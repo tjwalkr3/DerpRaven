@@ -3,9 +3,8 @@
     x:Class="DerpRaven.Maui.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:DerpRaven.Maui"
-    Shell.FlyoutBehavior="Flyout"
-    Title="DerpRaven.Maui">
+    xmlns:local="clr-namespace:DerpRaven.Maui.Views"
+    Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
         Title="Home"
