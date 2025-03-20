@@ -24,10 +24,4 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MauiTests\" />
-    <Folder Include="ApiTests\" />
-    <Folder Include="SharedTests\" />
-  </ItemGroup>
-
 </Project>
