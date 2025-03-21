@@ -6,6 +6,6 @@ public class Portfolio
     public string Description { get; set; } = null!;
     public string Name { get; set; } = null!;
         
-    public Type Type { get; set; } = null!;
+    public ProductType ProductType { get; set; } = null!;
     public List<Image> Images { get; set; } = [];
 }

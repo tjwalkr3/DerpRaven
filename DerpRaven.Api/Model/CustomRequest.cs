@@ -7,6 +7,6 @@ public class CustomRequest
     public string Email { get; set; } = null!;
     public string Status { get; set; } = null!;
 
-    public Type Type { get; set; } = null!;
+    public ProductType ProductType { get; set; } = null!;
     public User User { get; set; } = null!;
 }

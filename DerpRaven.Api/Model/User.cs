@@ -7,7 +7,7 @@ public class User
     public string OAuth { get; set; } = null!;
     public string Email {  get; set; } = null!;
     public string Role { get; set; } = null!;
-    public bool Active = false;
+    public bool Active { get; set; } = false;
 
     public List<CustomRequest> CustomRequests { get; set; } = [];
     public List<Order> Orders { get; set; } = [];

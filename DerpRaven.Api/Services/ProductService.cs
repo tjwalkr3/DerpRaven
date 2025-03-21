@@ -2,10 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
-public class ProductService : BaseClass
+public class ProductService
 {
-    public ProductService(AppDbContext context, ILogger<ProductService> logger) : base(context, logger)
+    private AppDbContext _context;
+    private ILogger _logger;
+
+    public ProductService(AppDbContext context, ILogger<ProductService> logger)
     {
+        _context = context;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<Product>> GetProductsByTypeAsync(string type)

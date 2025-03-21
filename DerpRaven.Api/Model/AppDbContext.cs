@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<Portfolio> Portfolios { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<Type> Types { get; set; }
+    public DbSet<ProductType> ProductTypes { get; set; }
     public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -84,25 +84,25 @@ public class AppDbContext : DbContext
 
         // One-to-Many: CustomRequest -> Type
         modelBuilder.Entity<CustomRequest>()
-            .HasOne(cr => cr.Type)
+            .HasOne(cr => cr.ProductType)
             .WithMany(t => t.CustomRequests)
-            .HasForeignKey("TypeId")
+            .HasForeignKey("ProductTypeId")
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         // One-to-Many: Product -> Type
         modelBuilder.Entity<Product>()
-            .HasOne(p => p.Type)
+            .HasOne(p => p.ProductType)
             .WithMany(t => t.Products)
-            .HasForeignKey("TypeId")
+            .HasForeignKey("ProductTypeId")
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         // One-to-Many: Portfolio -> Type
         modelBuilder.Entity<Portfolio>()
-            .HasOne(p => p.Type)
+            .HasOne(p => p.ProductType)
             .WithMany(t => t.Portfolios)
-            .HasForeignKey("TypeId")
+            .HasForeignKey("ProductTypeId")
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
     }

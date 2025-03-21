@@ -2,10 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
-public class PortfolioService : BaseClass
+public class PortfolioService
 {
-    public PortfolioService(AppDbContext context, ILogger<PortfolioService> logger) : base(context, logger)
+    private AppDbContext _context;
+    private ILogger _logger;
+
+    public PortfolioService(AppDbContext context, ILogger<PortfolioService> logger)
     {
+        _context = context;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<Portfolio>> GetAllPortfoliosAsync()

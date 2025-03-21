@@ -2,10 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
-public class UserService : BaseClass
+public class UserService
 {
-    public UserService(AppDbContext context, ILogger<UserService> logger) : base(context, logger)
+    private AppDbContext _context;
+    private ILogger _logger;
+
+    public UserService(AppDbContext context, ILogger<UserService> logger)
     {
+        _context = context;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<User>> GetAllUsersAsync()

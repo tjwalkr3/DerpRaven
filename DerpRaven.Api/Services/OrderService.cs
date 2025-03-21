@@ -2,10 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
-public class OrderService : BaseClass
+public class OrderService
 {
-    public OrderService(AppDbContext context, ILogger<OrderService> logger) : base(context, logger)
+    private AppDbContext _context;
+    private ILogger _logger;
+
+    public OrderService(AppDbContext context, ILogger<OrderService> logger)
     {
+        _context = context;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<Order>> GetAllOrdersAsync()

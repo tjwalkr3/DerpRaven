@@ -2,13 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
-public class CustomRequestService : BaseClass
+public class CustomRequestService
 {
-    public CustomRequestService(AppDbContext context, ILogger<CustomRequestService> logger) : base(context, logger)
+    private AppDbContext _context;
+    private ILogger _logger;
+
+    public CustomRequestService(AppDbContext context, ILogger<CustomRequestService> logger)
     {
+        _context = context;
+        _logger = logger;
     }
 
-    public async Task<IEnumerable<CustomRequest>> GetAllCustomsRequestsAsync()
+    public async Task<IEnumerable<CustomRequest>> GetAllCustomRequestsAsync()
     {
         return await _context.CustomRequests.ToListAsync();
     }
@@ -30,7 +35,7 @@ public class CustomRequestService : BaseClass
 
     public async Task<IEnumerable<CustomRequest>> GetCustomRequestsByTypeAsync(string type)
     {
-        return await _context.CustomRequests.Where(r => r.Type.Name == type).ToListAsync();
+        return await _context.CustomRequests.Where(r => r.ProductType.Name == type).ToListAsync();
     }
 
     public async Task ChangeStatus(int id, string status)

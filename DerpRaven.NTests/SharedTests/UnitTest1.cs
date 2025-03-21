@@ -1,8 +1,8 @@
-﻿namespace DerpRaven.Tests.MauiTests;
+﻿namespace DerpRaven.Tests.SharedTests;
 
 public class UnitTest1
 {
-    [Fact]
+    [Test]
     public void Test1()
     {
 
