@@ -23,9 +23,9 @@ public class PortfolioService
         return await _context.Portfolios.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Portfolio>> GetPortfoliosByTypeAsync(string type)
+    public async Task<IEnumerable<Portfolio>> GetPortfoliosByTypeAsync(string productType)
     {
-        return await _context.Portfolios.Where(p => p.Type.Name == type).ToListAsync();
+        return await _context.Portfolios.Where(p => p.ProductType.Name == productType).ToListAsync();
     }
 
     public async Task<Portfolio?> CreatePortfolio(Portfolio portfolio)
@@ -42,7 +42,7 @@ public class PortfolioService
         {
             oldPortfolio.Name = portfolio.Name;
             oldPortfolio.Description = portfolio.Description;
-            oldPortfolio.Type = portfolio.Type;
+            oldPortfolio.ProductType = portfolio.ProductType;
             oldPortfolio.Images = portfolio.Images;
             _context.Update(oldPortfolio);
             await _context.SaveChangesAsync();

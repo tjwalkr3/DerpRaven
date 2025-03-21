@@ -44,7 +44,7 @@ public class CustomRequestServiceTests
     [Test]
     public async Task CreateCustomRequest()
     {
-        var customRequest = new CustomRequest { Id = 1, Status = "Pending" };
+        var customRequest = new CustomRequest {Id = 1, Status = "Pending", Email = "test@example.com", Description = "I want a duckie." };
 
         await _customRequestService.CreateCustomRequest(customRequest);
         var result = await _context.CustomRequests.FindAsync(1);
@@ -58,8 +58,8 @@ public class CustomRequestServiceTests
     {
         var customRequests = new List<CustomRequest>
         {
-            new CustomRequest { Id = 1, Status = "Pending" },
-            new CustomRequest { Id = 2, Status = "Completed" }
+            new CustomRequest {Id = 1, Status = "Pending", Email = "test@example.com", Description = "I want a duckie."},
+            new CustomRequest { Id = 2, Status = "Completed", Email = "test@example.com", Description = "I want a duckie." }
         };
         await _context.CustomRequests.AddRangeAsync(customRequests);
         await _context.SaveChangesAsync();
@@ -73,7 +73,7 @@ public class CustomRequestServiceTests
     [Test]
     public async Task GetCustomRequestById()
     {
-        var customRequest = new CustomRequest { Id = 1, Status = "Pending" };
+        var customRequest = new CustomRequest {Id = 1, Status = "Pending", Email = "test@example.com", Description = "I want a duckie." };
         await _context.CustomRequests.AddAsync(customRequest);
         await _context.SaveChangesAsync();
 
@@ -87,18 +87,18 @@ public class CustomRequestServiceTests
     public async Task GetCustomRequestByUser()
     {
         User user1 = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" };
-        User user2 = new User { Id = 1, Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = true, Role = "customer" };
+        User user2 = new User { Id = 2, Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = true, Role = "customer" };
         var customRequests = new List<CustomRequest>
         {
-            new CustomRequest { Id = 1, Status = "Pending", User = user1 },
-            new CustomRequest { Id = 2, Status = "Completed", User = user2 }
+            new CustomRequest { Id = 1, Status = "Pending", User = user1, Email = "test@example.com", Description = "I want a duckie." },
+            new CustomRequest { Id = 2, Status = "Completed", User = user2, Email = "test2@example.com", Description = "I want a duckie 2." }
         };
         await _context.CustomRequests.AddRangeAsync(customRequests);
         await _context.SaveChangesAsync();
 
         var result = await _customRequestService.GetCustomRequestsByUserAsync(1);
 
-        result.ShouldBe(customRequests);
+        result.ShouldBe(customRequests.Where(c => c.User.Id == 1));
     }
 
     [Order(5)]
@@ -107,8 +107,8 @@ public class CustomRequestServiceTests
     {
         var customRequests = new List<CustomRequest>
         {
-            new CustomRequest { Id = 1, Status = "Pending" },
-            new CustomRequest { Id = 2, Status = "Pending" }
+            new CustomRequest { Id = 1, Status = "Pending", Email = "test@example.com", Description = "I want a duckie." },
+            new CustomRequest { Id = 2, Status = "Pending", Email = "test2@example.com", Description = "I want 2 duckies." }
         };
         await _context.CustomRequests.AddRangeAsync(customRequests);
         await _context.SaveChangesAsync();
@@ -129,30 +129,28 @@ public class CustomRequestServiceTests
 
         var customRequests = new List<CustomRequest>
         {
-            new CustomRequest { Id = 1, ProductType = type1 },
-            new CustomRequest { Id = 2, ProductType = type2 }
+            new CustomRequest { Id = 1, ProductType = type1, Status = "Pending", Email = "test@example.com", Description = "I want a duckie." },
+            new CustomRequest { Id = 2, ProductType = type2, Status = "Pending", Email = "test@example.com", Description = "I want a duckie." }
         };
         await _context.CustomRequests.AddRangeAsync(customRequests);
         await _context.SaveChangesAsync();
 
-        var result = await _customRequestService.GetCustomRequestsByTypeAsync("Type1");
+        var result = await _customRequestService.GetCustomRequestsByTypeAsync("Plushie");
 
-        result.ShouldBe(customRequests);
+        result.ShouldBe(customRequests.Where(c => c.ProductType.Name == "Plushie"));
     }
 
     [Order(1)]
     [Test]
     public async Task UpdateCustomRequest()
     {
-        var customRequest = new CustomRequest { Id = 1, Status = "Pending", Email = "test@example.com", Address = "123 Street" };
+        var customRequest = new CustomRequest { Id = 1, Status = "Pending", Email = "test@example.com", Description = "I want a duckie." };
         await _context.CustomRequests.AddAsync(customRequest);
         await _context.SaveChangesAsync();
 
         customRequest.Status = "Completed";
-        customRequest.Email = "updated@example.com";
-        customRequest.Address = "456 Avenue";
 
-        await _customRequestService.UpdateCustomRequest(customRequest);
+        await _customRequestService.ChangeStatus(customRequest.Id, customRequest.Status);
         var result = await _context.CustomRequests.FindAsync(1);
 
         result.ShouldBe(customRequest);

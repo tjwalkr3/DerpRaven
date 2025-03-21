@@ -33,9 +33,9 @@ public class CustomRequestService
         return await _context.CustomRequests.Where(r => r.Status == status).ToListAsync();
     }
 
-    public async Task<IEnumerable<CustomRequest>> GetCustomRequestsByTypeAsync(string type)
+    public async Task<IEnumerable<CustomRequest>> GetCustomRequestsByTypeAsync(string productType)
     {
-        return await _context.CustomRequests.Where(r => r.ProductType.Name == type).ToListAsync();
+        return await _context.CustomRequests.Where(r => r.ProductType.Name == productType).ToListAsync();
     }
 
     public async Task ChangeStatus(int id, string status)

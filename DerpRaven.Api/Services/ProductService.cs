@@ -13,9 +13,9 @@ public class ProductService
         _logger = logger;
     }
 
-    public async Task<IEnumerable<Product>> GetProductsByTypeAsync(string type)
+    public async Task<IEnumerable<Product>> GetProductsByTypeAsync(string productType)
     {
-        return await _context.Products.Where(p => p.Type.Name == type).ToListAsync();
+        return await _context.Products.Where(p => p.ProductType.Name == productType).ToListAsync();
     }
 
     public async Task<Product?> GetProductById(int id)
@@ -43,7 +43,7 @@ public class ProductService
             oldProduct.Name = product.Name;
             oldProduct.Description = product.Description;
             oldProduct.Price = product.Price;
-            oldProduct.Type = product.Type;
+            oldProduct.ProductType = product.ProductType;
             oldProduct.Images = product.Images;
             _context.Update(oldProduct);
             await _context.SaveChangesAsync();
