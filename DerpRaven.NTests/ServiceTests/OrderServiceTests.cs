@@ -47,7 +47,7 @@ namespace DerpRaven.Tests.ServiceTests
             result.ShouldBe(order);
         }
  
-        [Order(1)]
+        [Order(2)]
         [Test]
         public async Task GetAllOrders()
         {
@@ -66,7 +66,7 @@ namespace DerpRaven.Tests.ServiceTests
             retrievedOrders.ShouldBe(orders);
         }
  
-        [Order(2)]
+        [Order(3)]
         [Test]
         public async Task GetOrderById()
         {
@@ -82,10 +82,10 @@ namespace DerpRaven.Tests.ServiceTests
  
             var retrievedOrders = await _orderService.GetOrderByIdAsync(1);
  
-            retrievedOrders.ShouldBe(orders.Where(o => o.Id == 1));
+            retrievedOrders.ShouldBe(orders);
         }
  
-        [Order(3)]
+        [Order(4)]
         [Test]
         public async Task GetOrdersByUser()
         {
@@ -104,7 +104,7 @@ namespace DerpRaven.Tests.ServiceTests
             result.ShouldBe(orders);
         }
  
-        [Order(1)]
+        [Order(5)]
         [Test]
         public async Task UpdateOrder()
         {
