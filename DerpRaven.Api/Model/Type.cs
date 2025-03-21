@@ -1,4 +1,4 @@
-﻿namespace DerpRaven.Api.Repository;
+﻿namespace DerpRaven.Api.Model;
 
 public class Type
 {

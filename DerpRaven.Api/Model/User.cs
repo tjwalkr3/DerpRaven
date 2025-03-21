@@ -1,5 +1,4 @@
-﻿
-namespace DerpRaven.Api.Repository;
+﻿namespace DerpRaven.Api.Model;
 
 public class User
 {
@@ -7,6 +6,7 @@ public class User
     public string Name { get; set; } = null!;
     public string OAuth { get; set; } = null!;
     public string Email {  get; set; } = null!;
+    public string Role { get; set; } = null!;
     public bool Active = false;
 
     public List<CustomRequest> CustomRequests { get; set; } = [];

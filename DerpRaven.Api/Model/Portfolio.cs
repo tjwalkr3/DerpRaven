@@ -1,9 +1,9 @@
-﻿namespace DerpRaven.Api.Repository;
+﻿namespace DerpRaven.Api.Model;
 
 public class Portfolio
 {
     public int Id { get; set; }
-    public string Descriptio { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public string Name { get; set; } = null!;
         
     public Type Type { get; set; } = null!;

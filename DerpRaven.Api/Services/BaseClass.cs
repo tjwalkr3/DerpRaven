@@ -1,12 +1,14 @@
-﻿using DerpRaven.Api.Repository;
+﻿using DerpRaven.Api.Model;
 namespace DerpRaven.Api.Services;
 
 public class BaseClass
 {
-    private AppDbContext _context;
+    internal AppDbContext _context;
+    internal ILogger<BaseClass> _logger;
 
-    public BaseClass(AppDbContext context)
+    public BaseClass(AppDbContext context, ILogger<BaseClass> logger)
     {
         _context = context;
+        _logger = logger;
     }
 }
