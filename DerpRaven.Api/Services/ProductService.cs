@@ -28,7 +28,7 @@ public class ProductService
         return await _context.Products.ToListAsync();
     }
 
-    public async Task<Product?> CreateProduct(Product product)
+    public async Task<Product?> CreateProductAsync(Product product)
     {
         await _context.Products.AddAsync(product);
         await _context.SaveChangesAsync();
