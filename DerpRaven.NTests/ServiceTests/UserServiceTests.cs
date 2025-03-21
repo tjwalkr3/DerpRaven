@@ -34,7 +34,7 @@ public class UserServiceTests
 
     [Order(1)]
     [Test]
-    public async Task GetAllUsersAsync_ShouldReturnAllUsers()
+    public async Task GetAllUsers()
     {
         // Arrange
         _context.Users.Add(new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" });
@@ -51,7 +51,7 @@ public class UserServiceTests
 
     [Order(2)]
     [Test]
-    public async Task GetUserById_ShouldReturnUser()
+    public async Task GetUserById()
     {
         // Arrange
         var user = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" };
@@ -68,7 +68,7 @@ public class UserServiceTests
 
     [Order(3)]
     [Test]
-    public async Task CreateUser_ShouldAddUser()
+    public async Task CreateUser()
     {
         // Arrange
         var user = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" };
@@ -84,7 +84,7 @@ public class UserServiceTests
 
     [Order(4)]
     [Test]
-    public async Task UpdateUser_ShouldUpdateExistingUser()
+    public async Task UpdateUser()
     {
         // Arrange
         var user = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" };
@@ -105,7 +105,7 @@ public class UserServiceTests
 
     [Order(5)]
     [Test]
-    public async Task GetUsersByStatus_ShouldReturnUsersWithGivenStatus()
+    public async Task GetUsersByStatus()
     {
         // Arrange
         _context.Users.Add(new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" });
@@ -123,7 +123,7 @@ public class UserServiceTests
 
     [Order(6)]
     [Test]
-    public async Task GetUserByEmail_ShouldReturnUsersWithGivenEmail()
+    public async Task GetUserByEmail()
     {
         // Arrange
         _context.Users.Add(new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" });
@@ -141,7 +141,7 @@ public class UserServiceTests
 
     [Order(7)]
     [Test]
-    public async Task GetUserByName_ShouldReturnUserWithGivenName()
+    public async Task GetUserByName()
     {
         // Arrange
         _context.Users.Add(new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" });
