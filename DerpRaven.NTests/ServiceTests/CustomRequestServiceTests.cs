@@ -122,10 +122,15 @@ public class CustomRequestServiceTests
     [Test]
     public async Task GetCustomRequestByType()
     {
+
+        ProductType type1 = new() { Name = "Plushie" };
+        ProductType type2 = new() { Name = "Art" };
+
+
         var customRequests = new List<CustomRequest>
         {
-            new CustomRequest { Id = 1, ProductType = "Type1" },
-            new CustomRequest { Id = 2, ProductType = "Type1" }
+            new CustomRequest { Id = 1, ProductType = type1 },
+            new CustomRequest { Id = 2, ProductType = type2 }
         };
         await _context.CustomRequests.AddRangeAsync(customRequests);
         await _context.SaveChangesAsync();
