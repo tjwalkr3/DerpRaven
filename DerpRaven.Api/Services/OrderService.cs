@@ -18,12 +18,12 @@ public class OrderService
         return await _context.Orders.ToListAsync();
     }
 
-    public async Task<Order?> GetOrderById(int id)
+    public async Task<Order?> GetOrderByIdAsync(int id)
     {
         return await _context.Orders.FindAsync(id);
     }
 
-    public async Task UpdateOrder(Order order)
+    public async Task UpdateOrderAsync(Order order)
     {
         var oldOrder = await _context.Orders.Where(o => o.Id == order.Id).FirstOrDefaultAsync();
         if (oldOrder != null)
@@ -35,12 +35,12 @@ public class OrderService
         }
     }
 
-    public async Task<Order?> GetOrderByUserId(int id)
+    public async Task<Order?> GetOrdersByUserIdAsync(int id)
     {
         return await _context.Orders.Where(o => o.User.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task<Order?> CreateOrder(Order order)
+    public async Task<Order?> CreateOrderAsync(Order order)
     {
         await _context.Orders.AddAsync(order);
         await _context.SaveChangesAsync();

@@ -36,7 +36,7 @@ public class ProductServiceTests {
     public async Task CreateProduct() {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
-        var product = new Product { Id = 1, Name = "Test Product", ProductType = type1, Price = 100.0m };
+        var product = new Product { Id = 1, Name = "Test Product", ProductType = type1, Price = 100.0m, Quantity=1, Description="A description" };
 
         // Act
         await _productService.CreateProductAsync(product);
@@ -52,9 +52,9 @@ public class ProductServiceTests {
     public async Task GetAllProducts() {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
-        var type2 = new ProductType { Id = 1, Name = "Art" };
-        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m });
-        _dbContext.Products.Add(new Product { Id = 2, Name = "Test Product 2", ProductType = type2, Price = 50.0m });
+        var type2 = new ProductType { Id = 2, Name = "Art" };
+        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" });
+        _dbContext.Products.Add(new Product { Id = 2, Name = "Test Product 2", ProductType = type2, Price = 50.0m, Quantity = 1, Description = "A description" });
         _dbContext.SaveChanges();
 
         // Act
@@ -66,64 +66,69 @@ public class ProductServiceTests {
 
     [Order(3)]
     [Test]
-    public void GetProductById() {
+    public async Task GetProductById() {
         // Arrange
-        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m });
+        var type1 = new ProductType { Id = 1, Name = "Plushie" };
+        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" });
         _dbContext.SaveChanges();
 
         // Act
-        var product = _productService.GetProductById(1);
+        var product = await _productService.GetProductById(1);
 
         // Assert
         product.ShouldNotBeNull();
-        product.Name.ShouldBe("Test Product");
+        product.Name.ShouldBe("Test Product 1");
     }
 
     [Order(4)]
     [Test]
-    public void GetProductByName() {
+    public async Task GetProductByName() {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
 
-        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m });
+        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" });
         _dbContext.SaveChanges();
+        string productName = "Test Product 1";
 
         // Act
-        var product = _productService.GetProductByName("Test Product");
+        var products = await _productService.GetProductsByNameAsync(productName);
 
         // Assert
-        product.ShouldNotBeNull();
-        product.Name.ShouldBe("Test Product");
+        products.ShouldNotBeNull();
+        products.First().Name.ShouldBe(productName);
     }
 
     [Order(5)]
     [Test]
-    public void GetProductByType() {
+    public async Task GetProductByType() {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
+        var type2 = new ProductType { Id = 2, Name = "Art" };
 
-        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m });
-        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m });
+        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description 1." });
+        _dbContext.Products.Add(new Product { Id = 2, Name = "Test Product 2", ProductType = type2, Price = 100.0m, Quantity = 1, Description = "A description 2." });
         _dbContext.SaveChanges();
 
         // Act
-        var products = _productService.GetProductsByType("Electronics");
+        var products = await _productService.GetProductsByTypeAsync("Plushie");
 
         // Assert
-        products.Count().ShouldBe(2);
+        products.Where(p => true).Count().ShouldBe(1);
+        products.First().Id.ShouldBe(1);
     }
 
     [Order(6)]
     [Test]
-    public void UpdateProduct() {
+    public async Task UpdateProduct() {
         // Arrange
-        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m });
-        _dbContext.Products.Add(product);
+        var type1 = new ProductType { Id = 1, Name = "Plushie" };
+        var product1 = new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" };
+        _dbContext.Products.Add(product1);
         _dbContext.SaveChanges();
 
         // Act
-        product.Name = "Updated Product";
-        _productService.UpdateProduct(product);
+        product1.Name = "Updated Product";
+        await _productService.UpdateProduct(product1);
         var updatedProduct = _dbContext.Products.Find(1);
 
         // Assert

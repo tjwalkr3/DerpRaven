@@ -18,7 +18,7 @@ public class PortfolioService
         return await _context.Portfolios.ToListAsync();
     }
 
-    public async Task<Portfolio?> GetPortfolioById(int id)
+    public async Task<Portfolio?> GetPortfolioByIdAsync(int id)
     {
         return await _context.Portfolios.FindAsync(id);
     }
@@ -28,14 +28,14 @@ public class PortfolioService
         return await _context.Portfolios.Where(p => p.ProductType.Name == productType).ToListAsync();
     }
 
-    public async Task<Portfolio?> CreatePortfolio(Portfolio portfolio)
+    public async Task<Portfolio?> CreatePortfolioAsync(Portfolio portfolio)
     {
         await _context.Portfolios.AddAsync(portfolio);
         await _context.SaveChangesAsync();
         return portfolio;
     }
 
-    public async Task UpdatePortfolio(Portfolio portfolio)
+    public async Task UpdatePortfolioAsync(Portfolio portfolio)
     {
         var oldPortfolio = await _context.Portfolios.Where(p => p.Id == portfolio.Id).FirstOrDefaultAsync();
         if (oldPortfolio != null)
@@ -49,7 +49,7 @@ public class PortfolioService
         }
     }
 
-    public async Task DeletePortfolio(int id)
+    public async Task DeletePortfolioAsync(int id)
     {
         var portfolio = await _context.Portfolios.FindAsync(id);
         if (portfolio != null)
