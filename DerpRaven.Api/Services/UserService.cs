@@ -18,19 +18,19 @@ public class UserService
         return await _context.Users.ToListAsync();
     }
 
-    public async Task<User?> GetUserById(int id)
+    public async Task<User?> GetUserByIdAsync(int id)
     {
         return await _context.Users.FindAsync(id);
     }
 
-    public async Task<User?> CreateUser(User user)
+    public async Task<User?> CreateUserAsync(User user)
     {
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
         return user;
     }
 
-    public async Task UpdateUser(User user)
+    public async Task UpdateUserAsync(User user)
     {
         var oldUser = await _context.Users.Where(u => u.Id == user.Id).FirstOrDefaultAsync();
         if (oldUser != null)
@@ -44,17 +44,17 @@ public class UserService
         }
     }
 
-    public async Task<IEnumerable<User>> GetUsersByStatus(bool active)
+    public async Task<IEnumerable<User>> GetUsersByStatusAsync(bool active)
     {
         return await _context.Users.Where(u => u.Active == active).ToListAsync();
     }
 
-    public async Task<IEnumerable<User>> GetUserByEmail(string email)
+    public async Task<IEnumerable<User>> GetUsersByEmailAsync(string email)
     {
         return await _context.Users.Where(u => u.Email == email).ToListAsync();
     }
 
-    public async Task<User?> GetUserByName(string name)
+    public async Task<User?> GetUserByNameAsync(string name)
     {
         return await _context.Users.Where(u => u.Name == name).FirstOrDefaultAsync();
     }

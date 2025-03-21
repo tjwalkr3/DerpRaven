@@ -73,7 +73,7 @@ public class ProductServiceTests {
         _dbContext.SaveChanges();
 
         // Act
-        var product = await _productService.GetProductById(1);
+        var product = await _productService.GetProductByIdAsync(1);
 
         // Assert
         product.ShouldNotBeNull();
@@ -128,7 +128,7 @@ public class ProductServiceTests {
 
         // Act
         product1.Name = "Updated Product";
-        await _productService.UpdateProduct(product1);
+        await _productService.UpdateProductAsync(product1);
         var updatedProduct = _dbContext.Products.Find(1);
 
         // Assert

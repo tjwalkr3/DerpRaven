@@ -23,7 +23,7 @@ public class CustomRequestService
         return await _context.CustomRequests.Where(r => r.User.Id == id).ToListAsync();
     }
 
-    public async Task<CustomRequest?> GetCustomRequestById(int id)
+    public async Task<CustomRequest?> GetCustomRequestByIdAsync(int id)
     {
         return await _context.CustomRequests.FindAsync(id);
     }
@@ -38,7 +38,7 @@ public class CustomRequestService
         return await _context.CustomRequests.Where(r => r.ProductType.Name == productType).ToListAsync();
     }
 
-    public async Task ChangeStatus(int id, string status)
+    public async Task ChangeStatusAsync(int id, string status)
     {
         var request = await _context.CustomRequests.FindAsync(id);
         if (request != null)
@@ -48,7 +48,7 @@ public class CustomRequestService
         }
     }
 
-    public async Task CreateCustomRequest(CustomRequest request)
+    public async Task CreateCustomRequestAsync(CustomRequest request)
     {
         await _context.CustomRequests.AddAsync(request);
         await _context.SaveChangesAsync();

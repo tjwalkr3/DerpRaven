@@ -42,7 +42,7 @@ public class CustomRequestServiceTests
         var customRequest = new CustomRequest { Id = 1, Status = "Pending", Email = "test@example.com", Description = "I want a duckie." };
 
         // Act
-        await _customRequestService.CreateCustomRequest(customRequest);
+        await _customRequestService.CreateCustomRequestAsync(customRequest);
         var result = await _context.CustomRequests.FindAsync(1);
 
         // Assert
@@ -79,7 +79,7 @@ public class CustomRequestServiceTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _customRequestService.GetCustomRequestById(1);
+        var result = await _customRequestService.GetCustomRequestByIdAsync(1);
 
         // Assert
         result.ShouldBe(customRequest);
@@ -162,7 +162,7 @@ public class CustomRequestServiceTests
         customRequest.Status = "Completed";
 
         // Act
-        await _customRequestService.ChangeStatus(customRequest.Id, customRequest.Status);
+        await _customRequestService.ChangeStatusAsync(customRequest.Id, customRequest.Status);
         var result = await _context.CustomRequests.FindAsync(1);
 
         // Assert

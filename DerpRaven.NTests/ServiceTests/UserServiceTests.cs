@@ -59,7 +59,7 @@ public class UserServiceTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _userService.GetUserById(1);
+        var result = await _userService.GetUserByIdAsync(1);
 
         // Assert
         result.ShouldNotBeNull();
@@ -74,7 +74,7 @@ public class UserServiceTests
         var user = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" };
 
         // Act
-        var result = await _userService.CreateUser(user);
+        var result = await _userService.CreateUserAsync(user);
 
         // Assert
         _context.Users.ShouldContain(user);
@@ -93,7 +93,7 @@ public class UserServiceTests
         var updatedUser = new User { Id = 1, Name = "UpdatedUser", OAuth = "OAuth1", Email = "updated@example.com", Active = false, Role = "customer" };
 
         // Act
-        await _userService.UpdateUser(updatedUser);
+        await _userService.UpdateUserAsync(updatedUser);
 
         // Assert
         var result = await _context.Users.FindAsync(1);
@@ -113,7 +113,7 @@ public class UserServiceTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _userService.GetUsersByStatus(true);
+        var result = await _userService.GetUsersByStatusAsync(true);
 
         // Assert
         result.ShouldNotBeNull();
@@ -126,17 +126,21 @@ public class UserServiceTests
     public async Task GetUserByEmail()
     {
         // Arrange
-        _context.Users.Add(new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" });
-        _context.Users.Add(new User { Id = 2, Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = false, Role = "customer" });
+        _context.Users.Add(new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer1" });
+        _context.Users.Add(new User { Id = 2, Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = true, Role = "customer2" });
+        _context.Users.Add(new User { Id = 3, Name = "User3", OAuth = "OAuth3", Email = "user2@example.com", Active = false, Role = "custome3" });
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _userService.GetUserByEmail("user1@example.com");
+        string email = "user2@example.com";
+        var result = await _userService.GetUsersByEmailAsync(email);
 
         // Assert
         result.ShouldNotBeNull();
-        result.Count().ShouldBe(1);
-        result.First().Email.ShouldBe("user1@example.com");
+        result.Where(u => u.Email == email).Count().ShouldBe(2);
+        var filtered = _context.Users.Where(u => u.Email == email);
+        filtered.Contains(_context.Users.Find(2)).ShouldBeTrue();
+        filtered.Contains(_context.Users.Find(3)).ShouldBeTrue();
     }
 
     [Order(7)]
@@ -148,7 +152,7 @@ public class UserServiceTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _userService.GetUserByName("User1");
+        var result = await _userService.GetUserByNameAsync("User1");
 
         // Assert
         result.ShouldNotBeNull();

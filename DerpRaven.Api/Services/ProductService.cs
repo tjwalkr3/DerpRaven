@@ -18,7 +18,7 @@ public class ProductService
         return await _context.Products.Where(p => p.ProductType.Name == productType).ToListAsync();
     }
 
-    public async Task<Product?> GetProductById(int id)
+    public async Task<Product?> GetProductByIdAsync(int id)
     {
         return await _context.Products.FindAsync(id);
     }
@@ -35,7 +35,7 @@ public class ProductService
         return product;
     }
 
-    public async Task UpdateProduct(Product product)
+    public async Task UpdateProductAsync(Product product)
     {
         var oldProduct = await _context.Products.Where(p => p.Id == product.Id).FirstOrDefaultAsync();
         if (oldProduct != null)
