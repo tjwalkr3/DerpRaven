@@ -35,9 +35,9 @@ public class OrderService
         }
     }
 
-    public async Task<Order?> GetOrdersByUserIdAsync(int id)
+    public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(int id)
     {
-        return await _context.Orders.Where(o => o.User.Id == id).FirstOrDefaultAsync();
+        return await _context.Orders.Where(o => o.User.Id == id).ToListAsync();
     }
 
     public async Task<Order?> CreateOrderAsync(Order order)

@@ -80,14 +80,14 @@ namespace DerpRaven.Tests.ServiceTests
             await _context.Orders.AddRangeAsync(orders);
             await _context.SaveChangesAsync();
  
-            var retrievedOrders = await _orderService.GetOrderByIdAsync(1);
+            var retrievedOrder = await _orderService.GetOrderByIdAsync(1);
  
-            retrievedOrders.ShouldBe(orders);
+            retrievedOrder.ShouldBe(orders.Where(o => o.User.Id == 1).First());
         }
  
         [Order(4)]
         [Test]
-        public async Task GetOrdersByUser()
+        public async Task GetOrdersByUserId()
         {
             var user1 = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer1" };
             var user2 = new User { Id = 2, Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = true, Role = "customer2" };
@@ -101,7 +101,7 @@ namespace DerpRaven.Tests.ServiceTests
  
             var result = await _orderService.GetOrdersByUserIdAsync(1);
  
-            result.ShouldBe(orders);
+            result.ShouldBe(orders.Where(o => o.User.Id == 1));
         }
  
         [Order(5)]
