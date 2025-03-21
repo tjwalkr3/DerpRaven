@@ -4,7 +4,7 @@ namespace DerpRaven.Api.Services;
 
 public class ProductService : BaseClass
 {
-    public ProductService(AppDbContext context, ILogger<BaseClass> logger) : base(context, logger)
+    public ProductService(AppDbContext context, ILogger<ProductService> logger) : base(context, logger)
     {
     }
 

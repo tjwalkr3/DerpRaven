@@ -4,7 +4,7 @@ namespace DerpRaven.Api.Services;
 
 public class PortfolioService : BaseClass
 {
-    public PortfolioService(AppDbContext context, ILogger<BaseClass> logger) : base(context, logger)
+    public PortfolioService(AppDbContext context, ILogger<PortfolioService> logger) : base(context, logger)
     {
     }
 

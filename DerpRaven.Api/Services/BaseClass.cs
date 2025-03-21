@@ -4,9 +4,9 @@ namespace DerpRaven.Api.Services;
 public class BaseClass
 {
     internal AppDbContext _context;
-    internal ILogger<BaseClass> _logger;
+    internal ILogger _logger;
 
-    public BaseClass(AppDbContext context, ILogger<BaseClass> logger)
+    public BaseClass(AppDbContext context, ILogger logger)
     {
         _context = context;
         _logger = logger;

@@ -4,7 +4,7 @@ namespace DerpRaven.Api.Services;
 
 public class CustomRequestService : BaseClass
 {
-    public CustomRequestService(AppDbContext context, ILogger<BaseClass> logger) : base(context, logger)
+    public CustomRequestService(AppDbContext context, ILogger<CustomRequestService> logger) : base(context, logger)
     {
     }
 

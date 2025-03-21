@@ -4,7 +4,7 @@ namespace DerpRaven.Api.Services;
 
 public class UserService : BaseClass
 {
-    public UserService(AppDbContext context, ILogger<BaseClass> logger) : base(context, logger)
+    public UserService(AppDbContext context, ILogger<UserService> logger) : base(context, logger)
     {
     }
 

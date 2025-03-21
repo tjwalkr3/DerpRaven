@@ -4,7 +4,7 @@ namespace DerpRaven.Api.Services;
 
 public class OrderService : BaseClass
 {
-    public OrderService(AppDbContext context, ILogger<BaseClass> logger) : base(context, logger)
+    public OrderService(AppDbContext context, ILogger<OrderService> logger) : base(context, logger)
     {
     }
 
