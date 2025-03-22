@@ -40,7 +40,7 @@ public class OrderService
         return await _context.Orders.Where(o => o.User.Id == id).ToListAsync();
     }
 
-    public async Task<Order?> CreateOrderAsync(Order order)
+    public async Task<Order> CreateOrderAsync(Order order)
     {
         await _context.Orders.AddAsync(order);
         await _context.SaveChangesAsync();

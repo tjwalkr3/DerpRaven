@@ -9,14 +9,16 @@ using System;
 
 namespace DerpRaven.Tests.ServiceTests;
 
-public class ProductServiceTests {
+public class ProductServiceTests
+{
     private DbContextOptions<AppDbContext> _dbContextOptions;
     private AppDbContext _dbContext;
     private ProductService _productService;
     private ILogger<ProductService> _logger;
 
     [SetUp]
-    public void Setup() {
+    public void Setup()
+    {
         _logger = Substitute.For<ILogger<ProductService>>();
         _dbContextOptions = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
@@ -26,17 +28,19 @@ public class ProductServiceTests {
     }
 
     [TearDown]
-    public void TearDown() {
+    public void TearDown()
+    {
         _dbContext.Database.EnsureDeleted();
         _dbContext.Dispose();
     }
 
     [Order(1)]
     [Test]
-    public async Task CreateProduct() {
+    public async Task CreateProduct()
+    {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
-        var product = new Product { Id = 1, Name = "Test Product", ProductType = type1, Price = 100.0m, Quantity=1, Description="A description" };
+        var product = new Product { Id = 1, Name = "Test Product", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" };
 
         // Act
         await _productService.CreateProductAsync(product);
@@ -49,7 +53,8 @@ public class ProductServiceTests {
 
     [Order(2)]
     [Test]
-    public async Task GetAllProducts() {
+    public async Task GetAllProducts()
+    {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
         var type2 = new ProductType { Id = 2, Name = "Art" };
@@ -66,7 +71,8 @@ public class ProductServiceTests {
 
     [Order(3)]
     [Test]
-    public async Task GetProductById() {
+    public async Task GetProductById()
+    {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
         _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" });
@@ -82,7 +88,8 @@ public class ProductServiceTests {
 
     [Order(4)]
     [Test]
-    public async Task GetProductByName() {
+    public async Task GetProductByName()
+    {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
 
@@ -100,7 +107,8 @@ public class ProductServiceTests {
 
     [Order(5)]
     [Test]
-    public async Task GetProductByType() {
+    public async Task GetProductByType()
+    {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
         var type2 = new ProductType { Id = 2, Name = "Art" };
@@ -119,7 +127,8 @@ public class ProductServiceTests {
 
     [Order(6)]
     [Test]
-    public async Task UpdateProduct() {
+    public async Task UpdateProduct()
+    {
         // Arrange
         var type1 = new ProductType { Id = 1, Name = "Plushie" };
         var product1 = new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" };

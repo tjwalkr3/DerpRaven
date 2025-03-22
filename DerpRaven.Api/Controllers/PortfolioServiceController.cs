@@ -54,6 +54,7 @@ public class PortfolioServiceController : ControllerBase
         return CreatedAtAction(nameof(GetPortfolioById), new { id = createdPortfolio.Id }, createdPortfolio);
     }
 
+    //I'm not sure that this is proper. Derp
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePortfolio(int id, Portfolio portfolio)
     {

@@ -28,7 +28,7 @@ public class PortfolioService
         return await _context.Portfolios.Where(p => p.ProductType.Name == productType).ToListAsync();
     }
 
-    public async Task<Portfolio?> CreatePortfolioAsync(Portfolio portfolio)
+    public async Task<Portfolio> CreatePortfolioAsync(Portfolio portfolio)
     {
         await _context.Portfolios.AddAsync(portfolio);
         await _context.SaveChangesAsync();
@@ -63,4 +63,4 @@ public class PortfolioService
     {
         return await _context.Portfolios.Where(p => p.Name.Contains(name)).ToListAsync();
     }
-}   
+}
