@@ -48,9 +48,9 @@ public class UserServiceController : ControllerBase
     }
 
     [HttpGet("name/{name}")]
-    public async Task<IActionResult> GetUserByName(string name)
+    public async Task<IActionResult> GetUsersByName(string name)
     {
-        var user = await _userService.GetUserByNameAsync(name);
+        var user = await _userService.GetUsersByNameAsync(name);
         if (user == null)
         {
             return NotFound();
