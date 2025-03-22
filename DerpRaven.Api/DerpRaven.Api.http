@@ -1,6 +1,229 @@
 @DerpRaven.Api_HostAddress = http://localhost:5077
 
-GET {{DerpRaven.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Custom Request Service
+### Get all custom requests
+GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest
+
+### Get custom request by ID
+GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/1
+
+### Get custom requests by user ID
+GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/user/1
+
+### Get custom requests by status
+GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/status/Pending
+
+### Get custom requests by product type
+GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/type/Plushie
+
+### Create a new custom request
+POST {{DerpRaven.Api_HostAddress}}/api/CustomRequest
+Content-Type: application/json
+
+{
+  "id": 1,
+  "description": "I want a duckie.",
+  "email": "test@example.com",
+  "status": "Pending",
+  "productType": {
+    "id": 1,
+    "name": "Plushie"
+  },
+  "user": {
+    "id": 1,
+    "name": "User1",
+    "oauth": "OAuth1",
+    "email": "user1@example.com",
+    "role": "customer",
+    "active": true
+  }
+}
+
+### Change status of a custom request
+PUT {{DerpRaven.Api_HostAddress}}/api/CustomRequest/1/status
+Content-Type: application/json
+
+"Completed"
+
+### Order Service
+### Get all orders
+GET {{DerpRaven.Api_HostAddress}}/api/OrderService
+
+### Get order by ID
+GET {{DerpRaven.Api_HostAddress}}/api/OrderService/1
+
+
+### Get orders by user ID
+GET {{DerpRaven.Api_HostAddress}}/api/OrderService/user/1
+
+### Create a new order
+POST {{DerpRaven.Api_HostAddress}}/api/OrderService
+Content-Type: application/json
+
+{
+  "id": 1,
+  "address": "123 Street",
+  "email": "test@example.com",
+  "orderDate": "2025-03-21T00:00:00Z",
+  "user": {
+    "id": 1,
+    "name": "User1",
+    "oauth": "OAuth1",
+    "email": "user1@example.com",
+    "role": "customer",
+    "active": true
+  }
+}
+
+### Update an order
+PUT {{DerpRaven.Api_HostAddress}}/api/OrderService/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "address": "456 Avenue",
+  "email": "updated@example.com",
+  "orderDate": "2025-03-21T00:00:00Z",
+  "user": {
+    "id": 1,
+    "name": "User1",
+    "oauth": "OAuth1",
+    "email": "user1@example.com",
+    "role": "customer",
+    "active": true
+  }
+}
+
+### Portfolio Service
+### Get all portfolios
+GET {{DerpRaven.Api_HostAddress}}/api/PortfolioService
+
+### Get portfolio by ID
+GET {{DerpRaven.Api_HostAddress}}/api/PortfolioService/1
+
+### Get portfolios by product type
+GET {{DerpRaven.Api_HostAddress}}/api/PortfolioService/type/Plushie
+
+### Create a new portfolio
+POST {{DerpRaven.Api_HostAddress}}/api/PortfolioService
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Portfolio1",
+  "description": "Description1",
+  "productType": {
+    "id": 1,
+    "name": "Plushie"
+  },
+  "images": []
+}
+
+### Update a portfolio
+PUT {{DerpRaven.Api_HostAddress}}/api/PortfolioService/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "UpdatedPortfolio",
+  "description": "UpdatedDescription",
+  "productType": {
+    "id": 1,
+    "name": "Plushie"
+  },
+  "images": []
+}
+
+### Delete a portfolio
+DELETE {{DerpRaven.Api_HostAddress}}/api/PortfolioService/1
+
+### Product Service
+### Get all products
+GET {{DerpRaven.Api_HostAddress}}/api/ProductService
+
+### Get product by ID
+GET {{DerpRaven.Api_HostAddress}}/api/ProductService/1
+
+### Get products by name
+GET {{DerpRaven.Api_HostAddress}}/api/ProductService/name/Test%20Product
+
+### Get products by product type
+GET {{DerpRaven.Api_HostAddress}}/api/ProductService/type/Plushie
+
+### Create a new product
+POST {{DerpRaven.Api_HostAddress}}/api/ProductService
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Test Product",
+  "description": "A description",
+  "price": 100.0,
+  "quantity": 1,
+  "productType": {
+    "id": 1,
+    "name": "Plushie"
+  },
+  "images": []
+}
+
+### Update a product
+PUT {{DerpRaven.Api_HostAddress}}/api/ProductService/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Updated Product",
+  "description": "Updated description",
+  "price": 150.0,
+  "quantity": 2,
+  "productType": {
+    "id": 1,
+    "name": "Plushie"
+  },
+  "images": []
+}
+
+### User Service
+### Get all users
+GET {{DerpRaven.Api_HostAddress}}/api/UserService
+
+### Get user by ID
+GET {{DerpRaven.Api_HostAddress}}/api/UserService/1
+
+### Get users by status
+GET {{DerpRaven.Api_HostAddress}}/api/UserService/status/true
+
+### Get users by email
+GET {{DerpRaven.Api_HostAddress}}/api/UserService/email/user1@example.com
+
+### Get user by name
+GET {{DerpRaven.Api_HostAddress}}/api/UserService/name/User1
+
+### Create a new user
+POST {{DerpRaven.Api_HostAddress}}/api/UserService
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "User1",
+  "oauth": "OAuth1",
+  "email": "user1@example.com",
+  "role": "customer",
+  "active": true
+}
+
+### Update a user
+PUT {{DerpRaven.Api_HostAddress}}/api/UserService/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Updated User",
+  "oauth": "OAuth1",
+  "email": "updated@example.com",
+  "role": "customer",
+  "active": true
+}
 
 ###
