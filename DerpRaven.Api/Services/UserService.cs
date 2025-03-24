@@ -54,8 +54,8 @@ public class UserService
         return await _context.Users.Where(u => u.Email == email).ToListAsync();
     }
 
-    public async Task<User?> GetUserByNameAsync(string name)
+    public async Task<IEnumerable<User?>> GetUsersByNameAsync(string name)
     {
-        return await _context.Users.Where(u => u.Name == name).FirstOrDefaultAsync();
+        return await _context.Users.Where(u => u.Name == name).ToListAsync();
     }
 }

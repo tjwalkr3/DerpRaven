@@ -152,11 +152,11 @@ public class UserServiceTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _userService.GetUserByNameAsync("User1");
+        var result = await _userService.GetUsersByNameAsync("User1");
 
         // Assert
         result.ShouldNotBeNull();
-        result?.Name.ShouldBe("User1");
+        result.FirstOrDefault()?.Name.ShouldBe("User1");
     }
 }
 
