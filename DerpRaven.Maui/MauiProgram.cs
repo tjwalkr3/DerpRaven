@@ -28,13 +28,29 @@ public static class MauiProgram
 
     private static MauiAppBuilder RegisterViews(this MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<CartPage>();
+        builder.Services.AddTransient<CustomRequestPage>();
+        builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<OrderHistoryPage>();
+        builder.Services.AddTransient<PaymentPage>();
+        builder.Services.AddTransient<PortfolioPage>();
+        builder.Services.AddTransient<ProductPage>();
+        builder.Services.AddTransient<ProductsListPage>();
         return builder;
     }
 
     private static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<CartPageViewModel>();
+        builder.Services.AddTransient<CustomRequestPageViewModel>();
+        builder.Services.AddTransient<LoginPageViewModel>();
         builder.Services.AddTransient<MainPageViewModel>();
+        builder.Services.AddTransient<OrderHistoryPageViewModel>();
+        builder.Services.AddTransient<PaymentPageViewModel>();
+        builder.Services.AddTransient<PortfolioPageViewModel>();
+        builder.Services.AddTransient<ProductPageViewModel>();
+        builder.Services.AddTransient<ProductsListPageViewModel>();
         return builder;
     }
 
