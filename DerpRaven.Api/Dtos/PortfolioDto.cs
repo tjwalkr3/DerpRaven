@@ -2,12 +2,12 @@
 
 namespace DerpRaven.Api.Dtos;
 
-public class CustomRequestDto
+public class PortfolioDto
 {
     public int Id { get; set; }
     public string Description { get; set; } = null!;
-    public string Email { get; set; } = null!;
-    public string Status { get; set; } = null!;
+    public string Name { get; set; } = null!;
     public int ProductTypeId { get; set; }
-    public int UserId { get; set; }
+
+    public List<int> ImageIds { get; set; } = [];
 }
