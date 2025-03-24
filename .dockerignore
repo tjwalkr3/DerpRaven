@@ -1,0 +1,15 @@
+Dockerfile
+bin/
+obj/
+dataset/
+kube/
+.github/
+
+.dockerignore
+.gitignore
+nginx-default.conf
+cloudflare.ini
+duckdns.ini
+otel-collector-config.yml
+docker-compose.yml
+build-and-push.sh

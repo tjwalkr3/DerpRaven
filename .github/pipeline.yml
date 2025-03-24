@@ -1,0 +1,21 @@
+name: deployment pipeline
+on:
+- push
+- workflow_dispatch
+jobs:
+  automated_testing:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v4 # get the repo in the actions runner (running get clone)
+  
+    - name: test the 
+      run: |
+        docker build \
+          -f ./Test.Api.Dockerfile \
+          -t thomas_test_container \
+          .
+
+        docker run --rm thomas_test_container
+        echo "going to deploy!!!"
+
+
