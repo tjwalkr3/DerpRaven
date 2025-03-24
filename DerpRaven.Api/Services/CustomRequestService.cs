@@ -13,9 +13,12 @@ public class CustomRequestService
         _logger = logger;
     }
 
-    public async Task<IEnumerable<CustomRequest>> GetAllCustomRequestsAsync()
+    public async Task<List<CustomRequest>> GetAllCustomRequestsAsync()
     {
-        return await _context.CustomRequests.ToListAsync();
+        return await _context.CustomRequests
+            .Include(cr => cr.ProductType)
+            .Include(cr => cr.User)
+            .ToListAsync();
     }
 
     public async Task<IEnumerable<CustomRequest>> GetCustomRequestsByUserAsync(int id)

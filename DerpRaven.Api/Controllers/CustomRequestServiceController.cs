@@ -1,6 +1,7 @@
 ﻿using DerpRaven.Api.Model;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using DerpRaven.Api.Dtos;
 
 namespace DerpRaven.Api.Controllers;
 
@@ -55,9 +56,15 @@ public class CustomRequestController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCustomRequest(string description, string email, string status, int productTypeId, int userId)
+    public async Task<IActionResult> CreateCustomRequest([FromBody] CustomRequestDto request)
     {
-        await _customRequestService.CreateCustomRequestAsync(description, email, status, productTypeId, userId);
+        await _customRequestService.CreateCustomRequestAsync(
+            request.Description, 
+            request.Email, 
+            request.Status, 
+            request.ProductTypeId, 
+            request.UserId);
+
         return Created();
     }
 
@@ -68,3 +75,4 @@ public class CustomRequestController : ControllerBase
         return NoContent();
     }
 }
+

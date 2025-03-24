@@ -13,6 +13,11 @@ public class AppDbContext : DbContext
     public DbSet<ProductType> ProductTypes { get; set; }
     public DbSet<User> Users { get; set; }
 
+    public AppDbContext()
+    {
+        this.ChangeTracker.LazyLoadingEnabled = false;
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Many-to-Many: Order <-> Product
