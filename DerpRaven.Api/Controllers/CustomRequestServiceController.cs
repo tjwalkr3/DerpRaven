@@ -55,10 +55,10 @@ public class CustomRequestController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCustomRequest(CustomRequest request)
+    public async Task<IActionResult> CreateCustomRequest(string description, string email, string status, int productTypeId, int userId)
     {
-        await _customRequestService.CreateCustomRequestAsync(request);
-        return CreatedAtAction(nameof(GetCustomRequestById), new { id = request.Id }, request);
+        await _customRequestService.CreateCustomRequestAsync(description, email, status, productTypeId, userId);
+        return Created();
     }
 
     [HttpPut("{id}/status")]

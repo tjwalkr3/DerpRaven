@@ -48,9 +48,20 @@ public class CustomRequestService
         }
     }
 
-    public async Task CreateCustomRequestAsync(CustomRequest request)
+    public async Task CreateCustomRequestAsync(string description, string email, string status, int productTypeId, int userId)
     {
-        await _context.CustomRequests.AddAsync(request);
+        var productType = _context.ProductTypes.Where(t => t.Id == productTypeId).Single();
+        var user = _context.Users.Where(u => u.Id == userId).Single();
+
+        var customRequest = new CustomRequest()
+        {
+            Description = description,
+            Email = email,
+            Status = status,
+            ProductType = productType,
+            User = user
+        };
+        await _context.CustomRequests.AddAsync(customRequest);
         await _context.SaveChangesAsync();
     }
 }

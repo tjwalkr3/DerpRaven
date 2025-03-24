@@ -19,24 +19,12 @@ GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/type/Plushie
 ### Create a new custom request
 POST {{DerpRaven.Api_HostAddress}}/api/CustomRequest
 Content-Type: application/json
-
 {
-  "id": 1,
   "description": "I want a duckie.",
   "email": "test@example.com",
   "status": "Pending",
-  "productType": {
-    "id": 1,
-    "name": "Plushie"
-  },
-  "user": {
-    "id": 1,
-    "name": "User1",
-    "oauth": "OAuth1",
-    "email": "user1@example.com",
-    "role": "customer",
-    "active": true
-  }
+  "productTypeId": 1,
+  "userId": 2 
 }
 
 ### Change status of a custom request
@@ -80,7 +68,6 @@ PUT {{DerpRaven.Api_HostAddress}}/api/OrderService/1
 Content-Type: application/json
 
 {
-  "id": 1,
   "address": "456 Avenue",
   "email": "updated@example.com",
   "orderDate": "2025-03-21T00:00:00Z",
@@ -109,7 +96,6 @@ POST {{DerpRaven.Api_HostAddress}}/api/PortfolioService
 Content-Type: application/json
 
 {
-  "id": 1,
   "name": "Portfolio1",
   "description": "Description1",
   "productType": {
@@ -124,7 +110,6 @@ PUT {{DerpRaven.Api_HostAddress}}/api/PortfolioService/1
 Content-Type: application/json
 
 {
-  "id": 1,
   "name": "UpdatedPortfolio",
   "description": "UpdatedDescription",
   "productType": {
@@ -155,7 +140,6 @@ POST {{DerpRaven.Api_HostAddress}}/api/ProductService
 Content-Type: application/json
 
 {
-  "id": 1,
   "name": "Test Product",
   "description": "A description",
   "price": 100.0,
@@ -172,7 +156,6 @@ PUT {{DerpRaven.Api_HostAddress}}/api/ProductService/1
 Content-Type: application/json
 
 {
-  "id": 1,
   "name": "Updated Product",
   "description": "Updated description",
   "price": 150.0,
@@ -205,7 +188,6 @@ POST {{DerpRaven.Api_HostAddress}}/api/UserService
 Content-Type: application/json
 
 {
-  "id": 1,
   "name": "User1",
   "oauth": "OAuth1",
   "email": "user1@example.com",
@@ -218,7 +200,6 @@ PUT {{DerpRaven.Api_HostAddress}}/api/UserService/1
 Content-Type: application/json
 
 {
-  "id": 1,
   "name": "Updated User",
   "oauth": "OAuth1",
   "email": "updated@example.com",
