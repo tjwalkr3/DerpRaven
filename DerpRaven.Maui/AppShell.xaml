@@ -7,6 +7,11 @@
     Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+    
+    <ShellContent
         Title="Cart"
         ContentTemplate="{DataTemplate local:CartPage}"
         Route="CartPage" />
@@ -19,12 +24,8 @@
     <ShellContent
         Title="Log In"
         ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage" />
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="LoginPage" 
+        FlyoutItemIsVisible="False" />
 
     <ShellContent
         Title="Order History"
@@ -34,7 +35,8 @@
     <ShellContent
         Title="Payment"
         ContentTemplate="{DataTemplate local:PaymentPage}"
-        Route="PaymentPage" />
+        Route="PaymentPage" 
+        FlyoutItemIsVisible="False" />
 
     <ShellContent
         Title="Portfolio"
@@ -44,7 +46,8 @@
     <ShellContent
         Title="Product"
         ContentTemplate="{DataTemplate local:ProductPage}"
-        Route="ProductPage" />
+        Route="ProductPage" 
+        FlyoutItemIsVisible="False" />
 
     <ShellContent
         Title="Product List"
