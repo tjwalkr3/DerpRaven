@@ -6,8 +6,17 @@ jobs:
   automated_testing:
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v4 # get the repo in the actions runner (running get clone)
+    - name: check out code
+      uses: actions/checkout@v4 # get the repo in the actions runner (running get clone)
   
+    - name: check if dotne format changed anything
+      run: |
+        dotnet format --verify-no-changes --verbosity diagnostic
+
+    - name: Build No Error
+      run: |
+        dotnet build --warnaserror
+
     - name: test the 
       run: |
         docker build \
@@ -17,5 +26,4 @@ jobs:
 
         docker run --rm thomas_test_container
         echo "going to deploy!!!"
-
 
