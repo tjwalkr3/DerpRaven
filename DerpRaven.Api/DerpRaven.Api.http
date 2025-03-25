@@ -8,7 +8,7 @@ GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest
 GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/1
 
 ### Get custom requests by user ID
-GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/user/1
+GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/user/2
 
 ### Get custom requests by status
 GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/status/Pending
@@ -20,7 +20,7 @@ GET {{DerpRaven.Api_HostAddress}}/api/CustomRequest/type/Plushie
 POST {{DerpRaven.Api_HostAddress}}/api/CustomRequest
 Content-Type: application/json
 {
-  "description": "I want a duckie.",
+  "description": "I want another duckie.",
   "email": "test@example.com",
   "status": "Pending",
   "productTypeId": 1,
@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 
 ### Change status of a custom request
-PUT {{DerpRaven.Api_HostAddress}}/api/CustomRequest/1/status
+PATCH {{DerpRaven.Api_HostAddress}}/api/CustomRequest/1/status
 Content-Type: application/json
 
 "Completed"
