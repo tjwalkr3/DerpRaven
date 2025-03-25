@@ -5,10 +5,10 @@ namespace DerpRaven.Api.Services;
 
 public class CustomRequestService
 {
-    private AppDbContext _context;
+    private IAppDbContext _context;
     private ILogger _logger;
 
-    public CustomRequestService(AppDbContext context, ILogger<CustomRequestService> logger)
+    public CustomRequestService(IAppDbContext context, ILogger<CustomRequestService> logger)
     {
         _context = context;
         _logger = logger;
