@@ -14,7 +14,7 @@ jobs:
         nix-shell -p dotnet-sdk_9 --run "
           # dotnet workload restore
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Api
-          dotnet build --warnaserror
+          dotnet build --warnaserror DerpRaven.Api
         "
 
     - name: Run the tests.
