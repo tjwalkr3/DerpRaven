@@ -1,146 +1,180 @@
-﻿//using DerpRaven.Api.Model;
-//using DerpRaven.Api.Services;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.Extensions.Logging;
-//using NSubstitute;
-//using NUnit.Framework;
-//using Shouldly;
-//using System;
-//namespace DerpRaven.Tests.ServiceTests;
+﻿using DerpRaven.Api.Dtos;
+using DerpRaven.Api.Model;
+using DerpRaven.Api.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
+using Shouldly;
+using System.Runtime.Intrinsics.X86;
+namespace DerpRaven.Tests.ServiceTests;
 
-//public class ProductServiceTests
-//{
-//    private DbContextOptions<AppDbContext> _dbContextOptions;
-//    private AppDbContext _dbContext;
-//    private ProductService _productService;
-//    private ILogger<ProductService> _logger;
+public class ProductServiceTests
+{
+    private ProductService _productService;
+    private AppDbContext _context;
+    private List<ImageEntity> images;
+    private List<Order> orders;
+    private ProductType type1;
+    private ProductType type2;
+    private User user1;
 
-//    [SetUp]
-//    public void Setup()
-//    {
-//        _logger = Substitute.For<ILogger<ProductService>>();
-//        _dbContextOptions = new DbContextOptionsBuilder<AppDbContext>()
-//            .UseInMemoryDatabase(databaseName: "TestDatabase")
-//            .Options;
-//        _dbContext = new AppDbContext(_dbContextOptions);
-//        _productService = new ProductService(_dbContext, _logger);
-//    }
+    [SetUp]
+    public void Setup()
+    {
+        var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .Options;
 
-//    [TearDown]
-//    public void TearDown()
-//    {
-//        _dbContext.Database.EnsureDeleted();
-//        _dbContext.Dispose();
-//    }
+        _context = new AppDbContext(options);
+        var logger = Substitute.For<ILogger<ProductService>>();
+        _productService = new ProductService(_context, logger);
 
-//    [Order(1)]
-//    [Test]
-//    public async Task CreateProduct()
-//    {
-//        // Arrange
-//        var type1 = new ProductType { Id = 1, Name = "Plushie" };
-//        var product = new Product { Id = 1, Name = "Test Product", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" };
+        type1 = new() { Name = "Plushie" };
+        type2 = new() { Name = "Art" };
+        _context.ProductTypes.Add(type1);
+        _context.ProductTypes.Add(type2);
 
-//        // Act
-//        await _productService.CreateProductAsync(product);
-//        var createdProduct = _dbContext.Products.Find(1);
+        images = new()
+        {
+            new() { Alt = "an image", Path = "a random path", Products = [], Portfolios = []},
+            new() { Alt = "an image 2", Path = "a random path 2", Products = [], Portfolios = []}
+        };
+        _context.Images.AddRange(images);
 
-//        // Assert
-//        createdProduct.ShouldNotBeNull();
-//        createdProduct.Name.ShouldBe("Test Product");
-//    }
+        orders = new()
+        {
+            new() { Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, User = user1, Products = [] }
+        };
+        _context.Orders.AddRange(orders);
 
-//    [Order(2)]
-//    [Test]
-//    public async Task GetAllProducts()
-//    {
-//        // Arrange
-//        var type1 = new ProductType { Id = 1, Name = "Plushie" };
-//        var type2 = new ProductType { Id = 2, Name = "Art" };
-//        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" });
-//        _dbContext.Products.Add(new Product { Id = 2, Name = "Test Product 2", ProductType = type2, Price = 50.0m, Quantity = 1, Description = "A description" });
-//        _dbContext.SaveChanges();
+        user1 = new() { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" };
 
-//        // Act
-//        var products = await _productService.GetAllProductsAsync();
+        _context.SaveChanges();
+    }
 
-//        // Assert
-//        products.Where(s => true).Count().ShouldBe(2);
-//    }
+    [TearDown]
+    public void TearDown()
+    {
+        _context.Database.EnsureDeleted();
+        _context.Dispose();
+    }
 
-//    [Order(3)]
-//    [Test]
-//    public async Task GetProductById()
-//    {
-//        // Arrange
-//        var type1 = new ProductType { Id = 1, Name = "Plushie" };
-//        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" });
-//        _dbContext.SaveChanges();
+    [Order(1)]
+    [Test]
+    public async Task CreateProduct()
+    {
+        // Arrange
+        List<int> imageIds = images.Select(x => x.Id).ToList();
+        var product = new ProductDto() { Id = 1, Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductTypeId = type1.Id, ImageIds = imageIds };
 
-//        // Act
-//        var product = await _productService.GetProductByIdAsync(1);
+        // Act
+        await _productService.CreateProductAsync(product);
+        var createdProduct = _context.Products.Find(1);
 
-//        // Assert
-//        product.ShouldNotBeNull();
-//        product.Name.ShouldBe("Test Product 1");
-//    }
+        // Assert
+        createdProduct.ShouldNotBeNull();
+        createdProduct.Name.ShouldBe("Test Product");
+    }
 
-//    [Order(4)]
-//    [Test]
-//    public async Task GetProductByName()
-//    {
-//        // Arrange
-//        var type1 = new ProductType { Id = 1, Name = "Plushie" };
+    [Order(2)]
+    [Test]
+    public async Task GetAllProducts()
+    {
+        // Arrange
+        List<Product> products = new()
+        {
+            new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders },
+            new Product() { Name = "Test Product2", Price = 150.0m, Quantity = 1, Description = "A description2", ProductType = type2, Images = images, Orders = orders },
+        };
+        await _context.AddRangeAsync(products);
+        await _context.SaveChangesAsync();
 
-//        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" });
-//        _dbContext.SaveChanges();
-//        string productName = "Test Product 1";
+        // Act
+        var result = await _productService.GetAllProductsAsync();
 
-//        // Act
-//        var products = await _productService.GetProductsByNameAsync(productName);
+        // Assert
+        result.Any(p => p.Name == "Test Product").ShouldBeTrue();
+        result.Any(p => p.Name == "Test Product2").ShouldBeTrue();
+    }
 
-//        // Assert
-//        products.ShouldNotBeNull();
-//        products.First().Name.ShouldBe(productName);
-//    }
+    [Order(3)]
+    [Test]
+    public async Task GetProductById()
+    {
+        // Arrange
+        var product1 = new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders };
+        await _context.Products.AddAsync(product1);
+        await _context.SaveChangesAsync();
 
-//    [Order(5)]
-//    [Test]
-//    public async Task GetProductByType()
-//    {
-//        // Arrange
-//        var type1 = new ProductType { Id = 1, Name = "Plushie" };
-//        var type2 = new ProductType { Id = 2, Name = "Art" };
+        // Act
+        var product = await _productService.GetProductByIdAsync(1);
 
-//        _dbContext.Products.Add(new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description 1." });
-//        _dbContext.Products.Add(new Product { Id = 2, Name = "Test Product 2", ProductType = type2, Price = 100.0m, Quantity = 1, Description = "A description 2." });
-//        _dbContext.SaveChanges();
+        // Assert
+        product.ShouldNotBeNull();
+        product.Name.ShouldBe("Test Product");
+    }
 
-//        // Act
-//        var products = await _productService.GetProductsByTypeAsync("Plushie");
+    [Order(4)]
+    [Test]
+    public async Task GetProductByName()
+    {
+        // Arrange
+        var product1 = new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders };
+        await _context.Products.AddAsync(product1);
+        await _context.SaveChangesAsync();
 
-//        // Assert
-//        products.Where(p => true).Count().ShouldBe(1);
-//        products.First().Id.ShouldBe(1);
-//    }
+        // Act
+        var products = await _productService.GetProductsByNameAsync(product1.Name);
 
-//    [Order(6)]
-//    [Test]
-//    public async Task UpdateProduct()
-//    {
-//        // Arrange
-//        var type1 = new ProductType { Id = 1, Name = "Plushie" };
-//        var product1 = new Product { Id = 1, Name = "Test Product 1", ProductType = type1, Price = 100.0m, Quantity = 1, Description = "A description" };
-//        _dbContext.Products.Add(product1);
-//        _dbContext.SaveChanges();
+        // Assert
+        products.ShouldNotBeNull();
+        products.First().Name.ShouldBe(product1.Name);
+    }
 
-//        // Act
-//        product1.Name = "Updated Product";
-//        await _productService.UpdateProductAsync(product1);
-//        var updatedProduct = _dbContext.Products.Find(1);
+    [Order(5)]
+    [Test]
+    public async Task GetProductsByType()
+    {
+        // Arrange
+        List<Product> products = new()
+        {
+            new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders },
+            new Product() { Name = "Test Product2", Price = 150.0m, Quantity = 1, Description = "A description2", ProductType = type2, Images = images, Orders = orders }
+        };
+        _context.AddRange(products);
+        _context.SaveChanges();
 
-//        // Assert
-//        updatedProduct.ShouldNotBeNull();
-//        updatedProduct.Name.ShouldBe("Updated Product");
-//    }
-//}
+        // Act
+        var result = await _productService.GetProductsByTypeAsync(type1.Name);
+
+        // Assert
+        result.ShouldNotBeEmpty();
+        result.Any(p => p.ProductTypeId == 2).ShouldBeFalse();
+        result.Single().Name.ShouldBe("Test Product");
+    }
+
+    [Order(6)]
+    [Test]
+    public async Task UpdateProduct()
+    {
+        // Arrange
+        var product1 = new Product { Id = 1, Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders };
+        _context.Products.Add(product1);
+        _context.SaveChanges();
+
+        List<int> imageIds = images.Select(x => x.Id).ToList();
+        var productDto = new ProductDto() { Id = 1, Name = "UpdatedName", Price = 150.0m, Quantity = 2, Description = "UpdatedDescription", ProductTypeId = type2.Id, ImageIds = imageIds };
+
+        // Act
+        await _productService.UpdateProductAsync(productDto);
+        var updatedProduct = _context.Products.Find(1);
+
+        // Assert
+        updatedProduct.ShouldNotBeNull();
+        updatedProduct.Name.ShouldBe("UpdatedName");
+        updatedProduct.Price.ShouldBe(150.0m);
+        updatedProduct.Quantity.ShouldBe(2);
+        updatedProduct.Description.ShouldBe("UpdatedDescription");
+        updatedProduct.ProductType.Id.ShouldBe(2);
+    }
+}

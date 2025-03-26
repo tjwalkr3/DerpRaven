@@ -47,7 +47,7 @@ public class ProductService : IProductService
     {
         string searchQuery = name.Trim().ToLower();
         return await _context.Products
-            .Where(p => p.Name.Contains(searchQuery))
+            .Where(p => p.Name.Trim().ToLower().Contains(searchQuery))
             .Select(p => MapToProductDto(p))
             .ToListAsync();
     }
