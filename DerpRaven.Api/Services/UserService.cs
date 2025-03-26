@@ -50,7 +50,7 @@ public class UserService : IUserService
     {
         string searchQuery = name.Trim().ToLower();
         return await _context.Users
-            .Where(u => u.Name == searchQuery)
+            .Where(u => u.Name.Trim().ToLower() == searchQuery)
             .Select(u => MapToUserDto(u))
             .ToListAsync();
     }

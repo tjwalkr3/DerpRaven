@@ -60,6 +60,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="ImagesForApp\**" />
+	  <EmbeddedResource Remove="ImagesForApp\**" />
+	  <MauiCss Remove="ImagesForApp\**" />
+	  <MauiXaml Remove="ImagesForApp\**" />
+	  <None Remove="ImagesForApp\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
@@ -90,10 +98,6 @@
 	  <MauiXaml Update="Views\ProductsListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ImagesForApp\" />
 	</ItemGroup>
 
 </Project>
