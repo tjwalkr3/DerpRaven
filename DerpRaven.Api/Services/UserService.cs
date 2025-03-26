@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 namespace DerpRaven.Api.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     private IAppDbContext _context;
     private ILogger _logger;

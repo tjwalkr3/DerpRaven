@@ -3,7 +3,7 @@ using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
-public class OrderService
+public class OrderService : IOrderService
 {
     private IAppDbContext _context;
     private ILogger _logger;

@@ -3,7 +3,7 @@ using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
-public class PortfolioService
+public class PortfolioService : IPortfolioService
 {
     private IAppDbContext _context;
     private ILogger _logger;

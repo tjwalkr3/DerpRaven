@@ -3,7 +3,7 @@ using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
-public class CustomRequestService
+public class CustomRequestService : ICustomRequestService
 {
     private IAppDbContext _context;
     private ILogger _logger;

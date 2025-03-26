@@ -10,9 +10,9 @@ namespace DerpRaven.Api.Controllers;
 [Route("api/[controller]")]
 public class CustomRequestController : ControllerBase
 {
-    private readonly CustomRequestService _customRequestService;
+    private readonly ICustomRequestService _customRequestService;
 
-    public CustomRequestController(CustomRequestService customRequestService)
+    public CustomRequestController(ICustomRequestService customRequestService)
     {
         _customRequestService = customRequestService;
     }
