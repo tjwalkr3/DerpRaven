@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DerpRaven.Api\DerpRaven.Api.csproj" />
-    <ProjectReference Include="..\DerpRaven.Maui\DerpRaven.Maui.csproj" />
     <ProjectReference Include="..\DerpRaven.Shared\DerpRaven.Shared.csproj" />
   </ItemGroup>
 
