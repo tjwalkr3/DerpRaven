@@ -9,16 +9,13 @@ jobs:
     - name: Check out the code. 
       uses: actions/checkout@v4
 
-    - name: Install .NET MAUI Workloads
-      run: dotnet workload restore
-
     - name: Check if Dotnet format changed anything.
       run: |
-        dotnet format --verify-no-changes --verbosity diagnostic
-
-    - name: Check if there were any build errors.
-      run: |
-        dotnet build --warnaserror
+        nix-shell -p dotnet-sdk_9 --run "bash -c '
+          dotnet workload restore
+          dotnet format --verify-no-changes --verbosity diagnostic
+          dotnet build --warnaserror
+        '"
 
     - name: Run the tests.
       run: |
