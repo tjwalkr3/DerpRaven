@@ -43,13 +43,13 @@ public class OrderService : IOrderService
             .ToListAsync();
     }
 
-    public async Task<bool> UpdateOrderAsync(OrderDto dto)
+    public async Task<bool> UpdateOrderAsync(int id, string address, string email)
     {
-        var oldOrder = await _context.Orders.FindAsync(dto.Id);
+        var oldOrder = await _context.Orders.FindAsync(id);
         if (oldOrder != null)
         {
-            oldOrder.Address = dto.Address;
-            oldOrder.Email = dto.Email;
+            oldOrder.Address = address;
+            oldOrder.Email = email;
             await _context.SaveChangesAsync();
             return true;
         }

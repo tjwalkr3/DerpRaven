@@ -6,18 +6,18 @@ jobs:
   automated_testing:
     runs-on: self-hosted
     steps:
-    - name: check out code
-      uses: actions/checkout@v4 # get the repo in the actions runner (running get clone)
-  
-    - name: check if dotne format changed anything
-      run: |
-        dotnet format --verify-no-changes --verbosity diagnostic
+    - name: Check out the code. 
+      uses: actions/checkout@v4
 
-    - name: Build No Error
+    - name: Check if Dotnet format changed anything.
       run: |
-        dotnet build --warnaserror
+        nix-shell -p dotnet-sdk_9 --run "bash -c '
+          dotnet restore
+          dotnet format --verify-no-changes --verbosity diagnostic
+          dotnet build --warnaserror
+        '"
 
-    - name: test the 
+    - name: Run the tests.
       run: |
         docker build \
           -f ./Test.Api.Dockerfile \
