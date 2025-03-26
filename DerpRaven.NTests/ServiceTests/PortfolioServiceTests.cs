@@ -9,9 +9,9 @@ namespace DerpRaven.Tests.ServiceTests;
 
 public class PortfolioServiceTests
 {
-    private OrderService _orderService;
+    private PortfolioService _portfolioService;
     private AppDbContext _context;
-    private List<Image> images;
+    private List<ImageEntity> images;
     private ProductType type1;
     private ProductType type2;
 
@@ -23,19 +23,20 @@ public class PortfolioServiceTests
             .Options;
 
         _context = new AppDbContext(options);
-        var logger = Substitute.For<ILogger<OrderService>>();
-        _orderService = new OrderService(_context, logger);
+        var logger = Substitute.For<ILogger<PortfolioService>>();
+        _portfolioService = new PortfolioService(_context, logger);
 
         type1 = new() { Name = "Plushie" };
         type2 = new() { Name = "Art" };
         _context.ProductTypes.Add(type1);
         _context.ProductTypes.Add(type2);
 
-
-        user1 = new() { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" };
-        user2 = new() { Id = 2, Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = true, Role = "customer" };
-        _context.Users.Add(user1);
-        _context.Users.Add(user2);
+        images = new()
+        {
+            new() { Alt = "an image", Path = "a random path", Products = [], Portfolios = []},
+            new() { Alt = "an image 2", Path = "a random path 2", Products = [], Portfolios = []}
+        };
+        _context.Images.AddRange(images);
 
         _context.SaveChanges();
     }
@@ -52,15 +53,16 @@ public class PortfolioServiceTests
     public async Task CreatePortfolio()
     {
         // Arrange
-        var type1 = new ProductType() { Id = 1, Name = "Plushie" };
-        var portfolio = new Portfolio { Id = 1, Name = "Portfolio1", Description = "Description1", ProductType = type1 };
+        List<int> imageIds = images.Select(x => x.Id).ToList();
+        var portfolioDto = new PortfolioDto { Name = "Portfolio1", Description = "Description1", ProductTypeId = type1.Id, ImageIds = imageIds };
 
         // Act
-        await _portfolioService.CreatePortfolioAsync(portfolio);
+        await _portfolioService.CreatePortfolioAsync(portfolioDto);
         var result = await _context.Portfolios.FindAsync(1);
 
         // Assert
-        result.ShouldBe(portfolio);
+        result.ShouldNotBeNull();
+        result.Name.ShouldBe("Portfolio1");
     }
 
     [Order(1)]
@@ -68,12 +70,10 @@ public class PortfolioServiceTests
     public async Task GetAllPortfolios()
     {
         // Arrange
-        var type1 = new ProductType() { Id = 1, Name = "Plushie" };
-        var type2 = new ProductType() { Id = 2, Name = "Art" };
         var portfolios = new List<Portfolio>
         {
-            new Portfolio { Id = 1, Name = "Portfolio1", Description = "Description1", ProductType = type1 },
-            new Portfolio { Id = 2, Name = "Portfolio2", Description = "Description2", ProductType = type2 }
+            new Portfolio { Name = "Portfolio1", Description = "Description1", ProductType = type1, Images = images },
+            new Portfolio { Name = "Portfolio2", Description = "Description2", ProductType = type2, Images = images }
         };
         await _context.Portfolios.AddRangeAsync(portfolios);
         await _context.SaveChangesAsync();
@@ -82,7 +82,8 @@ public class PortfolioServiceTests
         var result = await _portfolioService.GetAllPortfoliosAsync();
 
         // Assert
-        result.ShouldBe(portfolios);
+        result.Any(p => p.Name == "Portfolio1").ShouldBeTrue();
+        result.Any(p => p.Name == "Portfolio2").ShouldBeTrue();
     }
 
     [Order(2)]
@@ -90,8 +91,7 @@ public class PortfolioServiceTests
     public async Task GetPortfolioById()
     {
         // Arrange
-        var type1 = new ProductType() { Id = 1, Name = "Plushie" };
-        var portfolio = new Portfolio { Id = 1, Name = "Portfolio1", Description = "Description1", ProductType = type1 };
+        var portfolio = new Portfolio { Name = "Portfolio1", Description = "Description1", ProductType = type1, Images = images };
         await _context.Portfolios.AddAsync(portfolio);
         await _context.SaveChangesAsync();
 
@@ -99,7 +99,8 @@ public class PortfolioServiceTests
         var result = await _portfolioService.GetPortfolioByIdAsync(1);
 
         // Assert
-        result.ShouldBe(portfolio);
+        result.ShouldNotBeNull();
+        result.Name.ShouldBe("Portfolio1");
     }
 
     [Order(3)]
@@ -107,12 +108,10 @@ public class PortfolioServiceTests
     public async Task GetPortfoliosByType()
     {
         // Arrange
-        var type1 = new ProductType() { Id = 1, Name = "Plushie" };
-        var type2 = new ProductType() { Id = 2, Name = "Art" };
         var portfolios = new List<Portfolio>
         {
-            new Portfolio { Id = 1, Name = "Portfolio1", Description = "Description1", ProductType = type1 },
-            new Portfolio { Id = 2, Name = "Portfolio2", Description = "Description2", ProductType = type2 }
+            new Portfolio { Name = "Portfolio1", Description = "Description1", ProductType = type1, Images = images },
+            new Portfolio { Name = "Portfolio2", Description = "Description2", ProductType = type2, Images = images }
         };
         await _context.Portfolios.AddRangeAsync(portfolios);
         await _context.SaveChangesAsync();
@@ -121,7 +120,7 @@ public class PortfolioServiceTests
         var result = await _portfolioService.GetPortfoliosByTypeAsync(type1.Name);
 
         // Assert
-        result.ShouldBe(portfolios.Where(p => p.ProductType.Name == type1.Name));
+        result.Single().Name.ShouldBe("Portfolio1");
     }
 
     [Order(1)]
@@ -129,19 +128,20 @@ public class PortfolioServiceTests
     public async Task UpdatePortfolio()
     {
         // Arrange
-        var type1 = new ProductType() { Id = 1, Name = "Plushie" };
-        var portfolio = new Portfolio { Id = 1, Name = "Portfolio1", Description = "Description1", ProductType = type1 };
+        var portfolio = new Portfolio { Name = "Portfolio1", Description = "Description1", ProductType = type1, Images = images };
         await _context.Portfolios.AddAsync(portfolio);
         await _context.SaveChangesAsync();
 
-        portfolio.Name = "UpdatedPortfolio";
-        portfolio.Description = "UpdatedDescription";
+        List<int> imageIds = images.Select(x => x.Id).ToList();
+        var portfolioDto = new PortfolioDto { Id = 1, Name = "UpdatedPortfolio", Description = "UpdatedDescription", ProductTypeId = type1.Id, ImageIds = imageIds };
 
         // Act
-        await _portfolioService.UpdatePortfolioAsync(portfolio);
+        await _portfolioService.UpdatePortfolioAsync(portfolioDto);
         var result = await _context.Portfolios.FindAsync(1);
 
         // Assert
-        result.ShouldBe(portfolio);
+        result.ShouldNotBeNull();
+        result.Name.ShouldBe("UpdatedPortfolio");
+        result.Description.ShouldBe("UpdatedDescription");
     }
 }

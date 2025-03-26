@@ -5,10 +5,10 @@ namespace DerpRaven.Api.Services;
 
 public class ProductService : IProductService
 {
-    private IAppDbContext _context;
+    private AppDbContext _context;
     private ILogger _logger;
 
-    public ProductService(IAppDbContext context, ILogger<ProductService> logger)
+    public ProductService(AppDbContext context, ILogger<ProductService> logger)
     {
         _context = context;
         _logger = logger;

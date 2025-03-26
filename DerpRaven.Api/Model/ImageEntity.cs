@@ -1,6 +1,6 @@
 ﻿namespace DerpRaven.Api.Model;
 
-public class Image
+public class ImageEntity
 {
     public int Id { get; set; }
     public string Alt { get; set; } = null!;
