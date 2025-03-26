@@ -5,4 +5,4 @@ COPY . .
 
 RUN dotnet build -warnaserror "DerpRaven.Api/DerpRaven.Api.csproj"
 
-CMD ["dotnet", "test"]
+CMD ["dotnet", "test", "DerpRaven.NTests"]
