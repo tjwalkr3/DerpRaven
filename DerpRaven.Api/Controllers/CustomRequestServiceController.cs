@@ -28,10 +28,6 @@ public class CustomRequestController : ControllerBase
     public async Task<IActionResult> GetCustomRequestById(int id)
     {
         var request = await _customRequestService.GetCustomRequestByIdAsync(id);
-        if (request == null)
-        {
-            return NotFound();
-        }
         return Ok(request);
     }
 

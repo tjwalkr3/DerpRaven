@@ -23,7 +23,7 @@ public class CustomRequestService : ICustomRequestService
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByUserIdAsync(int id)
+    public async Task<List<CustomRequestDto>> GetCustomRequestsByUserIdAsync(int id)
     {
         return await _context.CustomRequests
             .Include(r => r.ProductType)
@@ -43,7 +43,7 @@ public class CustomRequestService : ICustomRequestService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status)
+    public async Task<List<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status)
     {
         return await _context.CustomRequests
             .Include(r => r.ProductType)
@@ -53,7 +53,7 @@ public class CustomRequestService : ICustomRequestService
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType)
+    public async Task<List<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType)
     {
         return await _context.CustomRequests
             .Include(r => r.ProductType)

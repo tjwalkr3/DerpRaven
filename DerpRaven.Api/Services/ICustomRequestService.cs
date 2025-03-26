@@ -8,8 +8,8 @@ namespace DerpRaven.Api.Services
         Task<bool> CreateCustomRequestAsync(CustomRequestDto dto);
         Task<List<CustomRequestDto>> GetAllCustomRequestsAsync();
         Task<CustomRequestDto?> GetCustomRequestByIdAsync(int id);
-        Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status);
-        Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType);
-        Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByUserIdAsync(int id);
+        Task<List<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status);
+        Task<List<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType);
+        Task<List<CustomRequestDto>> GetCustomRequestsByUserIdAsync(int id);
     }
 }
