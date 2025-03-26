@@ -5,14 +5,40 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+            Padding="0,0"
+            Spacing="0">
 
             <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
+                Text="Welcome to Derp Raven"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
+            
+            <!--Hamburger button for drop down for pages-->
+           
+                <Grid
+                    ColumnDefinitions="*,*">
+                    
+                <!-- Image for logo1-->
+
+                <Image
+                    Source="logo.png"
+                    HeightRequest="150"
+                    WidthRequest="150"
+                    Aspect="AspectFit" 
+                    Margin="30"
+                    Grid.Column="0"/>
+                <!-- Image for logo2-->
+                <Image
+                    Source="derpravenlogo.png"
+                    HeightRequest="150"
+                    WidthRequest="150"
+                    Aspect="AspectFit" 
+                    Margin="30"
+                    Grid.Column="1"/>
+
+                </Grid>
+
             
         </VerticalStackLayout>
     </ScrollView>

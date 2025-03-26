@@ -92,4 +92,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="ImagesForApp\" />
+	</ItemGroup>
+
 </Project>

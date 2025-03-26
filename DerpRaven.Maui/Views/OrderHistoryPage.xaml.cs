@@ -3,9 +3,9 @@ namespace DerpRaven.Maui.Views;
 
 public partial class OrderHistoryPage : ContentPage
 {
-	public OrderHistoryPage(OrderHistoryPageViewModel vm)
-	{
-		InitializeComponent();
+    public OrderHistoryPage(OrderHistoryPageViewModel vm)
+    {
+        InitializeComponent();
         BindingContext = vm;
     }
 }
