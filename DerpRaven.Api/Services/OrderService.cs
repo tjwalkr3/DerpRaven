@@ -5,10 +5,10 @@ namespace DerpRaven.Api.Services;
 
 public class OrderService : IOrderService
 {
-    private IAppDbContext _context;
+    private AppDbContext _context;
     private ILogger _logger;
 
-    public OrderService(IAppDbContext context, ILogger<OrderService> logger)
+    public OrderService(AppDbContext context, ILogger<OrderService> logger)
     {
         _context = context;
         _logger = logger;

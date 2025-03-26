@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Model;
 
-public class AppDbContext : DbContext, IAppDbContext
+public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<CustomRequest> CustomRequests { get; set; }
-    public DbSet<Image> Images { get; set; }
+    public DbSet<ImageEntity> Images { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Portfolio> Portfolios { get; set; }
     public DbSet<Product> Products { get; set; }
@@ -44,7 +44,7 @@ public class AppDbContext : DbContext, IAppDbContext
             .UsingEntity<Dictionary<string, object>>(
                 "PortfolioImage",
                 j => j
-                    .HasOne<Image>()
+                    .HasOne<ImageEntity>()
                     .WithMany()
                     .HasForeignKey("ImageId")
                     .OnDelete(DeleteBehavior.Cascade),
@@ -61,7 +61,7 @@ public class AppDbContext : DbContext, IAppDbContext
             .UsingEntity<Dictionary<string, object>>(
                 "ProductImage",
                 j => j
-                    .HasOne<Image>()
+                    .HasOne<ImageEntity>()
                     .WithMany()
                     .HasForeignKey("ImageId")
                     .OnDelete(DeleteBehavior.Cascade),

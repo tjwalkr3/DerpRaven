@@ -9,6 +9,6 @@ public class Product
     public string Description { get; set; } = null!;
 
     public ProductType ProductType { get; set; } = null!;
-    public List<Image> Images { get; set; } = [];
+    public List<ImageEntity> Images { get; set; } = [];
     public List<Order> Orders { get; set; } = [];
 }

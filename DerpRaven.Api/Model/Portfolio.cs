@@ -7,5 +7,5 @@ public class Portfolio
     public string Name { get; set; } = null!;
 
     public ProductType ProductType { get; set; } = null!;
-    public List<Image> Images { get; set; } = [];
+    public List<ImageEntity> Images { get; set; } = [];
 }

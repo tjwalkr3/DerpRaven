@@ -5,10 +5,10 @@ namespace DerpRaven.Api.Services;
 
 public class PortfolioService : IPortfolioService
 {
-    private IAppDbContext _context;
+    private AppDbContext _context;
     private ILogger _logger;
 
-    public PortfolioService(IAppDbContext context, ILogger<PortfolioService> logger)
+    public PortfolioService(AppDbContext context, ILogger<PortfolioService> logger)
     {
         _context = context;
         _logger = logger;

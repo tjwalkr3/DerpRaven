@@ -6,10 +6,10 @@ namespace DerpRaven.Api.Services;
 
 public class UserService : IUserService
 {
-    private IAppDbContext _context;
+    private AppDbContext _context;
     private ILogger _logger;
 
-    public UserService(IAppDbContext context, ILogger<UserService> logger)
+    public UserService(AppDbContext context, ILogger<UserService> logger)
     {
         _context = context;
         _logger = logger;

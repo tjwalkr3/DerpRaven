@@ -5,10 +5,10 @@ namespace DerpRaven.Api.Services;
 
 public class ProductService : IProductService
 {
-    private IAppDbContext _context;
+    private AppDbContext _context;
     private ILogger _logger;
 
-    public ProductService(IAppDbContext context, ILogger<ProductService> logger)
+    public ProductService(AppDbContext context, ILogger<ProductService> logger)
     {
         _context = context;
         _logger = logger;
@@ -47,7 +47,7 @@ public class ProductService : IProductService
     {
         string searchQuery = name.Trim().ToLower();
         return await _context.Products
-            .Where(p => p.Name.Contains(searchQuery))
+            .Where(p => p.Name.Trim().ToLower().Contains(searchQuery))
             .Select(p => MapToProductDto(p))
             .ToListAsync();
     }
