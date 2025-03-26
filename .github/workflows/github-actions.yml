@@ -12,9 +12,9 @@ jobs:
     - name: Check if Dotnet format changed anything.
       run: |
         nix-shell -p dotnet-sdk_9 --run "bash -c '
-          sudo dotnet workload restore
-          sudo dotnet format --verify-no-changes --verbosity diagnostic
-          sudo dotnet build --warnaserror
+          dotnet restore
+          dotnet format --verify-no-changes --verbosity diagnostic
+          dotnet build --warnaserror
         '"
 
     - name: Run the tests.
