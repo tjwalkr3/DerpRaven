@@ -10,6 +10,4 @@ public class UserDto
     public string Email { get; set; } = null!;
     public string Role { get; set; } = null!;
     public bool Active { get; set; } = false;
-
-    public List<int> OrderIds { get; set; } = [];
 }

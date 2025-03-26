@@ -38,7 +38,7 @@ public class CustomRequestController : ControllerBase
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetCustomRequestsByUser(int userId)
     {
-        var requests = await _customRequestService.GetCustomRequestsByUserAsync(userId);
+        var requests = await _customRequestService.GetCustomRequestsByUserIdAsync(userId);
         return Ok(requests);
     }
 

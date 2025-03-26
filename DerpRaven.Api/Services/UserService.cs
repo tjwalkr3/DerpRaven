@@ -1,61 +1,115 @@
-﻿using DerpRaven.Api.Model;
+﻿using DerpRaven.Api.Dtos;
+using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
 namespace DerpRaven.Api.Services;
 
 public class UserService
 {
-    private AppDbContext _context;
+    private IAppDbContext _context;
     private ILogger _logger;
 
-    public UserService(AppDbContext context, ILogger<UserService> logger)
+    public UserService(IAppDbContext context, ILogger<UserService> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    public async Task<List<UserDto>> GetAllUsersAsync()
     {
-        return await _context.Users.ToListAsync();
+        return await _context.Users
+            .Select(u => MapToUserDto(u))
+            .ToListAsync();
     }
 
-    public async Task<User?> GetUserByIdAsync(int id)
+    public async Task<UserDto?> GetUserByIdAsync(int id)
     {
-        return await _context.Users.FindAsync(id);
+        return await _context.Users
+            .Where(u => u.Id == id)
+            .Select(u => MapToUserDto(u))
+            .FirstOrDefaultAsync();
     }
 
-    public async Task<User> CreateUserAsync(User user)
+    public async Task<List<UserDto>> GetUsersByStatusAsync(bool active)
     {
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-        return user;
+        return await _context.Users
+            .Where(u => u.Active == active)
+            .Select(u => MapToUserDto(u))
+            .ToListAsync();
     }
 
-    public async Task UpdateUserAsync(User user)
+    public async Task<List<UserDto>> GetUsersByEmailAsync(string email)
     {
-        var oldUser = await _context.Users.Where(u => u.Id == user.Id).FirstOrDefaultAsync();
-        if (oldUser != null)
+        return await _context.Users
+            .Where(u => u.Email == email)
+            .Select(u => MapToUserDto(u))
+            .ToListAsync();
+    }
+
+    public async Task<List<UserDto>> GetUsersByNameAsync(string name)
+    {
+        string searchQuery = name.Trim().ToLower();
+        return await _context.Users
+            .Where(u => u.Name == searchQuery)
+            .Select(u => MapToUserDto(u))
+            .ToListAsync();
+    }
+
+    public async Task<bool> CreateUserAsync(UserDto dto)
+    {
+        var user = MapFromUserDto(dto);
+        if (user != null)
         {
-            oldUser.Name = user.Name;
-            oldUser.Email = user.Email;
-            oldUser.Active = user.Active;
-
-            _context.Update(oldUser);
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    public async Task<IEnumerable<User>> GetUsersByStatusAsync(bool active)
+    public async Task<bool> UpdateUserAsync(UserDto dto)
     {
-        return await _context.Users.Where(u => u.Active == active).ToListAsync();
+        var oldUser = await _context.Users.FindAsync(dto.Id);
+        if (oldUser != null)
+        {
+            oldUser.Name = dto.Name;
+            oldUser.Email = dto.Email;
+            oldUser.Active = dto.Active;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public async Task<IEnumerable<User>> GetUsersByEmailAsync(string email)
+    private static User MapFromUserDto(UserDto dto)
     {
-        return await _context.Users.Where(u => u.Email == email).ToListAsync();
+        return new User()
+        {
+            Name = dto.Name,
+            OAuth = dto.OAuth,
+            Email = dto.Email,
+            Role = dto.Role,
+            Active = dto.Active,
+            CustomRequests = [],
+            Orders = []
+        };
     }
 
-    public async Task<IEnumerable<User?>> GetUsersByNameAsync(string name)
+    private static UserDto MapToUserDto(User user)
     {
-        return await _context.Users.Where(u => u.Name == name).ToListAsync();
+        return new UserDto()
+        {
+            Name = user.Name,
+            OAuth = user.OAuth,
+            Email = user.Email,
+            Role = user.Role,
+            Active = user.Active
+        };
     }
 }

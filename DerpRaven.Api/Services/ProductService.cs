@@ -1,57 +1,131 @@
-﻿using DerpRaven.Api.Model;
+﻿using DerpRaven.Api.Dtos;
+using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
 public class ProductService
 {
-    private AppDbContext _context;
+    private IAppDbContext _context;
     private ILogger _logger;
 
-    public ProductService(AppDbContext context, ILogger<ProductService> logger)
+    public ProductService(IAppDbContext context, ILogger<ProductService> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    public async Task<IEnumerable<Product>> GetProductsByTypeAsync(string productType)
+    public async Task<List<ProductDto>> GetAllProductsAsync()
     {
-        return await _context.Products.Where(p => p.ProductType.Name == productType).ToListAsync();
+        return await _context.Products
+            .Include(p => p.ProductType)
+            .Include(p => p.Images)
+            .Select(p => MapToProductDto(p))
+            .ToListAsync();
     }
 
-    public async Task<Product?> GetProductByIdAsync(int id)
+    public async Task<List<ProductDto>> GetProductsByTypeAsync(string productType)
     {
-        return await _context.Products.FindAsync(id);
+        return await _context.Products
+            .Include(p => p.ProductType)
+            .Include(p => p.Images)
+            .Where(p => p.ProductType.Name == productType)
+            .Select(p => MapToProductDto(p))
+            .ToListAsync();
     }
 
-    public async Task<IEnumerable<Product>> GetAllProductsAsync()
+    public async Task<ProductDto?> GetProductByIdAsync(int id)
     {
-        return await _context.Products.ToListAsync();
+        return await _context.Products
+            .Include(p => p.ProductType)
+            .Include(p => p.Images)
+            .Where(p => p.Id == id)
+            .Select(p => MapToProductDto(p))
+            .FirstOrDefaultAsync();
     }
 
-    public async Task<Product> CreateProductAsync(Product product)
+    public async Task<List<ProductDto>> GetProductsByNameAsync(string name)
     {
-        await _context.Products.AddAsync(product);
-        await _context.SaveChangesAsync();
-        return product;
+        string searchQuery = name.Trim().ToLower();
+        return await _context.Products
+            .Where(p => p.Name.Contains(searchQuery))
+            .Select(p => MapToProductDto(p))
+            .ToListAsync();
     }
 
-    public async Task UpdateProductAsync(Product product)
+    public async Task<bool> CreateProductAsync(ProductDto dto)
     {
-        var oldProduct = await _context.Products.Where(p => p.Id == product.Id).FirstOrDefaultAsync();
-        if (oldProduct != null)
+        var product = await MapFromProductDto(dto);
+        if (product != null)
         {
-            oldProduct.Name = product.Name;
-            oldProduct.Description = product.Description;
-            oldProduct.Price = product.Price;
-            oldProduct.ProductType = product.ProductType;
-            oldProduct.Images = product.Images;
-            _context.Update(oldProduct);
+            await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    public async Task<IEnumerable<Product>> GetProductsByNameAsync(string name)
+    public async Task<bool> UpdateProductAsync(ProductDto dto)
     {
-        return await _context.Products.Where(p => p.Name.Contains(name)).ToListAsync();
+        var oldProduct = await _context.Products.FindAsync(dto.Id);
+        var productType = await _context.ProductTypes.FindAsync(dto.ProductTypeId);
+        var images = await _context.Images
+            .Where(i => dto.ImageIds.Contains(i.Id))
+            .ToListAsync();
+
+        if (oldProduct != null && productType != null)
+        {
+            oldProduct.Name = dto.Name;
+            oldProduct.Price = dto.Price;
+            oldProduct.Quantity = dto.Quantity;
+            oldProduct.Description = dto.Description;
+            oldProduct.ProductType = productType;
+            oldProduct.Images = images;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private async Task<Product?> MapFromProductDto(ProductDto dto)
+    {
+        var productType = await _context.ProductTypes.FindAsync(dto.ProductTypeId);
+        var images = await _context.Images
+            .Where(i => dto.ImageIds.Contains(i.Id))
+            .ToListAsync();
+        if (productType == null) return null;
+
+        return new Product()
+        {
+            Name = dto.Name,
+            Price = dto.Price,
+            Quantity = dto.Quantity,
+            Description = dto.Description,
+            ProductType = productType,
+            Images = images,
+            Orders = []
+        };
+    }
+
+    private static ProductDto MapToProductDto(Product product)
+    {
+        List<int> imageIds = product.Images
+            .Select(p => p.Id)
+            .ToList();
+
+        return new ProductDto()
+        {
+            Name = product.Name,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            Description = product.Description,
+            ProductTypeId = product.ProductType.Id,
+            ImageIds = imageIds
+        };
     }
 }

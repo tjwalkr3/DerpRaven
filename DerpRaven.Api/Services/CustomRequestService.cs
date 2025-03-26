@@ -16,88 +16,88 @@ public class CustomRequestService
 
     public async Task<List<CustomRequestDto>> GetAllCustomRequestsAsync()
     {
-        List<CustomRequestDto> dtos = [];
-        var customRequests = await _context.CustomRequests
+        return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
+            .Select(r => MapToCustomRequestDto(r))
             .ToListAsync();
-
-        customRequests.ForEach(cr => dtos.Add(MapToCustomRequestDto(cr)));
-        return dtos;
     }
 
-    public async Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByUserAsync(int id)
+    public async Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByUserIdAsync(int id)
     {
-        List<CustomRequestDto> dtos = [];
-        var customRequests = await _context.CustomRequests
+        return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
             .Where(r => r.User.Id == id)
+            .Select(r => MapToCustomRequestDto(r))
             .ToListAsync();
-
-        customRequests.ForEach(cr => dtos.Add(MapToCustomRequestDto(cr)));
-        return dtos;
     }
 
     public async Task<CustomRequestDto?> GetCustomRequestByIdAsync(int id)
     {
-        var customRequest = await _context.CustomRequests
+        return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
             .Where(r => r.Id == id)
-            .FirstAsync();
-
-        if (customRequest == null) return null;
-        return MapToCustomRequestDto(customRequest);
+            .Select(r => MapToCustomRequestDto(r))
+            .FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status)
     {
-        List<CustomRequestDto> dtos = [];
-        var customRequests = await _context.CustomRequests
+        return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
             .Where(r => r.Status == status)
+            .Select(r => MapToCustomRequestDto(r))
             .ToListAsync();
-
-        customRequests.ForEach(cr => dtos.Add(MapToCustomRequestDto(cr)));
-        return dtos;
     }
 
     public async Task<IEnumerable<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType)
     {
-        List<CustomRequestDto> dtos = [];
-        var customRequests = await _context.CustomRequests
+        return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
             .Where(r => r.ProductType.Name == productType)
+            .Select(r => MapToCustomRequestDto(r))
             .ToListAsync();
-
-        customRequests.ForEach(cr => dtos.Add(MapToCustomRequestDto(cr)));
-        return dtos;
     }
 
-    public async Task ChangeStatusAsync(int id, string status)
+    public async Task<bool> ChangeStatusAsync(int id, string status)
     {
         var request = await _context.CustomRequests.FindAsync(id);
         if (request != null)
         {
             request.Status = status;
             await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    public async Task CreateCustomRequestAsync(CustomRequestDto dto)
+    public async Task<bool> CreateCustomRequestAsync(CustomRequestDto dto)
     {
-        var customRequest = MapFromCustomRequestDto(dto);
-        await _context.CustomRequests.AddAsync(customRequest);
-        await _context.SaveChangesAsync();
+        var customRequest = await MapFromCustomRequestDto(dto);
+        if (customRequest != null)
+        {
+            await _context.CustomRequests.AddAsync(customRequest);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    private CustomRequest MapFromCustomRequestDto(CustomRequestDto dto)
+    private async Task<CustomRequest?> MapFromCustomRequestDto(CustomRequestDto dto)
     {
-        var productType = _context.ProductTypes.Where(t => t.Id == dto.ProductTypeId).Single();
-        var user = _context.Users.Where(u => u.Id == dto.UserId).Single();
+        var productType = await _context.ProductTypes.FindAsync(dto.ProductTypeId);
+        var user = await _context.Users.FindAsync(dto.UserId);
+        if (productType == null || user == null) return null;
 
         return new CustomRequest()
         {

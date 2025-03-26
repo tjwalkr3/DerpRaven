@@ -1,50 +1,113 @@
-﻿using DerpRaven.Api.Model;
+﻿using DerpRaven.Api.Dtos;
+using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
 public class OrderService
 {
-    private AppDbContext _context;
+    private IAppDbContext _context;
     private ILogger _logger;
 
-    public OrderService(AppDbContext context, ILogger<OrderService> logger)
+    public OrderService(IAppDbContext context, ILogger<OrderService> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    public async Task<IEnumerable<Order>> GetAllOrdersAsync()
+    public async Task<List<OrderDto>> GetAllOrdersAsync()
     {
-        return await _context.Orders.ToListAsync();
+        return await _context.Orders
+            .Include(o => o.User)
+            .Include(o => o.Products)
+            .Select(o => MapToOrderDto(o))
+            .ToListAsync();
     }
 
-    public async Task<Order?> GetOrderByIdAsync(int id)
+    public async Task<OrderDto?> GetOrderByIdAsync(int id)
     {
-        return await _context.Orders.FindAsync(id);
+        return await _context.Orders
+            .Include(o => o.User)
+            .Include(o => o.Products)
+            .Where(o => o.Id == id)
+            .Select(o => MapToOrderDto(o))
+            .FirstOrDefaultAsync();
     }
 
-    public async Task UpdateOrderAsync(Order order)
+    public async Task<List<OrderDto>> GetOrdersByUserIdAsync(int id)
     {
-        var oldOrder = await _context.Orders.Where(o => o.Id == order.Id).FirstOrDefaultAsync();
+        return await _context.Orders
+            .Include(o => o.User)
+            .Include(o => o.Products)
+            .Where(r => r.User.Id == id)
+            .Select(o => MapToOrderDto(o))
+            .ToListAsync();
+    }
+
+    public async Task<bool> UpdateOrderAsync(OrderDto dto)
+    {
+        var oldOrder = await _context.Orders.FindAsync(dto.Id);
         if (oldOrder != null)
         {
-            oldOrder.Address = order.Address;
-            oldOrder.Email = order.Email;
-            _context.Update(oldOrder);
+            oldOrder.Address = dto.Address;
+            oldOrder.Email = dto.Email;
             await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(int id)
+    public async Task<bool> CreateOrderAsync(OrderDto dto)
     {
-        return await _context.Orders.Where(o => o.User.Id == id).ToListAsync();
+        var order = await MapFromOrderDto(dto);
+        if (order != null)
+        {
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public async Task<Order> CreateOrderAsync(Order order)
+    private async Task<Order?> MapFromOrderDto(OrderDto dto)
     {
-        await _context.Orders.AddAsync(order);
-        await _context.SaveChangesAsync();
-        return order;
+        var products = await _context.Products
+            .Where(p => dto.ProductIds.Contains(p.Id))
+            .ToListAsync();
+        var user = await _context.Users.FindAsync(dto.UserId);
+        if (products == null || user == null) return null;
+
+        return new Order()
+        {
+            Id = dto.Id,
+            Address = dto.Address,
+            Email = dto.Email,
+            OrderDate = dto.OrderDate,
+            User = user,
+            Products = products
+        };
+    }
+
+    private static OrderDto MapToOrderDto(Order order)
+    {
+        List<int> productIds = order.Products
+            .Select(o => o.Id)
+            .ToList();
+
+        return new OrderDto()
+        {
+            Id = order.Id,
+            Address = order.Address,
+            Email = order.Email,
+            OrderDate = order.OrderDate,
+            UserId = order.User.Id,
+            ProductIds = productIds
+        };
     }
 }
 

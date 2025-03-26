@@ -1,51 +1,93 @@
-﻿using DerpRaven.Api.Model;
+﻿using DerpRaven.Api.Dtos;
+using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
 namespace DerpRaven.Api.Services;
 
 public class PortfolioService
 {
-    private AppDbContext _context;
+    private IAppDbContext _context;
     private ILogger _logger;
 
-    public PortfolioService(AppDbContext context, ILogger<PortfolioService> logger)
+    public PortfolioService(IAppDbContext context, ILogger<PortfolioService> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    public async Task<IEnumerable<Portfolio>> GetAllPortfoliosAsync()
+    public async Task<List<PortfolioDto>> GetAllPortfoliosAsync()
     {
-        return await _context.Portfolios.ToListAsync();
+        return await _context.Portfolios
+            .Include(p => p.ProductType)
+            .Include(p => p.Images)
+            .Select(p => MapToPortfolioDto(p))
+            .ToListAsync();
     }
 
-    public async Task<Portfolio?> GetPortfolioByIdAsync(int id)
+    public async Task<PortfolioDto?> GetPortfolioByIdAsync(int id)
     {
-        return await _context.Portfolios.FindAsync(id);
+        return await _context.Portfolios
+            .Include(p => p.ProductType)
+            .Include(p => p.Images)
+            .Where(p => p.Id == id)
+            .Select(p => MapToPortfolioDto(p))
+            .FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Portfolio>> GetPortfoliosByTypeAsync(string productType)
+    public async Task<List<PortfolioDto>> GetPortfoliosByTypeAsync(string productType)
     {
-        return await _context.Portfolios.Where(p => p.ProductType.Name == productType).ToListAsync();
+        return await _context.Portfolios
+            .Include(p => p.ProductType)
+            .Include(p => p.Images)
+            .Where(p => p.ProductType.Name == productType)
+            .Select(p => MapToPortfolioDto(p))
+            .ToListAsync();
     }
 
-    public async Task<Portfolio> CreatePortfolioAsync(Portfolio portfolio)
+
+    public async Task<List<PortfolioDto>> GetPortfoliosByNameAsync(string name)
     {
-        await _context.Portfolios.AddAsync(portfolio);
-        await _context.SaveChangesAsync();
-        return portfolio;
+        string searchQuery = name.Trim().ToLower();
+        return await _context.Portfolios
+            .Where(p => p.Name.Contains(searchQuery))
+            .Select(p => MapToPortfolioDto(p))
+            .ToListAsync();
     }
 
-    public async Task UpdatePortfolioAsync(Portfolio portfolio)
+    public async Task<bool> CreatePortfolioAsync(PortfolioDto dto)
     {
-        var oldPortfolio = await _context.Portfolios.Where(p => p.Id == portfolio.Id).FirstOrDefaultAsync();
-        if (oldPortfolio != null)
+        var portfolio = await MapFromPortfolioDto(dto);
+        if (portfolio != null)
         {
-            oldPortfolio.Name = portfolio.Name;
-            oldPortfolio.Description = portfolio.Description;
-            oldPortfolio.ProductType = portfolio.ProductType;
-            oldPortfolio.Images = portfolio.Images;
-            _context.Update(oldPortfolio);
+            await _context.Portfolios.AddAsync(portfolio);
             await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> UpdatePortfolioAsync(PortfolioDto dto)
+    {
+        var oldPortfolio = await _context.Portfolios.FindAsync(dto.Id);
+        var productType = await _context.ProductTypes.FindAsync(dto.ProductTypeId);
+        var images = await _context.Images
+            .Where(i => dto.ImageIds.Contains(i.Id))
+            .ToListAsync();
+
+        if (oldPortfolio != null && productType != null)
+        {
+            oldPortfolio.Name = dto.Name;
+            oldPortfolio.Description = dto.Description;
+            oldPortfolio.ProductType = productType;
+            oldPortfolio.Images = images;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -59,8 +101,35 @@ public class PortfolioService
         }
     }
 
-    public async Task<IEnumerable<Portfolio>> GetPortfoliosByNameAsync(string name)
+    private async Task<Portfolio?> MapFromPortfolioDto(PortfolioDto dto)
     {
-        return await _context.Portfolios.Where(p => p.Name.Contains(name)).ToListAsync();
+        var productType = await _context.ProductTypes.FindAsync(dto.ProductTypeId);
+        var images = await _context.Images
+            .Where(i => dto.ImageIds.Contains(i.Id))
+            .ToListAsync();
+        if (productType == null) return null;
+
+        return new Portfolio()
+        {
+            Description = dto.Description,
+            Name = dto.Name,
+            ProductType = productType,
+            Images = images
+        };
+    }
+
+    private static PortfolioDto MapToPortfolioDto(Portfolio portfolio)
+    {
+        List<int> imageIds = portfolio.Images
+            .Select(p => p.Id)
+            .ToList();
+
+        return new PortfolioDto()
+        {
+            Description = portfolio.Description,
+            Name = portfolio.Name,
+            ProductTypeId = portfolio.ProductType.Id,
+            ImageIds = imageIds
+        };
     }
 }
