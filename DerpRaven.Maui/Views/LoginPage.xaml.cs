@@ -3,9 +3,9 @@ namespace DerpRaven.Maui.Views;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage(LoginPageViewModel vm)
-	{
-		InitializeComponent();
+    public LoginPage(LoginPageViewModel vm)
+    {
+        InitializeComponent();
         BindingContext = vm;
     }
 }

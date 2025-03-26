@@ -39,8 +39,14 @@ public class CustomRequestServiceControllerTests
     {
         // Arrange
         ICustomRequestService customRequestService = Substitute.For<ICustomRequestService>();
-        var requestDto = new CustomRequestDto() { 
-            Id = 1, Description = "", Email = "", ProductTypeId = 1, Status = "", UserId = 1,
+        var requestDto = new CustomRequestDto()
+        {
+            Id = 1,
+            Description = "",
+            Email = "",
+            ProductTypeId = 1,
+            Status = "",
+            UserId = 1,
         };
         var dtoList = new List<CustomRequestDto>() { requestDto };
         customRequestService.GetAllCustomRequestsAsync().Returns(dtoList);
