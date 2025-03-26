@@ -8,6 +8,6 @@ namespace DerpRaven.Api.Services
         Task<List<OrderDto>> GetAllOrdersAsync();
         Task<OrderDto?> GetOrderByIdAsync(int id);
         Task<List<OrderDto>> GetOrdersByUserIdAsync(int id);
-        Task<bool> UpdateOrderAsync(OrderDto dto);
+        Task<bool> UpdateOrderAsync(int id, string address, string email);
     }
 }
