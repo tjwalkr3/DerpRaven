@@ -1,4 +1,4 @@
-﻿namespace DerpRaven.Tests.SharedTests;
+﻿namespace DerpRaven.Tests.ControllerTests;
 
 public class UnitTest1
 {

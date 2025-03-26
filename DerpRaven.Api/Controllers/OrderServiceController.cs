@@ -40,22 +40,22 @@ public class OrderServiceController : ControllerBase
         return Ok(orders);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateOrder(Order order)
-    {
-        var createdOrder = await _orderService.CreateOrderAsync(order);
-        return CreatedAtAction(nameof(GetOrderById), new { id = createdOrder.Id }, createdOrder);
-    }
+    //[HttpPost]
+    //public async Task<IActionResult> CreateOrder(Order order)
+    //{
+    //    var createdOrder = await _orderService.CreateOrderAsync(order);
+    //    return CreatedAtAction(nameof(GetOrderById), new { id = createdOrder.Id }, createdOrder);
+    //}
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateOrder(int id, Order order)
-    {
-        if (id != order.Id)
-        {
-            return BadRequest();
-        }
+    //[HttpPut("{id}")]
+    //public async Task<IActionResult> UpdateOrder(int id, Order order)
+    //{
+    //    if (id != order.Id)
+    //    {
+    //        return BadRequest();
+    //    }
 
-        await _orderService.UpdateOrderAsync(order);
-        return NoContent();
-    }
+    //    await _orderService.UpdateOrderAsync(order);
+    //    return NoContent();
+    //}
 }

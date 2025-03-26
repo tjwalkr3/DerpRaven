@@ -5,8 +5,7 @@
 //using NSubstitute;
 //using Microsoft.EntityFrameworkCore.InMemory;
 //using Shouldly;
-
-//namespace DerpRaven.Tests.DatabaseTests;
+//namespace DerpRaven.Tests.ServiceTests;
 
 //public class UserServiceTests
 //{

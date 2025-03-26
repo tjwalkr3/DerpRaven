@@ -4,7 +4,7 @@
 //using Microsoft.Extensions.Logging;
 //using NSubstitute;
 //using Shouldly;
-//namespace DerpRaven.Tests.DatabaseTests;
+//namespace DerpRaven.Tests.ServiceTests;
 
 //public class PortfolioServiceTests
 //{

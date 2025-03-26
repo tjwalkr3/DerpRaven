@@ -30,8 +30,4 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ServiceUnitTests\" />
-  </ItemGroup>
-
 </Project>

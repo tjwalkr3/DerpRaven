@@ -4,7 +4,7 @@
 //using Microsoft.Extensions.Logging;
 //using Shouldly;
 //using NSubstitute;
-//namespace DerpRaven.Tests.DatabaseTests;
+//namespace DerpRaven.Tests.ServiceTests;
 
 //public class OrderServiceTests
 //{

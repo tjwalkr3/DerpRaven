@@ -47,23 +47,23 @@ public class ProductServiceController : ControllerBase
         return Ok(products);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateProduct(Product product)
-    {
-        var createdProduct = await _productService.CreateProductAsync(product);
-        return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
-    }
+    //[HttpPost]
+    //public async Task<IActionResult> CreateProduct(Product product)
+    //{
+    //    var createdProduct = await _productService.CreateProductAsync(product);
+    //    return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
+    //}
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProduct(int id, Product product)
-    {
-        if (id != product.Id)
-        {
-            return BadRequest();
-        }
+    //[HttpPut("{id}")]
+    //public async Task<IActionResult> UpdateProduct(int id, Product product)
+    //{
+    //    if (id != product.Id)
+    //    {
+    //        return BadRequest();
+    //    }
 
-        await _productService.UpdateProductAsync(product);
-        return NoContent();
-    }
+    //    await _productService.UpdateProductAsync(product);
+    //    return NoContent();
+    //}
 }
 

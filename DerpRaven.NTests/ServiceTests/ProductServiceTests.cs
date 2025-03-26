@@ -6,8 +6,7 @@
 //using NUnit.Framework;
 //using Shouldly;
 //using System;
-
-//namespace DerpRaven.Tests.DatabaseTests;
+//namespace DerpRaven.Tests.ServiceTests;
 
 //public class ProductServiceTests
 //{

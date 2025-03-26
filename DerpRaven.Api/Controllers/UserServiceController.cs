@@ -58,23 +58,23 @@ public class UserServiceController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateUser(User user)
-    {
-        var createdUser = await _userService.CreateUserAsync(user);
-        return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
-    }
+    //[HttpPost]
+    //public async Task<IActionResult> CreateUser(User user)
+    //{
+    //    var createdUser = await _userService.CreateUserAsync(user);
+    //    return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
+    //}
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateUser(int id, User user)
-    {
-        if (id != user.Id)
-        {
-            return BadRequest();
-        }
+    //[HttpPut("{id}")]
+    //public async Task<IActionResult> UpdateUser(int id, User user)
+    //{
+    //    if (id != user.Id)
+    //    {
+    //        return BadRequest();
+    //    }
 
-        await _userService.UpdateUserAsync(user);
-        return NoContent();
-    }
+    //    await _userService.UpdateUserAsync(user);
+    //    return NoContent();
+    //}
 }
 
