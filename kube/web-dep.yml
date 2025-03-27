@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: derp-web-container
-        image: tjwalkr3/derp-raven-web:$BUILD_NUMBER
+        image: tjwalkr3/derp-raven-web:0
         env:
         - name: BaseAddress
           value: "http://derp-api-svc:8080"

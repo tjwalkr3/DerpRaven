@@ -8,10 +8,6 @@ data:
   derp-db-init: |
     -- Initialization script for the dadabase
 
-    CREATE SCHEMA public AUTHORIZATION derp;
-
-    COMMENT ON SCHEMA public IS 'standard public schema';
-
     CREATE SEQUENCE public."CustomRequests_Id_seq"
       INCREMENT BY 1
       MINVALUE 1
