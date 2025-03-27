@@ -10,4 +10,4 @@ RUN dotnet publish "DerpRaven.Api/DerpRaven.Api.csproj" -c Release -o publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /App
 COPY --from=build /App/publish .
-ENTRYPOINT ["dotnet", "DerpRaven.Api/DerpRaven.Api.dll"]
+ENTRYPOINT ["dotnet", "DerpRaven.Api.dll"]
