@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: derp-api-container
-        image: tjwalkr3/derp-raven-api:0
+        image: tjwalkr3/derp-raven-api:1
         env:
         - name: ConnectionStrings__DefaultConnection
           value: "Server=derp-db-svc;Database=postgres;Userid=derp;Password=1234"
