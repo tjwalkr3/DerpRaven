@@ -1,4 +1,4 @@
-﻿using DerpRaven.Api.Model;
+﻿using DerpRaven.Api.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,10 +26,7 @@ public class OrderServiceController : ControllerBase
     public async Task<IActionResult> GetOrderById(int id)
     {
         var order = await _orderService.GetOrderByIdAsync(id);
-        if (order == null)
-        {
-            return NotFound();
-        }
+        if (order == null) return NotFound();
         return Ok(order);
     }
 
@@ -40,22 +37,18 @@ public class OrderServiceController : ControllerBase
         return Ok(orders);
     }
 
-    //[HttpPost]
-    //public async Task<IActionResult> CreateOrder(Order order)
-    //{
-    //    var createdOrder = await _orderService.CreateOrderAsync(order);
-    //    return CreatedAtAction(nameof(GetOrderById), new { id = createdOrder.Id }, createdOrder);
-    //}
+    [HttpPost]
+    public async Task<IActionResult> CreateOrder(OrderDto order)
+    {
+        var createdOrder = await _orderService.CreateOrderAsync(order);
+        return Created();
+    }
 
-    //[HttpPut("{id}")]
-    //public async Task<IActionResult> UpdateOrder(int id, Order order)
-    //{
-    //    if (id != order.Id)
-    //    {
-    //        return BadRequest();
-    //    }
-
-    //    await _orderService.UpdateOrderAsync(order);
-    //    return NoContent();
-    //}
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateOrder(int id, string address, string email)
+    {
+        bool wasUpdated = await _orderService.UpdateOrderAsync(id, address, email);
+        if (wasUpdated) return BadRequest();
+        return NoContent();
+    }
 }

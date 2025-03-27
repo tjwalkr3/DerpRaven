@@ -28,6 +28,7 @@ public class CustomRequestController : ControllerBase
     public async Task<IActionResult> GetCustomRequestById(int id)
     {
         var request = await _customRequestService.GetCustomRequestByIdAsync(id);
+        //if (request == null) return NoContent();
         return Ok(request);
     }
 
@@ -55,14 +56,16 @@ public class CustomRequestController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateCustomRequest([FromBody] CustomRequestDto request)
     {
-        await _customRequestService.CreateCustomRequestAsync(request);
+        bool wasCreated = await _customRequestService.CreateCustomRequestAsync(request);
+        if (wasCreated) return BadRequest();
         return Created();
     }
 
     [HttpPatch("{id}/status")]
     public async Task<IActionResult> ChangeStatus(int id, [FromBody] string status)
     {
-        await _customRequestService.ChangeStatusAsync(id, status);
+        bool wasUpdated = await _customRequestService.ChangeStatusAsync(id, status);
+        if (wasUpdated) return BadRequest();
         return NoContent();
     }
 
