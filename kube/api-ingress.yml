@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: derp-api-ingress
+  namespace: derp
+spec:
+  rules:
+  - host: derp-raven-api.duckdns.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: derp-api-svc
+            port:
+              number: 8080 # same as external ip set in service
