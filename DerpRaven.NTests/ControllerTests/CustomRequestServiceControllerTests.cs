@@ -95,12 +95,10 @@ public class CustomRequestServiceControllerTests
         CustomRequestController controller = new(customRequestService);
 
         // Act
-        var result = await controller.GetAllCustomRequests() as OkObjectResult;
+        var result = await controller.GetCustomRequestById(10) as NoContentResult;
 
         // Assert
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
-        var requests = result.Value as List<CustomRequestDto>;
-        requests.ShouldBeEmpty();
     }
 }
