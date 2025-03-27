@@ -18,11 +18,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddOpenApi();
-builder.Services.AddScoped<CustomRequestService>();
-builder.Services.AddScoped<OrderService>();
-builder.Services.AddScoped<PortfolioService>();
-builder.Services.AddScoped<ProductService>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ICustomRequestService, CustomRequestService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPortfolioService, PortfolioService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

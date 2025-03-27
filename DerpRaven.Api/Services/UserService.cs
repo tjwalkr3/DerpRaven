@@ -91,6 +91,7 @@ public class UserService : IUserService
     {
         return new User()
         {
+            Id = dto.Id,
             Name = dto.Name,
             OAuth = dto.OAuth,
             Email = dto.Email,
@@ -105,6 +106,7 @@ public class UserService : IUserService
     {
         return new UserDto()
         {
+            Id = user.Id,
             Name = user.Name,
             OAuth = user.OAuth,
             Email = user.Email,

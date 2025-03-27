@@ -102,6 +102,7 @@ public class ProductService : IProductService
 
         return new Product()
         {
+            Id = dto.Id,
             Name = dto.Name,
             Price = dto.Price,
             Quantity = dto.Quantity,
@@ -120,6 +121,7 @@ public class ProductService : IProductService
 
         return new ProductDto()
         {
+            Id = product.Id,
             Name = product.Name,
             Price = product.Price,
             Quantity = product.Quantity,

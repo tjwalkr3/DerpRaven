@@ -1,0 +1,42 @@
+﻿@page "/customrequests"
+@rendermode InteractiveServer
+
+<h3>CustomRequests</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Product Type Id</th>
+            <th>User Id</th>
+        </tr>
+
+        @if (_requests == null)
+        {
+            <tr>
+                <td colspan="6">Loading...</td>
+            </tr>
+        }
+        else 
+        {
+            @foreach (var item in _requests)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Description</td>
+                    <td>@item.Email</td>
+                    <td>@item.Status</td>
+                    <td>@item.ProductTypeId</td>
+                    <td>@item.UserId</td>
+                </tr>
+            }
+        }
+    </thead>
+</table>
+
+@code {
+
+}

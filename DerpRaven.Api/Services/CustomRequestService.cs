@@ -101,6 +101,7 @@ public class CustomRequestService : ICustomRequestService
 
         return new CustomRequest()
         {
+            Id = dto.Id,
             Description = dto.Description,
             Email = dto.Email,
             Status = dto.Status,
@@ -113,6 +114,7 @@ public class CustomRequestService : ICustomRequestService
     {
         return new CustomRequestDto()
         {
+            Id = cr.Id,
             Description = cr.Description,
             Email = cr.Email,
             Status = cr.Status,

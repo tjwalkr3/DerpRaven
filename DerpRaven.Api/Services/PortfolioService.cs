@@ -111,6 +111,7 @@ public class PortfolioService : IPortfolioService
 
         return new Portfolio()
         {
+            Id = dto.Id,
             Description = dto.Description,
             Name = dto.Name,
             ProductType = productType,
@@ -126,6 +127,7 @@ public class PortfolioService : IPortfolioService
 
         return new PortfolioDto()
         {
+            Id = portfolio.Id,
             Description = portfolio.Description,
             Name = portfolio.Name,
             ProductTypeId = portfolio.ProductType.Id,
