@@ -41,6 +41,7 @@ jobs:
     - name: build and push api to dockerhub
       run: |
         docker build \
+          -f ./Api.Dockerfile \
           -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-api:${{ github.run_number }} \
           .
 
@@ -49,6 +50,7 @@ jobs:
     - name: build and push web to dockerhub
       run: |
         docker build \
+          -f ./Web.Dockerfile \
           -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }} \
           --build-arg base_address="https://derp-api-svc:8080"
           .
