@@ -1,6 +1,4 @@
-﻿using DerpRaven.Api.Model;
-
-namespace DerpRaven.Api.Dtos;
+﻿namespace DerpRaven.Shared.Dtos;
 
 public class ImageDto
 {

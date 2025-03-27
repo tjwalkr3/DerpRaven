@@ -1,7 +1,6 @@
-﻿namespace DerpRaven.Shared
-{
-    public class Class1
-    {
+﻿namespace DerpRaven.Shared;
 
-    }
+public class Class1
+{
+
 }

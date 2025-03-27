@@ -1,8 +1,6 @@
-﻿using DerpRaven.Api.Model;
-using DerpRaven.Api.Services;
+﻿using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
-using DerpRaven.Api.Dtos;
-using System.Net;
+using DerpRaven.Shared.Dtos;
 
 namespace DerpRaven.Api.Controllers;
 

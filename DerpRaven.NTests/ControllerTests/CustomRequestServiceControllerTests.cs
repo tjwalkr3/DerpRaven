@@ -1,13 +1,11 @@
 ﻿using Castle.Core.Logging;
 using DerpRaven.Api.Controllers;
-using DerpRaven.Api.Dtos;
+using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Shouldly;
-using DerpRaven.Api.Model;
-using static NUnit.Framework.Internal.OSPlatform;
 namespace DerpRaven.Tests.ControllerTests;
 
 public class CustomRequestServiceControllerTests
@@ -44,7 +42,7 @@ public class CustomRequestServiceControllerTests
         // Arrange
         ICustomRequestService customRequestService = Substitute.For<ICustomRequestService>();
         var requestDto = new CustomRequestDto()
-            { Id = 1, Description = "", Email = "", ProductTypeId = 1, Status = "", UserId = 1 };
+        { Id = 1, Description = "", Email = "", ProductTypeId = 1, Status = "", UserId = 1 };
         var dtoList = new List<CustomRequestDto>() { requestDto };
         customRequestService.GetAllCustomRequestsAsync().Returns(dtoList);
         CustomRequestController controller = new(customRequestService);

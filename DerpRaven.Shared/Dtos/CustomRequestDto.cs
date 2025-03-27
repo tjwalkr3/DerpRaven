@@ -1,4 +1,4 @@
-﻿namespace DerpRaven.Api.Dtos;
+﻿namespace DerpRaven.Shared.Dtos;
 
 public class CustomRequestDto
 {

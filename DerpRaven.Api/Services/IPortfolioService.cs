@@ -1,4 +1,4 @@
-﻿using DerpRaven.Api.Dtos;
+﻿using DerpRaven.Shared.Dtos;
 
 namespace DerpRaven.Api.Services
 {

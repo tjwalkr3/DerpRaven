@@ -1,4 +1,4 @@
-﻿using DerpRaven.Api.Dtos;
+﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Model;
 using DerpRaven.Api.Services;
 using Microsoft.EntityFrameworkCore;

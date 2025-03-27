@@ -1,11 +1,10 @@
-﻿using DerpRaven.Api.Dtos;
+﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Model;
 using DerpRaven.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Shouldly;
-using System.Runtime.Intrinsics.X86;
 namespace DerpRaven.Tests.ServiceTests;
 
 public class ProductServiceTests

@@ -1,4 +1,4 @@
-﻿using DerpRaven.Api.Model;
+﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 

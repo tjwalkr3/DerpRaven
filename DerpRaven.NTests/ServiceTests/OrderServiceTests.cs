@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shouldly;
 using NSubstitute;
-using DerpRaven.Api.Dtos;
+using DerpRaven.Shared.Dtos;
 namespace DerpRaven.Tests.ServiceTests;
 
 public class OrderServiceTests
