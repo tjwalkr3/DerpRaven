@@ -1,6 +1,6 @@
 # Prepare the projects
-ARG BASE_ADDRESS
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG BASE_ADDRESS
 
 WORKDIR /App
 COPY . ./
