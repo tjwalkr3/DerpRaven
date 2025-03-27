@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-web-dep
+  namespace: derp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-web
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-web
+    spec:
+      containers:
+      - name: derp-web-container
+        image: tjwalkr3/derp-raven-web:$BUILD_NUMBER
+        env:
+        - name: BaseAddress
+          value: "http://derp-api-svc:8080"
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-api-dep
+  namespace: derp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-api
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-api
+    spec:
+      containers:
+      - name: derp-api-container
+        image: tjwalkr3/derp-raven-api:$BUILD_NUMBER
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Server=derp-db-svc;Database=postgres;Userid=derp;Password=1234"
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://derp-collector-svc:4318"
+        ports:
+        - containerPort: 8080

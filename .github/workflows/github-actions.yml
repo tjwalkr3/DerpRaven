@@ -12,7 +12,6 @@ jobs:
     - name: Check if Dotnet format changed anything.
       run: |
         nix-shell -p dotnet-sdk_9 --run "
-          # dotnet workload restore
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Api
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Shared
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.NTests
