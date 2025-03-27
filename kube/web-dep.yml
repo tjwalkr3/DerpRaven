@@ -26,5 +26,5 @@ spec:
         - name: BaseAddress
           value: "http://derp-api-svc:8080"
         ports:
-        - containerPort: 8080
+        - containerPort: 80
   

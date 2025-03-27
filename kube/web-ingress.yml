@@ -14,4 +14,4 @@ spec:
           service:
             name: derp-web-svc
             port:
-              number: 8080 # same as external ip set in service
+              number: 80 # same as external ip set in service

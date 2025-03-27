@@ -8,5 +8,5 @@ spec:
     app: derp-web
   ports:
     - protocol: TCP
-      port: 8080 # external port (doesn't have to be the same)
-      targetPort: 8080
+      port: 80 # external port (doesn't have to be the same)
+      targetPort: 80
