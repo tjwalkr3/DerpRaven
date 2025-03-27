@@ -7,7 +7,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dderp-db
+      app: derp-db
   # pod below
   template:
     metadata:
