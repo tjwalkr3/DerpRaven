@@ -110,4 +110,3 @@ data:
       CONSTRAINT "FK_ProductImage_Products_ProductId" FOREIGN KEY ("ProductId") REFERENCES public."Products"("Id") ON DELETE CASCADE
     );
     CREATE INDEX "IX_ProductImage_ProductId" ON public."ProductImage" USING btree ("ProductId");
-

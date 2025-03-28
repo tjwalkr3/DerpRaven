@@ -24,7 +24,7 @@ spec:
         image: tjwalkr3/derp-raven-api:$BUILD_NUMBER
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Server=derp-db-svc;Database=derpraven_db;Userid=derp;Password=1234"
+          value: "Server=derp-db-svc;Database=postgres;Userid=derp;Password=1234"
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://derp-collector-svc:4318"
         ports:
