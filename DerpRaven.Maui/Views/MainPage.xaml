@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DerpRaven.Maui.Views.MainPage">
+             x:Class="DerpRaven.Maui.Views.MainPage"
+             xmlns:models="clr-namespace:DerpRaven.Maui.ViewModels"
+             Background="DimGrey"
+             
+>
+    
 
     <ScrollView>
         <VerticalStackLayout
@@ -16,19 +21,18 @@
             
             <!--Hamburger button for drop down for pages-->
            
-                <Grid
-                    ColumnDefinitions="*,*">
+            <Grid
+                ColumnDefinitions="*,*">
                     
-                <!-- Image for logo1-->
-
+                <!-- Image for DRS-->
                 <Image
-                    Source="logo.png"
+                    Source="derpravenstudiologo.png"
                     HeightRequest="150"
                     WidthRequest="150"
                     Aspect="AspectFit" 
                     Margin="30"
                     Grid.Column="0"/>
-                <!-- Image for logo2-->
+                <!-- Image for DRP-->
                 <Image
                     Source="derpravenlogo.png"
                     HeightRequest="150"
@@ -37,9 +41,78 @@
                     Margin="30"
                     Grid.Column="1"/>
 
-                </Grid>
+            </Grid>
 
-            
+
+            <CarouselView ItemsSource="{Binding Emotes}"
+                          PeekAreaInsets="150"
+                          >
+
+                <CarouselView.ItemTemplate SnapPointsType ="None">
+                    <DataTemplate x:DataType="models:Emote">
+                        <StackLayout>
+                            <Border Stroke="Black"
+                                    StrokeShape="RoundRectangle 5"
+                                    Margin="10"
+                                    Padding="10"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                <StackLayout>
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           FontSize="18"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                    <Image Source="{Binding ImageUrl}"
+                                           Aspect="AspectFill"
+                                           HeightRequest="150"
+                                           WidthRequest="150"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="{Binding Description}"
+                                           FontAttributes="Italic"
+                                           HorizontalOptions="Center"
+                                           MaxLines="5"
+                                           LineBreakMode="TailTruncation" />
+                                </StackLayout>
+                            </Border>
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+            <CarouselView ItemsSource="{Binding Plushies}" PeekAreaInsets="150">
+                <CarouselView.ItemTemplate SnapPointsType ="None">
+                    <DataTemplate x:DataType="models:Emote">
+                        <StackLayout>
+                            <Border Stroke="Black"
+                                    StrokeShape="RoundRectangle 5"
+                                    Margin="10"
+                                    Padding="10"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                <StackLayout>
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           FontSize="18"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                    <Image Source="{Binding ImageUrl}"
+                                           Aspect="AspectFill"
+                                           HeightRequest="150"
+                                           WidthRequest="150"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="{Binding Description}"
+                                           FontAttributes="Italic"
+                                           HorizontalOptions="Center"
+                                           MaxLines="5"
+                                           LineBreakMode="TailTruncation" />
+                                </StackLayout>
+                            </Border>
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
         </VerticalStackLayout>
     </ScrollView>
 
