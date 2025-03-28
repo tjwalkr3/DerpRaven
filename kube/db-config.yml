@@ -121,16 +121,16 @@ data:
 
     INSERT INTO public."Products" ("Name","Price","Quantity","Description","ProductTypeId") VALUES
       ('Product1',10,1,'Plushie',1),
-      ('Product2',25,1,'Art',3);
+      ('Product2',25,1,'Art',2);
 
     INSERT INTO public."Orders" ("Address","Email","OrderDate","UserId") VALUES
-      ('Madeup1','Derpipose@gmail.com','2025-03-27 00:00:00.000',2),
-      ('Madeup2','Derpipose@gmail.com','2025-01-15 00:00:00.000',3);
+      ('Madeup1','Derpipose@gmail.com','2025-03-27 00:00:00.000',1),
+      ('Madeup2','Derpipose@gmail.com','2025-01-15 00:00:00.000',2);
 
     INSERT INTO public."CustomRequests" ("Description","Email","Status","ProductTypeId","UserId") VALUES
-      ('this Plushie','Derpipose@gmail.com','pending',1,2),
-      ('this Art','Derpipose2@gmail.com','pending',3,3),
-      ('this Art','Derpipose@gmail.com','pending',3,2);
+      ('this Plushie','Derpipose@gmail.com','pending',1,1),
+      ('this Art','Derpipose2@gmail.com','pending',2,2),
+      ('this Art','Derpipose@gmail.com','pending',2,1);
 
     INSERT INTO public."Images" ("Alt","Path") VALUES
       ('thisimage1','imagepath1'),
@@ -138,7 +138,7 @@ data:
 
     INSERT INTO public."Portfolios" ("Description","Name","ProductTypeId") VALUES
       ('portfolioPlush','Portfolio1',1),
-      ('portfolioArt','Portfolio2',3);
+      ('portfolioArt','Portfolio2',2);
 
     INSERT INTO public."OrderProduct" ("OrderId","ProductId") VALUES
       (1,1),
