@@ -108,14 +108,14 @@ public class UserServiceControllerTests
     public async Task CreateUser()
     {
         // Arrange
-        var user = new UserDto() 
-        { 
-            Id = 1, 
-            Name = "User1", 
-            OAuth = "OAuth1", 
-            Email = "user1@example.com", 
-            Role = "customer", 
-            Active = true 
+        var user = new UserDto()
+        {
+            Id = 1,
+            Name = "User1",
+            OAuth = "OAuth1",
+            Email = "user1@example.com",
+            Role = "customer",
+            Active = true
         };
         // Act
         var result = await _controller.CreateUser(user) as CreatedResult;

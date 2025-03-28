@@ -106,13 +106,15 @@ public class PortfolioServiceControllerTests
     public async Task UpdatePortfolio()
     {
         // Act
-        var result = await _controller.UpdatePortfolio(1, 
-            new PortfolioDto() { 
-                Description = "new portfolio 1", 
-                Id = 1, 
-                ImageIds = [1, 2, 3], 
-                Name = "my product", 
-                ProductTypeId = 1 }
+        var result = await _controller.UpdatePortfolio(1,
+            new PortfolioDto()
+            {
+                Description = "new portfolio 1",
+                Id = 1,
+                ImageIds = [1, 2, 3],
+                Name = "my product",
+                ProductTypeId = 1
+            }
             ) as NoContentResult;
         // Assert
         result.ShouldNotBeNull();
