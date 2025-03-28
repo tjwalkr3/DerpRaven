@@ -7,7 +7,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dderp-db
+      app: derp-db
   # pod below
   template:
     metadata:
@@ -15,17 +15,17 @@ spec:
         app: derp-db
     spec:
       volumes:
-      - name: derp-db-data
-        persistentVolumeClaim:
-          claimName: derp-db-pvc
+      # - name: derp-db-data
+      #   persistentVolumeClaim:
+      #     claimName: derp-db-pvc-new
       - name: schema-init
         configMap:
           name: derp-init-sql
       containers:
       - name: derp-postgres
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: derp-db-data
+        # - mountPath: /var/lib/postgresql/data
+        #   name: derp-db-data
         - mountPath: /docker-entrypoint-initdb.d/init.sql
           subPath: derp-db-init
           name: schema-init
@@ -37,3 +37,5 @@ spec:
           value: "derp"
         - name: POSTGRES_PASSWORD
           value: "1234"
+        - name: POSTGRES_DB
+          value: "postgres"

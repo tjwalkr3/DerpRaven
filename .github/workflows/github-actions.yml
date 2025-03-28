@@ -15,9 +15,11 @@ jobs:
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Api
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Shared
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.NTests
+          dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Web
           dotnet build --warnaserror DerpRaven.Api
           dotnet build --warnaserror DerpRaven.Shared
           dotnet build --warnaserror DerpRaven.NTests
+          dotnet build --warnaserror DerpRaven.Web
         "
 
     - name: Run the tests.
@@ -30,3 +32,39 @@ jobs:
         docker run --rm thomas_test_container
         echo "going to deploy!!!"
 
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+    - name: build and push api to dockerhub
+      run: |
+        docker build \
+          -f ./Api.Dockerfile \
+          -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-api:${{ github.run_number }} \
+          .
+
+        docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-api:${{ github.run_number }}
+
+    - name: build and push web to dockerhub
+      run: |
+        docker build \
+          -f ./Web.Dockerfile \
+          -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }} \
+          --build-arg BASE_ADDRESS="http://derp-raven-api.duckdns.org" \
+          .
+
+        docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }}
+
+    - name: deploy web to kubernetes
+      run: |
+        kubectl apply -f kube/namespace.yml
+        export BUILD_NUMBER=${{ github.run_number }}
+        
+        for FILE in "kube"/*
+        do
+          cat "$FILE" | envsubst | kubectl apply -f -
+        done
+
+    
