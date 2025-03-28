@@ -52,7 +52,7 @@ jobs:
         docker build \
           -f ./Web.Dockerfile \
           -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }} \
-          --build-arg BASE_ADDRESS=https://derp-api-svc:8080 \
+          --build-arg BASE_ADDRESS=http://derp-raven-api.duckdns.org \
           .
 
         docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }}
