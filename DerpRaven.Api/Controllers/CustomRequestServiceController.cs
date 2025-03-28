@@ -55,7 +55,7 @@ public class CustomRequestController : ControllerBase
     public async Task<IActionResult> CreateCustomRequest([FromBody] CustomRequestDto request)
     {
         bool wasCreated = await _customRequestService.CreateCustomRequestAsync(request);
-        if (wasCreated) return BadRequest();
+        if (!wasCreated) return BadRequest();
         return Created();
     }
 
@@ -63,9 +63,8 @@ public class CustomRequestController : ControllerBase
     public async Task<IActionResult> ChangeStatus(int id, [FromBody] string status)
     {
         bool wasUpdated = await _customRequestService.ChangeStatusAsync(id, status);
-        if (wasUpdated) return BadRequest();
+        if (!wasUpdated) return BadRequest();
         return NoContent();
     }
-
 }
 
