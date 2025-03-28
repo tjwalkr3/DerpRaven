@@ -111,37 +111,3 @@ data:
     );
     CREATE INDEX "IX_ProductImage_ProductId" ON public."ProductImage" USING btree ("ProductId");
 
-    CREATE OR REPLACE FUNCTION public.azure_roles_authtype()
-    RETURNS TABLE(rolename character, authtype text)
-    LANGUAGE c
-    STRICT
-    AS '$libdir/azure', $function$azure_get_roles$function$
-    ;
-
-    CREATE OR REPLACE FUNCTION public.pg_azure_cause_crash()
-    RETURNS void
-    LANGUAGE c
-    STRICT
-    AS '$libdir/azure', $function$pg_azure_cause_crash$function$
-    ;
-
-    CREATE OR REPLACE FUNCTION public.pg_last_removed_wal_lsn()
-    RETURNS pg_lsn
-    LANGUAGE c
-    AS '$libdir/azure', $function$pg_last_removed_wal_lsn$function$
-    ;
-
-    CREATE OR REPLACE FUNCTION public.pg_last_wal_replay_tli_lsn()
-    RETURNS TABLE(tli integer, lsn pg_lsn)
-    LANGUAGE c
-    STRICT
-    AS '$libdir/azure', $function$pg_last_wal_replay_tli_lsn$function$
-    ;
-
-    CREATE OR REPLACE FUNCTION public.pg_postmaster_memory()
-    RETURNS TABLE(private_writable_kb bigint, shared_writable_kb bigint, pid bigint)
-    LANGUAGE c
-    STRICT
-    AS '$libdir/azure', $function$pg_postmaster_memory$function$
-    ;
-      
