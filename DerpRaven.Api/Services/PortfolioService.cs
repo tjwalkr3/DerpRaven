@@ -91,14 +91,16 @@ public class PortfolioService : IPortfolioService
         }
     }
 
-    public async Task DeletePortfolioAsync(int id)
+    public async Task<bool> DeletePortfolioAsync(int id)
     {
         var portfolio = await _context.Portfolios.FindAsync(id);
         if (portfolio != null)
         {
             _context.Portfolios.Remove(portfolio);
             await _context.SaveChangesAsync();
+            return true;
         }
+        return false;
     }
 
     private async Task<Portfolio?> MapFromPortfolioDto(PortfolioDto dto)

@@ -8,9 +8,9 @@ namespace DerpRaven.Api.Controllers;
 [Route("api/[controller]")]
 public class UserServiceController : ControllerBase
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public UserServiceController(UserService userService)
+    public UserServiceController(IUserService userService)
     {
         _userService = userService;
     }
@@ -58,23 +58,22 @@ public class UserServiceController : ControllerBase
         return Ok(user);
     }
 
-    //[HttpPost]
-    //public async Task<IActionResult> CreateUser(User user)
-    //{
-    //    var createdUser = await _userService.CreateUserAsync(user);
-    //    return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
-    //}
+    [HttpPost]
+    public async Task<IActionResult> CreateUser(UserDto user)
+    {
+        var wasUser = await _userService.CreateUserAsync(user);
+        if (!wasUser) return BadRequest();
+        return Created();
 
-    //[HttpPut("{id}")]
-    //public async Task<IActionResult> UpdateUser(int id, User user)
-    //{
-    //    if (id != user.Id)
-    //    {
-    //        return BadRequest();
-    //    }
+    }
 
-    //    await _userService.UpdateUserAsync(user);
-    //    return NoContent();
-    //}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUser(int id, UserDto user)
+    {
+        if (id != user.Id) return BadRequest();
+        bool wasUpdated = await _userService.UpdateUserAsync(user);
+        if (!wasUpdated) return NotFound();
+        return NoContent();
+    }
 }
 

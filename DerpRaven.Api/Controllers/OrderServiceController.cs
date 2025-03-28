@@ -40,7 +40,8 @@ public class OrderServiceController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateOrder(OrderDto order)
     {
-        var createdOrder = await _orderService.CreateOrderAsync(order);
+        var wasCreated = await _orderService.CreateOrderAsync(order);
+        if (!wasCreated) return BadRequest();
         return Created();
     }
 
@@ -48,7 +49,7 @@ public class OrderServiceController : ControllerBase
     public async Task<IActionResult> UpdateOrder(int id, string address, string email)
     {
         bool wasUpdated = await _orderService.UpdateOrderAsync(id, address, email);
-        if (wasUpdated) return BadRequest();
+        if (!wasUpdated) return BadRequest();
         return NoContent();
     }
 }

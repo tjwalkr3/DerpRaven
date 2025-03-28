@@ -16,14 +16,14 @@ public class ProductServiceController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllProducts()
+    public async Task<IActionResult> GetAllProductsAsync()
     {
         var products = await _productService.GetAllProductsAsync();
         return Ok(products);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetProductById(int id)
+    public async Task<IActionResult> GetProductByIdAsync(int id)
     {
         var product = await _productService.GetProductByIdAsync(id);
         if (product == null)
@@ -34,36 +34,34 @@ public class ProductServiceController : ControllerBase
     }
 
     [HttpGet("type/{productType}")]
-    public async Task<IActionResult> GetProductsByType(string productType)
+    public async Task<IActionResult> GetProductsByTypeAsync(string productType)
     {
         var products = await _productService.GetProductsByTypeAsync(productType);
         return Ok(products);
     }
 
     [HttpGet("name/{name}")]
-    public async Task<IActionResult> GetProductsByName(string name)
+    public async Task<IActionResult> GetProductsByNameAsync(string name)
     {
         var products = await _productService.GetProductsByNameAsync(name);
         return Ok(products);
     }
 
-    //[HttpPost]
-    //public async Task<IActionResult> CreateProduct(Product product)
-    //{
-    //    var createdProduct = await _productService.CreateProductAsync(product);
-    //    return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
-    //}
+    [HttpPost]
+    public async Task<IActionResult> CreateProductAsync(ProductDto product)
+    {
+        var wasCreated = await _productService.CreateProductAsync(product);
+        if (!wasCreated) return BadRequest();
+        return Created();
+    }
 
-    //[HttpPut("{id}")]
-    //public async Task<IActionResult> UpdateProduct(int id, Product product)
-    //{
-    //    if (id != product.Id)
-    //    {
-    //        return BadRequest();
-    //    }
-
-    //    await _productService.UpdateProductAsync(product);
-    //    return NoContent();
-    //}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateProduct(int id, ProductDto product)
+    {
+        if (id != product.Id) return BadRequest();
+        bool wasUpdated = await _productService.UpdateProductAsync(product);
+        if (!wasUpdated) return NotFound();
+        return NoContent();
+    }
 }
 

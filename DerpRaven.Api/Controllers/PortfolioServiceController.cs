@@ -1,6 +1,7 @@
 ﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using DerpRaven.Api.Model;
 
 namespace DerpRaven.Api.Controllers;
 
@@ -47,30 +48,28 @@ public class PortfolioServiceController : ControllerBase
         return Ok(portfolios);
     }
 
-    //[HttpPost]
-    //public async Task<IActionResult> CreatePortfolio(Portfolio portfolio)
-    //{
-    //    var createdPortfolio = await _portfolioService.CreatePortfolioAsync(portfolio);
-    //    return CreatedAtAction(nameof(GetPortfolioById), new { id = createdPortfolio.Id }, createdPortfolio);
-    //}
+    [HttpPost]
+    public async Task<IActionResult> CreatePortfolioAsync(PortfolioDto portfolio)
+    {
+        var wasCreated = await _portfolioService.CreatePortfolioAsync(portfolio);
+        if (!wasCreated) return BadRequest();
+        return Created();
+    }
 
-    //I'm not sure that this is proper. Derp
-    //[HttpPut("{id}")]
-    //public async Task<IActionResult> UpdatePortfolio(int id, Portfolio portfolio)
-    //{
-    //    if (id != portfolio.Id)
-    //    {
-    //        return BadRequest();
-    //    }
-
-    //    await _portfolioService.UpdatePortfolioAsync(portfolio);
-    //    return NoContent();
-    //}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdatePortfolio(int id, PortfolioDto portfolio)
+    {
+        if (id != portfolio.Id) return BadRequest();
+        bool wasUpdated = await _portfolioService.UpdatePortfolioAsync(portfolio);
+        if (!wasUpdated) return NotFound();
+        return NoContent();
+    }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeletePortfolio(int id)
+    public async Task<IActionResult> DeletePortfolioAsync(int id)
     {
-        await _portfolioService.DeletePortfolioAsync(id);
+        bool wasDeleted = await _portfolioService.DeletePortfolioAsync(id);
+        if (!wasDeleted) return NotFound();
         return NoContent();
     }
 }
