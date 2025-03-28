@@ -37,3 +37,5 @@ spec:
           value: "derp"
         - name: POSTGRES_PASSWORD
           value: "1234"
+        - name: POSTGRES_DB
+          value: "postgres"

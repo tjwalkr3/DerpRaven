@@ -8,7 +8,7 @@ RUN dotnet restore "DerpRaven.Web/DerpRaven.Web.csproj"
 RUN dotnet publish "DerpRaven.Web/DerpRaven.Web.csproj" -c Release -o publish
 
 # Inject the base address into the appsettings.json
-RUN echo "{ \"BaseAddress\": \"$BASE_ADDRESS\" }" > /App/publish/wwwroot/appsettings.json
+RUN echo "{ \"BaseAddress\": \"${BASE_ADDRESS}\" }" > /App/publish/wwwroot/appsettings.json
 
 # Use NGINX to serve the static files
 FROM nginx:latest AS final

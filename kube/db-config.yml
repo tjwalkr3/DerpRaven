@@ -110,3 +110,47 @@ data:
       CONSTRAINT "FK_ProductImage_Products_ProductId" FOREIGN KEY ("ProductId") REFERENCES public."Products"("Id") ON DELETE CASCADE
     );
     CREATE INDEX "IX_ProductImage_ProductId" ON public."ProductImage" USING btree ("ProductId");
+
+    INSERT INTO public."CustomRequests" ("Description","Email","Status","ProductTypeId","UserId") VALUES
+      ('this Plushie','Derpipose@gmail.com','pending',1,2),
+      ('this Art','Derpipose2@gmail.com','pending',3,3),
+      ('this Art','Derpipose@gmail.com','pending',3,2);
+
+    INSERT INTO public."Images" ("Alt","Path") VALUES
+      ('thisimage1','imagepath1'),
+      ('thisimage2','imagepath2');
+
+    INSERT INTO public."OrderProduct" ("OrderId","ProductId") VALUES
+      (1,1),
+      (2,2);
+
+    INSERT INTO public."Orders" ("Address","Email","OrderDate","UserId") VALUES
+      ('Madeup1','Derpipose@gmail.com','2025-03-27 00:00:00.000',2),
+      ('Madeup2','Derpipose@gmail.com','2025-01-15 00:00:00.000',3);
+
+    INSERT INTO public."PortfolioImage" ("ImageId","PortfolioId") VALUES
+      (1,1),
+      (2,2);
+
+    INSERT INTO public."Portfolios" ("Description","Name","ProductTypeId") VALUES
+      ('portfolioPlush','Portfolio1',1),
+      ('portfolioArt','Portfolio2',3);
+
+    INSERT INTO public."ProductImage" ("ImageId","ProductId") VALUES
+      (1,1),
+      (2,2);
+
+    INSERT INTO public."ProductTypes" ("Name") VALUES
+      ('Plushie'),
+      ('Art');
+
+    INSERT INTO public."Products" ("Name","Price","Quantity","Description","ProductTypeId") VALUES
+      ('Product1',10,1,'Plushie',1),
+      ('Product2',25,1,'Art',3);
+
+    INSERT INTO public."Users" ("Name","OAuth","Email","Role","Active") VALUES
+      ('Derp','dljapfpsadkfjpajdpfajd','Derpipose@gmail.com','Admin',true),
+      ('Derp2','jhkjhljhkwejifuhiwine','Derpipose2@gmail.com','Customer',true);
+
+    INSERT INTO public."__EFMigrationsHistory" ("MigrationId","ProductVersion") VALUES
+      ('20250322010505_InitialCreate','9.0.3');
