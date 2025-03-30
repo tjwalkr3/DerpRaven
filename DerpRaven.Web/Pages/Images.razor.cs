@@ -52,8 +52,18 @@ public partial class Images
             bool result = await _imageClient.UploadImageAsync(selectedFile, altText);
             if (result)
             {
+                altText = string.Empty;
                 await LoadImages();
             }
+        }
+    }
+
+    public async Task DeleteImage(int id)
+    {
+        bool result = await _imageClient.DeleteImageAsync(id);
+        if (result)
+        {
+            await LoadImages();
         }
     }
 }

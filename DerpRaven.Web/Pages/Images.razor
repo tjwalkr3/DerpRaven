@@ -14,6 +14,7 @@
             <th>File Name</th>
             <th>Id</th>
             <th>Alt Text</th>
+            <th>Delete</th>
         </tr>
 
         @if (_images == null)
@@ -36,6 +37,9 @@
                     <td>@image.Path</td>
                     <td>@image.Id</td>
                     <td>@image.Alt</td>
+                    <td>
+                        <button class="deletebutton" @onclick="() => DeleteImage(image.Id)">Delete</button>
+                    </td>
                 </tr>
             }
         }

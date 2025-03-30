@@ -40,12 +40,18 @@ tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-tr:hover {
-    background-color: #f1f1f1;
-}
-
 img {
     border-radius: 5px;
     max-width: 100px;
     height: auto;
+}
+
+.deletebutton {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.deletebutton:hover {
+    background-color: #c82333;
 }

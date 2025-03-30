@@ -44,7 +44,7 @@ public class ImageController : ControllerBase
         return File(image, "image/png", imageName);
     }
 
-    [HttpDelete("delete/{fileName}")]
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteImage(int id)
     {
         bool result = await _imageService.DeleteImageAsync(id);
