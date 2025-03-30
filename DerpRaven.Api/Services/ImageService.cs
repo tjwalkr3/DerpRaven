@@ -1,4 +1,5 @@
 ﻿namespace DerpRaven.Api.Services;
+using Azure;
 using Azure.Storage.Blobs;
 using DerpRaven.Api.Model;
 using DerpRaven.Shared.Dtos;
@@ -76,9 +77,18 @@ public class ImageService : IImageService
             _logger.LogWarning($"Image {id} not found in the database.");
             return null;
         }
-        var blob = _containerClient.GetBlobClient(id.ToString());
-        var response = await blob.DownloadAsync();
-        return response.Value.Content;
+
+        try
+        {
+            var blob = _containerClient.GetBlobClient(id.ToString());
+            var response = await blob.DownloadAsync();
+            return response.Value.Content;
+        }
+        catch (RequestFailedException ex)
+        {
+            _logger.LogError(ex, $"Error getting image {id} from blob storage.");
+            return null;
+        }
     }
 
     public async Task<bool> DeleteImageAsync(int id)

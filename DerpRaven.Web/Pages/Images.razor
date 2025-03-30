@@ -1,20 +1,43 @@
 ﻿@page "/images"
 
 <h3>Images</h3>
-<input type="file" @onchange="OnFileSelected" />
-<input type="text" @bind="description" placeholder="Enter description" />
-<button @onclick="AddImage">Upload Image</button>
+<div class="form-container">
+    <InputFile OnChange="OnFileSelected" accept=".png" />
+    <textarea @bind="altText" maxlength="125" placeholder="Enter description"></textarea>
+    <button @onclick="AddImage">Upload Image</button>
+</div>
 
-<ul>
-    @if (_images == null)
-    {
-        <li>Loading...</li>
-    }
-    else
-    {
-        @foreach (var image in _images)
+<table>
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>File Name</th>
+            <th>Id</th>
+            <th>Alt Text</th>
+        </tr>
+
+        @if (_images == null)
         {
-            <li>@image.Path - @image.Alt</li>
+            <tr>
+                <td colspan="4">Loading...</td>
+            </tr>
         }
-    }
-</ul>
+        else
+        {
+            @foreach (var image in _images)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(image.ImageDataUrl))
+                        {
+                            <img src="@image.ImageDataUrl" alt="@image.Alt" width="100" />
+                        }
+                    </td>
+                    <td>@image.Path</td>
+                    <td>@image.Id</td>
+                    <td>@image.Alt</td>
+                </tr>
+            }
+        }
+    </thead>
+</table>
