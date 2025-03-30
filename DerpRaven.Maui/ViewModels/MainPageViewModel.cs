@@ -2,12 +2,14 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
-public partial class MainPageViewModel : ObservableObject {
+public partial class MainPageViewModel : ObservableObject
+{
     public ObservableCollection<Emote> Emotes { get; private set; }
     public ObservableCollection<Emote> Plushies { get; private set; }
 
 
-    public MainPageViewModel() {
+    public MainPageViewModel()
+    {
         Emotes = new ObservableCollection<Emote>
         {
             new Emote
@@ -126,7 +128,8 @@ public partial class MainPageViewModel : ObservableObject {
     }
 }
 
-public class Emote {
+public class Emote
+{
     public string Name { get; set; } = string.Empty;
     public string ImageUrl { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
