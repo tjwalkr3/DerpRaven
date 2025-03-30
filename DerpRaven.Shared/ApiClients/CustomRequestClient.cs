@@ -3,9 +3,10 @@
 namespace DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 
-public class CustomRequestClient
+public class CustomRequestClient : ICustomRequestClient
 {
     private readonly HttpClient _httpClient;
+
     public CustomRequestClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
@@ -44,7 +45,6 @@ public class CustomRequestClient
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<CustomRequestDto>>();
     }
-
 
     public async Task<List<CustomRequestDto>?> GetCustomRequestsByTypeAsync(string productType)
     {

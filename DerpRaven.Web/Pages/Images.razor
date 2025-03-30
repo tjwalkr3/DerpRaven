@@ -1,0 +1,20 @@
+﻿@page "/images"
+
+<h3>Images</h3>
+<input type="file" @onchange="OnFileSelected" />
+<input type="text" @bind="description" placeholder="Enter description" />
+<button @onclick="AddImage">Upload Image</button>
+
+<ul>
+    @if (_images == null)
+    {
+        <li>Loading...</li>
+    }
+    else
+    {
+        @foreach (var image in _images)
+        {
+            <li>@image.Path - @image.Alt</li>
+        }
+    }
+</ul>

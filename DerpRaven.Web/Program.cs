@@ -12,6 +12,7 @@ builder.Services.AddScoped(sp => new HttpClient
     BaseAddress = new Uri(builder.Configuration["BaseAddress"] ?? "http://localhost:8080")
 });
 
-builder.Services.AddScoped<CustomRequestClient>();
+builder.Services.AddScoped<ICustomRequestClient, CustomRequestClient>();
+builder.Services.AddScoped<IImageClient, ImageClient>();
 
 await builder.Build().RunAsync();

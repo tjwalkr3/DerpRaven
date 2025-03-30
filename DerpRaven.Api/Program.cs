@@ -1,3 +1,4 @@
+using DerpRaven.Api;
 using DerpRaven.Api.Model;
 using DerpRaven.Api.Services;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Add the database context
+string dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new ArgumentNullException("Database connection string is missing!");
+builder.Services.AddDbContext<AppDbContext>(o =>
+{
+    o.UseNpgsql(dbConnectionString);
+});
 
 // Add CORS services
 builder.Services.AddCors(options =>
@@ -23,6 +29,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddOpenApi();
+builder.Services.Configure<BlobStorageOptions>(builder.Configuration.GetSection("BlobStorage"));
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<ICustomRequestService, CustomRequestService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPortfolioService, PortfolioService>();

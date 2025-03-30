@@ -10,9 +10,9 @@ public partial class CustomRequests
     private string _productType = string.Empty;
     private int _userId = 0;
     private int _id = 0;
-    CustomRequestClient _customRequestClient { get; }
+    ICustomRequestClient _customRequestClient { get; }
 
-    public CustomRequests(CustomRequestClient customRequestClient)
+    public CustomRequests(ICustomRequestClient customRequestClient)
     {
         _customRequestClient = customRequestClient;
     }
