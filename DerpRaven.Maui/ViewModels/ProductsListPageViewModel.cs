@@ -49,9 +49,7 @@ public partial class ProductsListPageViewModel : ObservableObject {
     [RelayCommand]
     private async Task NavigateToProduct(Product product) {
         if (product == null) return;
-        //Debug.WriteLine($"Navigating to details for {product.Name}");
-        // Navigate to product details page (replace with actual navigation logic)
-         await Shell.Current.GoToAsync($"ProductPage?productId={product.Id}");
+         await Shell.Current.GoToAsync($"///ProductPage?productId={product.Id}");
     }
 }
 public class Product {
