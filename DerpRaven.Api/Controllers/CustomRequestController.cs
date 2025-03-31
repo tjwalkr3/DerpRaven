@@ -67,4 +67,3 @@ public class CustomRequestController : ControllerBase
         return NoContent();
     }
 }
-
