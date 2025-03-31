@@ -16,12 +16,10 @@
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
-            
-            <!--Hamburger button for drop down for pages-->
-           
+
             <Grid
                 ColumnDefinitions="*,*">
-                    
+
                 <!-- Image for DRS-->
                 <Image
                     Source="derpravenstudiologo.png"
@@ -30,6 +28,7 @@
                     Aspect="AspectFit" 
                     Margin="30"
                     Grid.Column="0"/>
+
                 <!-- Image for DRP-->
                 <Image
                     Source="derpravenlogo.png"
@@ -38,14 +37,10 @@
                     Aspect="AspectFit" 
                     Margin="30"
                     Grid.Column="1"/>
-
             </Grid>
 
-
             <CarouselView ItemsSource="{Binding Emotes}"
-                          PeekAreaInsets="150"
-                          >
-
+                          PeekAreaInsets="150">
                 <CarouselView.ItemTemplate SnapPointsType ="None">
                     <DataTemplate x:DataType="models:Emote">
                         <StackLayout>
@@ -110,8 +105,9 @@
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
-
         </VerticalStackLayout>
+        
+        
     </ScrollView>
 
 </ContentPage>
