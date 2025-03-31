@@ -1,11 +1,13 @@
 ﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DerpRaven.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class OrderServiceController : ControllerBase
 {
     private readonly IOrderService _orderService;
