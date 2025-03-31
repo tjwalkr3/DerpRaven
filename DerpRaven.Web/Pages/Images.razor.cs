@@ -10,6 +10,7 @@ public partial class Images
     private IBrowserFile? selectedFile;
     private string altText = string.Empty;
     private string featureFlag;
+    private string errorString = string.Empty;
 
     public Images(IImageClient imageClient, IConfiguration config)
     {
@@ -37,16 +38,23 @@ public partial class Images
 
     public async Task LoadImages()
     {
-        _images = await _imageClient.ListImagesAsync();
-        foreach (var image in _images)
+        try
         {
-            var imageData = await _imageClient.GetImageAsync(image.Id);
-            if (imageData != null)
+            _images = await _imageClient.ListImagesAsync();
+            foreach (var image in _images)
             {
-                image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
+                var imageData = await _imageClient.GetImageAsync(image.Id);
+                if (imageData != null)
+                {
+                    image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
+                }
             }
+            StateHasChanged();
         }
-        StateHasChanged();
+        catch (Exception ex)
+        {
+            errorString = ex.Message;
+        }
     }
 
     private void OnFileSelected(InputFileChangeEventArgs e)

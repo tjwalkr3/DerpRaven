@@ -10,6 +10,7 @@ public partial class CustomRequests
     private string _productType = string.Empty;
     private int _userId = 0;
     private int _id = 0;
+    private string errorString = string.Empty;
     ICustomRequestClient _customRequestClient { get; }
 
     public CustomRequests(ICustomRequestClient customRequestClient)
@@ -24,7 +25,15 @@ public partial class CustomRequests
 
     private async Task LoadRequests()
     {
-        _requests = await _customRequestClient.GetAllCustomRequestsAsync();
+        try
+        {
+            _requests = await _customRequestClient.GetAllCustomRequestsAsync();
+            errorString = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            errorString = ex.Message;
+        }
     }
 
     private async Task CreateRequest()
