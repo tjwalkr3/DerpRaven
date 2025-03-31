@@ -1,10 +1,12 @@
 ﻿namespace DerpRaven.Api.Controllers;
 using DerpRaven.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ImageController : ControllerBase
 {
     private readonly IImageService _imageService;
@@ -29,6 +31,7 @@ public class ImageController : ControllerBase
     }
 
     [HttpGet("list")]
+    [AllowAnonymous]
     public async Task<IActionResult> ListImages()
     {
         var images = await _imageService.ListImagesAsync();
@@ -36,6 +39,7 @@ public class ImageController : ControllerBase
     }
 
     [HttpGet("get/{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetImage(int id)
     {
         string imageName = await _imageService.GetFileName(id);
