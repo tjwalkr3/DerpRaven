@@ -61,6 +61,7 @@ jobs:
       run: |
         kubectl apply -f kube/namespace.yml
         export BUILD_NUMBER=${{ github.run_number }}
+        export AZURE_BLOB_CONN_STRING=${{ secrets.AZURE_BLOB_CONN_STRING }}
         
         for FILE in "kube"/*
         do

@@ -25,6 +25,10 @@ spec:
         env:
         - name: ConnectionStrings__DefaultConnection
           value: "Server=derp-db-svc;Database=postgres;Userid=derp;Password=1234"
+        - name: BlobStorage__ConnectionString
+          value: $AZURE_BLOB_CONN_STRING
+        - name: BlobStorage__ContainerName
+          value: "kube-images"
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://derp-collector-svc:4318"
         ports:
