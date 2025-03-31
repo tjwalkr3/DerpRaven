@@ -1,6 +1,13 @@
 ﻿@page "/images"
 
-<h3>Images</h3>
+@if (featureFlagEnabled) {
+    <h3>Images (with feature flag enabled)</h3>
+}
+else
+{
+    <h3>Images</h3>
+}
+
 <div class="form-container">
     <InputFile OnChange="OnFileSelected" accept=".png" />
     <textarea @bind="altText" maxlength="125" placeholder="Enter description"></textarea>
