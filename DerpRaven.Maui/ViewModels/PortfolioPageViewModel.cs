@@ -7,7 +7,8 @@ public partial class PortfolioPageViewModel : ObservableObject
 
     public ObservableCollection<Emote> PortfolioEmotes { get; private set; }
     public ObservableCollection<Emote> PortfolioPlushies { get; private set; }
-    public PortfolioPageViewModel() {
+    public PortfolioPageViewModel()
+    {
         PortfolioEmotes = new ObservableCollection<Emote>
         {
             new Emote
@@ -124,5 +125,5 @@ public partial class PortfolioPageViewModel : ObservableObject
             }
         };
     }
-   
+
 }
