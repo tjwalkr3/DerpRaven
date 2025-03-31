@@ -28,8 +28,10 @@ spec:
         - name: BlobStorage__ConnectionString
           value: $AZURE_BLOB_CONN_STRING
         - name: BlobStorage__ContainerName
-          value: "kube-images"
+          value: $AZURE_BLOB_CONTIANER_NAME
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
           value: "http://derp-collector-svc:4318"
+        - name: FEATURE_FLAG_ON
+          value: $FEATURE_FLAG_ON
         ports:
         - containerPort: 8080
