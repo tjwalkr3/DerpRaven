@@ -14,7 +14,8 @@ public partial class Images
     public Images(IImageClient imageClient, IConfiguration config)
     {
         _imageClient = imageClient;
-        if (string.IsNullOrEmpty(config["FeatureFlagEnabled"])) {
+        if (string.IsNullOrEmpty(config["FeatureFlagEnabled"]))
+        {
             featureFlagEnabled = false;
         }
         else
