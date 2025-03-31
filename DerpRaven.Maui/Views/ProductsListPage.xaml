@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
+
              x:Class="DerpRaven.Maui.Views.ProductsListPage"
              Title="ProductsListPage">
     <ScrollView>
@@ -11,7 +13,9 @@
                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
                             <Image Grid.ColumnSpan="2" Source="{Binding ImageUrl}" HeightRequest="240"  Aspect="AspectFill" Margin="0,5,0,20">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NavigateToProductCommand}" NumberOfTapsRequired="1"/>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductsListPageViewModel}}, Path=NavigateToProductCommand}" 
+                                        CommandParameter="{Binding}" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Grid.Row="1" Text="{Binding Name}" FontSize="20" FontAttributes="Bold"/>
