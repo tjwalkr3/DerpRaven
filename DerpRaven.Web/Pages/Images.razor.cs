@@ -9,18 +9,18 @@ public partial class Images
     List<ImageDto>? _images = [];
     private IBrowserFile? selectedFile;
     private string altText = string.Empty;
-    private bool featureFlagEnabled;
+    private string featureFlag;
 
     public Images(IImageClient imageClient, IConfiguration config)
     {
         _imageClient = imageClient;
         if (string.IsNullOrEmpty(config["FeatureFlagEnabled"]))
         {
-            featureFlagEnabled = false;
+            featureFlag = string.Empty;
         }
         else
         {
-            featureFlagEnabled = bool.Parse(config["FeatureFlagEnabled"] ?? "false");
+            featureFlag = config["FeatureFlagEnabled"] ?? string.Empty;
         }
     }
 

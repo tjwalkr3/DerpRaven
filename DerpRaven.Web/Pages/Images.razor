@@ -1,11 +1,8 @@
 ﻿@page "/images"
 
-@if (featureFlagEnabled) {
-    <h3>Images (with feature flag enabled)</h3>
-}
-else
-{
-    <h3>Images</h3>
+<h3>Images</h3>
+@if (!string.IsNullOrEmpty(featureFlag)) {
+    <p>The feature flag is set to: @featureFlag</p>
 }
 
 <div class="form-container">
