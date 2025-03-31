@@ -18,9 +18,7 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
             
             <!--Hamburger button for drop down for pages-->
-           
-            <Grid
-                ColumnDefinitions="*,*">
+            <Grid ColumnDefinitions="*,*">
                     
                 <!-- Image for DRS-->
                 <Image
@@ -42,10 +40,7 @@
             </Grid>
 
 
-            <CarouselView ItemsSource="{Binding Emotes}"
-                          PeekAreaInsets="150"
-                          >
-
+            <CarouselView ItemsSource="{Binding Emotes}" PeekAreaInsets="150">
                 <CarouselView.ItemTemplate SnapPointsType ="None">
                     <DataTemplate x:DataType="models:Emote">
                         <StackLayout>

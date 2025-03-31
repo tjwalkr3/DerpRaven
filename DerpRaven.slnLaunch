@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Blazor&API",
+    "Projects": [
+      {
+        "Path": "DerpRaven.Web\\DerpRaven.Web.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "DerpRaven.Api\\DerpRaven.Api.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
