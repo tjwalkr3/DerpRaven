@@ -9,7 +9,7 @@ RUN dotnet restore "DerpRaven.Web/DerpRaven.Web.csproj"
 RUN dotnet publish "DerpRaven.Web/DerpRaven.Web.csproj" -c Release -o publish
 
 # Inject the base address into the appsettings.json
-RUN echo "{\n    \"BaseAddress\": \"${BASE_ADDRESS}\"\n    \"FeatureFlagEnabled\": \"${FEATURE_FLAG_ON}\"\n}" \
+RUN echo "{\n    \"BaseAddress\": \"${BASE_ADDRESS}\",\n    \"FeatureFlagEnabled\": \"${FEATURE_FLAG_ON}\"}" \
     > /App/publish/wwwroot/appsettings.json
 
 # Use NGINX to serve the static files
