@@ -10,7 +10,7 @@ namespace DerpRaven.NTests.ApiControllerTests;
 
 public class OrderServiceControllerTests
 {
-    OrderServiceController _controller;
+    OrderController _controller;
 
     [SetUp]
     public void Setup()

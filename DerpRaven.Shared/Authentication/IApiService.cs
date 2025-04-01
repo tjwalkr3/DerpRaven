@@ -10,5 +10,6 @@ namespace DerpRaven.Shared.Authentication
         Task<HttpResponseMessage> PatchAsync(string endpoint, HttpContent content);
         Task<HttpResponseMessage> PostAsJsonAsync<T>(string endpoint, T content);
         Task<HttpResponseMessage> PostAsync(string endpoint, HttpContent content);
+        Task<HttpResponseMessage> PutAsJsonAsync<T>(string endpoint, T content);
     }
 }

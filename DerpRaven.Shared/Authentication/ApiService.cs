@@ -69,4 +69,12 @@ public class ApiService : IApiService
 
         return await _httpClient.PatchAsync(endpoint, content);
     }
+
+    public async Task<HttpResponseMessage> PutAsJsonAsync<T>(string endpoint, T content)
+    {
+        _httpClient.DefaultRequestHeaders.Clear();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", keycloakClient.IdentityToken);
+
+        return await _httpClient.PutAsJsonAsync(endpoint, content);
+    }
 }
