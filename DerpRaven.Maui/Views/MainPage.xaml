@@ -4,7 +4,8 @@
              x:Class="DerpRaven.Maui.Views.MainPage"
              xmlns:models="clr-namespace:DerpRaven.Maui.ViewModels"
              xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared"
-             Background="DimGrey">
+             Background="DimGrey"
+             >
     
 
     <ScrollView
