@@ -19,7 +19,7 @@
             <CollectionView ItemsSource="{Binding Portfolios}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:PortfolioViewModel">
-                        <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="150">
+                        <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
                             <CarouselView.ItemTemplate>
                                 <DataTemplate x:DataType="dtos:ImageDto">
                                     <StackLayout>
