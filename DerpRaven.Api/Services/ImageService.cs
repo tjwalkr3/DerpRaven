@@ -124,4 +124,14 @@ public class ImageService : IImageService
 
         return false;
     }
+
+    public async Task<ImageDto?> GetImageInfoAsync(int id)
+    {
+        var image = await _context.Images.FindAsync(id);
+        if (image != null)
+        {
+            return MapToImageDto(image);
+        }
+        return null;
+    }
 }

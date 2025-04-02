@@ -4,7 +4,6 @@ using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using NSubstitute.Extensions;
 using Shouldly;
 
 namespace DerpRaven.NTests.ApiControllerTests;

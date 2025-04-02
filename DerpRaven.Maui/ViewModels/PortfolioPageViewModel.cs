@@ -1,129 +1,49 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using DerpRaven.Shared.Dtos;
 namespace DerpRaven.Maui.ViewModels;
 
-public partial class PortfolioPageViewModel : ObservableObject
-{
 
-    public ObservableCollection<Emote> PortfolioEmotes { get; private set; }
-    public ObservableCollection<Emote> PortfolioPlushies { get; private set; }
-    public PortfolioPageViewModel()
-    {
-        PortfolioEmotes = new ObservableCollection<Emote>
-        {
-            new Emote
-            {
-                Name = "Quincy Mad Emote",
-                ImageUrl = "quincymad.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Quincy Meh Emote",
-                ImageUrl = "quincymeh.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Quincy Shy Emote",
-                ImageUrl = "quincyshy.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Quincy Upset Emote",
-                ImageUrl = "quincyupset.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Ramus Angry Emote",
-                ImageUrl = "ramusangry.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Ramus Happy Emote",
-                ImageUrl = "ramushappy.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Ramus Sad Emote",
-                ImageUrl = "ramussad.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Ramus Tired Emote",
-                ImageUrl = "ramustired.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Roxanne Grumpy Emote",
-                ImageUrl = "roxannegrumpy.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Roxanne Happy Emote",
-                ImageUrl = "roxannehappy.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Roxanne Laughing Emote",
-                ImageUrl = "roxannelaughing.png",
-                Description = "A custom emote for a client"
-            },
-            new Emote
-            {
-                Name = "Roxanne Seducing Emote",
-                ImageUrl = "roxanneseducing.png",
-                Description = "A custom emote for a client"
-            }
-        };
 
-        PortfolioPlushies = new ObservableCollection<Emote>
+
+public partial class PortfolioPageViewModel : ObservableObject {
+    public ObservableCollection<PortfolioViewModel> Portfolios { get; private set; }
+    private List<ImageDto> Images { get; set; }
+
+    public PortfolioPageViewModel() {
+        Images = new List<ImageDto>
         {
-            new Emote
-            {
-                Name = "Derp Squid Squish",
-                ImageUrl = "derpsquid.png",
-                Description = "A custom plush for a client"
-            },
-            new Emote
-            {
-                Name = "Flower Turtle",
-                ImageUrl = "flowerturtle.png",
-                Description = "A custom plush for a client"
-            },
-            new Emote
-            {
-                Name = "Dragon Plush",
-                ImageUrl = "dragonplush.png",
-                Description = "A plush for a client"
-            },
-            new Emote
-            {
-                Name = "Puffer Squish",
-                ImageUrl = "puffersquish.png",
-                Description = "A custom plush for a client"
-            },
-            new Emote
-            {
-                Name = "Unicorn Squish",
-                ImageUrl = "unicornsquish.png",
-                Description = "A custom plush for a client"
-            },
-            new Emote
-            {
-                Name = "Horse Snuggler",
-                ImageUrl = "horsesnuggler.png",
-                Description = "A horse snuggler"
-            }
-        };
+        new ImageDto { Id = 1, Alt = "Derp Squid", Path = "derpsquid.png" },
+        new ImageDto { Id = 2, Path = "horsesnuggler.png", Alt = "Horse Snuggler" },
+        new ImageDto { Id = 3, Path = "puffersquish.png", Alt = "Puffer Squishy" }
+    };
+
+        var portfolioDtos = new List<PortfolioDto>
+        {
+        new PortfolioDto { Id = 1, Description = "Plushies", Name = "Plush Portfolio", ProductTypeId = 1, ImageIds = new List<int> { 1, 2, 3 } },
+        new PortfolioDto { Id = 2, Description = "Plushies2", Name = "Plush Portfolio2", ProductTypeId = 1, ImageIds = new List<int> { 3 } }
+    };
+
+        Portfolios = new ObservableCollection<PortfolioViewModel>(
+            portfolioDtos.Select(p => new PortfolioViewModel(p, Images))
+        );
+    }
+}
+
+
+
+public class PortfolioViewModel : ObservableObject {
+    public PortfolioDto Portfolio { get; }
+    public ObservableCollection<ImageDto> Images { get; }
+
+    public PortfolioViewModel(PortfolioDto portfolio, List<ImageDto> allImages) {
+        Portfolio = portfolio;
+        Images = new ObservableCollection<ImageDto>(
+            allImages.Where(img => portfolio.ImageIds.Contains(img.Id))
+        );
     }
 
 }
+
+
+

@@ -46,4 +46,11 @@ public class ImageClient(IApiService apiService) : IImageClient
         var response = await apiService.DeleteAsync($"api/image/delete/{id}");
         return response.IsSuccessStatusCode;
     }
+
+    // does not need authentication
+    public async Task<ImageDto> GetImageInfoAsync(int id)
+    {
+        var response = await apiService.GetFromJsonAsyncWithoutAuthorization<ImageDto>($"api/image/info/{id}");
+        return response ?? new ImageDto();
+    }
 }

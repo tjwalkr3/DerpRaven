@@ -10,7 +10,7 @@ namespace DerpRaven.NTests.ApiControllerTests;
 
 public class ProductServiceControllerTests
 {
-    ProductServiceController _controller;
+    ProductController _controller;
     [SetUp]
     public void Setup()
     {
@@ -28,7 +28,7 @@ public class ProductServiceControllerTests
         productService.GetProductsByNameAsync("my product").Returns(dtoList.Where(c => c.Name == "my product").ToList());
         productService.UpdateProductAsync(Arg.Any<ProductDto>()).Returns(true);
 
-        _controller = new ProductServiceController(productService);
+        _controller = new ProductController(productService);
     }
 
     [Test]

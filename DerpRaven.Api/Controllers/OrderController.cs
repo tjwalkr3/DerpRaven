@@ -8,11 +8,11 @@ namespace DerpRaven.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class OrderServiceController : ControllerBase
+public class OrderController : ControllerBase
 {
     private readonly IOrderService _orderService;
 
-    public OrderServiceController(IOrderService orderService)
+    public OrderController(IOrderService orderService)
     {
         _orderService = orderService;
     }

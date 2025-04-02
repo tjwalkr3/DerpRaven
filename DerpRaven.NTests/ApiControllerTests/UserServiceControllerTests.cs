@@ -1,5 +1,4 @@
-﻿
-using DerpRaven.Api.Controllers;
+﻿using DerpRaven.Api.Controllers;
 using DerpRaven.Api.Services;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +10,7 @@ namespace DerpRaven.NTests.ApiControllerTests;
 
 public class UserServiceControllerTests
 {
-    UserServiceController _controller;
+    UserController _controller;
 
     [SetUp]
     public void Setup()
@@ -31,7 +30,7 @@ public class UserServiceControllerTests
         userService.GetUsersByStatusAsync(true).Returns(dtoList);
         userService.GetUsersByEmailAsync("user1@example.com").Returns(dtoList.Where(u => u.Email == "user1@example.com").ToList());
 
-        _controller = new UserServiceController(userService);
+        _controller = new UserController(userService);
     }
 
     [Test]

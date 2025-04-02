@@ -8,11 +8,11 @@ namespace DerpRaven.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class ProductServiceController : ControllerBase
+public class ProductController : ControllerBase
 {
     private readonly IProductService _productService;
 
-    public ProductServiceController(IProductService productService)
+    public ProductController(IProductService productService)
     {
         _productService = productService;
     }
