@@ -1,11 +1,10 @@
-using DerpRaven.Maui.ViewModels;
+using Microsoft.Maui.Controls;
 namespace DerpRaven.Maui.Views;
 
-public partial class PortfolioPage : ContentPage
+public partial class PortfolioPage : Shell
 {
-    public PortfolioPage(PortfolioPageViewModel vm)
+    public PortfolioPage()
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

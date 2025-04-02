@@ -3,6 +3,7 @@ using DerpRaven.Maui.Views;
 using Microsoft.Extensions.Logging;
 using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.ApiClients;
+using CommunityToolkit.Maui;
 namespace DerpRaven.Maui;
 
 public static class MauiProgram
@@ -12,6 +13,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .RegisterServices()
             .RegisterViewModels()
             .RegisterViews()
@@ -53,6 +55,8 @@ public static class MauiProgram
         builder.Services.AddTransient<PortfolioPageViewModel>();
         builder.Services.AddTransient<ProductPageViewModel>();
         builder.Services.AddTransient<ProductsListPageViewModel>();
+        builder.Services.AddTransient<PlushiePortfolioPage>();
+        builder.Services.AddTransient<ArtPortfolioPage>();
         return builder;
     }
 

@@ -1,57 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DerpRaven.Maui.Views.PortfolioPage"
-             xmlns:models="clr-namespace:DerpRaven.Maui.ViewModels"
-             xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared"
-             Title="Portfolio Page">
+<Shell
+    x:Class="DerpRaven.Maui.Views.PortfolioPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DerpRaven.Maui.Views"
+    BackgroundColor="Grey">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="0,0" Spacing="0">
-
-            <Label
-                Text="Welcome to Derp Raven"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
-
-            <!-- CollectionView dynamically creating multiple carousels -->
-            <CollectionView ItemsSource="{Binding Portfolios}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:PortfolioViewModel">
-                        <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
-                            <CarouselView.ItemTemplate>
-                                <DataTemplate x:DataType="dtos:ImageDto">
-                                    <StackLayout>
-                                        <Border Stroke="Black"
-                                                StrokeShape="RoundRectangle 5"
-                                                Margin="10"
-                                                Padding="10"
-                                                HorizontalOptions="Center"
-                                                VerticalOptions="Center">
-                                            <StackLayout>
-                                                <Label Text="{Binding Alt}"
-                                                       FontAttributes="Bold"
-                                                       FontSize="18"
-                                                       HorizontalOptions="Center"
-                                                       VerticalOptions="Center" />
-                                                <Image Source="{Binding Path}"
-                                                       Aspect="AspectFill"
-                                                       HeightRequest="150"
-                                                       WidthRequest="150"
-                                                       HorizontalOptions="Center" />
-                                            </StackLayout>
-                                        </Border>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-
-        </VerticalStackLayout>
-    </ScrollView>
-
-</ContentPage>
+    <TabBar>
+        <Tab Title="Plushie Portfolio">
+            <ShellContent ContentTemplate="{DataTemplate local:PlushiePortfolioPage}" />
+        </Tab>
+        <Tab Title="Art Portfolio">
+            <ShellContent ContentTemplate="{DataTemplate local:ArtPortfolioPage}" />
+        </Tab>
+    </TabBar>
+</Shell>
