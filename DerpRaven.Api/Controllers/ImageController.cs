@@ -55,4 +55,13 @@ public class ImageController : ControllerBase
         if (!result) return BadRequest("Failed to delete image.");
         return Ok("Deleted");
     }
+
+    [HttpGet("info/{id}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetImageInfo(int id)
+    {
+        var image = await _imageService.GetImageInfoAsync(id);
+        if (image == null) return NotFound("An image with this ID was not found!");
+        return Ok(image);
+    }
 }
