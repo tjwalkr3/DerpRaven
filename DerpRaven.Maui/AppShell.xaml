@@ -58,7 +58,7 @@
         Route="ProductsListPage" />
 
     <Shell.ToolbarItems>
-        <ToolbarItem Text="Login" Clicked="OnLoginClicked"/>
+        <ToolbarItem Text="Login" Clicked="OnButtonClicked"/>
     </Shell.ToolbarItems>
 
 </Shell>

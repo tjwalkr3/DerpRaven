@@ -39,6 +39,9 @@ public static class MauiProgram
         builder.Services.AddTransient<PortfolioPage>();
         builder.Services.AddTransient<ProductPage>();
         builder.Services.AddTransient<ProductsListPage>();
+        builder.Services.AddTransient<AppShell>();
+        builder.Services.AddTransient<SplashScreen>();
+        builder.Services.AddTransient<App>();
         return builder;
     }
 
@@ -61,7 +64,7 @@ public static class MauiProgram
         var oktaClientConfiguration = new OktaClientConfiguration()
         {
             Domain = "https://engineering.snow.edu/auth/realms/SnowCollege/",
-            ClientId = "DerpRavenMauiAuth",
+            ClientId = "JonathanMauiAuth",
             RedirectUri = "myapp://callback",
             Browser = new WebBrowserAuthenticator()
         };

@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddAuthentication().AddJwtBearer(options =>
 {
     options.Authority = "https://engineering.snow.edu/auth/realms/SnowCollege";
-    options.Audience = "DerpRavenMauiAuth";
+    options.Audience = "JonathanMauiAuth";
 });
 
 // Add the database context
