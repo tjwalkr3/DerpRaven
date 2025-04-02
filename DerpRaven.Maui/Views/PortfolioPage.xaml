@@ -3,13 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DerpRaven.Maui.Views.PortfolioPage"
              xmlns:models="clr-namespace:DerpRaven.Maui.ViewModels"
+             xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared"
              Title="Portfolio Page">
-    
 
     <ScrollView>
-        <VerticalStackLayout
-    Padding="0,0"
-    Spacing="0">
+        <VerticalStackLayout Padding="0,0" Spacing="0">
 
             <Label
                 Text="Welcome to Derp Raven"
@@ -17,75 +15,41 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
 
-
-           
-            <CarouselView ItemsSource="{Binding PortfolioEmotes}"
-                    PeekAreaInsets="150">
-
-                <CarouselView.ItemTemplate SnapPointsType ="None">
-                    <DataTemplate x:DataType="models:Emote">
-                        <StackLayout>
-                            <Border Stroke="Black"
-                            StrokeShape="RoundRectangle 5"
-                            Margin="10"
-                            Padding="10"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-                                <StackLayout>
-                                    <Label Text="{Binding Name}"
-                                    FontAttributes="Bold"
-                                    FontSize="18"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center" />
-                                    <Image Source="{Binding ImageUrl}"
-                                    Aspect="AspectFill"
-                                    HeightRequest="150"
-                                    WidthRequest="150"
-                                    HorizontalOptions="Center" />
-                                    <Label Text="{Binding Description}"
-                                    FontAttributes="Italic"
-                                    HorizontalOptions="Center"
-                                    MaxLines="5"
-                                    LineBreakMode="TailTruncation" />
-                                </StackLayout>
-                            </Border>
-                        </StackLayout>
+            <!-- CollectionView dynamically creating multiple carousels -->
+            <CollectionView ItemsSource="{Binding Portfolios}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:PortfolioViewModel">
+                        <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="150">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate x:DataType="dtos:ImageDto">
+                                    <StackLayout>
+                                        <Border Stroke="Black"
+                                                StrokeShape="RoundRectangle 5"
+                                                Margin="10"
+                                                Padding="10"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center">
+                                            <StackLayout>
+                                                <Label Text="{Binding Alt}"
+                                                       FontAttributes="Bold"
+                                                       FontSize="18"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                                <Image Source="{Binding Path}"
+                                                       Aspect="AspectFill"
+                                                       HeightRequest="150"
+                                                       WidthRequest="150"
+                                                       HorizontalOptions="Center" />
+                                            </StackLayout>
+                                        </Border>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
                     </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-            <CarouselView ItemsSource="{Binding PortfolioPlushies}" PeekAreaInsets="150">
-                <CarouselView.ItemTemplate SnapPointsType ="None">
-                    <DataTemplate x:DataType="models:Emote">
-                        <StackLayout>
-                            <Border Stroke="Black"
-                            StrokeShape="RoundRectangle 5"
-                            Margin="10"
-                            Padding="10"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-                                <StackLayout>
-                                    <Label Text="{Binding Name}"
-                                    FontAttributes="Bold"
-                                    FontSize="18"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center" />
-                                    <Image Source="{Binding ImageUrl}"
-                                    Aspect="AspectFill"
-                                    HeightRequest="150"
-                                    WidthRequest="150"
-                                    HorizontalOptions="Center" />
-                                    <Label Text="{Binding Description}"
-                                    FontAttributes="Italic"
-                                    HorizontalOptions="Center"
-                                    MaxLines="5"
-                                    LineBreakMode="TailTruncation" />
-                                </StackLayout>
-                            </Border>
-                        </StackLayout>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
 
         </VerticalStackLayout>
     </ScrollView>
