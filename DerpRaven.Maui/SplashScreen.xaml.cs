@@ -19,7 +19,7 @@ public partial class SplashScreen : ContentPage
             MainThread.InvokeOnMainThreadAsync(() =>
             {
                 var mainPageViewModel = new MainPageViewModel();
-                Application.Current.Windows[0].Page = new MainPage(mainPageViewModel);
+                if (Application.Current != null) Application.Current.Windows[0].Page = new AppShell();
             });
         });
     }
