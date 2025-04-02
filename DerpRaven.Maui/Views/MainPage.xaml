@@ -17,8 +17,8 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
 
-            <Grid
-                ColumnDefinitions="*,*">
+
+            <Grid ColumnDefinitions="*,*">
 
                 <!-- Image for DRS-->
                 <Image

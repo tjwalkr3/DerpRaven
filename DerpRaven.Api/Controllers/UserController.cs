@@ -1,16 +1,18 @@
 ﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DerpRaven.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserServiceController : ControllerBase
+[Authorize]
+public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
 
-    public UserServiceController(IUserService userService)
+    public UserController(IUserService userService)
     {
         _userService = userService;
     }

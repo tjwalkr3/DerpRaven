@@ -1,5 +1,4 @@
-﻿using Castle.Core.Logging;
-using DerpRaven.Api.Controllers;
+﻿using DerpRaven.Api.Controllers;
 using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;

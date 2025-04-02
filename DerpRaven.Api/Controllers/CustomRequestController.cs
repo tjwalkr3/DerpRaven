@@ -1,11 +1,13 @@
 ﻿using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using DerpRaven.Shared.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DerpRaven.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class CustomRequestController : ControllerBase
 {
     private readonly ICustomRequestService _customRequestService;

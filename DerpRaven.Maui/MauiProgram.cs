@@ -1,6 +1,8 @@
 ﻿using DerpRaven.Maui.ViewModels;
 using DerpRaven.Maui.Views;
 using Microsoft.Extensions.Logging;
+using DerpRaven.Shared.Authentication;
+using DerpRaven.Shared.ApiClients;
 namespace DerpRaven.Maui;
 
 public static class MauiProgram
@@ -56,7 +58,21 @@ public static class MauiProgram
 
     private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
+        var oktaClientConfiguration = new OktaClientConfiguration()
+        {
+            Domain = "https://engineering.snow.edu/auth/realms/SnowCollege/",
+            ClientId = "DerpRavenMauiAuth",
+            RedirectUri = "myapp://callback",
+            Browser = new WebBrowserAuthenticator()
+        };
 
+        builder.Services.AddSingleton(new KeycloakClient(oktaClientConfiguration));
+        builder.Services.AddSingleton<ApiService>();
+
+        builder.Services.AddSingleton<IApiService, ApiService>();
+        builder.Services.AddSingleton<IImageClient, ImageClient>();
+        builder.Services.AddSingleton<ICustomRequestClient, CustomRequestClient>();
+        builder.Services.AddSingleton<IPortfolioClient, PortfolioClient>();
         return builder;
     }
 

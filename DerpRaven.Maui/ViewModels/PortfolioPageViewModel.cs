@@ -5,6 +5,7 @@ namespace DerpRaven.Maui.ViewModels;
 
 
 
+
 public partial class PortfolioPageViewModel : ObservableObject {
     public ObservableCollection<PortfolioViewModel> Portfolios { get; private set; }
     private List<ImageDto> Images { get; set; }
@@ -41,6 +42,7 @@ public class PortfolioViewModel : ObservableObject {
             allImages.Where(img => portfolio.ImageIds.Contains(img.Id))
         );
     }
+
 }
 
 

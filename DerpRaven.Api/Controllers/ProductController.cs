@@ -1,21 +1,24 @@
 ﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DerpRaven.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductServiceController : ControllerBase
+[Authorize]
+public class ProductController : ControllerBase
 {
     private readonly IProductService _productService;
 
-    public ProductServiceController(IProductService productService)
+    public ProductController(IProductService productService)
     {
         _productService = productService;
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllProductsAsync()
     {
         var products = await _productService.GetAllProductsAsync();
@@ -23,6 +26,7 @@ public class ProductServiceController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProductByIdAsync(int id)
     {
         var product = await _productService.GetProductByIdAsync(id);
@@ -34,6 +38,7 @@ public class ProductServiceController : ControllerBase
     }
 
     [HttpGet("type/{productType}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProductsByTypeAsync(string productType)
     {
         var products = await _productService.GetProductsByTypeAsync(productType);
@@ -41,6 +46,7 @@ public class ProductServiceController : ControllerBase
     }
 
     [HttpGet("name/{name}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProductsByNameAsync(string name)
     {
         var products = await _productService.GetProductsByNameAsync(name);

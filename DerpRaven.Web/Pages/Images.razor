@@ -1,6 +1,11 @@
 ﻿@page "/images"
 
 <h3>Images</h3>
+<h4 class="errorText">@errorString</h4>
+@if (!string.IsNullOrEmpty(featureFlag)) {
+    <p>The feature flag is set to: @featureFlag</p>
+}
+
 <div class="form-container">
     <InputFile OnChange="OnFileSelected" accept=".png" />
     <textarea @bind="altText" maxlength="125" placeholder="Enter description"></textarea>

@@ -6,8 +6,14 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+// Add authentication services
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.Authority = "https://engineering.snow.edu/auth/realms/SnowCollege";
+    options.Audience = "DerpRavenMauiAuth";
+});
 
 // Add the database context
 string dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")

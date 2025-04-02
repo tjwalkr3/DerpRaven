@@ -10,7 +10,7 @@ namespace DerpRaven.NTests.ApiControllerTests;
 
 public class PortfolioServiceControllerTests
 {
-    PortfolioServiceController _controller;
+    PortfolioController _controller;
 
     [SetUp]
     public void Setup()
@@ -30,7 +30,7 @@ public class PortfolioServiceControllerTests
         portfolioService.DeletePortfolioAsync(1).Returns(true);
         portfolioService.UpdatePortfolioAsync(Arg.Any<PortfolioDto>()).Returns(true);
 
-        _controller = new PortfolioServiceController(portfolioService);
+        _controller = new PortfolioController(portfolioService);
 
     }
 

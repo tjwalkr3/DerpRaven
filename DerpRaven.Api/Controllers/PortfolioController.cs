@@ -2,21 +2,24 @@
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using DerpRaven.Api.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DerpRaven.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PortfolioServiceController : ControllerBase
+[Authorize]
+public class PortfolioController : ControllerBase
 {
     private readonly IPortfolioService _portfolioService;
 
-    public PortfolioServiceController(IPortfolioService portfolioService)
+    public PortfolioController(IPortfolioService portfolioService)
     {
         _portfolioService = portfolioService;
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllPortfolios()
     {
         var portfolios = await _portfolioService.GetAllPortfoliosAsync();
@@ -24,6 +27,7 @@ public class PortfolioServiceController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetPortfolioById(int id)
     {
         var portfolio = await _portfolioService.GetPortfolioByIdAsync(id);
@@ -35,6 +39,7 @@ public class PortfolioServiceController : ControllerBase
     }
 
     [HttpGet("type/{productType}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetPortfoliosByType(string productType)
     {
         var portfolios = await _portfolioService.GetPortfoliosByTypeAsync(productType);
@@ -42,6 +47,7 @@ public class PortfolioServiceController : ControllerBase
     }
 
     [HttpGet("name/{name}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetPortfoliosByName(string name)
     {
         var portfolios = await _portfolioService.GetPortfoliosByNameAsync(name);
