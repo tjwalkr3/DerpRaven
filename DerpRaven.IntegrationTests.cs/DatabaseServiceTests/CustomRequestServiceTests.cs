@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Shouldly;
-namespace DerpRaven.Tests.ServiceTests;
+namespace DerpRaven.IntegrationTests.DatabaseServiceTests;
 
 public class CustomRequestServiceTests
 {

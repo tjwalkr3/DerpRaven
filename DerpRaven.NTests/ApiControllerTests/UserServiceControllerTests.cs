@@ -1,5 +1,4 @@
-﻿
-using DerpRaven.Api.Controllers;
+﻿using DerpRaven.Api.Controllers;
 using DerpRaven.Api.Services;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Http;

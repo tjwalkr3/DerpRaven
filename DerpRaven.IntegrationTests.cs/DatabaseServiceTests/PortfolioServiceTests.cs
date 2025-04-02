@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Shouldly;
 using NSubstitute;
 using DerpRaven.Shared.Dtos;
-namespace DerpRaven.Tests.ServiceTests;
+namespace DerpRaven.IntegrationTests.DatabaseServiceTests;
 
 public class PortfolioServiceTests
 {
