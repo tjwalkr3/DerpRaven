@@ -9,7 +9,8 @@ public partial class ProductPageViewModel : ObservableObject
     [ObservableProperty]
     private int _productId;
 
-    partial void OnProductIdChanged(int oldValue, int newValue) {
+    partial void OnProductIdChanged(int oldValue, int newValue)
+    {
         throw new NotImplementedException();
     }
 

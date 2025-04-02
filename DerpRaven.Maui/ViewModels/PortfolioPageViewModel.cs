@@ -6,11 +6,13 @@ namespace DerpRaven.Maui.ViewModels;
 
 
 
-public partial class PortfolioPageViewModel : ObservableObject {
+public partial class PortfolioPageViewModel : ObservableObject
+{
     public ObservableCollection<PortfolioViewModel> Portfolios { get; private set; }
     private List<ImageDto> Images { get; set; }
 
-    public PortfolioPageViewModel() {
+    public PortfolioPageViewModel()
+    {
         Images = new List<ImageDto>
         {
         new ImageDto { Id = 1, Alt = "Derp Squid", Path = "derpsquid.png" },
@@ -32,11 +34,13 @@ public partial class PortfolioPageViewModel : ObservableObject {
 
 
 
-public class PortfolioViewModel : ObservableObject {
+public class PortfolioViewModel : ObservableObject
+{
     public PortfolioDto Portfolio { get; }
     public ObservableCollection<ImageDto> Images { get; }
 
-    public PortfolioViewModel(PortfolioDto portfolio, List<ImageDto> allImages) {
+    public PortfolioViewModel(PortfolioDto portfolio, List<ImageDto> allImages)
+    {
         Portfolio = portfolio;
         Images = new ObservableCollection<ImageDto>(
             allImages.Where(img => portfolio.ImageIds.Contains(img.Id))

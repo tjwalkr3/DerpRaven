@@ -17,7 +17,7 @@ public partial class AppShell : Shell
     {
         var loginToolbarItem = this.ToolbarItems.FirstOrDefault(t => t.Text == "Login" || t.Text.Contains("Logout"));
         if (loginToolbarItem == null) return;
-        if(loginToolbarItem.Text == "Login")
+        if (loginToolbarItem.Text == "Login")
         {
             var loginResult = await _oktaClient.LoginAsync();
             if (!loginResult.IsError)
