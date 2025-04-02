@@ -54,4 +54,8 @@
         ContentTemplate="{DataTemplate local:ProductsListPage}"
         Route="ProductsListPage" />
 
+    <Shell.ToolbarItems>
+        <ToolbarItem Text="Login" Clicked="OnLoginClicked"/>
+    </Shell.ToolbarItems>
+
 </Shell>
