@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace DerpRaven.Shared.ApiClients;
 
-public class PortfolioClient(IApiService apiService)
+public class PortfolioClient(IApiService apiService) : IPortfolioClient
 {
     // does not need authentication
     public async Task<List<PortfolioDto>> GetAllPortfoliosAsync()
