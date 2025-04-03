@@ -1,12 +1,10 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.Options;
-using static System.Net.Mime.MediaTypeNames;
-
 namespace DerpRaven.Api.Services;
 
-public class BlobService
+public class BlobService : IBlobService
 {
     private readonly BlobContainerClient _containerClient;
 
@@ -19,21 +17,22 @@ public class BlobService
         _containerClient = _blobClient.GetBlobContainerClient(containerName);
     }
 
-    public async Task<Azure.Storage.Blobs.Models.BlobContainerInfo> CreateIfNotExistsAsync()
+    public async Task<BlobContainerInfo> CreateIfNotExistsAsync()
     {
         return await _containerClient.CreateIfNotExistsAsync();
     }
 
-    public async Task<Azure.Storage.Blobs.Models.BlobContentInfo> UploadAsync(string blobName, Stream stream)
+    public async Task<BlobContentInfo> UploadAsync(string blobName, Stream stream)
     {
         var blob = _containerClient.GetBlobClient(blobName);
         return await blob.UploadAsync(stream, true);
     }
 
-    public async Task<Azure.Storage.Blobs.Models.BlobDownloadInfo> DownloadAsync(string blobName)
+    public async Task<Stream> DownloadAsync(string blobName)
     {
         var blob = _containerClient.GetBlobClient(blobName);
-        return await blob.DownloadAsync();
+        var result = await blob.DownloadAsync();
+        return result.Value.Content;
     }
 
     public async Task<Response<bool>> DeleteAsync(string blobName)

@@ -8,19 +8,25 @@ using Microsoft.Extensions.Options;
 
 public class ImageService : IImageService
 {
-    private readonly BlobContainerClient _containerClient;
+    private readonly IBlobService _blobService;
     private readonly AppDbContext _context;
     private readonly ILogger _logger;
 
-    public ImageService(IOptions<BlobStorageOptions> options, AppDbContext context, ILogger<ImageService> logger)
+    public ImageService(IBlobService blobService, AppDbContext context, ILogger<ImageService> logger)
     {
-        string connectionString = options.Value.ConnectionString
-            ?? throw new ArgumentNullException("BlobStorage connection string is missing!");
-        string containerName = options.Value.ContainerName;
-        BlobServiceClient _blobClient = new BlobServiceClient(connectionString);
-        _containerClient = _blobClient.GetBlobContainerClient(containerName);
+        _blobService = blobService;
         _context = context;
         _logger = logger;
+    }
+
+    public static ImageDto MapToImageDto(ImageEntity image)
+    {
+        return new()
+        {
+            Id = image.Id,
+            Path = image.Path,
+            Alt = image.Alt
+        };
     }
 
     public async Task<bool> UploadImageAsync(string fileName, string alt, Stream stream)
@@ -31,10 +37,8 @@ public class ImageService : IImageService
             await _context.Images.AddAsync(image);
             await _context.SaveChangesAsync();
 
-            await _containerClient.CreateIfNotExistsAsync();
-            var blob = _containerClient.GetBlobClient(image.Id.ToString());
-            await blob.UploadAsync(stream, true);
-
+            await _blobService.CreateIfNotExistsAsync();
+            await _blobService.UploadAsync(image.Id.ToString(), stream);
             return true;
         }
         else
@@ -60,16 +64,6 @@ public class ImageService : IImageService
             .ToListAsync();
     }
 
-    private static ImageDto MapToImageDto(ImageEntity image)
-    {
-        return new()
-        {
-            Id = image.Id,
-            Path = image.Path,
-            Alt = image.Alt
-        };
-    }
-
     public async Task<Stream?> GetImageAsync(int id)
     {
         if (!await _context.Images.AnyAsync(i => i.Id == id))
@@ -80,9 +74,7 @@ public class ImageService : IImageService
 
         try
         {
-            var blob = _containerClient.GetBlobClient(id.ToString());
-            var response = await blob.DownloadAsync();
-            return response.Value.Content;
+            return await _blobService.DownloadAsync(id.ToString());
         }
         catch (RequestFailedException ex)
         {
@@ -101,8 +93,7 @@ public class ImageService : IImageService
             await _context.SaveChangesAsync();
 
             // delete the image in the blob storage
-            var blob = _containerClient.GetBlobClient(id.ToString());
-            await blob.DeleteIfExistsAsync();
+            await _blobService.DeleteAsync(id.ToString());
 
             return true;
         }
