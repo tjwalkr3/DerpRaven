@@ -12,7 +12,8 @@ public class BlobService : IBlobService
     {
         string connectionString = options.Value.ConnectionString
             ?? throw new ArgumentNullException("BlobStorage connection string is missing!");
-        string containerName = options.Value.ContainerName;
+        string containerName = options.Value.ContainerName
+            ?? throw new ArgumentNullException("Blobstorage container name is missing!");
         BlobServiceClient _blobClient = new BlobServiceClient(connectionString);
         _containerClient = _blobClient.GetBlobContainerClient(containerName);
     }
