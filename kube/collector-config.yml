@@ -30,10 +30,10 @@ data:
       pipelines:
         traces:
           receivers: [otlp]
-          exporters: [zipkin]
+          exporters: [zipkin, debug]
         metrics:
           receivers: [otlp]
-          exporters: [prometheus]
+          exporters: [prometheus, debug]
         logs:
           receivers: [otlp]
-          exporters: [debug]
+          exporters: [oltphttp, debug]
