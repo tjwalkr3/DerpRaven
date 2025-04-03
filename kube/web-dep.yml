@@ -9,7 +9,7 @@ spec:
     rollingUpdate:
       maxUnavailable: 0
       maxSurge: 1
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: derp-web
@@ -19,11 +19,6 @@ spec:
       labels:
         app: derp-web
     spec:
-      strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 0
-        maxSurge: 1
       containers:
       - name: derp-web-container
         image: tjwalkr3/derp-raven-web:$BUILD_NUMBER
