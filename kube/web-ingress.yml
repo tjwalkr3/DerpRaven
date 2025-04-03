@@ -3,6 +3,11 @@ kind: Ingress
 metadata:
   name: derp-web-ingress
   namespace: derp
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+
 spec:
   rules:
   - host: dragonbytes.org
