@@ -27,9 +27,8 @@ public class CustomRequestClientTests
             }
         });
         _apiService = Substitute.For<IApiService>();
-        _apiService.GetAsync(Arg.Any<string>()).Returns(new HttpResponseMessage(HttpStatusCode.OK)
-        { Content = new StringContent(json) }
-        );
+        _apiService.GetAsync(Arg.Any<string>())
+            .Returns(new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(json) });
         _apiService.PostAsJsonAsync(Arg.Any<string>(), Arg.Any<CustomRequestDto>()).Returns(new HttpResponseMessage(HttpStatusCode.OK));
         _apiService.PatchAsync(Arg.Any<string>(), Arg.Any<HttpContent>()).Returns(new HttpResponseMessage(HttpStatusCode.OK));
     }
@@ -77,6 +76,18 @@ public class CustomRequestClientTests
     public async Task GetCustomRequestByIdAsync()
     {
         // Arrange
+        string json = JsonSerializer.Serialize(new CustomRequestDto
+        {
+            Id = 1,
+            Description = "description1",
+            Email = "email1",
+            ProductTypeId = 1,
+            Status = "Pending",
+            UserId = 1
+        });
+        IApiService newApiService = Substitute.For<IApiService>();
+        _apiService.GetAsync(Arg.Any<string>())
+            .Returns(new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(json) });
         var client = new CustomRequestClient(_apiService);
 
         // Act
