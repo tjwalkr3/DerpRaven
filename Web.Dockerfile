@@ -12,12 +12,14 @@ RUN dotnet publish "DerpRaven.Web/DerpRaven.Web.csproj" -c Release -o publish
 RUN echo "{\n    \"BaseAddress\": \"${BASE_ADDRESS}\",\n    \"FeatureFlagEnabled\": \"${FEATURE_FLAG_ON}\"}" \
     > /App/publish/wwwroot/appsettings.json
 
+# Use NGINX to serve the static files
+FROM nginx:latest AS final
+
 # Configure nginx for relative routing
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./config/nginx.conf /etc/nginx/conf.d
 
-# Use NGINX to serve the static files
-FROM nginx:latest AS final
+# Copy the WASM files to the correct server directory
 COPY --from=build /App/publish/wwwroot /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
