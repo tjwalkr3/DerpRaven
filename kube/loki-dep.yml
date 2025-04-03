@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-loki-dep
+  namespace: derp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-loki
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-loki
+    spec:
+      containers:
+      - name: derp-loki
+        image: grafana/loki:latest
+        ports:
+        - name: loki-logs
+          containerPort: 3100

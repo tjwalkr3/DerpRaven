@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: derp-prometheus-svc
+  namespace: derp
+spec:
+  selector:
+    app: derp-prometheus
+  ports:
+    - protocol: TCP
+      port: 9090 # external port (doesn't have to be the same)
+      targetPort: 9090
+      name: prom-webui
+    - protocol: TCP
+      port: 8889 # external port (doesn't have to be the same)
+      targetPort: 8889
+      name: prom-traces

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: derp-collector-svc
+  namespace: derp
+spec:
+  selector:
+    app: derp-collector
+  ports:
+    - protocol: TCP
+      port: 4318 # external port (doesn't have to be the same)
+      targetPort: 4318
+      name: dotnet-telem
+    - protocol: TCP
+      port: 8889 # external port (doesn't have to be the same)
+      targetPort: 8889
+      name: prom-traces

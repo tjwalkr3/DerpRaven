@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-collector-dep
+  namespace: derp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-collector
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-collector
+    spec:
+      volumes:
+      - name: collector-config-mount
+        configMap:
+          name: derp-collector-config
+      containers:
+      - name: derp-collector
+        volumeMounts:
+        - mountPath: /etc/otelcol-contrib/config.yaml
+          subPath: collector-config
+          name: collector-config-mount
+        image: otel/opentelemetry-collector-contrib
+        ports:
+        - name: dotnet-app
+          containerPort: 4318
+        - name: prom-traces
+          containerPort: 8889

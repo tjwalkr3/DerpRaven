@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: derp-grafana-ingress
+  namespace: derp
+spec:
+  rules:
+  - host: grafana.derp-raven.duckdns.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: derp-grafana-svc
+            port:
+              number: 3000

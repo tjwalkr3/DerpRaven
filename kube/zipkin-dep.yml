@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-zipkin-dep
+  namespace: derp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-zipkin
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-zipkin
+    spec:
+      containers:
+      - name: derp-zipkin
+        image: ghcr.io/openzipkin/zipkin-slim:latest
+        env:
+        - name: STORAGE_TYPE
+          value: mem
+        # - name: SELF_TRACING_ENABLED
+        #   value: true
+        ports:
+        - name: zipkin-traces
+          containerPort: 9411

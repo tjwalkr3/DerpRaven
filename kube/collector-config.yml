@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: derp-collector-config
+  namespace: derp
+data:
+  # property-like keys; each key maps to a simple value
+  collector-config: |
+    # Receivers
+    receivers:
+      otlp:
+        protocols:
+          http:
+            endpoint: 0.0.0.0:4318
+
+    # Exporters
+    exporters:
+      debug:
+        verbosity: detailed
+      zipkin:
+        endpoint: http://derp-zipkin-svc:9411/api/v2/spans
+      prometheus:
+        endpoint: 0.0.0.0:8889
+        namespace: detailed
+      otlphttp:
+        endpoint: "http://derp-loki-svc:3100/otlp"
+
+    # Pipelines
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          exporters: [zipkin]
+        metrics:
+          receivers: [otlp]
+          exporters: [prometheus]
+        logs:
+          receivers: [otlp]
+          exporters: [debug]
