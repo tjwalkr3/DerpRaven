@@ -197,4 +197,27 @@ public class ImageServiceTests
         // Assert
         result.ShouldBeNull();
     }
+
+    [Test]
+    public void MapToImageDto()
+    {
+        // Arrange
+        var image = new ImageEntity
+        {
+            Id = 1,
+            Alt = "alt text",
+            Path = "file.png",
+            Portfolios = [],
+            Products = []
+        };
+
+        // Act
+        var result = ImageService.MapToImageDto(image);
+
+        // Assert
+        result.ShouldNotBeNull();
+        result.Id.ShouldBe(1);
+        result.Alt.ShouldBe("alt text");
+        result.Path.ShouldBe("file.png");
+    }
 }
