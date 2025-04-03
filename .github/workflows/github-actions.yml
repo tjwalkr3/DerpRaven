@@ -52,7 +52,7 @@ jobs:
         docker build \
           -f ./Web.Dockerfile \
           -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }} \
-          --build-arg BASE_ADDRESS="http://derp-raven-api.duckdns.org" \
+          --build-arg BASE_ADDRESS="http://api.dragonbytes.org" \
           --build-arg FEATURE_FLAG_ON=${{ vars.FEATURE_FLAG_ON }} \
           .
 

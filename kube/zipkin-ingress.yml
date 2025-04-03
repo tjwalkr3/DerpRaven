@@ -5,7 +5,7 @@ metadata:
   namespace: derp
 spec:
   rules:
-  - host: zipkin.derp-raven.duckdns.org
+  - host: zipkin.dragonbytes.org
     http:
       paths:
       - path: /

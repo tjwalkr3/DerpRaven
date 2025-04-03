@@ -5,7 +5,7 @@ metadata:
   namespace: derp
 spec:
   rules:
-  - host: grafana.derp-raven.duckdns.org
+  - host: grafana.dragonbytes.org
     http:
       paths:
       - path: /

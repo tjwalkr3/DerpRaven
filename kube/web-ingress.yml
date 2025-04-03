@@ -5,7 +5,7 @@ metadata:
   namespace: derp
 spec:
   rules:
-  - host: derp-raven.duckdns.org
+  - host: dragonbytes.org
     http:
       paths:
       - path: /
