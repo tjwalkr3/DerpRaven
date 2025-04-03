@@ -5,7 +5,7 @@ metadata:
   namespace: derp
 data:
   # property-like keys; each key maps to a simple value
-  # added a comment
+  #another change
   collector-config: |
     # Receivers
     receivers:
