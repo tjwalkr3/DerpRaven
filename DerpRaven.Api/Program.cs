@@ -2,6 +2,11 @@ using DerpRaven.Api;
 using DerpRaven.Api.Model;
 using DerpRaven.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +26,43 @@ string dbConnectionString = builder.Configuration.GetConnectionString("DefaultCo
 builder.Services.AddDbContext<AppDbContext>(o =>
 {
     o.UseNpgsql(dbConnectionString);
+});
+
+// Get exporter URL
+Uri otlpEndpoint = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? "http://localhost:4318");
+
+var resourceBuilder = ResourceBuilder.CreateDefault()
+    .AddService("DerpRaven");
+
+// Set up OpenTelemetry
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .SetResourceBuilder(resourceBuilder)
+        .AddAspNetCoreInstrumentation()
+        .AddOtlpExporter(options =>
+        {
+            options.Endpoint = new Uri(otlpEndpoint, "/v1/traces");
+            options.Protocol = OtlpExportProtocol.HttpProtobuf;
+        }))
+    .WithMetrics(metrics => metrics
+        .SetResourceBuilder(resourceBuilder)
+        .AddAspNetCoreInstrumentation()
+        .AddMeter("DerpRaven")
+        // .AddConsoleExporter()
+        .AddOtlpExporter(options =>
+        {
+            options.Endpoint = new Uri(otlpEndpoint, "/v1/metrics");
+            options.Protocol = OtlpExportProtocol.HttpProtobuf;
+        }));
+
+builder.Logging.AddOpenTelemetry(logging => {
+    logging.SetResourceBuilder(resourceBuilder);
+    logging.AddConsoleExporter();
+    logging.AddOtlpExporter(options =>
+    {
+        options.Endpoint = new Uri(otlpEndpoint, "/v1/logs");
+        options.Protocol = OtlpExportProtocol.HttpProtobuf;
+    });
 });
 
 // Add CORS services
