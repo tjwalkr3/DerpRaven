@@ -31,20 +31,14 @@ spec:
           name: schema-init
         image: postgres:16
         livenessProbe:
-          exec:
-            command:
-            - sh
-            - -c
-            - "psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c 'SELECT 1'"
-          initialDelaySeconds: 10
+          tcpSocket:
+            port: 5432
+          initialDelaySeconds: 15
           periodSeconds: 10
         readinessProbe:
-          exec:
-            command:
-            - sh
-            - -c
-            - "psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c 'SELECT 1'"
-          initialDelaySeconds: 10
+          tcpSocket:
+            port: 5432
+          initialDelaySeconds: 15
           periodSeconds: 10
         ports:
         - containerPort: 5432
