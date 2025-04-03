@@ -35,7 +35,7 @@ spec:
             command:
             - sh
             - -c
-            - "PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB -c 'SELECT 1'"
+            - "psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c 'SELECT 1'"
           initialDelaySeconds: 10
           periodSeconds: 10
         readinessProbe:
@@ -43,7 +43,7 @@ spec:
             command:
             - sh
             - -c
-            - "PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB -c 'SELECT 1'"
+            - "psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c 'SELECT 1'"
           initialDelaySeconds: 10
           periodSeconds: 10
         ports:
