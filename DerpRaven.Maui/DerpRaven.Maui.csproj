@@ -67,7 +67,7 @@
 	  <MauiXaml Remove="ImagesForApp\**" />
 	  <None Remove="ImagesForApp\**" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 	  <None Remove="Resources\Splash\splash.svg" />
 	</ItemGroup>
