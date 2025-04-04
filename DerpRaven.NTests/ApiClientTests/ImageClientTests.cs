@@ -4,9 +4,7 @@ using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Components.Forms;
 using NSubstitute;
 using System.Net;
-using System.Text.Json;
 using Shouldly;
-
 namespace DerpRaven.NTests.ApiClientTests;
 
 public class ImageClientTests
