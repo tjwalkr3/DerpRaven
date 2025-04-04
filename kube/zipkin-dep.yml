@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: derp-zipkin
-        image: ghcr.io/openzipkin/zipkin-slim:latest
+        image: ghcr.io/openzipkin/zipkin-slim:3.5
         env:
         - name: STORAGE_TYPE
           value: mem

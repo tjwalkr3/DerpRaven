@@ -24,7 +24,7 @@ data:
         endpoint: 0.0.0.0:8889
         namespace: detailed
       otlphttp:
-        endpoint: "http://derp-loki-svc:3100/otlp"
+        endpoint: http://derp-loki-svc:3100/otlp
 
     # Pipelines
     service:
@@ -37,4 +37,4 @@ data:
           exporters: [prometheus]
         logs:
           receivers: [otlp]
-          exporters: [otlphttp, debug]
+          exporters: [debug, otlphttp]

@@ -24,7 +24,7 @@ spec:
         - mountPath: /etc/grafana/provisioning/datasources/ds.yaml
           subPath: derp-config
           name: grafana-configs
-        image: grafana/grafana:latest
+        image: grafana/grafana:11.6.0
         ports:
         - name: web-int
           containerPort: 3000

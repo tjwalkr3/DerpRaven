@@ -24,7 +24,7 @@ spec:
         - mountPath: /etc/prometheus/prometheus.yml
           subPath: derp-config
           name: prometheus-configs
-        image: prom/prometheus
+        image: prom/prometheus:v3.2.1
         ports:
         - name: prom-traces
           containerPort: 8889

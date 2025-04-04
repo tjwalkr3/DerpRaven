@@ -24,7 +24,7 @@ spec:
         - mountPath: /etc/otelcol-contrib/config.yaml
           subPath: collector-config
           name: collector-config-mount
-        image: otel/opentelemetry-collector-contrib
+        image: otel/opentelemetry-collector-contrib:0.123.0
         ports:
         - name: dotnet-app
           containerPort: 4318
