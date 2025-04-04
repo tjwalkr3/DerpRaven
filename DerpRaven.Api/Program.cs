@@ -55,7 +55,8 @@ builder.Services.AddOpenTelemetry()
             options.Protocol = OtlpExportProtocol.HttpProtobuf;
         }));
 
-builder.Logging.AddOpenTelemetry(logging => {
+builder.Logging.AddOpenTelemetry(logging =>
+{
     logging.SetResourceBuilder(resourceBuilder);
     logging.AddConsoleExporter();
     logging.AddOtlpExporter(options =>
