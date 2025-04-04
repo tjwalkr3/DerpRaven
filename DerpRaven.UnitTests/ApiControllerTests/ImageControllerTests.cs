@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Shouldly;
-
-namespace DerpRaven.NTests.ApiControllerTests;
+namespace DerpRaven.UnitTests.ApiControllerTests;
 
 public class ImageControllerTests
 {

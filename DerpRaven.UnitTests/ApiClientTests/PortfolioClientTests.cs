@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using NSubstitute;
 using System.Net;
 using Shouldly;
-namespace DerpRaven.Shared.ApiClients;
+namespace DerpRaven.UnitTests.ApiClientTests;
 
 public class PortfolioClientTests
 {

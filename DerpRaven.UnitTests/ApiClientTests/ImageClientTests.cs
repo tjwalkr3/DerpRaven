@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using NSubstitute;
 using System.Net;
 using Shouldly;
-namespace DerpRaven.NTests.ApiClientTests;
+namespace DerpRaven.UnitTests.ApiClientTests;
 
 public class ImageClientTests
 {

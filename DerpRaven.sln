@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.Api", "DerpRaven.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.Shared", "DerpRaven.Shared\DerpRaven.Shared.csproj", "{E287DBFA-0D15-402D-A21B-39B85102A9CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.NTests", "DerpRaven.NTests\DerpRaven.NTests.csproj", "{53C99CE5-92D1-40F6-B210-C53AE9B8FAE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.UnitTests", "DerpRaven.UnitTests\DerpRaven.UnitTests.csproj", "{53C99CE5-92D1-40F6-B210-C53AE9B8FAE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.Web", "DerpRaven.Web\DerpRaven.Web.csproj", "{63F96BCA-C567-4A11-BC09-F962FE468A2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.IntegrationTests.cs", "DerpRaven.IntegrationTests.cs\DerpRaven.IntegrationTests.cs.csproj", "{46C3D851-DA51-4B56-A798-EE8BDECAF46E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.IntegrationTests", "DerpRaven.IntegrationTests\DerpRaven.IntegrationTests.csproj", "{46C3D851-DA51-4B56-A798-EE8BDECAF46E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

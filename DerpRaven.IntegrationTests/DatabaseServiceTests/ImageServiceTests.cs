@@ -7,7 +7,7 @@ using Shouldly;
 using DerpRaven.Shared.Dtos;
 using DerpRaven.Api;
 using Microsoft.Extensions.Options;
-namespace DerpRaven.IntegrationTests.cs.DatabaseServiceTests;
+namespace DerpRaven.IntegrationTests.DatabaseServiceTests;
 
 public class ImageServiceTests
 {
