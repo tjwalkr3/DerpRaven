@@ -16,6 +16,7 @@ public class CustomRequestService : ICustomRequestService
 
     public async Task<List<CustomRequestDto>> GetAllCustomRequestsAsync()
     {
+        _logger.LogInformation("Fetching all custom requests");
         return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
@@ -25,6 +26,7 @@ public class CustomRequestService : ICustomRequestService
 
     public async Task<List<CustomRequestDto>> GetCustomRequestsByUserIdAsync(int id)
     {
+        _logger.LogInformation("Fetching custom requests for user with ID {UserId}", id);
         return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
@@ -35,6 +37,7 @@ public class CustomRequestService : ICustomRequestService
 
     public async Task<CustomRequestDto?> GetCustomRequestByIdAsync(int id)
     {
+        _logger.LogInformation("Fetching custom request with ID {RequestId}", id);
         return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
@@ -45,6 +48,7 @@ public class CustomRequestService : ICustomRequestService
 
     public async Task<List<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status)
     {
+        _logger.LogInformation("Fetching custom requests with status {Status}", status);
         return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
@@ -55,6 +59,7 @@ public class CustomRequestService : ICustomRequestService
 
     public async Task<List<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType)
     {
+        _logger.LogInformation("Fetching custom requests with product type {ProductType}", productType);
         return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
@@ -65,6 +70,7 @@ public class CustomRequestService : ICustomRequestService
 
     public async Task<bool> ChangeStatusAsync(int id, string status)
     {
+        _logger.LogInformation("Changing status of custom request with ID {RequestId} to {Status}", id, status);
         var request = await _context.CustomRequests.FindAsync(id);
         if (request != null)
         {
@@ -85,6 +91,7 @@ public class CustomRequestService : ICustomRequestService
         {
             await _context.CustomRequests.AddAsync(customRequest);
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Created custom request with ID {RequestId}", dto.Id);
             return true;
         }
         else

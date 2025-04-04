@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddLogging();
 
 // Add authentication services
 builder.Services.AddAuthentication().AddJwtBearer(options =>
@@ -48,23 +49,19 @@ builder.Services.AddOpenTelemetry()
         .SetResourceBuilder(resourceBuilder)
         .AddAspNetCoreInstrumentation()
         .AddMeter("DerpRaven")
-        // .AddConsoleExporter()
         .AddOtlpExporter(options =>
         {
             options.Endpoint = new Uri(otlpEndpoint, "/v1/metrics");
             options.Protocol = OtlpExportProtocol.HttpProtobuf;
+        }))
+    .WithLogging(logging => logging
+        .SetResourceBuilder(resourceBuilder)
+        .AddConsoleExporter()
+        .AddOtlpExporter(options =>
+        {
+            options.Endpoint = new Uri(otlpEndpoint, "/v1/logs");
+            options.Protocol = OtlpExportProtocol.HttpProtobuf;
         }));
-
-builder.Logging.AddOpenTelemetry(logging =>
-{
-    logging.SetResourceBuilder(resourceBuilder);
-    logging.AddConsoleExporter();
-    logging.AddOtlpExporter(options =>
-    {
-        options.Endpoint = new Uri(otlpEndpoint, "/v1/logs");
-        options.Protocol = OtlpExportProtocol.HttpProtobuf;
-    });
-});
 
 // Add CORS services
 builder.Services.AddCors(options =>

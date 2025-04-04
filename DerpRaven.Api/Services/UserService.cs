@@ -17,6 +17,7 @@ public class UserService : IUserService
 
     public async Task<List<UserDto>> GetAllUsersAsync()
     {
+        _logger.LogInformation("Fetching all users");
         return await _context.Users
             .Select(u => MapToUserDto(u))
             .ToListAsync();
