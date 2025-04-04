@@ -1,7 +1,11 @@
-name: deployment pipeline
+name: Build and Deploy the Api and Web Projects
+
 on:
-- push
-- workflow_dispatch
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   format_verification:
     runs-on: self-hosted
