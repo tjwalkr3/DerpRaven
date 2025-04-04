@@ -37,4 +37,4 @@ data:
           exporters: [prometheus]
         logs:
           receivers: [otlp]
-          exporters: [oltphttp, debug]
+          exporters: [otlphttp, debug]
