@@ -4,35 +4,39 @@ on:
 - workflow_dispatch
 jobs:
   format_verification:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Check out the code. 
       uses: actions/checkout@v4
 
     - name: Verify code formatting and style.
       run: |
-        dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Api
-        dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Shared
-        dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.UnitTests
-        dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.IntegrationTests
-        dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Web
+        nix-shell -p dotnet-sdk_9 --run "
+          dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Api
+          dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Shared
+          dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.UnitTests
+          dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.IntegrationTests
+          dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Web
+        "
     
   check_for_warnings:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Check out the code. 
       uses: actions/checkout@v4
 
     - name: Check for warnings with dotnet format  --warnaserror
       run: |
-        dotnet build --warnaserror DerpRaven.Api
-        dotnet build --warnaserror DerpRaven.Shared
-        dotnet build --warnaserror DerpRaven.UnitTests
-        dotnet build --warnaserror DerpRaven.IntegrationTests
-        dotnet build --warnaserror DerpRaven.Web
+        nix-shell -p dotnet-sdk_9 --run "
+          dotnet build --warnaserror DerpRaven.Api
+          dotnet build --warnaserror DerpRaven.Shared
+          dotnet build --warnaserror DerpRaven.UnitTests
+          dotnet build --warnaserror DerpRaven.IntegrationTests
+          dotnet build --warnaserror DerpRaven.Web
+        "
 
   run_unit_tests:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Check out the code. 
       uses: actions/checkout@v4
@@ -48,7 +52,7 @@ jobs:
         echo "going to deploy!!!"
 
   run_integration_tests:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Check out the code. 
       uses: actions/checkout@v4
@@ -65,7 +69,7 @@ jobs:
 
   build_and_push_api_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Check out the code. 
       uses: actions/checkout@v4
@@ -87,7 +91,7 @@ jobs:
 
   build_and_push_web_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Check out the code. 
       uses: actions/checkout@v4
