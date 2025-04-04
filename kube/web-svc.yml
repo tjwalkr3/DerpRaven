@@ -10,3 +10,7 @@ spec:
     - protocol: TCP
       port: 80 # external port (doesn't have to be the same)
       targetPort: 80
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 600

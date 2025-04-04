@@ -10,4 +10,3 @@ spec:
     - protocol: TCP
       port: 3100 # external port (doesn't have to be the same)
       targetPort: 3100
-      name: loki-logs

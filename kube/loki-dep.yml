@@ -16,7 +16,6 @@ spec:
     spec:
       containers:
       - name: derp-loki
-        image: grafana/loki:latest
+        image: grafana/loki:3.4
         ports:
-        - name: loki-logs
           containerPort: 3100

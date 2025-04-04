@@ -5,6 +5,7 @@ metadata:
   namespace: derp
 data:
   # property-like keys; each key maps to a simple value
+  #another change
   collector-config: |
     # Receivers
     receivers:
@@ -36,4 +37,4 @@ data:
           exporters: [prometheus]
         logs:
           receivers: [otlp]
-          exporters: [debug]
+          exporters: [oltphttp, debug]
