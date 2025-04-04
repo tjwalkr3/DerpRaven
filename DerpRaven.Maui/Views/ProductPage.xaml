@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
              x:Class="DerpRaven.Maui.Views.ProductPage"
-             Title="ProductPage">
+             Title="Product Details">
     <ScrollView>
-        
+        <VerticalStackLayout Padding="10" Spacing="10">
+            <Label x:Name="ProductName" FontSize="24" FontAttributes="Bold" />
+
+            <CarouselView x:Name="ProductImageCarousel" HeightRequest="240">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}" Aspect="AspectFill" />
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <Label x:Name="ProductPrice" FontSize="20" TextColor="Green" />
+
+            <HorizontalStackLayout>
+                <Label Text="Quantity:" VerticalOptions="Center" />
+
+                <Picker x:Name="QuantityPicker" 
+                        WidthRequest="100"
+                        ItemsSource="{Binding Quantities}" 
+                        SelectedItem="{Binding SelectedQuantity}" />
+            </HorizontalStackLayout>
+
+            <Button Text="Add To Cart" 
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductsListPageViewModel}}, Path=AddToCartCommand}" />
+
+                <Label x:Name="ProductDescription" FontSize="18" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
