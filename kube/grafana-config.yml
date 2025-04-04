@@ -4,7 +4,6 @@ metadata:
   name: derp-grafana-config
   namespace: derp
 data:
-  # property-like keys; each key maps to a simple value
   derp-config: |
     apiVersion: 1
 

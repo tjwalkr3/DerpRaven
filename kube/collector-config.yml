@@ -4,8 +4,6 @@ metadata:
   name: derp-collector-config
   namespace: derp
 data:
-  # property-like keys; each key maps to a simple value
-  #another change
   collector-config: |
     # Receivers
     receivers:

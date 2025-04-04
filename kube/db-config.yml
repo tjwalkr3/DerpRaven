@@ -4,7 +4,6 @@ metadata:
   name: derp-init-sql
   namespace: derp
 data:
-  # property-like keys; each key maps to a simple value
   derp-db-init: |
     -- Initialization script for the DerpRaven database
 

@@ -44,7 +44,7 @@ jobs:
     - name: Run the unit tests.
       run: |
         docker build \
-          -f ./Test.Api.Dockerfile \
+          -f ./UnitTests.Dockerfile \
           -t thomas_test_container \
           .
 
@@ -60,7 +60,7 @@ jobs:
     - name: Run the unit tests.
       run: |
         docker build \
-          -f ./Test.Api.Dockerfile \
+          -f ./IntegrationTests.Dockerfile \
           -t thomas_test_container \
           .
 

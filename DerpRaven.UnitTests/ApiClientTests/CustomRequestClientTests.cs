@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using NSubstitute;
 using System.Net;
 using Shouldly;
+using System.Text.Json;
 namespace DerpRaven.UnitTests.ApiClientTests;
 
 public class CustomRequestClientTests
