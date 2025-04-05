@@ -117,6 +117,16 @@ jobs:
 
         docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }}
 
+    - name: Build and push Web to DockerHub.
+      run: |
+        docker build \
+          -f ./Web.Dockerfile \
+          -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:azure-${{ github.run_number }} \
+          --build-arg BASE_ADDRESS="http://derpraven.westus.azurecontainer.io:8080" \
+          .
+
+        docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:azure-${{ github.run_number }}
+
   deploy_to_kubernetes:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
     runs-on: self-hosted
@@ -136,4 +146,20 @@ jobs:
           cat "$FILE" | envsubst | kubectl apply -f -
         done
 
+  deploy_to_azure:
+    needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
+    steps:
+    - name: Check out the code. 
+      uses: actions/checkout@v4
+
+    - name: run the deployment script
+      run: |
+        ./azure-deploy.sh \
+          ${{ vars.DOCKERHUB_USERNAME }} \
+          ${{ secrets.DOCKERHUB_TOKEN }} \
+          ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-api:${{ github.run_number }} \
+          ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:azure-${{ github.run_number }} \
+          ${{ secrets.AZURE_DB_CONN_STRING }} \
+          ${{ secrets.AZURE_BLOB_CONN_STRING }} \
+          ${{ vars.AZURE_BLOB_CONTAINER_NAME_KUBE }}
     
