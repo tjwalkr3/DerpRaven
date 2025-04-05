@@ -14,8 +14,7 @@ if [ $# -lt 5 ]; then
 fi
 
 RESOURCE_GROUP="derpraven"
-LOCATION="westus"
-PORT=8080
+LOCATION="westus3"
 
 #####################################################
 # Create the container service for the API container
@@ -32,7 +31,7 @@ az container create \
     --name "$CONTAINER_NAME_1" \
     --image "$IMAGE1" \
     --dns-name-label "$CONTAINER_NAME_1" \
-    --ports "$PORT" \
+    --ports "8080" \
     --os-type Linux \
     --cpu 1 \
     --memory 1.5 \
@@ -65,7 +64,7 @@ az container create \
     --name "$CONTAINER_NAME_2" \
     --image $IMAGE2 \
     --dns-name-label "$CONTAINER_NAME_2" \
-    --ports "$PORT" \
+    --ports "80" \
     --os-type Linux \
     --cpu 1 \
     --memory 1.5 \
