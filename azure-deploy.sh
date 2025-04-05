@@ -15,65 +15,69 @@ fi
 
 RESOURCE_GROUP="derpraven"
 LOCATION="westus3"
-CONTAINER_NAME_1="$RESOURCE_GROUP-api"
-CONTAINER_NAME_2="$RESOURCE_GROUP-web"
 
 #####################################################
 # Create the container service for the API container
 #####################################################
-(
-    az container delete \
-        --name "$CONTAINER_NAME_1" \
-        --resource-group "$RESOURCE_GROUP" \
-        --yes
+CONTAINER_NAME_1="$RESOURCE_GROUP-api"
 
-    az container create \
-        --resource-group "$RESOURCE_GROUP" \
-        --name "$CONTAINER_NAME_1" \
-        --image "$IMAGE1" \
-        --dns-name-label "$CONTAINER_NAME_1" \
-        --ports "8080" \
-        --os-type Linux \
-        --cpu 1 \
-        --memory 1.5 \
-        --registry-login-server "index.docker.io" \
-        --registry-username "$REGISTRY_USER" \
-        --registry-password "$REGISTRY_PASS" \
-        --location "$LOCATION" \
-        --output none \
-        --secure-environment-variables \
-            ConnectionStrings__DefaultConnection="$DB_CONN_STRING" \
-            BlobStorage__ConnectionString="$BLOB_CONN_STRING" \
-            BlobStorage__ContainerName="$BLOB_CONTAINER_NAME" \
-        || { echo "Failed to create container $CONTAINER_NAME_1"; exit 1; }
-) &
+az container delete \
+    --name "$CONTAINER_NAME_1" \
+    --resource-group "$RESOURCE_GROUP" \
+    --only-show-errors \
+    --yes
+
+az container create \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$CONTAINER_NAME_1" \
+    --image "$IMAGE1" \
+    --dns-name-label "$CONTAINER_NAME_1" \
+    --ports "8080" \
+    --os-type Linux \
+    --cpu 1 \
+    --memory 1.5 \
+    --registry-login-server "index.docker.io" \
+    --registry-username "$REGISTRY_USER" \
+    --registry-password "$REGISTRY_PASS" \
+    --location "$LOCATION" \
+    --output none \
+    --only-show-errors \
+    --secure-environment-variables \
+        ConnectionStrings__DefaultConnection="$DB_CONN_STRING" \
+        BlobStorage__ConnectionString="$BLOB_CONN_STRING" \
+        BlobStorage__ContainerName="$BLOB_CONTAINER_NAME" \
+    || { echo "Failed to create container $CONTAINER_NAME_1"; exit 1; }
+
+echo "API container created at: http://$CONTAINER_NAME_1.$LOCATION.azurecontainer.io:$PORT"
+
 
 #####################################################
 # Create the container service for the Web container
 #####################################################
-(
-    az container delete \
-        --name "$CONTAINER_NAME_2" \
-        --resource-group "$RESOURCE_GROUP" \
-        --yes
+CONTAINER_NAME_2="$RESOURCE_GROUP-web"
 
-    az container create \
-        --resource-group "$RESOURCE_GROUP" \
-        --name "$CONTAINER_NAME_2" \
-        --image $IMAGE2 \
-        --dns-name-label "$CONTAINER_NAME_2" \
-        --ports "80" \
-        --os-type Linux \
-        --cpu 1 \
-        --memory 1.5 \
-        --registry-login-server "index.docker.io" \
-        --registry-username "$REGISTRY_USER" \
-        --registry-password "$REGISTRY_PASS" \
-        --location "$LOCATION" \
-        --output none \
-        || { echo "Failed to create container $CONTAINER_NAME_1"; exit 1; }
-) &
+az container delete \
+    --name "$CONTAINER_NAME_2" \
+    --resource-group "$RESOURCE_GROUP" \
+    --only-show-errors \
+    --yes
 
-wait
-echo "API container created at: http://$CONTAINER_NAME_1.$LOCATION.azurecontainer.io:$PORT"
+az container create \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$CONTAINER_NAME_2" \
+    --image $IMAGE2 \
+    --dns-name-label "$CONTAINER_NAME_2" \
+    --ports "80" \
+    --os-type Linux \
+    --cpu 1 \
+    --memory 1.5 \
+    --registry-login-server "index.docker.io" \
+    --registry-username "$REGISTRY_USER" \
+    --registry-password "$REGISTRY_PASS" \
+    --location "$LOCATION" \
+    --output none \
+    --only-show-errors \
+    || { echo "Failed to create container $CONTAINER_NAME_1"; exit 1; }
+
 echo "Web container created at: http://$CONTAINER_NAME_2.$LOCATION.azurecontainer.io:$PORT"
+
