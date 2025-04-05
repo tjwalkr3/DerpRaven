@@ -162,5 +162,5 @@ jobs:
           ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:azure-${{ github.run_number }} \
           ${{ secrets.AZURE_DB_CONN_STRING }} \
           ${{ secrets.AZURE_BLOB_CONN_STRING }} \
-          ${{ vars.AZURE_BLOB_CONTAINER_NAME_KUBE }}
+          ${{ vars.AZURE_BLOB_CONTAINER_NAME_AZURE }}
 
