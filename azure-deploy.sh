@@ -15,12 +15,13 @@ fi
 
 RESOURCE_GROUP="derpraven"
 LOCATION="westus3"
+CONTAINER_NAME_1="$RESOURCE_GROUP-api"
+CONTAINER_NAME_2="$RESOURCE_GROUP-web"
 
 #####################################################
 # Create the container service for the API container
 #####################################################
-CONTAINER_NAME_1="$RESOURCE_GROUP-api"
-
+(
 az container delete \
     --name "$CONTAINER_NAME_1" \
     --resource-group "$RESOURCE_GROUP" \
@@ -45,15 +46,12 @@ az container create \
         BlobStorage__ConnectionString="$BLOB_CONN_STRING" \
         BlobStorage__ContainerName="$BLOB_CONTAINER_NAME" \
     || { echo "Failed to create container $CONTAINER_NAME_1"; exit 1; }
-
-echo "API container created at: http://$CONTAINER_NAME_1.$LOCATION.azurecontainer.io:$PORT"
-
+) &
 
 #####################################################
 # Create the container service for the Web container
 #####################################################
-CONTAINER_NAME_2="$RESOURCE_GROUP-web"
-
+(
 az container delete \
     --name "$CONTAINER_NAME_2" \
     --resource-group "$RESOURCE_GROUP" \
@@ -74,6 +72,8 @@ az container create \
     --location "$LOCATION" \
     --output none \
     || { echo "Failed to create container $CONTAINER_NAME_1"; exit 1; }
+) &
 
+wait
+echo "API container created at: http://$CONTAINER_NAME_1.$LOCATION.azurecontainer.io:$PORT"
 echo "Web container created at: http://$CONTAINER_NAME_2.$LOCATION.azurecontainer.io:$PORT"
-
