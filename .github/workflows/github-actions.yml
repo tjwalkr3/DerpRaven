@@ -148,6 +148,7 @@ jobs:
 
   deploy_to_azure:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
+    runs-on: self-hosted
     steps:
     - name: Check out the code. 
       uses: actions/checkout@v4
