@@ -110,6 +110,11 @@ public class AppDbContext : DbContext
             .HasForeignKey("ProductTypeId")
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+
+        // Email uniqueness constraint
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
     }
 
 }

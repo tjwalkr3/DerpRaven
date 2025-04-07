@@ -1,4 +1,7 @@
-﻿namespace DerpRaven.Api.Model;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
+
+namespace DerpRaven.Api.Model;
 
 public class User
 {
