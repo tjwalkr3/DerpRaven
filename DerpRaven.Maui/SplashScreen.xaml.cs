@@ -16,7 +16,7 @@ public partial class SplashScreen : ContentPage
     {
         base.OnAppearing();
 
-        await Task.Delay(3000).ContinueWith(t =>
+        await Task.Delay(1500).ContinueWith(t =>
         {
             MainThread.InvokeOnMainThreadAsync(() =>
             {

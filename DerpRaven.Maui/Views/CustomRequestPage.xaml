@@ -2,11 +2,37 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DerpRaven.Maui.Views.CustomRequestPage"
-             Title="CustomRequestPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Custom Order">
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
+
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ArtCheckBox" CheckedChanged="OnCheckBoxCheckedChanged" />
+                <Label Text="Art" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <CheckBox x:Name="PlushieCheckBox" CheckedChanged="OnCheckBoxCheckedChanged" />
+                <Label Text="Plushie" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Picker x:Name="ArtOptionsPicker" IsVisible="{Binding Source={x:Reference ArtCheckBox}, Path=IsChecked}">
+                <Picker.Items>
+                    <x:String>Select an option</x:String>
+                    <x:String>Option 1</x:String>
+                    <x:String>Option 2</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Label Text="Description of what you want:" />
+            <Border Stroke="Black" StrokeThickness="1" Padding="0">
+                <Editor HeightRequest="300" Placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla. "/>
+            </Border>
+
+            <Label Text="Email (Required for contact):" />
+            <Border Stroke="Black" StrokeThickness="1">
+                <Entry Placeholder="example@example.com" Keyboard="Email"/>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

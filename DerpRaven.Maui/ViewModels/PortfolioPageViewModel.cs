@@ -3,9 +3,6 @@ using System.Collections.ObjectModel;
 using DerpRaven.Shared.Dtos;
 namespace DerpRaven.Maui.ViewModels;
 
-
-
-
 public partial class PortfolioPageViewModel : ObservableObject
 {
     public ObservableCollection<PortfolioViewModel> Portfolios { get; private set; }

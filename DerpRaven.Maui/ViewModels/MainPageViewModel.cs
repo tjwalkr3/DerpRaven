@@ -1,136 +1,132 @@
 ﻿namespace DerpRaven.Maui.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using DerpRaven.Shared.Dtos;
 
 public partial class MainPageViewModel : ObservableObject
 {
-    public ObservableCollection<Emote> Emotes { get; private set; }
-    public ObservableCollection<Emote> Plushies { get; private set; }
+    public ObservableCollection<ImageDto> Art { get; private set; }
+    public ObservableCollection<ImageDto> Plushies { get; private set; }
 
 
     public MainPageViewModel()
     {
-        Emotes = new ObservableCollection<Emote>
+        Art = new ObservableCollection<ImageDto>
         {
-            new Emote
+            new ImageDto
             {
-                Name = "Quincy Mad Emote",
-                ImageUrl = "quincymad.png",
-                Description = "A custom emote for a client"
+                Id = 1,
+                Alt = "Quincy Mad Emote",
+                Path = "quincymad.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Quincy Meh Emote",
-                ImageUrl = "quincymeh.png",
-                Description = "A custom emote for a client"
+                Id = 2,
+                Alt = "Quincy Meh Emote",
+                Path = "quincymeh.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Quincy Shy Emote",
-                ImageUrl = "quincyshy.png",
-                Description = "A custom emote for a client"
+                Id = 3,
+                Alt = "Quincy Shy Emote",
+                Path = "quincyshy.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Quincy Upset Emote",
-                ImageUrl = "quincyupset.png",
-                Description = "A custom emote for a client"
+                Id = 4,
+                Alt = "Quincy Upset Emote",
+                Path = "quincyupset.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Ramus Angry Emote",
-                ImageUrl = "ramusangry.png",
-                Description = "A custom emote for a client"
+                Id = 5,
+                Alt = "Ramus Angry Emote",
+                Path = "ramusangry.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Ramus Happy Emote",
-                ImageUrl = "ramushappy.png",
-                Description = "A custom emote for a client"
+                Id = 6,
+                Alt = "Ramus Happy Emote",
+                Path = "ramushappy.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Ramus Sad Emote",
-                ImageUrl = "ramussad.png",
-                Description = "A custom emote for a client"
+                Id = 7,
+                Alt = "Ramus Sad Emote",
+                Path = "ramussad.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Ramus Tired Emote",
-                ImageUrl = "ramustired.png",
-                Description = "A custom emote for a client"
+                Id = 8,
+                Alt = "Ramus Tired Emote",
+                Path = "ramustired.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Roxanne Grumpy Emote",
-                ImageUrl = "roxannegrumpy.png",
-                Description = "A custom emote for a client"
+                Id = 9,
+                Alt = "Roxanne Grumpy Emote",
+                Path = "roxannegrumpy.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Roxanne Happy Emote",
-                ImageUrl = "roxannehappy.png",
-                Description = "A custom emote for a client"
+                Id = 10,
+                Alt = "Roxanne Happy Emote",
+                Path = "roxannehappy.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Roxanne Laughing Emote",
-                ImageUrl = "roxannelaughing.png",
-                Description = "A custom emote for a client"
+                Id = 11,
+                Alt = "Roxanne Laughing Emote",
+                Path = "roxannelaughing.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Roxanne Seducing Emote",
-                ImageUrl = "roxanneseducing.png",
-                Description = "A custom emote for a client"
+                Id = 12,
+                Alt = "Roxanne Seducing Emote",
+                Path = "roxanneseducing.png"
             }
         };
 
-        Plushies = new ObservableCollection<Emote>
+        Plushies = new ObservableCollection<ImageDto>
         {
-            new Emote
+            new ImageDto
             {
-                Name = "Derp Squid Squish",
-                ImageUrl = "derpsquid.png",
-                Description = "A custom plush for a client"
+                Id = 13,
+                Alt = "Derp Squid Squish",
+                Path = "derpsquid.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Flower Turtle",
-                ImageUrl = "flowerturtle.png",
-                Description = "A custom plush for a client"
+                Id = 14,
+                Alt = "Flower Turtle",
+                Path = "flowerturtle.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Dragon Plush",
-                ImageUrl = "dragonplush.png",
-                Description = "A plush for a client"
+                Id = 15,
+                Alt = "Dragon Plush",
+                Path = "dragonplush.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Puffer Squish",
-                ImageUrl = "puffersquish.png",
-                Description = "A custom plush for a client"
+                Id = 16,
+                Alt = "Puffer Squish",
+                Path = "puffersquish.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Unicorn Squish",
-                ImageUrl = "unicornsquish.png",
-                Description = "A custom plush for a client"
+                Id = 17,
+                Alt = "Unicorn Squish",
+                Path = "unicornsquish.png"
             },
-            new Emote
+            new ImageDto
             {
-                Name = "Horse Snuggler",
-                ImageUrl = "horsesnuggler.png",
-                Description = "A horse snuggler"
+                Id = 18,
+                Alt = "Horse Snuggler",
+                Path = "horsesnuggler.png"
             }
         };
     }
 }
 
-public class Emote
-{
-    public string Name { get; set; } = string.Empty;
-    public string ImageUrl { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-}
+
