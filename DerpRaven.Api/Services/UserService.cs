@@ -39,12 +39,12 @@ public class UserService : IUserService
             .ToListAsync();
     }
 
-    public async Task<List<UserDto>> GetUsersByEmailAsync(string email)
+    public async Task<UserDto?> GetUserByEmailAsync(string email)
     {
         return await _context.Users
             .Where(u => u.Email == email)
             .Select(u => MapToUserDto(u))
-            .ToListAsync();
+            .FirstOrDefaultAsync();
     }
 
     public async Task<List<UserDto>> GetUsersByNameAsync(string name)
