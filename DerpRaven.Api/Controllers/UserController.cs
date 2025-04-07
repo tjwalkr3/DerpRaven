@@ -43,10 +43,14 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("email/{email}")]
-    public async Task<IActionResult> GetUsersByEmail(string email)
+    public async Task<IActionResult> GetUserByEmail(string email)
     {
-        var users = await _userService.GetUsersByEmailAsync(email);
-        return Ok(users);
+        var user = await _userService.GetUserByEmailAsync(email);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
     }
 
     [HttpGet("name/{name}")]

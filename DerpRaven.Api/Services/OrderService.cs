@@ -16,6 +16,7 @@ public class OrderService : IOrderService
 
     public async Task<List<OrderDto>> GetAllOrdersAsync()
     {
+        _logger.LogInformation("Fetching all orders");
         return await _context.Orders
             .Include(o => o.User)
             .Include(o => o.Products)
@@ -25,6 +26,7 @@ public class OrderService : IOrderService
 
     public async Task<OrderDto?> GetOrderByIdAsync(int id)
     {
+        _logger.LogInformation("Fetching order with ID {OrderId}", id);
         return await _context.Orders
             .Include(o => o.User)
             .Include(o => o.Products)
@@ -35,6 +37,7 @@ public class OrderService : IOrderService
 
     public async Task<List<OrderDto>> GetOrdersByUserIdAsync(int id)
     {
+        _logger.LogInformation("Fetching orders for user with ID {UserId}", id);
         return await _context.Orders
             .Include(o => o.User)
             .Include(o => o.Products)
@@ -51,6 +54,7 @@ public class OrderService : IOrderService
             oldOrder.Address = address;
             oldOrder.Email = email;
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Updated order with ID {OrderId}", id);
             return true;
         }
         else
@@ -66,6 +70,7 @@ public class OrderService : IOrderService
         {
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Created order with ID {OrderId}", dto.Id);
             return true;
         }
         else

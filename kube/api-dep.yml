@@ -4,11 +4,6 @@ metadata:
   name: derp-api-dep
   namespace: derp
 spec:
-  # strategy:
-  #   type: RollingUpdate
-  #   rollingUpdate:
-  #     maxUnavailable: 0
-  #     maxSurge: 1
   replicas: 1
   selector:
     matchLabels:
@@ -22,6 +17,18 @@ spec:
       containers:
       - name: derp-api-container
         image: tjwalkr3/derp-raven-api:$BUILD_NUMBER
+        livenessProbe:
+          httpGet:
+            path: /api/healthcheck
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/healthcheck
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 5
         env:
         - name: ConnectionStrings__DefaultConnection
           value: "Server=derp-db-svc;Database=postgres;Userid=derp;Password=1234"

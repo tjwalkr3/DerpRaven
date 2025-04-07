@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Shouldly;
-namespace DerpRaven.Tests.ApiControllerTests;
+namespace DerpRaven.UnitTests.ApiControllerTests;
 
 public class CustomRequestServiceControllerTests
 {

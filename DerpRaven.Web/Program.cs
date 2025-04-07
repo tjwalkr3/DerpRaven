@@ -12,6 +12,8 @@ builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri(builder.Configuration["BaseAddress"] ?? "http://localhost:8080")
 });
+
+// Comment these out 
 builder.Services.AddScoped<IKeycloakClient, KeycloakClient>(k =>
 {
     var oktaClientConfiguration = new OktaClientConfiguration()

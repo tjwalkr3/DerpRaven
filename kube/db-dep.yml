@@ -30,6 +30,16 @@ spec:
           subPath: derp-db-init
           name: schema-init
         image: postgres:16
+        livenessProbe:
+          tcpSocket:
+            port: 5432
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 5432
+          initialDelaySeconds: 15
+          periodSeconds: 10
         ports:
         - containerPort: 5432
         env:

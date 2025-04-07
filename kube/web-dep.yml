@@ -4,12 +4,12 @@ metadata:
   name: derp-web-dep
   namespace: derp
 spec:
-  # strategy:
-  #   type: RollingUpdate
-  #   rollingUpdate:
-  #     maxUnavailable: 0
-  #     maxSurge: 1
-  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  replicas: 3
   selector:
     matchLabels:
       app: derp-web
@@ -22,9 +22,18 @@ spec:
       containers:
       - name: derp-web-container
         image: tjwalkr3/derp-raven-web:$BUILD_NUMBER
-        env:
-        - name: BaseAddress
-          value: "http://derp-api-svc:8080"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 5
         ports:
         - containerPort: 80
   

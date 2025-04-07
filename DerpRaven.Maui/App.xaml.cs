@@ -2,14 +2,16 @@
 {
     public partial class App : Application
     {
-        public App()
+        SplashScreen _splashScreen;
+        public App(SplashScreen splashScreen)
         {
             InitializeComponent();
+            _splashScreen = splashScreen;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new SplashScreen());
+            return new Window(_splashScreen);
         }
     }
 }

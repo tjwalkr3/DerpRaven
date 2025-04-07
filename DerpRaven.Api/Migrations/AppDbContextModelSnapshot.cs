@@ -57,7 +57,7 @@ namespace DerpRaven.Api.Migrations
                     b.ToTable("CustomRequests");
                 });
 
-            modelBuilder.Entity("DerpRaven.Api.Model.Image", b =>
+            modelBuilder.Entity("DerpRaven.Api.Model.ImageEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -211,6 +211,9 @@ namespace DerpRaven.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
@@ -328,7 +331,7 @@ namespace DerpRaven.Api.Migrations
 
             modelBuilder.Entity("PortfolioImage", b =>
                 {
-                    b.HasOne("DerpRaven.Api.Model.Image", null)
+                    b.HasOne("DerpRaven.Api.Model.ImageEntity", null)
                         .WithMany()
                         .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -343,7 +346,7 @@ namespace DerpRaven.Api.Migrations
 
             modelBuilder.Entity("ProductImage", b =>
                 {
-                    b.HasOne("DerpRaven.Api.Model.Image", null)
+                    b.HasOne("DerpRaven.Api.Model.ImageEntity", null)
                         .WithMany()
                         .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Cascade)

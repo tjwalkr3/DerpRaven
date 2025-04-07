@@ -146,35 +146,11 @@ public class UserServiceTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _userService.GetUsersByEmailAsync("user1@example.com");
+        var result = await _userService.GetUserByEmailAsync("user1@example.com");
 
         // Assert
         result.ShouldNotBeNull();
-        result.Count.ShouldBe(1);
-        result.Single().Email.ShouldBe("user1@example.com");
-    }
-
-    [Order(7)]
-    [Test]
-    public async Task GetUserByEmail_WhileTwoEmailsAreTheSame()
-    {
-        // Arrange
-        List<User> users = new()
-        {
-            new User { Name = "User1", OAuth = "OAuth1", Email = "user@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] },
-            new User { Name = "User2", OAuth = "OAuth2", Email = "user@example.com", Active = false, Role = "customer", CustomRequests = [], Orders = [] }
-        };
-        await _context.Users.AddRangeAsync(users);
-        await _context.SaveChangesAsync();
-
-        // Act
-        var result = await _userService.GetUsersByEmailAsync("user@example.com");
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.Count.ShouldBe(2);
-        result.Any(u => u.Name == "User1").ShouldBeTrue();
-        result.Any(u => u.Name == "User2").ShouldBeTrue();
+        result.Email.ShouldBe("user1@example.com");
     }
 
     [Order(8)]

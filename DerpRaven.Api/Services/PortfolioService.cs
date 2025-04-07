@@ -16,6 +16,7 @@ public class PortfolioService : IPortfolioService
 
     public async Task<List<PortfolioDto>> GetAllPortfoliosAsync()
     {
+        _logger.LogInformation("Fetching all portfolios");
         return await _context.Portfolios
             .Include(p => p.ProductType)
             .Include(p => p.Images)
@@ -25,6 +26,7 @@ public class PortfolioService : IPortfolioService
 
     public async Task<PortfolioDto?> GetPortfolioByIdAsync(int id)
     {
+        _logger.LogInformation("Fetching portfolio with ID {PortfolioId}", id);
         return await _context.Portfolios
             .Include(p => p.ProductType)
             .Include(p => p.Images)
@@ -35,6 +37,7 @@ public class PortfolioService : IPortfolioService
 
     public async Task<List<PortfolioDto>> GetPortfoliosByTypeAsync(string productType)
     {
+        _logger.LogInformation("Fetching portfolios with product type {ProductType}", productType);
         return await _context.Portfolios
             .Include(p => p.ProductType)
             .Include(p => p.Images)
@@ -46,6 +49,7 @@ public class PortfolioService : IPortfolioService
 
     public async Task<List<PortfolioDto>> GetPortfoliosByNameAsync(string name)
     {
+        _logger.LogInformation("Fetching portfolios with name {PortfolioName}", name);
         string searchQuery = name.Trim().ToLower();
         return await _context.Portfolios
             .Where(p => p.Name.Contains(searchQuery))
@@ -60,6 +64,7 @@ public class PortfolioService : IPortfolioService
         {
             await _context.Portfolios.AddAsync(portfolio);
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Created portfolio with ID {PortfolioId}", dto.Id);
             return true;
         }
         else
@@ -83,6 +88,7 @@ public class PortfolioService : IPortfolioService
             oldPortfolio.ProductType = productType;
             oldPortfolio.Images = images;
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Updated portfolio with ID {PortfolioId}", dto.Id);
             return true;
         }
         else
@@ -93,6 +99,7 @@ public class PortfolioService : IPortfolioService
 
     public async Task<bool> DeletePortfolioAsync(int id)
     {
+        _logger.LogInformation("Deleting portfolio with ID {PortfolioId}", id);
         var portfolio = await _context.Portfolios.FindAsync(id);
         if (portfolio != null)
         {

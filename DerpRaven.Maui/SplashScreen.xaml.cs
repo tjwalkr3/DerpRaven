@@ -5,9 +5,11 @@ namespace DerpRaven.Maui;
 
 public partial class SplashScreen : ContentPage
 {
-    public SplashScreen()
+    AppShell _appShell;
+    public SplashScreen(AppShell appShell)
     {
         InitializeComponent();
+        _appShell = appShell;
     }
 
     protected override async void OnAppearing()
@@ -19,7 +21,7 @@ public partial class SplashScreen : ContentPage
             MainThread.InvokeOnMainThreadAsync(() =>
             {
                 var mainPageViewModel = new MainPageViewModel();
-                if (Application.Current != null) Application.Current.Windows[0].Page = new AppShell();
+                if (Application.Current != null) Application.Current.Windows[0].Page = _appShell;
             });
         });
     }

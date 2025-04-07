@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: derp-zipkin-ingress
+  namespace: derp
+spec:
+  rules:
+  - host: zipkin.dragonbytes.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: derp-zipkin-svc
+            port:
+              number: 9411 # same as external ip set in service

@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Shouldly;
-
-namespace DerpRaven.NTests.ApiControllerTests;
+namespace DerpRaven.UnitTests.ApiControllerTests;
 
 public class UserServiceControllerTests
 {
@@ -28,7 +27,7 @@ public class UserServiceControllerTests
         userService.GetUsersByNameAsync("User1").Returns(dtoList.Where(c => c.Name == "User1").ToList());
         userService.UpdateUserAsync(Arg.Any<UserDto>()).Returns(true);
         userService.GetUsersByStatusAsync(true).Returns(dtoList);
-        userService.GetUsersByEmailAsync("user1@example.com").Returns(dtoList.Where(u => u.Email == "user1@example.com").ToList());
+        userService.GetUserByEmailAsync("user1@example.com").Returns(dtoList.Where(u => u.Email == "user1@example.com").Single());
 
         _controller = new UserController(userService);
     }
@@ -53,6 +52,7 @@ public class UserServiceControllerTests
     {
         // Act
         var result = await _controller.GetUserById(1) as OkObjectResult;
+
         // Assert
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(StatusCodes.Status200OK);
@@ -66,6 +66,7 @@ public class UserServiceControllerTests
     {
         // Act
         var result = await _controller.GetUsersByStatus(true) as OkObjectResult;
+
         // Assert
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(StatusCodes.Status200OK);
@@ -80,14 +81,14 @@ public class UserServiceControllerTests
     public async Task GetUsersByEmail()
     {
         // Act
-        var result = await _controller.GetUsersByEmail("user1@example.com") as OkObjectResult;
+        var result = await _controller.GetUserByEmail("user1@example.com") as OkObjectResult;
+
         // Assert
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var users = result.Value as List<UserDto>;
-        users.ShouldNotBeEmpty();
-        users.Count.ShouldBe(1);
-        users.Single().Email.ShouldBe("user1@example.com");
+        var users = result.Value as UserDto;
+        users.ShouldNotBeNull();
+        users.Email.ShouldBe("user1@example.com");
     }
 
     [Test]
@@ -95,6 +96,7 @@ public class UserServiceControllerTests
     {
         // Act
         var result = await _controller.GetUsersByName("User1") as OkObjectResult;
+
         // Assert
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(StatusCodes.Status200OK);
@@ -116,8 +118,10 @@ public class UserServiceControllerTests
             Role = "customer",
             Active = true
         };
+
         // Act
         var result = await _controller.CreateUser(user) as CreatedResult;
+
         // Assert
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(StatusCodes.Status201Created);
@@ -137,6 +141,7 @@ public class UserServiceControllerTests
                 Role = "customer",
                 Active = true
             }) as NoContentResult;
+
         // Assert
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(StatusCodes.Status204NoContent);

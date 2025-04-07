@@ -16,6 +16,7 @@ public class ProductService : IProductService
 
     public async Task<List<ProductDto>> GetAllProductsAsync()
     {
+        _logger.LogInformation("Fetching all products");
         return await _context.Products
             .Include(p => p.ProductType)
             .Include(p => p.Images)
@@ -25,6 +26,7 @@ public class ProductService : IProductService
 
     public async Task<List<ProductDto>> GetProductsByTypeAsync(string productType)
     {
+        _logger.LogInformation("Fetching products with product type {ProductType}", productType);
         return await _context.Products
             .Include(p => p.ProductType)
             .Include(p => p.Images)
@@ -35,6 +37,7 @@ public class ProductService : IProductService
 
     public async Task<ProductDto?> GetProductByIdAsync(int id)
     {
+        _logger.LogInformation("Fetching product with ID {ProductId}", id);
         return await _context.Products
             .Include(p => p.ProductType)
             .Include(p => p.Images)
@@ -45,6 +48,7 @@ public class ProductService : IProductService
 
     public async Task<List<ProductDto>> GetProductsByNameAsync(string name)
     {
+        _logger.LogInformation("Fetching products with name {ProductName}", name);
         string searchQuery = name.Trim().ToLower();
         return await _context.Products
             .Where(p => p.Name.Trim().ToLower().Contains(searchQuery))
@@ -59,6 +63,7 @@ public class ProductService : IProductService
         {
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Created product with ID {ProductId} and name \"{ProductName}\"", dto.Id, dto.Name);
             return true;
         }
         else
@@ -84,6 +89,7 @@ public class ProductService : IProductService
             oldProduct.ProductType = productType;
             oldProduct.Images = images;
             await _context.SaveChangesAsync();
+            _logger.LogInformation("Updated product with ID {ProductId}", dto.Id);
             return true;
         }
         else

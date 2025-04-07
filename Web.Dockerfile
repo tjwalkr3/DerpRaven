@@ -14,6 +14,12 @@ RUN echo "{\n    \"BaseAddress\": \"${BASE_ADDRESS}\",\n    \"FeatureFlagEnabled
 
 # Use NGINX to serve the static files
 FROM nginx:latest AS final
+
+# Configure nginx for relative routing
+RUN rm /etc/nginx/conf.d/default.conf
+COPY ./config/nginx.conf /etc/nginx/conf.d
+
+# Copy the WASM files to the correct server directory
 COPY --from=build /App/publish/wwwroot /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

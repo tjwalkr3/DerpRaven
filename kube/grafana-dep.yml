@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-grafana-dep
+  namespace: derp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-grafana
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-grafana
+    spec:
+      volumes:
+      - name: grafana-configs
+        configMap:
+          name: derp-grafana-config
+      containers:
+      - name: derp-grafana
+        volumeMounts:
+        - mountPath: /etc/grafana/provisioning/datasources/ds.yaml
+          subPath: derp-config
+          name: grafana-configs
+        image: grafana/grafana:11.6.0
+        ports:
+        - name: web-int
+          containerPort: 3000

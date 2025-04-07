@@ -11,5 +11,18 @@
         "Action": "Start"
       }
     ]
+  },
+  {
+    "Name": "Maui&API",
+    "Projects": [
+      {
+        "Path": "DerpRaven.Maui\\DerpRaven.Maui.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "DerpRaven.Api\\DerpRaven.Api.csproj",
+        "Action": "Start"
+      }
+    ]
   }
 ]

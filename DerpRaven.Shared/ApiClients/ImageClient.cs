@@ -48,9 +48,9 @@ public class ImageClient(IApiService apiService) : IImageClient
     }
 
     // does not need authentication
-    public async Task<ImageDto> GetImageInfoAsync(int id)
+    public async Task<ImageDto?> GetImageInfoAsync(int id)
     {
         var response = await apiService.GetFromJsonAsyncWithoutAuthorization<ImageDto>($"api/image/info/{id}");
-        return response ?? new ImageDto();
+        return response;
     }
 }

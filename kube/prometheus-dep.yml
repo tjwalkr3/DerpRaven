@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-prometheus-dep
+  namespace: derp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-prometheus
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-prometheus
+    spec:
+      volumes:
+      - name: prometheus-configs
+        configMap:
+          name: derp-prometheus-config
+      containers:
+      - name: derp-prometheus
+        volumeMounts:
+        - mountPath: /etc/prometheus/prometheus.yml
+          subPath: derp-config
+          name: prometheus-configs
+        image: prom/prometheus:v3.2.1
+        ports:
+        - name: prom-traces
+          containerPort: 8889
+        - name: prom-webui
+          containerPort: 9090

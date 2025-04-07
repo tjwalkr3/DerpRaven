@@ -11,7 +11,7 @@ public class KeycloakClient : IKeycloakClient
     /// Gets the OktaClient's Configuration
     /// </summary>
     public OktaClientConfiguration Configuration { get; private set; }
-    public string? IdentityToken { get; internal set; }
+    public string? IdentityToken { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OktaClient"/> class.
