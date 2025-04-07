@@ -10,6 +10,17 @@ using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddLogging();
@@ -62,17 +73,6 @@ builder.Services.AddOpenTelemetry()
             options.Endpoint = new Uri(otlpEndpoint, "/v1/logs");
             options.Protocol = OtlpExportProtocol.HttpProtobuf;
         }));
-
-// Add CORS services
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-    });
-});
 
 builder.Services.AddOpenApi();
 builder.Services.Configure<BlobStorageOptions>(builder.Configuration.GetSection("BlobStorage"));
