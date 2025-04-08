@@ -5,6 +5,15 @@
              Title="Custom Order">
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="10">
+            <CollectionView ItemsSource="{Binding CustomRequests}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Email}" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <HorizontalStackLayout>
                 <CheckBox x:Name="ArtCheckBox" CheckedChanged="OnCheckBoxCheckedChanged" />
