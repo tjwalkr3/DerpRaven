@@ -28,6 +28,7 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The build has failed due to a formatting error.'
+        embed-url: true
     
   check_for_warnings:
     runs-on: self-hosted
@@ -50,6 +51,7 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The build has failed due to a warning.'
+        embed-url: true
 
   run_unit_tests:
     runs-on: self-hosted
@@ -73,6 +75,7 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The build has failed due to a failed unit test.'
+        embed-url: true
 
   run_integration_tests:
     runs-on: self-hosted
@@ -96,6 +99,7 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The build has failed due to a failed integration test.'
+        embed-url: true
 
   build_and_push_api_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
@@ -125,6 +129,7 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The docker build has failed for the api.'
+        embed-url: true
 
   build_and_push_web_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
@@ -166,6 +171,7 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The docker build has failed for the Blazor WASM app.'
+        embed-url: true
 
   deploy_to_kubernetes:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
@@ -192,6 +198,7 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The Kubernetes deployment has failed.'
+        embed-url: true
 
   deploy_to_azure:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
@@ -217,23 +224,4 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The Azure deployment has failed.'
-
-  discord_notifications:
-    runs-on: self-hosted
-    needs: [deploy_to_kubernetes, deploy_to_azure, build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub, run_unit_tests, run_integration_tests, check_for_warnings, format_verification]
-    if: |
-      needs.deploy_to_kubernetes.result == 'failure' ||
-      needs.deploy_to_azure.result == 'failure' || 
-      needs.build_and_push_api_to_dockerhub.result == 'failure' ||
-      needs.build_and_push_web_to_dockerhub.result == 'failure' ||
-      needs.run_unit_tests.result == 'failure' ||
-      needs.run_integration_tests.result == 'failure' ||
-      needs.check_for_warnings.result == 'failure' ||
-      needs.format_verification.result == 'failure'
-    steps:
-      - name: Notify Discord on Failure
-        uses: tsickert/discord-webhook@v7.0.0
-        with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          content: 'Click the link to view the failed deployment:'
-          embed-url: true
+        embed-url: true
