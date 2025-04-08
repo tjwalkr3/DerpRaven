@@ -218,3 +218,15 @@ jobs:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The Azure deployment has failed.'
 
+  discord_notifications:
+    runs-on: self-hosted
+    needs: [deploy_to_kubernetes, deploy_to_azure]
+    steps:
+    - name: Notify Discord on Success
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'Click this URL to view the deployment:'
+        embed-url: true
+
