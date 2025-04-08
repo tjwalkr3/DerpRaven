@@ -220,7 +220,16 @@ jobs:
 
   discord_notifications:
     runs-on: self-hosted
-    if: failure()
+    needs: [deploy_to_kubernetes, deploy_to_azure, build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub, run_unit_tests, run_integration_tests, check_for_warnings, format_verification]
+    if: |
+      needs.deploy_to_kubernetes.result == 'failure' ||
+      needs.deploy_to_azure.result == 'failure' || 
+      needs.build_and_push_api_to_dockerhub.result == 'failure' ||
+      needs.build_and_push_web_to_dockerhub.result == 'failure' ||
+      needs.run_unit_tests.result == 'failure' ||
+      needs.run_integration_tests.result == 'failure' ||
+      needs.check_for_warnings.result == 'failure' ||
+      needs.format_verification.result == 'failure'
     steps:
       - name: Notify Discord on Failure
         uses: tsickert/discord-webhook@v7.0.0
