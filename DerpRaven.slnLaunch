@@ -18,7 +18,7 @@
       {
         "Path": "DerpRaven.Maui\\DerpRaven.Maui.csproj",
         "Action": "Start",
-        "DebugTarget": "Pixel 7 - API 35 (1) (Android 15.0 - API 35)"
+        "DebugTarget": "Phone 420-DPI - API 34 (Android 14.0 - API 34)"
       },
       {
         "Path": "DerpRaven.Api\\DerpRaven.Api.csproj",

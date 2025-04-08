@@ -5,7 +5,7 @@ using DerpRaven.Shared.Dtos;
 using System.Collections.ObjectModel;
 namespace DerpRaven.Maui.ViewModels;
 
-public partial class CustomRequestPageViewModel(CustomRequestClient client) : ObservableObject
+public partial class CustomRequestPageViewModel(ICustomRequestClient client) : ObservableObject
 {
     private ObservableCollection<CustomRequestDto> CustomRequests;
 
