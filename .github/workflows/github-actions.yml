@@ -22,6 +22,12 @@ jobs:
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.IntegrationTests
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Web
         "
+    - name: Notify Discord on Failure
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'The build has failed due to a formatting error.'
     
   check_for_warnings:
     runs-on: self-hosted
@@ -36,8 +42,14 @@ jobs:
           dotnet build --warnaserror DerpRaven.Shared
           dotnet build --warnaserror DerpRaven.UnitTests
           dotnet build --warnaserror DerpRaven.IntegrationTests
-          dotnet build --warnaserror DerpRaven.Web
-        "
+          dotnet build --warnaserror DerpRaven.Web"
+
+    - name: Notify Discord on Failure
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'The build has failed due to a warning.'
 
   run_unit_tests:
     runs-on: self-hosted
@@ -55,6 +67,13 @@ jobs:
         docker run --rm thomas_test_container
         echo "going to deploy!!!"
 
+    - name: Notify Discord on Failure
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'The build has failed due to a failed unit test.'
+
   run_integration_tests:
     runs-on: self-hosted
     steps:
@@ -70,6 +89,13 @@ jobs:
 
         docker run --rm thomas_test_container
         echo "going to deploy!!!"
+
+    - name: Notify Discord on Failure
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'The build has failed due to a failed integration test.'
 
   build_and_push_api_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
@@ -92,6 +118,13 @@ jobs:
           .
 
         docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-api:${{ github.run_number }}
+
+    - name: Notify Discord on Failure
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'The docker build has failed for the api.'
 
   build_and_push_web_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
@@ -127,6 +160,13 @@ jobs:
 
         docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:azure-${{ github.run_number }}
 
+    - name: Notify Discord on Failure
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'The docker build has failed for the Blazor WASM app.'
+
   deploy_to_kubernetes:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
     runs-on: self-hosted
@@ -146,6 +186,13 @@ jobs:
           cat "$FILE" | envsubst | kubectl apply -f -
         done
 
+    - name: Notify Discord on Failure
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'The Kubernetes deployment has failed.'
+
   deploy_to_azure:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
     runs-on: self-hosted
@@ -163,4 +210,11 @@ jobs:
           ${{ secrets.AZURE_DB_CONN_STRING }} \
           ${{ secrets.AZURE_BLOB_CONN_STRING }} \
           ${{ vars.AZURE_BLOB_CONTAINER_NAME_AZURE }}
+
+    - name: Notify Discord on Failure
+      if: failure()
+      uses: tsickert/discord-webhook@v7.0.0
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        content: 'The Azure deployment has failed.'
 
