@@ -80,7 +80,14 @@ public class CustomRequestServiceTests
     public async Task GetAllCustomRequests_ShouldReturn1()
     {
         // Arrange
-        var customRequest = new CustomRequest { Id = 1, ProductType = type1, User = user1, Status = "Pending", Email = "test@example.com", Description = "I want a duckie." };
+        var customRequest = new CustomRequest { 
+            Id = 1, 
+            ProductType = type1, 
+            User = user1, 
+            Status = "Pending", 
+            Email = "test@example.com", 
+            Description = "I want a duckie." 
+        };
         await _context.CustomRequests.AddAsync(customRequest);
         await _context.SaveChangesAsync();
 

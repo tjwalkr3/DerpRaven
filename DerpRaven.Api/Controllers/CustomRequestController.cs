@@ -35,8 +35,9 @@ public class CustomRequestController : ControllerBase
     [HttpGet("user")]
     public async Task<IActionResult> GetCustomRequestsByUserEmail()
     {
-        var userEmail = HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "email")?.Value
-            ?? HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
+        var user  = HttpContext.User;
+        var userEmail = user?.Claims.FirstOrDefault(c => c.Type == "email")?.Value
+            ?? user?.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
         if (userEmail != null) userEmail = userEmail + "@snow.edu";
 
         if (userEmail == null) return Unauthorized();
