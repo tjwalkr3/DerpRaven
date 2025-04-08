@@ -151,10 +151,4 @@ public class ImageClientTests
         result.Id.ShouldBe(1);
         result.Alt.ShouldBe("alt1");
     }
-
-    [Test]
-    public void TestThatFails() 
-    {
-        false.ShouldBeTrue();
-    }
 }
