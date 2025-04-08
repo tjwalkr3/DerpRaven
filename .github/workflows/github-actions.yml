@@ -221,12 +221,13 @@ jobs:
   discord_notifications:
     runs-on: self-hosted
     needs: [deploy_to_kubernetes, deploy_to_azure]
+    if: |
+      needs.deploy_to_kubernetes.result == 'failure' ||
+      needs.deploy_to_azure.result == 'failure'
     steps:
-    - name: Notify Discord on Success
-      if: failure()
-      uses: tsickert/discord-webhook@v7.0.0
-      with:
-        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'Click this URL to view the deployment:'
-        embed-url: true
-
+      - name: Notify Discord on Failure
+        uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: 'Click the link to view the failed deployment:'
+          embed-url: true
