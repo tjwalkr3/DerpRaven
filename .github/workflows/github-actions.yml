@@ -28,7 +28,6 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The build has failed due to a formatting error.'
-        embed-url: true
     
   check_for_warnings:
     runs-on: self-hosted
@@ -51,7 +50,6 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The build has failed due to a warning.'
-        embed-url: true
 
   run_unit_tests:
     runs-on: self-hosted
@@ -75,7 +73,6 @@ jobs:
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The build has failed due to a failed unit test.'
-        embed-url: true
 
   run_integration_tests:
     runs-on: self-hosted
@@ -98,8 +95,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The build has failed due to a failed integration test.'
-        embed-url: true
+        content: 'The build has failed due to a failed integration test.\nhttps://${{ vars.SUBDOMAIN }}.${{ vars.DOMAIN }}/deploy/${{ github.run_number }}'
 
   build_and_push_api_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
@@ -128,8 +124,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The docker build has failed for the api.'
-        embed-url: true
+        content: 'The docker build has failed for the api.\nhttps://${{ vars.SUBDOMAIN }}.${{ vars.DOMAIN }}/deploy/${{ github.run_number }}'
 
   build_and_push_web_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
@@ -170,8 +165,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The docker build has failed for the Blazor WASM app.'
-        embed-url: true
+        content: 'The docker build has failed for the Blazor WASM app.\nhttps://${{ vars.SUBDOMAIN }}.${{ vars.DOMAIN }}/deploy/${{ github.run_number }}'
 
   deploy_to_kubernetes:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
@@ -197,8 +191,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The Kubernetes deployment has failed.'
-        embed-url: true
+        content: 'The Kubernetes deployment has failed.\nhttps://${{ vars.SUBDOMAIN }}.${{ vars.DOMAIN }}/deploy/${{ github.run_number }}'
 
   deploy_to_azure:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
@@ -223,5 +216,4 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The Azure deployment has failed.'
-        embed-url: true
+        content: 'The Azure deployment has failed.\nhttps://${{ vars.SUBDOMAIN }}.${{ vars.DOMAIN }}/deploy/${{ github.run_number }}'
