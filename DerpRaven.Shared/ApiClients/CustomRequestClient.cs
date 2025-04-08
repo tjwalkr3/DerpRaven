@@ -31,9 +31,9 @@ public class CustomRequestClient(IApiService apiService) : ICustomRequestClient
     }
 
     // needs authentication
-    public async Task<List<CustomRequestDto>?> GetCustomRequestsByUserAsync(int userId)
+    public async Task<List<CustomRequestDto>?> GetCustomRequestsByUserEmailAsync()
     {
-        var response = await apiService.GetAsync($"api/CustomRequest/user/{userId}");
+        var response = await apiService.GetAsync($"api/CustomRequest/user");
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<CustomRequestDto>>();
     }

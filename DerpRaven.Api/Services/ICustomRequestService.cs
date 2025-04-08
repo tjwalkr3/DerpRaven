@@ -10,6 +10,6 @@ namespace DerpRaven.Api.Services
         Task<CustomRequestDto?> GetCustomRequestByIdAsync(int id);
         Task<List<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status);
         Task<List<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType);
-        Task<List<CustomRequestDto>> GetCustomRequestsByUserIdAsync(int id);
+        Task<List<CustomRequestDto>> GetCustomRequestsByUserEmailAsync(string email);
     }
 }

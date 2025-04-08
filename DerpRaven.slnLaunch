@@ -17,7 +17,8 @@
     "Projects": [
       {
         "Path": "DerpRaven.Maui\\DerpRaven.Maui.csproj",
-        "Action": "Start"
+        "Action": "Start",
+        "DebugTarget": "Phone 420-DPI (1) - API 34 (Android 14.0 - API 34)"
       },
       {
         "Path": "DerpRaven.Api\\DerpRaven.Api.csproj",

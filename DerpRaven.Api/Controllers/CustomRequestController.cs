@@ -32,10 +32,16 @@ public class CustomRequestController : ControllerBase
         return Ok(request);
     }
 
-    [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetCustomRequestsByUser(int userId)
+    [HttpGet("user")]
+    public async Task<IActionResult> GetCustomRequestsByUserEmail()
     {
-        var requests = await _customRequestService.GetCustomRequestsByUserIdAsync(userId);
+        var userEmail = HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "email")?.Value
+            ?? HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
+        if (userEmail != null) userEmail = userEmail + "@snow.edu";
+
+        if (userEmail == null) return Unauthorized();
+
+        var requests = await _customRequestService.GetCustomRequestsByUserEmailAsync(userEmail);
         return Ok(requests);
     }
 

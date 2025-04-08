@@ -101,14 +101,13 @@ public class CustomRequestClientTests
     }
 
     [Test]
-    public async Task GetCustomRequestsByUserAsync
-        ()
+    public async Task GetCustomRequestsByUserAsync()
     {
         // Arrange
         var client = new CustomRequestClient(_apiService);
 
         // Act
-        var result = await client.GetCustomRequestsByUserAsync(1);
+        var result = await client.GetCustomRequestsByUserEmailAsync();
 
         // Assert
         result.ShouldNotBeNull();

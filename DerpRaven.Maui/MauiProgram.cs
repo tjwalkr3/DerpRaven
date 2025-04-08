@@ -65,16 +65,23 @@ public static class MauiProgram
 
     private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
-        var oktaClientConfiguration = new OktaClientConfiguration()
+        builder.Services.AddScoped<IKeycloakClient, KeycloakClient>(k =>
         {
-            Domain = "https://engineering.snow.edu/auth/realms/SnowCollege/",
-            ClientId = "JonathanMauiAuth",
-            RedirectUri = "myapp://callback",
-            Browser = new WebBrowserAuthenticator()
-        };
+            var oktaClientConfiguration = new OktaClientConfiguration()
+            {
+                //Verify by adding .well-known/openid-configuration to the URL
+                Domain = "https://engineering.snow.edu/auth/realms/SnowCollege/",
+                ClientId = "JonathanMauiAuth",
+                RedirectUri = "myapp://callback",
+                Browser = new WebBrowserAuthenticator()
+            };
+            return new KeycloakClient(oktaClientConfiguration);
+        });
 
-        builder.Services.AddSingleton(new KeycloakClient(oktaClientConfiguration));
-        builder.Services.AddSingleton<ApiService>();
+        builder.Services.AddSingleton(sp => new HttpClient
+        {
+            BaseAddress = new Uri("http://10.0.2.2:5077")
+        });
 
         builder.Services.AddSingleton<IApiService, ApiService>();
         builder.Services.AddSingleton<IImageClient, ImageClient>();
@@ -82,6 +89,5 @@ public static class MauiProgram
         builder.Services.AddSingleton<IPortfolioClient, PortfolioClient>();
         return builder;
     }
-
 }
 

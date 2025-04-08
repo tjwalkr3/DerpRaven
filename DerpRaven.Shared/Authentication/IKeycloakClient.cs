@@ -5,7 +5,7 @@ namespace DerpRaven.Shared.Authentication
     public interface IKeycloakClient
     {
         OktaClientConfiguration Configuration { get; }
-        string? IdentityToken { get; }
+        string? IdentityToken { get; set; }
 
         Task<LoginResult> LoginAsync(CancellationToken cancellationToken = default);
         Task<LogoutResult> LogoutAsync(string idToken, CancellationToken cancellationToken = default);

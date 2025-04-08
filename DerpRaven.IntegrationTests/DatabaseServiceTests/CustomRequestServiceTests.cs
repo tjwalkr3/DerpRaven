@@ -170,7 +170,7 @@ public class CustomRequestServiceTests
     public async Task GetCustomRequestByUserId_ShouldBeEmpty()
     {
         // Act
-        var result = await _customRequestService.GetCustomRequestsByUserIdAsync(1);
+        var result = await _customRequestService.GetCustomRequestsByUserEmailAsync("a-random-email@this-should-be.null");
 
         // Assert
         result.ShouldNotBeNull();
@@ -187,7 +187,7 @@ public class CustomRequestServiceTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _customRequestService.GetCustomRequestsByUserIdAsync(1);
+        var result = await _customRequestService.GetCustomRequestsByUserEmailAsync("user1@example.com");
 
         // Assert
         result.Count.ShouldBe(1);
@@ -208,7 +208,7 @@ public class CustomRequestServiceTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _customRequestService.GetCustomRequestsByUserIdAsync(1);
+        var result = await _customRequestService.GetCustomRequestsByUserEmailAsync("user1@example.com");
 
         // Assert
         result.Count.ShouldBe(1);

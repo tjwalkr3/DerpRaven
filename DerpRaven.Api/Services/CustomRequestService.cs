@@ -24,13 +24,13 @@ public class CustomRequestService : ICustomRequestService
             .ToListAsync();
     }
 
-    public async Task<List<CustomRequestDto>> GetCustomRequestsByUserIdAsync(int id)
+    public async Task<List<CustomRequestDto>> GetCustomRequestsByUserEmailAsync(string email)
     {
-        _logger.LogInformation("Fetching custom requests for user with ID {UserId}", id);
+        _logger.LogInformation("Fetching custom requests for user with ID {UserEmail}", email);
         return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
-            .Where(r => r.User.Id == id)
+            .Where(r => r.User.Email == email)
             .Select(r => MapToCustomRequestDto(r))
             .ToListAsync();
     }

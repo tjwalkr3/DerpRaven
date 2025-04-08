@@ -5,9 +5,9 @@ namespace DerpRaven.Maui;
 
 public partial class AppShell : Shell
 {
-    KeycloakClient _oktaClient;
+    IKeycloakClient _oktaClient;
     private LoginResult _authenticationData = default!;
-    public AppShell(KeycloakClient oktaClient)
+    public AppShell(IKeycloakClient oktaClient)
     {
         InitializeComponent();
         _oktaClient = oktaClient;

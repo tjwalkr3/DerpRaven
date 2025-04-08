@@ -45,7 +45,7 @@ public partial class CustomRequests
 
     private async Task GetRequestsByUser()
     {
-        _requests = await _customRequestClient.GetCustomRequestsByUserAsync(_userId);
+        _requests = await _customRequestClient.GetCustomRequestsByUserEmailAsync();
     }
 
     private async Task GetRequestsByStatus()
