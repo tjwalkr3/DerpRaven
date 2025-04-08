@@ -220,10 +220,7 @@ jobs:
 
   discord_notifications:
     runs-on: self-hosted
-    needs: [deploy_to_kubernetes, deploy_to_azure]
-    if: |
-      needs.deploy_to_kubernetes.result == 'failure' ||
-      needs.deploy_to_azure.result == 'failure'
+    if: failure()
     steps:
       - name: Notify Discord on Failure
         uses: tsickert/discord-webhook@v7.0.0
