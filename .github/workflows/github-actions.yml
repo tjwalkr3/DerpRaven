@@ -27,7 +27,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The build has failed due to a formatting error. https://https://github.com/tjwalkr3/DerpRaven/deploy/${{ github.run_id }}'
+        content: 'The build has failed due to a formatting error. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
     
   check_for_warnings:
     runs-on: self-hosted
@@ -49,7 +49,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The build has failed due to a warning. https://https://github.com/tjwalkr3/DerpRaven/deploy/${{ github.run_id }}'
+        content: 'The build has failed due to a warning. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
 
   run_unit_tests:
     runs-on: self-hosted
@@ -72,7 +72,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The build has failed due to a failed unit test. https://https://github.com/tjwalkr3/DerpRaven/deploy/${{ github.run_id }}'
+        content: 'The build has failed due to a failed unit test. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
 
   run_integration_tests:
     runs-on: self-hosted
@@ -95,7 +95,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The build has failed due to a failed integration test. https://https://github.com/tjwalkr3/DerpRaven/deploy/${{ github.run_id }}'
+        content: 'The build has failed due to a failed integration test. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
 
   build_and_push_api_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
@@ -124,7 +124,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The docker build has failed for the api. https://https://github.com/tjwalkr3/DerpRaven/deploy/${{ github.run_id }}'
+        content: 'The docker build has failed for the api. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
 
   build_and_push_web_to_dockerhub:
     needs: [format_verification, check_for_warnings, run_unit_tests, run_integration_tests]
@@ -165,7 +165,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The docker build has failed for the Blazor WASM app. https://https://github.com/tjwalkr3/DerpRaven/deploy/${{ github.run_id }}'
+        content: 'The docker build has failed for the Blazor WASM app. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
 
   deploy_to_kubernetes:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
@@ -191,7 +191,7 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The Kubernetes deployment has failed. https://https://github.com/tjwalkr3/DerpRaven/deploy/${{ github.run_id }}'
+        content: 'The Kubernetes deployment has failed. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
 
   deploy_to_azure:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
@@ -216,4 +216,4 @@ jobs:
       uses: tsickert/discord-webhook@v7.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The Azure deployment has failed. https://https://github.com/tjwalkr3/DerpRaven/deploy/${{ github.run_id }}'
+        content: 'The Azure deployment has failed. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
