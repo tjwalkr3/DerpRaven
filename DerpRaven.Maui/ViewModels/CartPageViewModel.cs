@@ -61,9 +61,9 @@ public partial class CartPageViewModel : ObservableObject
 
 public class CartItem
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public decimal Price { get; set; }
     public int Quantity { get; set; }
-    public string ImageUrl { get; set; }
+    public string ImageUrl { get; set; } = string.Empty;
     public decimal Total => Price * Quantity;
 }
