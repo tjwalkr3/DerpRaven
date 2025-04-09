@@ -23,35 +23,6 @@ public class CustomRequestController : ControllerBase
         _userService = userService;
     }
 
-    public async Task<UserDto?> GetCurrentUser(ClaimsPrincipal user)
-    {
-        if (user == null) return null;
-        string? userEmail = user?.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
-
-        if (userEmail == null)
-        {
-            userEmail = user?.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
-            if (userEmail != null)
-            {
-                if (await _userService.EmailExistsAsync(userEmail + "@snow.edu"))
-                {
-                    userEmail = userEmail + "@snow.edu";
-                }
-                else if (await _userService.EmailExistsAsync(userEmail + "@students.snow.edu"))
-                {
-                    userEmail = userEmail + "@students.snow.edu";
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        if (userEmail == null) return null;
-        return await _userService.GetUserByEmailAsync(userEmail);
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetAllCustomRequests()
     {
@@ -73,7 +44,7 @@ public class CustomRequestController : ControllerBase
     public async Task<IActionResult> GetCustomRequestsByUserEmail()
     {
         _metrics.AddCustomRequestEndpointCall();
-        UserDto? user = await GetCurrentUser(HttpContext.User);
+        UserDto? user = await ControllerHelpers.GetCurrentUser(HttpContext.User, _userService);
         if (user == null) return Unauthorized();
 
         var requests = await _customRequestService.GetCustomRequestsByUserEmailAsync(user.Email);
@@ -100,7 +71,7 @@ public class CustomRequestController : ControllerBase
     public async Task<IActionResult> CreateCustomRequest([FromBody] CustomRequestDto request)
     {
         _metrics.AddCustomRequestEndpointCall();
-        UserDto? user = await GetCurrentUser(HttpContext.User);
+        UserDto? user = await ControllerHelpers.GetCurrentUser(HttpContext.User, _userService);
         if (user == null) return Unauthorized();
         request.UserId = user.Id;
 
