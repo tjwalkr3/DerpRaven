@@ -15,6 +15,14 @@ public class UserService : IUserService
         _logger = logger;
     }
 
+    public async Task<bool> EmailExistsAsync(string email)
+    {
+        _logger.LogInformation("Checking whether email exists: {UserEmail}", email);
+        return await _context.Users
+            .Where(u => u.Email == email)
+            .AnyAsync();
+    }
+
     public async Task<List<UserDto>> GetAllUsersAsync()
     {
         _logger.LogInformation("Fetching all users");
