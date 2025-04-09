@@ -8,17 +8,4 @@ public partial class CustomRequestPage : ContentPage
         InitializeComponent();
         BindingContext = vm;
     }
-
-    private void OnCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        if (sender == ArtCheckBox && e.Value)
-        {
-            PlushieCheckBox.IsChecked = false;
-            ArtOptionsPicker.SelectedIndex = 0;
-        }
-        else if (sender == PlushieCheckBox && e.Value)
-        {
-            ArtCheckBox.IsChecked = false;
-        }
-    }
 }
