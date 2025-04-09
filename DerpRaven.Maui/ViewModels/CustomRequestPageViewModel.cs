@@ -8,5 +8,5 @@ namespace DerpRaven.Maui.ViewModels;
 
 public partial class CustomRequestPageViewModel
 {
-   
+
 }

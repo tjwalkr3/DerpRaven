@@ -5,10 +5,10 @@
              xmlns:local="clr-namespace:DerpRaven.Maui.Views"
              BackgroundColor="Grey">
     <TabBar>
-        <Tab>
+        <Tab Title="Create">
             <ShellContent ContentTemplate="{DataTemplate local:CreateCustomRequestPage}" />
         </Tab>
-        <Tab>
+        <Tab Title="View">
             <ShellContent ContentTemplate="{DataTemplate local:ViewCustomRequestsPage}" />
         </Tab>
     </TabBar>

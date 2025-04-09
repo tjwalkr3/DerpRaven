@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DerpRaven.Maui.Views.CreateCustomRequestPage"
-             Title="CreateCustomRequestPage">
+             Title="Create a Custom Request">
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout Padding="10" Spacing="10">
             <HorizontalStackLayout>
                 <CheckBox x:Name="ArtCheckBox" IsChecked="{Binding IsArt}" />
                 <Label Text="Art" VerticalOptions="Center" />

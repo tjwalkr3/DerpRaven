@@ -31,6 +31,7 @@ public class CustomRequestController : ControllerBase
         if (userEmail == null)
         {
             userEmail = user?.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
+            //Maybe check if there's an email with this @snow.edu and check if there's a user with @students.snow.edu
             if (userEmail != null) userEmail = userEmail + "@snow.edu";
         }
 
