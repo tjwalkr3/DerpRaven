@@ -1,4 +1,5 @@
-﻿using DerpRaven.Api.Controllers;
+﻿using DerpRaven.Api;
+using DerpRaven.Api.Controllers;
 using DerpRaven.Api.Services;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +16,7 @@ public class PortfolioServiceControllerTests
     public void Setup()
     {
         IPortfolioService portfolioService = Substitute.For<IPortfolioService>();
+        IDerpRavenMetrics metrics = Substitute.For<IDerpRavenMetrics>();
         var dtoList = new List<PortfolioDto>()
         {
             new() { Description = "new portfolio 1", Id = 1, ImageIds = [1, 2, 3], Name = "my product", ProductTypeId = 1 },
@@ -29,7 +31,7 @@ public class PortfolioServiceControllerTests
         portfolioService.DeletePortfolioAsync(1).Returns(true);
         portfolioService.UpdatePortfolioAsync(Arg.Any<PortfolioDto>()).Returns(true);
 
-        _controller = new PortfolioController(portfolioService);
+        _controller = new PortfolioController(portfolioService, metrics);
 
     }
 

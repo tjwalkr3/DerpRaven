@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 namespace DerpRaven.Api;
 
-public class DerpRavenMetrics
+public class DerpRavenMetrics : IDerpRavenMetrics
 {
     public static ActivitySource ActivitySource = new("derp-raven-custom-trace-source");
     private readonly Counter<int> _imageEndpointCalls;

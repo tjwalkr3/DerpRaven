@@ -1,4 +1,5 @@
-﻿using DerpRaven.Api.Controllers;
+﻿using DerpRaven.Api;
+using DerpRaven.Api.Controllers;
 using DerpRaven.Api.Services;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +16,7 @@ public class ImageControllerTests
     public void Setup()
     {
         IImageService imageService = Substitute.For<IImageService>();
+        IDerpRavenMetrics metrics = Substitute.For<IDerpRavenMetrics>();
         var dtoList = new List<ImageDto>()
         {
             new() { Id = 1, Alt = "alt text 1", Path = "file1.png" },
@@ -26,7 +28,7 @@ public class ImageControllerTests
         imageService.ListImagesAsync().Returns(dtoList);
         imageService.UpdateImageDescriptionAsync(1, "new alt text").Returns(true);
         imageService.UploadImageAsync("file3.png", "alt text 3", new MemoryStream()).Returns(true);
-        _controller = new ImageController(imageService);
+        _controller = new ImageController(imageService, metrics);
     }
 
     [Test]
@@ -51,7 +53,7 @@ public class ImageControllerTests
         var fileMock = new FormFile(ms, 0, ms.Length, "file3", "file3.png");
         var imageService = Substitute.For<IImageService>();
         imageService.UploadImageAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<Stream>()).Returns(true);
-        var controller = new ImageController(imageService);
+        var controller = new ImageController(imageService, Substitute.For<IDerpRavenMetrics>());
 
         var result = await controller.UploadImage(fileMock, "alt text 3") as OkObjectResult;
 

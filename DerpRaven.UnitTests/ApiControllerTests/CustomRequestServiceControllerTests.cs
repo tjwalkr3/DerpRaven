@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Shouldly;
+using DerpRaven.Api;
 namespace DerpRaven.UnitTests.ApiControllerTests;
 
 public class CustomRequestServiceControllerTests
@@ -14,7 +15,9 @@ public class CustomRequestServiceControllerTests
     [SetUp]
     public void Setup()
     {
-        _controller = new(Substitute.For<ICustomRequestService>());
+        ICustomRequestService service = Substitute.For<ICustomRequestService>();
+        IDerpRavenMetrics metrics = Substitute.For<IDerpRavenMetrics>();
+        _controller = new CustomRequestController(service, metrics);
         _controller.ControllerContext = new ControllerContext
         {
             HttpContext = new DefaultHttpContext()
