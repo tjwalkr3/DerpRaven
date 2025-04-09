@@ -41,6 +41,10 @@ public class CustomRequestController : ControllerBase
                 {
                     userEmail = userEmail + "@students.snow.edu";
                 }
+                else
+                {
+                    return null;
+                }
             }
         }
 
