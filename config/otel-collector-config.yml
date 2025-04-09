@@ -9,8 +9,8 @@ receivers:
 exporters:
   debug:
     verbosity: detailed
-  # zipkin:
-  #   endpoint: http://zipkin:9411/api/v2/spans
+  zipkin:
+    endpoint: http://zipkin:9411/api/v2/spans
   prometheus:
     endpoint: 0.0.0.0:8889
     namespace: detailed
@@ -20,9 +20,9 @@ exporters:
 # Pipelines
 service:
   pipelines:
-    # traces:
-    #   receivers: [otlp]
-    #   exporters: [zipkin]
+    traces:
+      receivers: [otlp]
+      exporters: [zipkin]
     metrics:
       receivers: [otlp]
       exporters: [prometheus]

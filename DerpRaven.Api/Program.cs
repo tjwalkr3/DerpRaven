@@ -10,7 +10,7 @@ using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<DerpRavenMetrics>();
+builder.Services.AddSingleton<IDerpRavenMetrics, DerpRavenMetrics>();
 
 // Add CORS services
 builder.Services.AddCors(options =>
@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddLogging();
 
-// Add authentication services
+// Add authentication services.
 builder.Services.AddAuthentication().AddJwtBearer(options =>
 {
     options.Authority = "https://engineering.snow.edu/auth/realms/SnowCollege";
