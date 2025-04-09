@@ -7,7 +7,7 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=postgres;Userid=derp;Password=1234
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
-      - BlobStorage__ConnectionString=<insert-user-secret-here>
+      - BlobStorage__ConnectionString=<user-secret-goes-here>
       - BlobStorage__ContainerName=docker-compose-images
     restart: unless-stopped
     depends_on:
