@@ -17,7 +17,8 @@ public class CustomRequestServiceControllerTests
     {
         ICustomRequestService service = Substitute.For<ICustomRequestService>();
         IDerpRavenMetrics metrics = Substitute.For<IDerpRavenMetrics>();
-        _controller = new CustomRequestController(service, metrics);
+        IUserService userService = Substitute.For<IUserService>();
+        _controller = new CustomRequestController(service, metrics, userService);
         _controller.ControllerContext = new ControllerContext
         {
             HttpContext = new DefaultHttpContext()

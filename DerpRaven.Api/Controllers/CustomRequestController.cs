@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DerpRaven.Api.Controllers;
 
@@ -12,11 +14,28 @@ public class CustomRequestController : ControllerBase
 {
     private readonly ICustomRequestService _customRequestService;
     private readonly IDerpRavenMetrics _metrics;
+    private readonly IUserService _userService;
 
-    public CustomRequestController(ICustomRequestService customRequestService, IDerpRavenMetrics metrics)
+    public CustomRequestController(ICustomRequestService customRequestService, IDerpRavenMetrics metrics, IUserService userService)
     {
         _customRequestService = customRequestService;
         _metrics = metrics;
+        _userService = userService;
+    }
+
+    public async Task<UserDto?> GetCurrentUser(ClaimsPrincipal user)
+    {
+        if (user == null) return null;
+        string? userEmail = user?.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+
+        if (userEmail == null)
+        {
+            userEmail = user?.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
+            if (userEmail != null) userEmail = userEmail + "@snow.edu";
+        }
+
+        if (userEmail == null) return null;
+        return await _userService.GetUserByEmailAsync(userEmail);
     }
 
     [HttpGet]
@@ -40,14 +59,10 @@ public class CustomRequestController : ControllerBase
     public async Task<IActionResult> GetCustomRequestsByUserEmail()
     {
         _metrics.AddCustomRequestEndpointCall();
-        var user = HttpContext.User;
-        var userEmail = user?.Claims.FirstOrDefault(c => c.Type == "email")?.Value
-            ?? user?.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
-        if (userEmail != null) userEmail = userEmail + "@snow.edu";
+        UserDto? user = await GetCurrentUser(HttpContext.User);
+        if (user == null) return Unauthorized();
 
-        if (userEmail == null) return Unauthorized();
-
-        var requests = await _customRequestService.GetCustomRequestsByUserEmailAsync(userEmail);
+        var requests = await _customRequestService.GetCustomRequestsByUserEmailAsync(user.Email);
         return Ok(requests);
     }
 
@@ -71,17 +86,17 @@ public class CustomRequestController : ControllerBase
     public async Task<IActionResult> CreateCustomRequest([FromBody] CustomRequestDto request)
     {
         _metrics.AddCustomRequestEndpointCall();
-        bool wasCreated = await _customRequestService.CreateCustomRequestAsync(request);
-        if (!wasCreated) return BadRequest();
-        return Created();
+        UserDto? user = await GetCurrentUser(HttpContext.User);
+        if (user == null) return Unauthorized();
+        request.UserId = user.Id;
+
+        return await _customRequestService.CreateCustomRequestAsync(request) ? Created() : BadRequest();
     }
 
     [HttpPatch("{id}/status")]
     public async Task<IActionResult> ChangeStatus(int id, [FromBody] string status)
     {
         _metrics.AddCustomRequestEndpointCall();
-        bool wasUpdated = await _customRequestService.ChangeStatusAsync(id, status);
-        if (!wasUpdated) return BadRequest();
-        return NoContent();
+        return await _customRequestService.ChangeStatusAsync(id, status) ? NoContent() : BadRequest();
     }
 }

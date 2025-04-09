@@ -108,7 +108,6 @@ public class CustomRequestService : ICustomRequestService
 
         return new CustomRequest()
         {
-            Id = dto.Id,
             Description = dto.Description,
             Email = dto.Email,
             Status = dto.Status,
