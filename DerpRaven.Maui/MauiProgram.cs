@@ -41,6 +41,8 @@ public static class MauiProgram
         builder.Services.AddTransient<PortfolioPage>();
         builder.Services.AddTransient<ProductPage>();
         builder.Services.AddTransient<ProductsListPage>();
+        builder.Services.AddTransient<CreateCustomRequestPage>();
+        builder.Services.AddTransient<ViewCustomRequestsPage>();
         builder.Services.AddTransient<AppShell>();
         builder.Services.AddTransient<SplashScreen>();
         builder.Services.AddTransient<App>();
@@ -58,6 +60,8 @@ public static class MauiProgram
         builder.Services.AddTransient<PortfolioPageViewModel>();
         builder.Services.AddTransient<ProductPageViewModel>();
         builder.Services.AddTransient<ProductsListPageViewModel>();
+        builder.Services.AddTransient<CreateCustomRequestPageViewModel>();
+        builder.Services.AddTransient<ViewCustomRequestsPageViewModel>();
         builder.Services.AddTransient<PlushiePortfolioPage>();
         builder.Services.AddTransient<ArtPortfolioPage>();
         return builder;

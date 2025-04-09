@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DerpRaven.Maui.Views.ViewCustomRequestsPage"
+             Title="ViewCustomRequestsPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
+            <CollectionView ItemsSource="{Binding CustomRequests}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Description, StringFormat='Description: {0}'}" />
+                            <Label Text="{Binding Email, StringFormat='Email: {0}'}" />
+                            <Label Text="{Binding Status, StringFormat='Status: {0}'}" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Get Custom Requests" Command="{Binding GetCustomRequestsCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
