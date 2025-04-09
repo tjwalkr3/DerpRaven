@@ -10,6 +10,8 @@ using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<DerpRavenMetrics>();
+
 // Add CORS services
 builder.Services.AddCors(options =>
 {
