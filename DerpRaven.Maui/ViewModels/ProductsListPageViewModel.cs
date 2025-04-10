@@ -11,34 +11,7 @@ public partial class ProductsListPageViewModel : ObservableObject
 
     public ProductsListPageViewModel()
     {
-        Products = new ObservableCollection<Product>
-        {
-            new Product
-            {
-                Id = 1, // Unique identifier for the product
-                Name = "Unicorn Squishy",
-                ImageUrl = "unicornsquish.png",
-                Description = "A cute unicorn stress squishy",
-                Price = 10.99,
-                Quantity = 10
-            },
-            new Product
-            {
-                Id = 2, // Unique identifier for the product
-                Name = "Horse Plushie",
-                ImageUrl = "horsesnuggler.png",
-                Description = "A cute and cuddly horse plushie",
-                Price = 59.99
-            },
-            new Product
-            {
-                Id = 3, // Unique identifier for the product
-                Name = "Emote",
-                ImageUrl = "quincymad.png",
-                Description = "A custom emote page",
-                Price = 14.99
-            }
-        };
+        Products = ProductsList;
     }
 
     [RelayCommand]
@@ -55,9 +28,33 @@ public partial class ProductsListPageViewModel : ObservableObject
         if (product == null) return;
         await Shell.Current.GoToAsync($"///ProductPage?productId={product.Id}");
     }
+
+    public List<Product> ProductsList = new List<Product> {
+    new Product {
+        Id = 1, // Unique identifier for the product
+        Name = "Unicorn Squishy",
+        ImageUrl = "unicornsquish.png",
+        Description = "A cute unicorn stress squishy",
+        Price = 10.99,
+        Quantity = 10
+    },
+    new Product {
+        Id = 2, // Unique identifier for the product
+        Name = "Horse Plushie",
+        ImageUrl = "horsesnuggler.png",
+        Description = "A cute and cuddly horse plushie",
+        Price = 59.99
+    },
+    new Product {
+        Id = 3, // Unique identifier for the product
+        Name = "Emote",
+        ImageUrl = "quincymad.png",
+        Description = "A custom emote page",
+        Price = 14.99
+    }
+};
 }
-public class Product
-{
+public class Product {
     public int Id { get; set; } // Unique identifier for the product
     public string Name { get; set; } = string.Empty; // Default to empty string to avoid null reference issues
     public string ImageUrl { get; set; } = string.Empty; // Default to empty string to avoid null reference issues
@@ -65,3 +62,4 @@ public class Product
     public double Price { get; set; }
     public int Quantity { get; set; } = 1; // Default quantity to 1 for the product
 }
+
