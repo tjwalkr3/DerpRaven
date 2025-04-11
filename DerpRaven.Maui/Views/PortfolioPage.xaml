@@ -3,8 +3,7 @@
     x:Class="DerpRaven.Maui.Views.PortfolioPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:DerpRaven.Maui.Views"
-    BackgroundColor="Grey">
+    xmlns:local="clr-namespace:DerpRaven.Maui.Views">
 
     <TabBar>
         <Tab Title="Plushie Portfolio">
