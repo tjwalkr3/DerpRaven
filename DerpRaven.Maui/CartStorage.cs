@@ -17,10 +17,10 @@ internal class CartStorage {
         Preferences.Set(CartKey, json);
     }
 
-    public static void AddCartItem(ProductDto product, string imageurl) {
+    public static void AddCartItem(ProductDto product) {
         var item = new CartItem {
             Name = product.Name,
-            ImageUrl = imageurl,
+            ImageUrl = Path.Combine(FileSystem.CacheDirectory, $"{product.ImageIds[0]}.png"),
             //ImageUrl = GetImageUrl(product.ImageIds),
             Quantity = product.Quantity,
             Price = product.Price,
