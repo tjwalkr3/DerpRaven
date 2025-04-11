@@ -2,6 +2,7 @@
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Json;
+using System.Web;
 
 namespace DerpRaven.Shared.ApiClients;
 
@@ -52,5 +53,13 @@ public class ImageClient(IApiService apiService) : IImageClient
     {
         var response = await apiService.GetFromJsonAsyncWithoutAuthorization<ImageDto>($"api/image/info/{id}");
         return response;
+    }
+
+    // does not need authentication
+    public async Task<List<ImageDto>> GetImageInfoManyAsync(List<int> ids)
+    {
+        string path = $"api/image/info-many/?{string.Join("&", ids.Select(id => $"ids={id}"))}";
+        var response = await apiService.GetFromJsonAsyncWithoutAuthorization<List<ImageDto>>(path);
+        return response ?? [];
     }
 }

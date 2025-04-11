@@ -4,7 +4,7 @@ namespace DerpRaven.Maui.Views;
 
 public partial class ArtPortfolioPage : ContentPage
 {
-    public ArtPortfolioPage(MainPageViewModel vm)
+    public ArtPortfolioPage(PortfolioPageViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;

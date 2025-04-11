@@ -32,15 +32,6 @@ public class ImageController : ControllerBase
         return StatusCode(500, "An error occurred while uploading the image.");
     }
 
-    [HttpGet("list")]
-    [AllowAnonymous]
-    public async Task<IActionResult> ListImages()
-    {
-        var images = await _imageService.ListImagesAsync();
-        _metrics.AddImageEndpointCall();
-        return Ok(images);
-    }
-
     [HttpGet("get/{id}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetImage(int id)
@@ -61,6 +52,16 @@ public class ImageController : ControllerBase
         return Ok("Deleted");
     }
 
+    
+    [HttpGet("list")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ListImages()
+    {
+        var images = await _imageService.ListImagesAsync();
+        _metrics.AddImageEndpointCall();
+        return Ok(images);
+    }
+
     [HttpGet("info/{id}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetImageInfo(int id)
@@ -69,5 +70,15 @@ public class ImageController : ControllerBase
         if (image == null) return NotFound("An image with this ID was not found!");
         _metrics.AddImageEndpointCall();
         return Ok(image);
+    }
+
+    [HttpGet("info-many")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetImageInfoMany([FromQuery] List<int> ids)
+    {
+        var imageDtos = await _imageService.GetInfoForImagesAsync(ids);
+        if (imageDtos == null) return NotFound("Images with these IDs were not found!");
+        _metrics.AddImageEndpointCall();
+        return Ok(imageDtos);
     }
 }

@@ -16,6 +16,7 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
 
             <!-- CollectionView dynamically creating multiple carousels -->
+            
             <CarouselView ItemsSource="{Binding Plushies}" PeekAreaInsets="100">
                 <CarouselView.ItemTemplate>
                     <DataTemplate x:DataType="dtos:ImageDto">

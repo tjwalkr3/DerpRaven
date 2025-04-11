@@ -6,37 +6,78 @@ namespace DerpRaven.Maui.ViewModels;
 
 public partial class PortfolioPageViewModel : ObservableObject
 {
-    public ObservableCollection<CarouselViewModel> Portfolios { get; private set; }
-    private List<ImageDto> Images { get; set; }
-    private readonly PortfolioClient _portfolioClient;
+    public ObservableCollection<CarouselViewModel> PlushiePortfolios { get; private set; } = [];
+    public ObservableCollection<CarouselViewModel> ArtPortfolios { get; private set; } = [];
+    private readonly IPortfolioClient _portfolioClient;
+    private readonly IImageClient _imageClient;
 
-    public PortfolioPageViewModel(PortfolioClient client)
+    public PortfolioPageViewModel(IPortfolioClient portfolioClient, IImageClient imageClient)
     {
-        _portfolioClient = client;
-        List<PortfolioDto> portfolios = client.GetAllPortfoliosAsync().Result;
-        List<ImageDto> images = [];
+        _portfolioClient = portfolioClient;
+        _imageClient = imageClient;
+    }
 
+    public async Task RefreshPortfolioView()
+    {
+        List<PortfolioDto> portfolios = await _portfolioClient.GetAllPortfoliosAsync();
+        List<ImageDto> images = await GetPortfolioImages(portfolios);
+        PopulatePortfolioViews(portfolios);
+    }
 
-        Images = new List<ImageDto>
+    private void PopulatePortfolioViews(List<PortfolioDto> portfolios)
+    {
+        PlushiePortfolios.Clear();
+        ArtPortfolios.Clear();
+        foreach (var portfolio in portfolios)
         {
-            new ImageDto { Id = 1, Alt = "Derp Squid", Path = "derpsquid.png" },
-            new ImageDto { Id = 2, Path = "horsesnuggler.png", Alt = "Horse Snuggler" },
-            new ImageDto { Id = 3, Path = "puffersquish.png", Alt = "Puffer Squishy" }
-        };
+            if (portfolio.ProductTypeId == 1)
+            {
+                PlushiePortfolios.Add(new CarouselViewModel(portfolio, new List<ImageDto>()));
+            }
+            else if (portfolio.ProductTypeId == 2)
+            {
+                ArtPortfolios.Add(new CarouselViewModel(portfolio, new List<ImageDto>()));
+            }
+        }
+    }
 
-        var portfolioDtos = new List<PortfolioDto>
+    private async Task<List<ImageDto>> GetPortfolioImages(List<PortfolioDto> portfolios)
+    {
+        List<int> imageIds = portfolios
+            .SelectMany(p => p.ImageIds)
+            .Distinct()
+            .ToList();
+
+        List<ImageDto> images = await _imageClient.GetImageInfoManyAsync(imageIds);
+        await SaveListOfImages(images);
+
+        return images;
+    }
+
+    // download all images from the server and save them to the device cache
+    private async Task SaveListOfImages(List<ImageDto> imageDtos)
+    {
+        foreach (ImageDto imageDto in imageDtos)
         {
-            new PortfolioDto { Id = 1, Description = "Plushies", Name = "Plush Portfolio", ProductTypeId = 1, ImageIds = new List<int> { 1, 2, 3 } },
-            new PortfolioDto { Id = 2, Description = "Art", Name = "Art", ProductTypeId = 1, ImageIds = new List<int> { 3 } }
-        };
+            var image = await _imageClient.GetImageAsync(imageDto.Id);
+            if (image != null && image.Length != 0)
+            {
+                SaveImage(image, imageDto.Id);
+            }
+        }
+    }
 
-        Portfolios = new ObservableCollection<CarouselViewModel>(
-            portfolioDtos.Select(p => new CarouselViewModel(p, Images))
-        );
+    // save the downloaded byte array to the device cache, return if it already exists
+    private void SaveImage(byte[] image, int id)
+    {
+        var filePath = Path.Combine(FileSystem.CacheDirectory, $"{id}.png");
+        if (File.Exists(filePath)) return;
+        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+        {
+            stream.Write(image, 0, image.Length);
+        }
     }
 }
-
-
 
 public class CarouselViewModel : ObservableObject
 {
@@ -50,8 +91,4 @@ public class CarouselViewModel : ObservableObject
             allImages.Where(img => portfolio.ImageIds.Contains(img.Id))
         );
     }
-
 }
-
-
-
