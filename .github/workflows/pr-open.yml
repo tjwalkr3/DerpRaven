@@ -65,7 +65,7 @@ jobs:
         export AZURE_BLOB_CONN_STRING=${{ secrets.AZURE_BLOB_CONN_STRING }}
         export AZURE_BLOB_CONTIANER_NAME=${{ vars.AZURE_BLOB_CONTAINER_NAME_KUBE }}
 
-        for FILE in "kube"/*
+        for FILE in "kube-pr"/*
         do
           cat "$FILE" | envsubst | kubectl apply -f -
         done
