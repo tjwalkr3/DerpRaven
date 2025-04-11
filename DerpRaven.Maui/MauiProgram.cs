@@ -40,9 +40,11 @@ public static class MauiProgram
         builder.Services.AddSingleton<PaymentPage>();
         builder.Services.AddTransient<PortfolioPage>();
         builder.Services.AddSingleton<ProductPage>();
-        builder.Services.AddSingleton<ProductsListPage>();
+        builder.Services.AddTransient<ProductsListPage>();
         builder.Services.AddSingleton<CreateCustomRequestPage>();
-        builder.Services.AddSingleton<ViewCustomRequestsPage>();    
+        builder.Services.AddSingleton<ViewCustomRequestsPage>();   
+        builder.Services.AddSingleton<PlushieProductsListPage>();
+        builder.Services.AddSingleton<ArtProductsListPage>();
         builder.Services.AddSingleton<AppShell>();
         builder.Services.AddSingleton<SplashScreen>();
         builder.Services.AddSingleton<App>();
