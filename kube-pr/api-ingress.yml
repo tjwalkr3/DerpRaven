@@ -5,7 +5,7 @@ metadata:
   namespace: $NAMESPACE
 spec:
   rules:
-  - host: api-pr-${PULL_REQUEST_ID}.dragonbytes.org
+  - host: api-derp-pr.duckdns.org
     http:
       paths:
       - path: /
@@ -14,4 +14,4 @@ spec:
           service:
             name: derp-api-svc
             port:
-              number: 8080 # same as external ip set in service
+              number: 8080

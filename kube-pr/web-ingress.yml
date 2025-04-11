@@ -3,14 +3,9 @@ kind: Ingress
 metadata:
   name: derp-web-ingress
   namespace: $NAMESPACE
-  annotations:
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "route"
-    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
-
 spec:
   rules:
-  - host: web-pr-${PULL_REQUEST_ID}.dragonbytes.org
+  - host: web-derp-pr.duckdns.org
     http:
       paths:
       - path: /
@@ -19,4 +14,4 @@ spec:
           service:
             name: derp-web-svc
             port:
-              number: 80 # same as external ip set in service
+              number: 80

@@ -43,7 +43,7 @@ jobs:
         docker build \
           -f ./Web.Dockerfile \
           -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:pr-${{ github.event.pull_request.number }} \
-          --build-arg BASE_ADDRESS="http://api-pr-${{ github.event.pull_request.number }}.dragonbytes.org" \
+          --build-arg BASE_ADDRESS="http://api-derp-pr.duckdns.org" \
           .
 
         docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:pr-${{ github.event.pull_request.number }}
