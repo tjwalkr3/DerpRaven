@@ -21,24 +21,44 @@ public partial class CartPageViewModel : ObservableObject
                 Name = "Unicorn Squishy",
                 ImageUrl = "unicornsquish.jpg",
                 Quantity = 10,
-                Price = 10.99M
+                Price = 10.99M,
+                ProductTypeId = 1
             },
             new CartItem
             {
                 Name = "Horse Plushie",
                 ImageUrl = "horsesnuggler.jpg",
                 Quantity = 2,
-                Price = 59.99M
+                Price = 59.99M,
+                ProductTypeId = 1
             },
             new CartItem
             {
                 Name = "Emote",
                 ImageUrl = "quincymad.png",
                 Quantity = 1,
-                Price = 14.99M
+                Price = 14.99M,
+                ProductTypeId = 2
+
             }
         };
+
+        checkPlushiePresent();
     }
+
+    [ObservableProperty]
+    public bool plushiePresent = false;
+
+    public void checkPlushiePresent() {
+        foreach (var item in CartItems) {
+            if (item.ProductTypeId == 1) {
+                PlushiePresent = true;
+                break;
+            } else PlushiePresent = false;
+        }
+    }
+
+    
 
     //[RelayCommand]
     //private void RemoveItem(CartItem item)
@@ -59,11 +79,3 @@ public partial class CartPageViewModel : ObservableObject
     //}
 }
 
-public class CartItem
-{
-    public string Name { get; set; }
-    public decimal Price { get; set; }
-    public int Quantity { get; set; }
-    public string ImageUrl { get; set; }
-    public decimal Total => Price * Quantity;
-}

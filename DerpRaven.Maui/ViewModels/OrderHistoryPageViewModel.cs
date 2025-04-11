@@ -44,8 +44,8 @@ public partial class OrderViewModel : ObservableObject {
     public void getImagePaths() {
 
         foreach(int imageId in Order.ProductIds) {
-            string imagepath= ProductsListPageViewModel.ProductsList
-            productImagePaths.Add();
+            //string imagepath= ProductsListPageViewModel.ProductsList
+            //productImagePaths.Add();
         }
     }
 }

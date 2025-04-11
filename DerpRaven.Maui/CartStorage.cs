@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Microsoft.Maui.Storage;
 using DerpRaven.Maui.ViewModels;
+using DerpRaven.Shared.Dtos;
 
 namespace DerpRaven.Maui;
 internal class CartStorage {
@@ -16,7 +17,15 @@ internal class CartStorage {
         Preferences.Set(CartKey, json);
     }
 
-    public static void AddCartItem(CartItem item) {
+    public static void AddCartItem(ProductDto product, string imageurl) {
+        var item = new CartItem {
+            Name = product.Name,
+            ImageUrl = imageurl,
+            //ImageUrl = GetImageUrl(product.ImageIds),
+            Quantity = product.Quantity,
+            Price = product.Price,
+            ProductTypeId = product.ProductTypeId
+        };
         //if the item is already in the cart, increase the quantity
         var existingItem = GetCartItems().FirstOrDefault(i => i.Name == item.Name);
         if (existingItem != null) {
@@ -27,6 +36,13 @@ internal class CartStorage {
         }
         SaveCartItems(GetCartItems());
     }
+
+    //private static string GetImageUrl(List<int> ids) {
+    //    string imageUrl = string.Empty;
+    //    // Assuming you have a method to get the image URL by ID
+    //    imageUrl = GetImageUrlById(ids[0]);
+    //    return imageUrl;
+    //}
 
     public static void RemoveCartItem(CartItem item) {
         var cartItems = GetCartItems();
@@ -56,6 +72,7 @@ internal class CartStorage {
         SaveCartItems(cartItems);
     }
 
+
 }
 
 public class CartItem {
@@ -63,4 +80,5 @@ public class CartItem {
     public string ImageUrl { get; set; } = string.Empty;
     public int Quantity { get; set; }
     public decimal Price { get; set; }
+    public int ProductTypeId { get; set; }
 }
