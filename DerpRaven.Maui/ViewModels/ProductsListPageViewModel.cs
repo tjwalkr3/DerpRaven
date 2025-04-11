@@ -77,12 +77,13 @@ public partial class ProductsListPageViewModel : ObservableObject
         }
     };
 }
-public class Product {
+public class Product
+{
     public int Id { get; set; } // Unique identifier for the product
     public string Name { get; set; } = string.Empty; // Default to empty string to avoid null reference issues
     public string ImageUrl { get; set; } = string.Empty; // Default to empty string to avoid null reference issues
     public string Description { get; set; } = string.Empty; // Default to empty string to avoid null reference issues
-    public double Price { get; set; } 
+    public double Price { get; set; }
     public int Quantity { get; set; } = 1; // Default quantity to 1 for the product
 }
 

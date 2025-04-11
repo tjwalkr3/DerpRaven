@@ -49,16 +49,20 @@ public partial class CartPageViewModel : ObservableObject
     [ObservableProperty]
     public bool plushiePresent = false;
 
-    public void checkPlushiePresent() {
-        foreach (var item in CartItems) {
-            if (item.ProductTypeId == 1) {
+    public void checkPlushiePresent()
+    {
+        foreach (var item in CartItems)
+        {
+            if (item.ProductTypeId == 1)
+            {
                 PlushiePresent = true;
                 break;
-            } else PlushiePresent = false;
+            }
+            else PlushiePresent = false;
         }
     }
 
-    
+
 
     //[RelayCommand]
     //private void RemoveItem(CartItem item)

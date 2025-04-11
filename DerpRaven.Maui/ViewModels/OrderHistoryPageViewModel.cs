@@ -5,10 +5,12 @@ using System.Collections.ObjectModel;
 
 namespace DerpRaven.Maui.ViewModels;
 
-public partial class OrderHistoryPageViewModel : ObservableObject {
+public partial class OrderHistoryPageViewModel : ObservableObject
+{
     public ObservableCollection<OrderViewModel> Orders { get; } = [];
 
-    public OrderHistoryPageViewModel() {
+    public OrderHistoryPageViewModel()
+    {
         var historyList = new List<OrderDto>
         {
             new() { Id = 1, Address = "123 Street", Email = "user@example.com", OrderDate = DateTime.Now, UserId = 5, ProductIds = new List<int> { 1, 2 } },
@@ -16,24 +18,28 @@ public partial class OrderHistoryPageViewModel : ObservableObject {
         };
 
         Orders.Clear();
-        foreach (var order in historyList) {
+        foreach (var order in historyList)
+        {
             Orders.Add(new OrderViewModel(order));
         }
     }
 }
 
-public partial class OrderViewModel : ObservableObject {
+public partial class OrderViewModel : ObservableObject
+{
     public OrderDto Order { get; }
 
     [ObservableProperty]
     private bool isExpanded;
 
-    public OrderViewModel(OrderDto order) {
+    public OrderViewModel(OrderDto order)
+    {
         Order = order;
     }
 
     [RelayCommand]
-    private void ToggleExpand() {
+    private void ToggleExpand()
+    {
         IsExpanded = !IsExpanded;
     }
 
@@ -41,9 +47,11 @@ public partial class OrderViewModel : ObservableObject {
 
     public List<string> productImagePaths = new();
 
-    public void getImagePaths() {
+    public void getImagePaths()
+    {
 
-        foreach(int imageId in Order.ProductIds) {
+        foreach (int imageId in Order.ProductIds)
+        {
             //string imagepath= ProductsListPageViewModel.ProductsList
             //productImagePaths.Add();
         }

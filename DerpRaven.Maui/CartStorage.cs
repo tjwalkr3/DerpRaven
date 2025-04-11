@@ -9,16 +9,20 @@ using DerpRaven.Maui.ViewModels;
 using DerpRaven.Shared.Dtos;
 
 namespace DerpRaven.Maui;
-internal class CartStorage {
+internal class CartStorage
+{
     private const string CartKey = "CartItems";
 
-    public static void SaveCartItems(List<CartItem> items) {
+    public static void SaveCartItems(List<CartItem> items)
+    {
         var json = JsonSerializer.Serialize(items);
         Preferences.Set(CartKey, json);
     }
 
-    public static void AddCartItem(ProductDto product) {
-        var item = new CartItem {
+    public static void AddCartItem(ProductDto product)
+    {
+        var item = new CartItem
+        {
             Name = product.Name,
             ImageUrl = Path.Combine(FileSystem.CacheDirectory, $"{product.ImageIds[0]}.png"),
             //ImageUrl = GetImageUrl(product.ImageIds),
@@ -28,9 +32,12 @@ internal class CartStorage {
         };
         //if the item is already in the cart, increase the quantity
         var existingItem = GetCartItems().FirstOrDefault(i => i.Name == item.Name);
-        if (existingItem != null) {
+        if (existingItem != null)
+        {
             existingItem.Quantity += item.Quantity;
-        } else {
+        }
+        else
+        {
             var cartItems = GetCartItems();
             cartItems.Add(item);
         }
@@ -44,28 +51,34 @@ internal class CartStorage {
     //    return imageUrl;
     //}
 
-    public static void RemoveCartItem(CartItem item) {
+    public static void RemoveCartItem(CartItem item)
+    {
         var cartItems = GetCartItems();
         cartItems.Remove(item);
         SaveCartItems(cartItems);
     }
 
-    public static List<CartItem> GetCartItems() {
+    public static List<CartItem> GetCartItems()
+    {
         var json = Preferences.Get(CartKey, string.Empty);
-        if (string.IsNullOrEmpty(json)) {
+        if (string.IsNullOrEmpty(json))
+        {
             return new List<CartItem>();
         }
         return JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
     }
 
-    public static void ClearCart() {
+    public static void ClearCart()
+    {
         Preferences.Remove(CartKey);
     }
 
-    public static void UpdateCartItem(CartItem item) {
+    public static void UpdateCartItem(CartItem item)
+    {
         var cartItems = GetCartItems();
         var existingItem = cartItems.FirstOrDefault(i => i.Name == item.Name);
-        if (existingItem != null) {
+        if (existingItem != null)
+        {
             existingItem.Quantity = item.Quantity;
             existingItem.Price = item.Price;
         }
@@ -75,7 +88,8 @@ internal class CartStorage {
 
 }
 
-public class CartItem {
+public class CartItem
+{
     public string Name { get; set; } = string.Empty;
     public string ImageUrl { get; set; } = string.Empty;
     public int Quantity { get; set; }

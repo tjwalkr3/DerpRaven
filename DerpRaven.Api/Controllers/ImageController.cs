@@ -52,7 +52,7 @@ public class ImageController : ControllerBase
         return Ok("Deleted");
     }
 
-    
+
     [HttpGet("list")]
     [AllowAnonymous]
     public async Task<IActionResult> ListImages()
