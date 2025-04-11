@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: derp-api-container
-        image: tjwalkr3/derp-raven-api:pr-$BUILD_NUMBER
+        image: tjwalkr3/derp-raven-api:pr-$PULL_REQUEST_ID
         livenessProbe:
           httpGet:
             path: /api/healthcheck
