@@ -25,8 +25,8 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Text="Enter Address For Plushie Shipping:" />
-            <Border Stroke="Black" StrokeThickness="1">
+            <Label Text="Enter Address For Plushie Shipping:" IsVisible="{Binding PlushiePresent}"/>
+            <Border Stroke="Black" StrokeThickness="1" IsVisible="{Binding PlushiePresent}">
                 <Entry Placeholder="Address" />
             </Border>
 

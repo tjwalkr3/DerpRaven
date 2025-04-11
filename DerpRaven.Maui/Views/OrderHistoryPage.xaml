@@ -4,17 +4,29 @@
              x:Class="DerpRaven.Maui.Views.OrderHistoryPage"
              Title="OrderHistoryPage">
     <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="10">
-            <Border Stroke="Gray" Padding="10" Margin="5">
-                <VerticalStackLayout>
-                    <Button Text="{Binding OrderDate, StringFormat='Order {0:MM/dd/yyyy}'}"
+        <CollectionView ItemsSource="{Binding Orders}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Padding="10" Spacing="10">
+                        <Border Stroke="Gray" Padding="10" Margin="5">
+                            <VerticalStackLayout>
+                                <Button Text="{Binding OrderDate, StringFormat='Order {0:MM/dd/yyyy}'}"
                                         Command="{Binding ToggleExpandCommand}" />
 
-                    <StackLayout IsVisible="{Binding IsExpanded}">
-                        <Image Source="unicornsquish.jpg" HeightRequest="100" />
-                    </StackLayout>
-                </VerticalStackLayout>
-            </Border>
-        </VerticalStackLayout>
+                                <CollectionView ItemsSource="{Binding ProductImagePaths}" 
+                                                ItemsLayout="HorizontalList"
+                                                IsVisible="{Binding IsExpanded}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding}" HeightRequest="100" WidthRequest="100" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </ScrollView>
 </ContentPage>
