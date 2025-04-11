@@ -8,7 +8,6 @@ public partial class CustomRequests
     private CustomRequestDto _newRequest = new();
     private string _status = string.Empty;
     private string _productType = string.Empty;
-    private int _userId = 0;
     private int _id = 0;
     private string errorString = string.Empty;
     ICustomRequestClient _customRequestClient { get; }

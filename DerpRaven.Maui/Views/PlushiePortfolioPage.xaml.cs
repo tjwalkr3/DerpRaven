@@ -4,7 +4,7 @@ namespace DerpRaven.Maui.Views;
 
 public partial class PlushiePortfolioPage : ContentPage
 {
-    public PlushiePortfolioPage(MainPageViewModel vm)
+    public PlushiePortfolioPage(PortfolioPageViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;

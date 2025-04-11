@@ -169,5 +169,38 @@ public class UserServiceTests
         result.ShouldNotBeEmpty();
         result.Single().Name.ShouldBe("User1");
     }
+
+
+    [Order(9)]
+    [Test]
+    public async Task ChackEmailExists_ShouldBeTrue()
+    {
+        // Arrange
+        User user = new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+
+        // Act
+        bool exists = await _userService.EmailExistsAsync("user1@example.com");
+
+        // Assert
+        exists.ShouldBeTrue();
+    }
+
+    [Order(10)]
+    [Test]
+    public async Task ChackEmailExists_ShouldBeFalse()
+    {
+        // Arrange
+        User user = new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+
+        // Act
+        bool exists = await _userService.EmailExistsAsync("user5@example.com");
+
+        // Assert
+        exists.ShouldBeFalse();
+    }
 }
 

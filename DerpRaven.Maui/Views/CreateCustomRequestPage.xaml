@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DerpRaven.Maui.Views.CreateCustomRequestPage"
+             Title="Create a Custom Request">
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ArtCheckBox" IsChecked="{Binding IsArt}" />
+                <Label Text="Art" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <CheckBox x:Name="PlushieCheckBox" IsChecked="{Binding IsPlushie}" />
+                <Label Text="Plushie" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Picker x:Name="ArtOptionsPicker" 
+            IsVisible="{Binding Source={x:Reference ArtCheckBox}, Path=IsChecked}"
+            SelectedItem="{Binding ArtType}"
+            Title="Select an option">
+                <Picker.Items>
+                    <x:String>Headshot</x:String>
+                    <x:String>Bust</x:String>
+                    <x:String>Half Body</x:String>
+                    <x:String>Full Body</x:String>
+                    <x:String>Ref Sheet</x:String>
+                    <x:String>Comic</x:String>
+                    <x:String>Emote</x:String>
+                    <x:String>Sketch</x:String>
+                    <x:String>Plushify Me!</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Label Text="Description of what you want:" />
+            <Border Stroke="Black" StrokeThickness="1" Padding="0">
+                <Editor HeightRequest="300" Text="{Binding Description}" Placeholder="Describe what you want..."/>
+            </Border>
+
+            <Label Text="Email (Required for contact):" />
+            <Border Stroke="Black" StrokeThickness="1">
+                <Entry Text="{Binding Email}" Placeholder="example@example.com" Keyboard="Email"/>
+            </Border>
+            <Button Text="Submit" Command="{Binding SubmitCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -132,4 +132,16 @@ public class ImageService : IImageService
         }
         return null;
     }
+
+    public async Task<List<ImageDto>> GetInfoForImagesAsync(List<int> ids)
+    {
+        _logger.LogInformation("Fetching image info for images with IDs {ImageIds}", string.Join(", ", ids));
+        List<ImageDto> images = [];
+        foreach (var id in ids)
+        {
+            ImageDto? dto = await GetImageInfoAsync(id);
+            if (dto != null) images.Add(dto);
+        }
+        return images;
+    }
 }

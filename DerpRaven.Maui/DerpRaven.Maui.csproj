@@ -84,7 +84,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\ViewCustomRequestspage.xaml.cs">
+	    <DependentUpon>ViewCustomRequestsPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\CreateCustomRequestPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="SplashScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ViewCustomRequestsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\CartPage.xaml">

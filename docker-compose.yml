@@ -7,7 +7,7 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=postgres;Userid=derp;Password=1234
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
-      - BlobStorage__ConnectionString=<insert-connection-string-here>
+      - BlobStorage__ConnectionString=<user-secret-goes-here>
       - BlobStorage__ContainerName=docker-compose-images
     restart: unless-stopped
     depends_on:
@@ -29,7 +29,7 @@ services:
       - 8091:80
 
   db:
-    image: docker.io/library/postgres
+    image: postgres:16
     restart: unless-stopped
     environment:
       - POSTGRES_USER=derp
@@ -40,30 +40,36 @@ services:
       - ./config/db-init.sql:/docker-entrypoint-initdb.d/db-init.sql
 
   otel-collector:
-    image: otel/opentelemetry-collector-contrib
+    image: otel/opentelemetry-collector-contrib:0.123.0
     volumes:
       - ./config/otel-collector-config.yml:/etc/otelcol-contrib/config.yaml
   
   loki:
-    image: grafana/loki:latest
+    image: grafana/loki:3.4.2
 
   grafana:
+    image: grafana/grafana:11.6.0
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-    image: grafana/grafana:latest
     volumes:
       - ./config/grafana-datasource.yml:/etc/grafana/provisioning/datasources/ds.yaml
     ports:
       - 8092:3000
 
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v3.2.1
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 8093:9090
 
+  zipkin:
+    image: ghcr.io/openzipkin/zipkin-slim:3.5
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+     - 8094:9411
+
 volumes:
   postgres: {}
-  config: {}

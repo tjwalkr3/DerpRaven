@@ -1,6 +1,7 @@
 ﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Maui.ApplicationModel.Communication;
 namespace DerpRaven.Api.Services;
 
 public class CustomRequestService : ICustomRequestService
@@ -108,7 +109,6 @@ public class CustomRequestService : ICustomRequestService
 
         return new CustomRequest()
         {
-            Id = dto.Id,
             Description = dto.Description,
             Email = dto.Email,
             Status = dto.Status,

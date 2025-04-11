@@ -10,6 +10,8 @@ using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<IDerpRavenMetrics, DerpRavenMetrics>();
+
 // Add CORS services
 builder.Services.AddCors(options =>
 {
@@ -25,11 +27,11 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddLogging();
 
-// Add authentication services
+// Add authentication services.
 builder.Services.AddAuthentication().AddJwtBearer(options =>
 {
     options.Authority = "https://engineering.snow.edu/auth/realms/SnowCollege";
-    options.Audience = "JonathanMauiAuth";
+    options.Audience = "DerpClientSpring25";
 });
 
 // Add the database context
@@ -46,6 +48,9 @@ Uri otlpEndpoint = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] 
 var resourceBuilder = ResourceBuilder.CreateDefault()
     .AddService("DerpRaven");
 
+#if DEBUG
+
+#else
 // Set up OpenTelemetry
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing
@@ -73,6 +78,7 @@ builder.Services.AddOpenTelemetry()
             options.Endpoint = new Uri(otlpEndpoint, "/v1/logs");
             options.Protocol = OtlpExportProtocol.HttpProtobuf;
         }));
+#endif
 
 builder.Services.AddOpenApi();
 builder.Services.Configure<BlobStorageOptions>(builder.Configuration.GetSection("BlobStorage"));
@@ -94,7 +100,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

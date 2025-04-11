@@ -32,46 +32,50 @@ public static class MauiProgram
 
     private static MauiAppBuilder RegisterViews(this MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<CartPage>();
-        builder.Services.AddTransient<CustomRequestPage>();
-        builder.Services.AddTransient<LoginPage>();
-        builder.Services.AddTransient<MainPage>();
-        builder.Services.AddTransient<OrderHistoryPage>();
-        builder.Services.AddTransient<PaymentPage>();
-        builder.Services.AddTransient<PortfolioPage>();
-        builder.Services.AddTransient<ProductPage>();
-        builder.Services.AddTransient<ProductsListPage>();
-        builder.Services.AddTransient<AppShell>();
-        builder.Services.AddTransient<SplashScreen>();
-        builder.Services.AddTransient<App>();
+        builder.Services.AddSingleton<CartPage>();
+        builder.Services.AddSingleton<CustomRequestPage>();
+        builder.Services.AddSingleton<LoginPage>();
+        builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<OrderHistoryPage>();
+        builder.Services.AddSingleton<PaymentPage>();
+        builder.Services.AddSingleton<PortfolioPage>();
+        builder.Services.AddSingleton<ProductPage>();
+        builder.Services.AddSingleton<ProductsListPage>();
+        builder.Services.AddSingleton<CreateCustomRequestPage>();
+        builder.Services.AddSingleton<ViewCustomRequestsPage>();
+        builder.Services.AddSingleton<AppShell>();
+        builder.Services.AddSingleton<SplashScreen>();
+        builder.Services.AddSingleton<App>();
         return builder;
     }
 
     private static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<CartPageViewModel>();
-        builder.Services.AddTransient<CustomRequestPageViewModel>();
-        builder.Services.AddTransient<LoginPageViewModel>();
-        builder.Services.AddTransient<MainPageViewModel>();
-        builder.Services.AddTransient<OrderHistoryPageViewModel>();
-        builder.Services.AddTransient<PaymentPageViewModel>();
-        builder.Services.AddTransient<PortfolioPageViewModel>();
-        builder.Services.AddTransient<ProductPageViewModel>();
-        builder.Services.AddTransient<ProductsListPageViewModel>();
-        builder.Services.AddTransient<PlushiePortfolioPage>();
-        builder.Services.AddTransient<ArtPortfolioPage>();
+        builder.Services.AddSingleton<CartPageViewModel>();
+        builder.Services.AddSingleton<CustomRequestPageViewModel>();
+        builder.Services.AddSingleton<LoginPageViewModel>();
+        builder.Services.AddSingleton<MainPageViewModel>();
+        builder.Services.AddSingleton<OrderHistoryPageViewModel>();
+        builder.Services.AddSingleton<PaymentPageViewModel>();
+        builder.Services.AddSingleton<PortfolioPageViewModel>();
+        builder.Services.AddSingleton<ProductPageViewModel>();
+        builder.Services.AddSingleton<ProductsListPageViewModel>();
+        builder.Services.AddSingleton<CreateCustomRequestPageViewModel>();
+        builder.Services.AddSingleton<ViewCustomRequestsPageViewModel>();
+        builder.Services.AddSingleton<PlushiePortfolioPage>();
+        builder.Services.AddSingleton<ArtPortfolioPage>();
         return builder;
     }
 
     private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
-        builder.Services.AddScoped<IKeycloakClient, KeycloakClient>(k =>
+        builder.Services.AddSingleton<IKeycloakClient, KeycloakClient>(k =>
         {
             var oktaClientConfiguration = new OktaClientConfiguration()
             {
                 //Verify by adding .well-known/openid-configuration to the URL
                 Domain = "https://engineering.snow.edu/auth/realms/SnowCollege/",
-                ClientId = "JonathanMauiAuth",
+                ClientId = "DerpClientSpring25",
                 RedirectUri = "myapp://callback",
                 Browser = new WebBrowserAuthenticator()
             };

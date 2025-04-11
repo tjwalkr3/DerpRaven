@@ -16,7 +16,7 @@
         jsonData:
           timeInterval: "15s"
 
-      # - name: Zipkin
-      #   type: zipkin
-      #   url: http://zipkin:9411
-      #   access: proxy
+      - name: Zipkin
+        type: zipkin
+        url: http://zipkin:9411
+        access: proxy

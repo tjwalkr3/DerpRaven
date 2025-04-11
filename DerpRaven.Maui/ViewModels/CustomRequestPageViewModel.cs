@@ -2,21 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 namespace DerpRaven.Maui.ViewModels;
 
-public partial class CustomRequestPageViewModel(ICustomRequestClient client) : ObservableObject
+public partial class CustomRequestPageViewModel
 {
-    private ObservableCollection<CustomRequestDto> CustomRequests;
 
-    [RelayCommand]
-    public async Task GetCustomRequests()
-    {
-        // See if we can get all custom requests
-        List<CustomRequestDto>? requests = await client.GetCustomRequestsByUserEmailAsync();
-        // If we don't find any, we don't need to do much, just return, leaving the list empty
-        if (requests == null) return;
-        // If we do find some, we need to set the list to include the requests
-        CustomRequests = new(requests);
-    }
 }

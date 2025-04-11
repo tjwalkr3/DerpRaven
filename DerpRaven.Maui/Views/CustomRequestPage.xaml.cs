@@ -1,24 +1,25 @@
 using DerpRaven.Maui.ViewModels;
 namespace DerpRaven.Maui.Views;
 
-public partial class CustomRequestPage : ContentPage
+public partial class CustomRequestPage : Shell
 {
-    public CustomRequestPage(CustomRequestPageViewModel vm)
+    public CustomRequestPage()
     {
         InitializeComponent();
-        BindingContext = vm;
+
+        Navigated += OnNavigated;
+    }
+    private void OnNavigated(object sender, ShellNavigatedEventArgs e)
+    {
+        UpdateTitle(); // Update the title every time navigation happens
     }
 
-    private void OnCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
+    private void UpdateTitle()
     {
-        if (sender == ArtCheckBox && e.Value)
+        if (this.CurrentItem is ShellItem shellItem)
         {
-            PlushieCheckBox.IsChecked = false;
-            ArtOptionsPicker.SelectedIndex = 0;
-        }
-        else if (sender == PlushieCheckBox && e.Value)
-        {
-            ArtCheckBox.IsChecked = false;
+            var activeSection = shellItem.CurrentItem; // Get the active ShellSection
+            this.Title = activeSection.Title; // This updates the parent Shell title
         }
     }
 }

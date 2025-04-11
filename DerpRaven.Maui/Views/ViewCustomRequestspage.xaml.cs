@@ -2,9 +2,9 @@ using DerpRaven.Maui.ViewModels;
 
 namespace DerpRaven.Maui.Views;
 
-public partial class ArtPortfolioPage : ContentPage
+public partial class ViewCustomRequestsPage : ContentPage
 {
-    public ArtPortfolioPage(PortfolioPageViewModel vm)
+    public ViewCustomRequestsPage(ViewCustomRequestsPageViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;
