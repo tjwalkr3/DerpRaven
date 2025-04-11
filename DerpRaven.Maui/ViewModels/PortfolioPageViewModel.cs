@@ -21,10 +21,10 @@ public partial class PortfolioPageViewModel : ObservableObject
     {
         List<PortfolioDto> portfolios = await _portfolioClient.GetAllPortfoliosAsync();
         List<ImageDto> images = await GetPortfolioImages(portfolios);
-        PopulatePortfolioViews(portfolios);
+        PopulatePortfolioViews(portfolios, images);
     }
 
-    private void PopulatePortfolioViews(List<PortfolioDto> portfolios)
+    private void PopulatePortfolioViews(List<PortfolioDto> portfolios, List<ImageDto> images)
     {
         PlushiePortfolios.Clear();
         ArtPortfolios.Clear();
@@ -32,13 +32,15 @@ public partial class PortfolioPageViewModel : ObservableObject
         {
             if (portfolio.ProductTypeId == 1)
             {
-                PlushiePortfolios.Add(new CarouselViewModel(portfolio, new List<ImageDto>()));
+                PlushiePortfolios.Add(new CarouselViewModel(portfolio, images));
             }
             else if (portfolio.ProductTypeId == 2)
             {
-                ArtPortfolios.Add(new CarouselViewModel(portfolio, new List<ImageDto>()));
+                ArtPortfolios.Add(new CarouselViewModel(portfolio, images));
             }
         }
+        OnPropertyChanged(nameof(PlushiePortfolios));
+        OnPropertyChanged(nameof(ArtPortfolios));
     }
 
     private async Task<List<ImageDto>> GetPortfolioImages(List<PortfolioDto> portfolios)
@@ -49,8 +51,18 @@ public partial class PortfolioPageViewModel : ObservableObject
             .ToList();
 
         List<ImageDto> images = await _imageClient.GetImageInfoManyAsync(imageIds);
+        images = GetPaths(images);
         await SaveListOfImages(images);
 
+        return images;
+    }
+
+    private List<ImageDto> GetPaths(List<ImageDto> images)
+    {
+        foreach (var image in images)
+        {
+            image.Path = Path.Combine(FileSystem.CacheDirectory, $"{image.Id}.png");
+        }
         return images;
     }
 
@@ -62,17 +74,16 @@ public partial class PortfolioPageViewModel : ObservableObject
             var image = await _imageClient.GetImageAsync(imageDto.Id);
             if (image != null && image.Length != 0)
             {
-                SaveImage(image, imageDto.Id);
+                SaveImage(image, imageDto.Path);
             }
         }
     }
 
     // save the downloaded byte array to the device cache, return if it already exists
-    private void SaveImage(byte[] image, int id)
+    private void SaveImage(byte[] image, string path)
     {
-        var filePath = Path.Combine(FileSystem.CacheDirectory, $"{id}.png");
-        if (File.Exists(filePath)) return;
-        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+        if (File.Exists(path)) return;
+        using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
         {
             stream.Write(image, 0, image.Length);
         }

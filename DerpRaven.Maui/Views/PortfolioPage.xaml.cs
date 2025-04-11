@@ -8,6 +8,7 @@ public partial class PortfolioPage : Shell
     public PortfolioPage(PortfolioPageViewModel vm)
     {
         InitializeComponent();
+        BindingContext = vm;
         _viewModel = vm;
     }
 
