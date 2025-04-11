@@ -1,0 +1,15 @@
+name: Tear down environment on closed pull request
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  tear-down-kubernetes:
+    runs-on: self-hosted
+    steps:
+    - name: tear-down-kubernetes
+      run: |
+        export PULL_REQUEST_ID=${{ github.event.pull_request.number }}
+        export NAMESPACE="derpraven-pr-$PULL_REQUEST_ID"
+        kubectl delete namespace $NAMESPACE

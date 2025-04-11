@@ -1,0 +1,82 @@
+name: Create environment on opened pull request
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  build_and_push_api_to_dockerhub:
+    runs-on: self-hosted
+    steps:
+    - name: Check out the code. 
+      uses: actions/checkout@v4
+
+    - name: Login to Docker Hub.
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+    - name: Build and push Api to DockerHub.
+      run: |
+        docker build \
+          -f ./Api.Dockerfile \
+          -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-api:pr-${{ github.event.pull_request.number }} \
+          .
+
+        docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-api:pr-${{ github.event.pull_request.number }}
+
+  build_and_push_web_to_dockerhub:
+    runs-on: self-hosted
+    steps:
+    - name: Check out the code. 
+      uses: actions/checkout@v4
+      
+    - name: Login to Docker Hub.
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push Web to DockerHub.
+      run: |
+        docker build \
+          -f ./Web.Dockerfile \
+          -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:pr-${{ github.run_number }} \
+          --build-arg BASE_ADDRESS="http://api.pr-${PULL_REQUEST_ID}.dragonbytes.org" \
+          .
+
+        docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:pr-${{ github.event.pull_request.number }}
+
+  deploy_to_kubernetes:
+    needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
+    runs-on: self-hosted
+    steps:
+    - name: Check out the code. 
+      uses: actions/checkout@v4
+
+    - name: Deploy to kubernetes.
+      run: |
+        export PULL_REQUEST_ID=${{ github.event.pull_request.number }}
+        export NAMESPACE="derpraven-pr-$PULL_REQUEST_ID"
+
+        kubectl apply -f kube/namespace.yml
+        export BUILD_NUMBER=${{ github.run_number }}
+        export AZURE_BLOB_CONN_STRING=${{ secrets.AZURE_BLOB_CONN_STRING }}
+        export AZURE_BLOB_CONTIANER_NAME=${{ vars.AZURE_BLOB_CONTAINER_NAME_KUBE }}
+
+        for FILE in "kube"/*
+        do
+          cat "$FILE" | envsubst | kubectl apply -f -
+        done
+
+    - uses: actions/github-script@v7
+      name: Add PR request message as comment.
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'View the live pull-request site at <http://pr-${{ github.event.pull_request.number }}.dragonbytes.org>'
+          });

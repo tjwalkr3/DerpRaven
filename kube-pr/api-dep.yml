@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-api-dep
+  namespace: ${NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-api
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-api
+    spec:
+      containers:
+      - name: derp-api-container
+        image: tjwalkr3/derp-raven-api:pr-$BUILD_NUMBER
+        livenessProbe:
+          httpGet:
+            path: /api/healthcheck
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/healthcheck
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Server=derp-db-svc;Database=postgres;Userid=derp;Password=1234"
+        - name: BlobStorage__ConnectionString
+          value: $AZURE_BLOB_CONN_STRING
+        - name: BlobStorage__ContainerName
+          value: $AZURE_BLOB_CONTIANER_NAME
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://derp-collector-svc:4318"
+        - name: FEATURE_FLAG_ON
+          value: $FEATURE_FLAG_ON
+        ports:
+        - containerPort: 8080
