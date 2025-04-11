@@ -10,7 +10,7 @@ metadata:
 
 spec:
   rules:
-  - host: pr-${PULL_REQUEST_ID}.dragonbytes.org
+  - host: web-pr-${PULL_REQUEST_ID}.dragonbytes.org
     http:
       paths:
       - path: /
