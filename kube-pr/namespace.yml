@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ${NAMESPACE}
+  name: $NAMESPACE
   labels:
-    name: ${NAMESPACE}
+    name: $NAMESPACE

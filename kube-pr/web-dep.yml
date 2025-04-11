@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: derp-web-dep
-  namespace: ${NAMESPACE}
+  namespace: $NAMESPACE
 spec:
   strategy:
     type: RollingUpdate

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: derp-init-sql
-  namespace: ${NAMESPACE}
+  namespace: $NAMESPACE
 data:
   derp-db-init: |
     -- Initialization script for the DerpRaven database
