@@ -22,12 +22,12 @@
         ContentTemplate="{DataTemplate local:CartPage}"
         Route="CartPage" />
 
-        <ShellContent
+    <ShellContent
         Title="Custom Request"
         ContentTemplate="{DataTemplate local:CustomRequestPage}"
         Route="CustomRequestPage" />
 
-        <ShellContent
+    <ShellContent
         Title="Log In"
         ContentTemplate="{DataTemplate local:LoginPage}"
         Route="LoginPage" 
