@@ -5,7 +5,7 @@ metadata:
   namespace: $NAMESPACE
 spec:
   rules:
-  - host: api-derp-pr.duckdns.org
+  - host: pr-${PULL_REQUEST_ID}.api-derp-pr.duckdns.org
     http:
       paths:
       - path: /
