@@ -25,7 +25,8 @@ public partial class ProductPageViewModel : ObservableObject
     private readonly IImageHelpers _imageHelpers;
     private readonly IProductClient _productClient;
 
-    public ProductPageViewModel(IImageHelpers imageHelpers, IProductClient productClient) {
+    public ProductPageViewModel(IImageHelpers imageHelpers, IProductClient productClient)
+    {
         _imageHelpers = imageHelpers;
         _productClient = productClient;
         SelectedQuantity = 1;
@@ -46,13 +47,15 @@ public partial class ProductPageViewModel : ObservableObject
 
     public List<int> QuantityOptions => Enumerable.Range(1, ProductDetails?.Quantity ?? 0).ToList();
 
-    partial void OnProductDetailsChanged(ProductDto? value) {
+    partial void OnProductDetailsChanged(ProductDto? value)
+    {
         OnPropertyChanged(nameof(QuantityOptions));
     }
 
     //Add to cart will add the product to the cart
     [RelayCommand]
-    private async Task AddToCartAsync(ProductDto product) {
+    private async Task AddToCartAsync(ProductDto product)
+    {
         //if (product == null) return;
         //Debug.WriteLine($"Added {product.Name} to cart!");
         // Here we will add logic to update a cart collection
