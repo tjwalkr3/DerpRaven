@@ -7,9 +7,17 @@ using System.Collections.ObjectModel;
 namespace DerpRaven.Maui.ViewModels;
 
 
-[QueryProperty(nameof(ProductId), "productId")]
+[QueryProperty(nameof(ProductIdQuery), "productId")]
 public partial class ProductPageViewModel : ObservableObject
 {
+    public string ProductIdQuery
+    {
+        set
+        {
+            if (int.TryParse(value, out var id)) ProductId = id;
+        }
+    }
+
     [ObservableProperty]
     private int productId;
 
@@ -30,6 +38,12 @@ public partial class ProductPageViewModel : ObservableObject
         _imageHelpers = imageHelpers;
         _productClient = productClient;
         SelectedQuantity = 1;
+    }
+
+    // onproductidchanged method
+    partial void OnProductIdChanged(int value)
+    {
+        RefreshSingleProductView();
     }
 
     public async Task RefreshSingleProductView()
