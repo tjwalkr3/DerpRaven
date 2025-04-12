@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
              Title="PlushieProductsListPage">
     <ScrollView>
-        <CollectionView ItemsSource="{Binding Products}" SelectionMode="Single">
+        <CollectionView ItemsSource="{Binding PlushieProducts}" SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Padding="10" Margin="10,10,10,0" Stroke="Transparent">

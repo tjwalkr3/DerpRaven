@@ -93,6 +93,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IImageClient, ImageClient>();
         builder.Services.AddSingleton<ICustomRequestClient, CustomRequestClient>();
         builder.Services.AddSingleton<IPortfolioClient, PortfolioClient>();
+        builder.Services.AddSingleton<IProductClient, ProductClient>();
+        builder.Services.AddSingleton<IImageHelpers, ImageHelpers>();
         return builder;
     }
 }

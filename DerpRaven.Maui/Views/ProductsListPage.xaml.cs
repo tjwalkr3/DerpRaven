@@ -3,8 +3,19 @@ namespace DerpRaven.Maui.Views;
 
 public partial class ProductsListPage : Shell
 {
-    public ProductsListPage()
+    ProductsListPageViewModel _viewModel;
+    public ProductsListPage(ProductsListPageViewModel viewModel)
     {
         InitializeComponent();
+        _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        if (_viewModel != null)
+        {
+            await _viewModel.RefreshProductsView();
+        }
     }
 }
