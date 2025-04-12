@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derp-web-dep
+  namespace: $NAMESPACE
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: derp-web
+  # pod below
+  template:
+    metadata:
+      labels:
+        app: derp-web
+    spec:
+      containers:
+      - name: derp-web-container
+        image: tjwalkr3/derp-raven-web:pr-$PULL_REQUEST_ID
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        ports:
+        - containerPort: 80
+  

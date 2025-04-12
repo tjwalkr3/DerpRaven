@@ -1,10 +1,11 @@
 [
   {
-    "Name": "Blazor&API",
+    "Name": "Maui&API",
     "Projects": [
       {
-        "Path": "DerpRaven.Web\\DerpRaven.Web.csproj",
-        "Action": "Start"
+        "Path": "DerpRaven.Maui\\DerpRaven.Maui.csproj",
+        "Action": "Start",
+        "DebugTarget": "Pixel 7 - API 34 (Android 14.0 - API 34)"
       },
       {
         "Path": "DerpRaven.Api\\DerpRaven.Api.csproj",

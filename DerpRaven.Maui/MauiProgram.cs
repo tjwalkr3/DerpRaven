@@ -33,16 +33,18 @@ public static class MauiProgram
     private static MauiAppBuilder RegisterViews(this MauiAppBuilder builder)
     {
         builder.Services.AddSingleton<CartPage>();
-        builder.Services.AddSingleton<CustomRequestPage>();
+        builder.Services.AddTransient<CustomRequestPage>();
         builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<OrderHistoryPage>();
         builder.Services.AddSingleton<PaymentPage>();
-        builder.Services.AddSingleton<PortfolioPage>();
+        builder.Services.AddTransient<PortfolioPage>();
         builder.Services.AddSingleton<ProductPage>();
-        builder.Services.AddSingleton<ProductsListPage>();
+        builder.Services.AddTransient<ProductsListPage>();
         builder.Services.AddSingleton<CreateCustomRequestPage>();
-        builder.Services.AddSingleton<ViewCustomRequestsPage>();
+        builder.Services.AddSingleton<ViewCustomRequestsPage>();   
+        builder.Services.AddSingleton<PlushieProductsListPage>();
+        builder.Services.AddSingleton<ArtProductsListPage>();
         builder.Services.AddSingleton<AppShell>();
         builder.Services.AddSingleton<SplashScreen>();
         builder.Services.AddSingleton<App>();
