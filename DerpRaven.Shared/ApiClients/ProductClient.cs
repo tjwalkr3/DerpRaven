@@ -11,4 +11,10 @@ public class ProductClient(IApiService apiService) : IProductClient
         var response = await apiService.GetFromJsonAsyncWithoutAuthorization<List<ProductDto>>("api/product");
         return response ?? [];
     }
+
+    public async Task<ProductDto?> GetProductByIdAsync(int id)
+    {
+        var response = await apiService.GetFromJsonAsyncWithoutAuthorization<ProductDto>($"api/product/{id}");
+        return response;
+    }
 }

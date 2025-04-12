@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using System.Collections.ObjectModel;
 
@@ -9,70 +10,45 @@ namespace DerpRaven.Maui.ViewModels;
 [QueryProperty(nameof(ProductId), "productId")]
 public partial class ProductPageViewModel : ObservableObject
 {
-    //Ghost Data
-    ProductDto ghost_product = new ProductDto {
-        Name = "Unicorn Squishy",
-        ImageIds = [1,2,3],
-        Description = "A cute unicorn stress squishy",
-        Price = 10.99m,
-        Quantity = 10
-    };
-    List<ImageDto> ghost_images = new List<ImageDto>() {
-        new ImageDto {
-            Id = 1,
-            Path = "unicornsquish.jpg",
-            Alt = "Unicorn Squishy"
-        },new ImageDto {
-            Id = 2,
-            Path = "derpsquid.jpg",
-            Alt = "Unicorn Squishy"
-        },new ImageDto {
-            Id = 3,
-            Path = "puffersquish.jpg",
-            Alt = "Unicorn Squishy"
-        }
-    };
-
-
-    public List<int> QuantityOptions => Enumerable.Range(1, ProductDetails?.Quantity ?? 0).ToList();
-
-
     [ObservableProperty]
     private int productId;
 
     [ObservableProperty]
-    ProductDto _productDetails;
+    ProductDto? _productDetails;
 
     [ObservableProperty]
-    List<ImageDto> _images = new();
+    List<ImageDto> _images = [];
 
     [ObservableProperty]
     private int selectedQuantity;
 
-    public ProductPageViewModel() {
-        _productDetails = GetProductInfo();
-       GetImages();
+    private readonly IImageHelpers _imageHelpers;
+    private readonly IProductClient _productClient;
+
+    public ProductPageViewModel(IImageHelpers imageHelpers, IProductClient productClient) {
+        _imageHelpers = imageHelpers;
+        _productClient = productClient;
         SelectedQuantity = 1;
     }
 
-    public ProductDto GetProductInfo() {
-        // This is where you would typically fetch the product details from a service
-        // For now, we'll just return the ghost data
-        return ghost_product;
-    }
-    public void GetImages() {
-        // This is where you would typically fetch the product details from a service
-        // For now, we'll just return the ghost data
-        Images.Clear();
-        foreach(var image in ghost_images) {
-            Images.Add(image);
-        }
+    public async Task RefreshSingleProductView()
+    {
+        ProductDetails = await _productClient.GetProductByIdAsync(ProductId);
+        if (ProductDetails == null) return;
+
+        List<int> imageIds = ProductDetails?.ImageIds ?? [];
+        if (imageIds.Count < 1) return;
+
+        Images = await _imageHelpers.GetImageDtos(imageIds);
+        Images = _imageHelpers.GetPaths(Images);
+        await _imageHelpers.SaveListOfImages(Images);
     }
 
-    partial void OnProductDetailsChanged(ProductDto value) {
+    public List<int> QuantityOptions => Enumerable.Range(1, ProductDetails?.Quantity ?? 0).ToList();
+
+    partial void OnProductDetailsChanged(ProductDto? value) {
         OnPropertyChanged(nameof(QuantityOptions));
     }
-
 
     //Add to cart will add the product to the cart
     [RelayCommand]
@@ -83,7 +59,5 @@ public partial class ProductPageViewModel : ObservableObject
         //navigate to cart page
         await Shell.Current.GoToAsync($"///CartPage");
     }
-
-
 }
 

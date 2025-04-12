@@ -30,13 +30,14 @@ public partial class PortfolioPageViewModel : ObservableObject
         ArtPortfolios.Clear();
         foreach (var portfolio in portfolios)
         {
+            List<ImageDto> portfolioImages = images.Where(img => portfolio.ImageIds.Contains(img.Id)).ToList();
             if (portfolio.ProductTypeId == 1)
             {
-                PlushiePortfolios.Add(new CarouselViewModel(portfolio, images));
+                PlushiePortfolios.Add(new CarouselViewModel(portfolio, portfolioImages));
             }
             else if (portfolio.ProductTypeId == 2)
             {
-                ArtPortfolios.Add(new CarouselViewModel(portfolio, images));
+                ArtPortfolios.Add(new CarouselViewModel(portfolio, portfolioImages));
             }
         }
         OnPropertyChanged(nameof(PlushiePortfolios));

@@ -8,6 +8,7 @@ public class ProductDto
     public int Quantity { get; set; }
     public string Description { get; set; } = null!;
     public int ProductTypeId { get; set; }
+    public string? ImagePath { get; set; } // optional (the path to the main image)
 
     public List<int> ImageIds { get; set; } = [];
 }

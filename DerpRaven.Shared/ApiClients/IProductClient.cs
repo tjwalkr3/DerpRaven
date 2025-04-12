@@ -5,5 +5,6 @@ namespace DerpRaven.Shared.ApiClients
     public interface IProductClient
     {
         Task<List<ProductDto>> GetAllProductsAsync();
+        Task<ProductDto?> GetProductByIdAsync(int id);
     }
 }

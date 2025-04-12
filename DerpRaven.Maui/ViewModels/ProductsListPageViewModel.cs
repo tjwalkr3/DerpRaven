@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 namespace DerpRaven.Maui.ViewModels;
@@ -23,17 +24,18 @@ public partial class ProductsListPageViewModel : ObservableObject
     public async Task RefreshProductsView()
     {
         List<ProductDto> products = await _productClient.GetAllProductsAsync();
-        PopulateProductViews(products);
-        await DownloadAllImages(products);
+        List<ImageDto> images = await DownloadAllImages(products);
+        PopulateProductViews(products, images);
     }
 
-    private void PopulateProductViews(List<ProductDto> products)
+    private void PopulateProductViews(List<ProductDto> products, List<ImageDto> images)
     {
         PlushieProducts.Clear();
         ArtProducts.Clear();
 
         foreach (var product in products)
         {
+            product.ImagePath = images.FirstOrDefault(img => img.Id == product.ImageIds[0])?.Path; // set the path to the main image
             if (product.ProductTypeId == 1)
             {
                 PlushieProducts.Add(product);
@@ -56,6 +58,7 @@ public partial class ProductsListPageViewModel : ObservableObject
                 imageIds.Add(product.ImageIds[0]);
             }
         }
+        imageIds = imageIds.Distinct().ToList();
 
         List<ImageDto> images = await _imageHelpers.GetImageDtos(imageIds);
         images = _imageHelpers.GetPaths(images);
@@ -79,4 +82,3 @@ public partial class ProductsListPageViewModel : ObservableObject
         await Shell.Current.GoToAsync($"///ProductPage?productId={product.Id}");
     }
 }
-
