@@ -43,7 +43,7 @@ jobs:
         docker build \
           -f ./Web.Dockerfile \
           -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:pr-${{ github.event.pull_request.number }} \
-          --build-arg BASE_ADDRESS="http://api-derp-pr.duckdns.org" \
+          --build-arg BASE_ADDRESS="http://pr-${{ github.event.pull_request.number }}.api-derp-pr.duckdns.org" \
           .
 
         docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:pr-${{ github.event.pull_request.number }}
@@ -78,5 +78,5 @@ jobs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'View the live pull-request site at <http://web-pr-${{ github.event.pull_request.number }}.dragonbytes.org>'
+            body: 'View the live pull-request site at <http://pr-${{ github.event.pull_request.number }}.web-derp-pr.duckdns.org>'
           });
