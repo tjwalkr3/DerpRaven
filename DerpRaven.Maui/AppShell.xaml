@@ -28,12 +28,6 @@
         Route="CustomRequestPage" />
 
     <ShellContent
-        Title="Log In"
-        ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage" 
-        FlyoutItemIsVisible="False" />
-
-    <ShellContent
         Title="Order History"
         ContentTemplate="{DataTemplate local:OrderHistoryPage}"
         Route="OrderHistoryPage" />

@@ -34,7 +34,6 @@ public static class MauiProgram
     {
         builder.Services.AddSingleton<CartPage>();
         builder.Services.AddTransient<CustomRequestPage>();
-        builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<OrderHistoryPage>();
         builder.Services.AddSingleton<PaymentPage>();
@@ -55,7 +54,6 @@ public static class MauiProgram
     {
         builder.Services.AddSingleton<CartPageViewModel>();
         builder.Services.AddSingleton<CustomRequestPageViewModel>();
-        builder.Services.AddSingleton<LoginPageViewModel>();
         builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddSingleton<OrderHistoryPageViewModel>();
         builder.Services.AddSingleton<PaymentPageViewModel>();
