@@ -2,34 +2,56 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
+             xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared"
+             
              x:Class="DerpRaven.Maui.Views.ProductPage"
              Title="Product Details">
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="10">
-            <Label x:Name="ProductName" FontSize="24" FontAttributes="Bold" />
+            <Label Text="{Binding ProductDetails.Name}" FontSize="24" FontAttributes="Bold" />
 
-            <CarouselView x:Name="ProductImageCarousel" HeightRequest="240">
+            <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
                 <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding}" Aspect="AspectFill" />
+                    <DataTemplate x:DataType="dtos:ImageDto">
+                        <StackLayout>
+                            <Border Stroke="Black"
+                                    StrokeShape="RoundRectangle 5"
+                                    Margin="10"
+                                    Padding="10"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                <StackLayout>
+                                    <Label Text="{Binding Alt}"
+                                        FontAttributes="Bold"
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                    <Image Source="{Binding Path}"
+                                        Aspect="AspectFill"
+                                        HeightRequest="150"
+                                        WidthRequest="150"
+                                        HorizontalOptions="Center" />
+                                </StackLayout>
+                            </Border>
+                        </StackLayout>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
-            <Label x:Name="ProductPrice" FontSize="20" TextColor="Green" />
+            <Label Text="{Binding ProductDetails.Price, StringFormat='Price: ${0:F2}'}" FontSize="20" TextColor="Green" />
 
             <HorizontalStackLayout>
                 <Label Text="Quantity:" VerticalOptions="Center" />
 
                 <Picker x:Name="QuantityPicker" 
                         WidthRequest="100"
-                        ItemsSource="{Binding Quantities}" 
+                        ItemsSource="{Binding QuantityOptions}" 
                         SelectedItem="{Binding SelectedQuantity}" />
+
             </HorizontalStackLayout>
 
-            <Button Text="Add To Cart" 
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductsListPageViewModel}}, Path=AddToCartCommand}" />
+            <Button Text="Add To Cart" Command="{Binding AddToCartCommand}" />
 
-                <Label x:Name="ProductDescription" FontSize="18" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+            <Label Text="{Binding ProductDetails.Description}" FontSize="18"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
