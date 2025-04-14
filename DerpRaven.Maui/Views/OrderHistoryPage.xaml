@@ -13,12 +13,20 @@
                                 <Button Text="{Binding OrderDate, StringFormat='Order {0:MM/dd/yyyy}'}"
                                         Command="{Binding ToggleExpandCommand}" />
 
-                                <CollectionView ItemsSource="{Binding ProductImagePaths}" 
-                                                ItemsLayout="HorizontalList"
+                                <CollectionView ItemsSource="{Binding Products}" 
                                                 IsVisible="{Binding IsExpanded}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
-                                            <Image Source="{Binding}" HeightRequest="100" WidthRequest="100" />
+                                            <VerticalStackLayout>
+                                                <Label>
+                                                    <Label.Text>
+                                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                                            <Binding Path="Name" />
+                                                            <Binding Path="Price" />
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                            </VerticalStackLayout>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
