@@ -5,6 +5,7 @@ on:
 
 jobs:
   backup-database:
+    runs-on: self-hosted
     steps:
     - name: Back up the database.
       run: |

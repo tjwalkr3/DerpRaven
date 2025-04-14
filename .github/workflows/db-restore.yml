@@ -5,6 +5,7 @@ on:
 
 jobs:
   restore-database:
+    runs-on: self-hosted
     steps:
     - name: Restore the database.
       run: |
