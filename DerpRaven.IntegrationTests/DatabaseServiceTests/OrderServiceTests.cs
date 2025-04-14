@@ -11,11 +11,12 @@ public class OrderServiceTests
 {
     private OrderService _orderService;
     private AppDbContext _context;
-    private List<Product> products;
     private User user1;
     private User user2;
     private ProductType type1;
     private ProductType type2;
+    List<OrderedProduct> orderedProducts = [];
+    List<Order> orders = [];
 
     [SetUp]
     public void Setup()
@@ -33,17 +34,24 @@ public class OrderServiceTests
         _context.ProductTypes.Add(type1);
         _context.ProductTypes.Add(type2);
 
-        products = new()
-        {
-            new() { Name = "product1", Price = 10.97m, Quantity = 1, Description = "description1", Images = [], Orders = [], ProductType = type1},
-            new() { Name = "product2", Price = 20.57m, Quantity = 1, Description = "description2", Images = [], Orders = [], ProductType = type2}
-        };
-        _context.Products.AddRange(products);
-
         user1 = new() { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer" };
         user2 = new() { Id = 2, Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = true, Role = "customer" };
         _context.Users.Add(user1);
         _context.Users.Add(user2);
+
+        orders = new()
+        {
+            new Order { Id = 1, Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, User = user1 },
+            new Order { Id = 2, Address = "456 Avenue", Email = "test2@example.com", OrderDate = DateTime.Now, User = user2 }
+        };
+        _context.Orders.AddRange(orders);
+
+        orderedProducts = new()
+        {
+            new() { Id = 1, Name = "Product1", Price = 10.0m, Quantity = 5, Order = orders[0]},
+            new() { Id = 2, Name = "Product2", Price = 15.0m, Quantity = 5, Order = orders[1]}
+        };
+        _context.OrderedProducts.AddRange(orderedProducts);
 
         _context.SaveChanges();
     }
@@ -60,8 +68,8 @@ public class OrderServiceTests
     public async Task CreateOrder()
     {
         // Arrange
-        List<int> productIds = products.Select(p => p.Id).ToList();
-        var order = new OrderDto { Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, UserId = user1.Id, ProductIds = productIds };
+        List<int> productIds = _context.OrderedProducts.Select(p => p.Id).ToList();
+        var order = new OrderDto { Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, UserId = user1.Id, OrderedProductIds = productIds };
 
         // Act
         await _orderService.CreateOrderAsync(order);
@@ -76,15 +84,6 @@ public class OrderServiceTests
     [Test]
     public async Task GetAllOrders()
     {
-        // Arrange
-        var orders = new List<Order>
-        {
-            new() { Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, User = user1, Products = products },
-            new() { Address = "456 Avenue", Email = "test2@example.com", OrderDate = DateTime.Now, User = user2, Products = products }
-        };
-        await _context.Orders.AddRangeAsync(orders);
-        await _context.SaveChangesAsync();
-
         // Act
         var retrievedOrders = await _orderService.GetAllOrdersAsync();
 
@@ -97,15 +96,6 @@ public class OrderServiceTests
     [Test]
     public async Task GetOrderById()
     {
-        // Arrange
-        var orders = new List<Order>
-        {
-            new Order { Id = 1, Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, User = user1, Products = products },
-            new Order { Id = 2, Address = "456 Avenue", Email = "test2@example.com", OrderDate = DateTime.Now, User = user2, Products = products }
-        };
-        await _context.Orders.AddRangeAsync(orders);
-        await _context.SaveChangesAsync();
-
         // Act
         var result = await _orderService.GetOrderByIdAsync(1);
 
@@ -118,15 +108,6 @@ public class OrderServiceTests
     [Test]
     public async Task GetOrdersByUserId()
     {
-        // Arrange
-        var orders = new List<Order>
-        {
-            new Order { Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, User = user1, Products = products },
-            new Order { Address = "456 Avenue", Email = "test2@example.com", OrderDate = DateTime.Now, User = user2, Products = products }
-        };
-        await _context.Orders.AddRangeAsync(orders);
-        await _context.SaveChangesAsync();
-
         // Act
         var result = await _orderService.GetOrdersByUserIdAsync(1);
 
@@ -139,11 +120,6 @@ public class OrderServiceTests
     [Test]
     public async Task UpdateOrder()
     {
-        // Arrange
-        var order = new Order { Id = 1, Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, User = user1, Products = products };
-        await _context.Orders.AddAsync(order);
-        await _context.SaveChangesAsync();
-
         // Act
         await _orderService.UpdateOrderAsync(1, "456 Avenue", "updated@example.com");
         var result = await _context.Orders.FindAsync(1);

@@ -9,12 +9,12 @@ public partial class PortfolioPageViewModel : ObservableObject
     public ObservableCollection<CarouselViewModel> PlushiePortfolios { get; private set; } = [];
     public ObservableCollection<CarouselViewModel> ArtPortfolios { get; private set; } = [];
     private readonly IPortfolioClient _portfolioClient;
-    private readonly IImageClient _imageClient;
+    private readonly IImageHelpers _imageHelpers;
 
-    public PortfolioPageViewModel(IPortfolioClient portfolioClient, IImageClient imageClient)
+    public PortfolioPageViewModel(IPortfolioClient portfolioClient, IImageHelpers imageHelpers)
     {
         _portfolioClient = portfolioClient;
-        _imageClient = imageClient;
+        _imageHelpers = imageHelpers;
     }
 
     public async Task RefreshPortfolioView()
@@ -30,13 +30,14 @@ public partial class PortfolioPageViewModel : ObservableObject
         ArtPortfolios.Clear();
         foreach (var portfolio in portfolios)
         {
+            List<ImageDto> portfolioImages = images.Where(img => portfolio.ImageIds.Contains(img.Id)).ToList();
             if (portfolio.ProductTypeId == 1)
             {
-                PlushiePortfolios.Add(new CarouselViewModel(portfolio, images));
+                PlushiePortfolios.Add(new CarouselViewModel(portfolio, portfolioImages));
             }
             else if (portfolio.ProductTypeId == 2)
             {
-                ArtPortfolios.Add(new CarouselViewModel(portfolio, images));
+                ArtPortfolios.Add(new CarouselViewModel(portfolio, portfolioImages));
             }
         }
         OnPropertyChanged(nameof(PlushiePortfolios));
@@ -50,43 +51,11 @@ public partial class PortfolioPageViewModel : ObservableObject
             .Distinct()
             .ToList();
 
-        List<ImageDto> images = await _imageClient.GetImageInfoManyAsync(imageIds);
-        images = GetPaths(images);
-        await SaveListOfImages(images);
+        List<ImageDto> images = await _imageHelpers.GetImageDtos(imageIds);
+        images = _imageHelpers.GetPaths(images);
+        await _imageHelpers.SaveListOfImages(images);
 
         return images;
-    }
-
-    private List<ImageDto> GetPaths(List<ImageDto> images)
-    {
-        foreach (var image in images)
-        {
-            image.Path = Path.Combine(FileSystem.CacheDirectory, $"{image.Id}.png");
-        }
-        return images;
-    }
-
-    // download all images from the server and save them to the device cache
-    private async Task SaveListOfImages(List<ImageDto> imageDtos)
-    {
-        foreach (ImageDto imageDto in imageDtos)
-        {
-            var image = await _imageClient.GetImageAsync(imageDto.Id);
-            if (image != null && image.Length != 0)
-            {
-                SaveImage(image, imageDto.Path);
-            }
-        }
-    }
-
-    // save the downloaded byte array to the device cache, return if it already exists
-    private void SaveImage(byte[] image, string path)
-    {
-        if (File.Exists(path)) return;
-        using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
-        {
-            stream.Write(image, 0, image.Length);
-        }
     }
 }
 

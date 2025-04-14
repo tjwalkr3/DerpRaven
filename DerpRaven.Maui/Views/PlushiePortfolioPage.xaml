@@ -4,7 +4,6 @@
              xmlns:models="clr-namespace:DerpRaven.Maui.ViewModels"
              xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared"
              x:Class="DerpRaven.Maui.Views.PlushiePortfolioPage"
-             Background="DimGrey"
              Title="Plushie Portfolio">
     <ScrollView>
         <VerticalStackLayout Padding="0,0" Spacing="0">

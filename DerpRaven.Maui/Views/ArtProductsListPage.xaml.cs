@@ -1,9 +1,10 @@
 using DerpRaven.Maui.ViewModels;
+
 namespace DerpRaven.Maui.Views;
 
-public partial class LoginPage : ContentPage
+public partial class ArtProductsListPage : ContentPage
 {
-    public LoginPage(LoginPageViewModel vm)
+    public ArtProductsListPage(ProductsListPageViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;

@@ -34,18 +34,20 @@ public static class MauiProgram
     {
         builder.Services.AddSingleton<CartPage>();
         builder.Services.AddTransient<CustomRequestPage>();
-        builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<OrderHistoryPage>();
         builder.Services.AddSingleton<PaymentPage>();
         builder.Services.AddTransient<PortfolioPage>();
         builder.Services.AddSingleton<ProductPage>();
-        builder.Services.AddSingleton<ProductsListPage>();
+        builder.Services.AddTransient<ProductsListPage>();
         builder.Services.AddSingleton<CreateCustomRequestPage>();
-        builder.Services.AddSingleton<ViewCustomRequestsPage>();    
+        builder.Services.AddSingleton<ViewCustomRequestsPage>();
+        builder.Services.AddSingleton<PlushieProductsListPage>();
+        builder.Services.AddSingleton<ArtProductsListPage>();
         builder.Services.AddSingleton<AppShell>();
         builder.Services.AddSingleton<SplashScreen>();
         builder.Services.AddSingleton<App>();
+        builder.Services.AddSingleton<AppShell>();
         return builder;
     }
 
@@ -53,7 +55,6 @@ public static class MauiProgram
     {
         builder.Services.AddSingleton<CartPageViewModel>();
         builder.Services.AddSingleton<CustomRequestPageViewModel>();
-        builder.Services.AddSingleton<LoginPageViewModel>();
         builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddSingleton<OrderHistoryPageViewModel>();
         builder.Services.AddSingleton<PaymentPageViewModel>();
@@ -64,6 +65,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ViewCustomRequestsPageViewModel>();
         builder.Services.AddSingleton<PlushiePortfolioPage>();
         builder.Services.AddSingleton<ArtPortfolioPage>();
+        builder.Services.AddSingleton<AppShellViewModel>();
         return builder;
     }
 
@@ -91,6 +93,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IImageClient, ImageClient>();
         builder.Services.AddSingleton<ICustomRequestClient, CustomRequestClient>();
         builder.Services.AddSingleton<IPortfolioClient, PortfolioClient>();
+        builder.Services.AddSingleton<IProductClient, ProductClient>();
+        builder.Services.AddSingleton<IImageHelpers, ImageHelpers>();
         return builder;
     }
 }

@@ -20,10 +20,10 @@ public class BlobService : IBlobService
         _logger = logger;
     }
 
-    public async Task<BlobContainerInfo> CreateIfNotExistsAsync()
+    public async Task CreateIfNotExistsAsync()
     {
         _logger.LogInformation("Creating container {ContainerName}", _containerClient.Name);
-        return await _containerClient.CreateIfNotExistsAsync();
+        await _containerClient.CreateIfNotExistsAsync();
     }
 
     public async Task<BlobContentInfo> UploadAsync(string blobName, Stream stream)

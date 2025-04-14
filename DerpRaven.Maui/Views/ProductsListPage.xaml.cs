@@ -1,11 +1,21 @@
 using DerpRaven.Maui.ViewModels;
 namespace DerpRaven.Maui.Views;
 
-public partial class ProductsListPage : ContentPage
+public partial class ProductsListPage : Shell
 {
-    public ProductsListPage(ProductsListPageViewModel vm)
+    ProductsListPageViewModel _viewModel;
+    public ProductsListPage(ProductsListPageViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = vm;
+        _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        if (_viewModel != null)
+        {
+            await _viewModel.RefreshProductsView();
+        }
     }
 }

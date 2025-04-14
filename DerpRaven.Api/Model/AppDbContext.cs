@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<OrderedProduct> OrderedProducts { get; set; }
 
     public AppDbContext()
     {
@@ -20,23 +21,6 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Many-to-Many: Order <-> Product
-        modelBuilder.Entity<Order>()
-            .HasMany(o => o.Products)
-            .WithMany(p => p.Orders)
-            .UsingEntity<Dictionary<string, object>>(
-                "OrderProduct",
-                j => j
-                    .HasOne<Product>()
-                    .WithMany()
-                    .HasForeignKey("ProductId")
-                    .OnDelete(DeleteBehavior.Cascade),
-                j => j
-                    .HasOne<Order>()
-                    .WithMany()
-                    .HasForeignKey("OrderId")
-                    .OnDelete(DeleteBehavior.Cascade));
-
         // Many-to-Many: Portfolio <-> Image
         modelBuilder.Entity<Portfolio>()
             .HasMany(p => p.Images)
@@ -84,6 +68,14 @@ public class AppDbContext : DbContext
             .HasOne(o => o.User)
             .WithMany(u => u.Orders)
             .HasForeignKey("UserId")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // One-to-Many: Order -> OrderedProduct
+        modelBuilder.Entity<Order>()
+            .HasMany(o => o.OrderedProducts)
+            .WithOne(op => op.Order)
+            .HasForeignKey("OrderId")
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
