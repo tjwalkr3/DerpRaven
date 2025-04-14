@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: derp-db-pvc-new2
+  name: derp-db-pvc-new3
   namespace: derp
 spec:
   accessModes:
