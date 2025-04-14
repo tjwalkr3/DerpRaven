@@ -6,7 +6,7 @@ on:
 jobs:
   restore-database:
     steps:
-      name: Restore the database.
+    - name: Restore the database.
       run: |
         # === Configuration ===
         CONTAINER_NAME=$(kubectl -n derp get pods --no-headers -o custom-columns=":metadata.name" | grep "derp-db-dep")
