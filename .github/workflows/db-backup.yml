@@ -22,7 +22,6 @@ jobs:
         FILENAME="${DB_NAME}_backup_${TIMESTAMP}.dmp"
 
         # === Back up the database ===
-        mkdir backups
         kubectl -n derp exec -t $CONTAINER_NAME -- \
           pg_dump -Fc -U "$DB_USER" "$DB_NAME" \
-          > /home/thomas/backups/$FILENAME
+          > /home/thomas/$FILENAME

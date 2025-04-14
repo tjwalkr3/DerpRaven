@@ -13,7 +13,7 @@ jobs:
         CONTAINER_NAME=$(kubectl -n derp get pods --no-headers -o custom-columns=":metadata.name" | grep "derp-db-dep")
 
         # === Find the most recent backup ===
-        LATEST_BACKUP=$(ls -t /home/thomas/backups/*.dmp | head -n 1)
+        LATEST_BACKUP=$(ls -t /home/thomas/*.dmp | head -n 1)
         echo "Restoring from backup file: $LATEST_BACKUP"
 
         # === Copy the most recent backup file to the database ===
