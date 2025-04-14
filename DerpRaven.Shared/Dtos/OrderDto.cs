@@ -9,5 +9,5 @@ public class OrderDto
     public DateTime OrderDate { get; set; }
     public int UserId { get; set; }
 
-    public List<int> ProductIds { get; set; } = [];
+    public List<int> OrderedProductIds { get; set; } = [];
 }

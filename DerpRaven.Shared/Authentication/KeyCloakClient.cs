@@ -6,12 +6,13 @@ public class KeycloakClient : IKeycloakClient
 {
     private readonly OidcClient _oidcClient;
     private readonly OidcClientOptions _oidcClientOptions;
+    public event Action? IdentityTokenChanged;
 
     /// <summary>
     /// Gets the OktaClient's Configuration
     /// </summary>
     public OktaClientConfiguration Configuration { get; private set; }
-    public string? IdentityToken { get; set; }
+    public string? IdentityToken { get; internal set; } = string.Empty;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OktaClient"/> class.
@@ -32,7 +33,13 @@ public class KeycloakClient : IKeycloakClient
     public async Task<LoginResult> LoginAsync(CancellationToken cancellationToken = default)
     {
         await EnsureProviderInformationAsync(cancellationToken);
-        return await _oidcClient.LoginAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        var loginResult = await _oidcClient.LoginAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        if (!loginResult.IsError)
+        {
+            IdentityToken = loginResult.IdentityToken;
+            IdentityTokenChanged?.Invoke();
+        }
+        return loginResult;
     }
 
     /// <summary>
@@ -55,7 +62,13 @@ public class KeycloakClient : IKeycloakClient
             IdTokenHint = idToken,
         };
 
-        return await _oidcClient.LogoutAsync(logoutRequest, cancellationToken).ConfigureAwait(false);
+        var logoutResult = await _oidcClient.LogoutAsync(logoutRequest, cancellationToken).ConfigureAwait(false);
+        if (!logoutResult.IsError)
+        {
+            IdentityToken = string.Empty;
+            IdentityTokenChanged?.Invoke();
+        }
+        return logoutResult;
     }
 
     /// <summary>

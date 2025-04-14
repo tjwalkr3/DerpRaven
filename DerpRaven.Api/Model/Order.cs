@@ -8,5 +8,5 @@ public class Order
     public DateTime OrderDate { get; set; }
 
     public User User { get; set; } = null!;
-    public List<Product> Products { get; set; } = [];
+    public List<OrderedProduct> OrderedProducts { get; set; } = [];
 }

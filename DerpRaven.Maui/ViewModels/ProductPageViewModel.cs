@@ -40,10 +40,9 @@ public partial class ProductPageViewModel : ObservableObject
         SelectedQuantity = 1;
     }
 
-    // onproductidchanged method
     partial void OnProductIdChanged(int value)
     {
-        RefreshSingleProductView();
+        Task.Run(async () => await RefreshSingleProductView());
     }
 
     public async Task RefreshSingleProductView()

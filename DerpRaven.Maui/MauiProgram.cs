@@ -47,6 +47,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<AppShell>();
         builder.Services.AddSingleton<SplashScreen>();
         builder.Services.AddSingleton<App>();
+        builder.Services.AddSingleton<AppShell>();
         return builder;
     }
 
@@ -64,6 +65,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ViewCustomRequestsPageViewModel>();
         builder.Services.AddSingleton<PlushiePortfolioPage>();
         builder.Services.AddSingleton<ArtPortfolioPage>();
+        builder.Services.AddSingleton<AppShellViewModel>();
         return builder;
     }
 

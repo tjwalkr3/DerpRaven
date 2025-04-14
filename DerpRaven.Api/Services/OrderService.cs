@@ -19,7 +19,7 @@ public class OrderService : IOrderService
         _logger.LogInformation("Fetching all orders");
         return await _context.Orders
             .Include(o => o.User)
-            .Include(o => o.Products)
+            .Include(o => o.OrderedProducts)
             .Select(o => MapToOrderDto(o))
             .ToListAsync();
     }
@@ -29,7 +29,7 @@ public class OrderService : IOrderService
         _logger.LogInformation("Fetching order with ID {OrderId}", id);
         return await _context.Orders
             .Include(o => o.User)
-            .Include(o => o.Products)
+            .Include(o => o.OrderedProducts)
             .Where(o => o.Id == id)
             .Select(o => MapToOrderDto(o))
             .FirstOrDefaultAsync();
@@ -40,7 +40,7 @@ public class OrderService : IOrderService
         _logger.LogInformation("Fetching orders for user with ID {UserId}", id);
         return await _context.Orders
             .Include(o => o.User)
-            .Include(o => o.Products)
+            .Include(o => o.OrderedProducts)
             .Where(r => r.User.Id == id)
             .Select(o => MapToOrderDto(o))
             .ToListAsync();
@@ -81,8 +81,8 @@ public class OrderService : IOrderService
 
     private async Task<Order?> MapFromOrderDto(OrderDto dto)
     {
-        var products = await _context.Products
-            .Where(p => dto.ProductIds.Contains(p.Id))
+        var products = await _context.OrderedProducts
+            .Where(p => dto.OrderedProductIds.Contains(p.Id))
             .ToListAsync();
         var user = await _context.Users.FindAsync(dto.UserId);
         if (products == null || user == null) return null;
@@ -94,13 +94,13 @@ public class OrderService : IOrderService
             Email = dto.Email,
             OrderDate = dto.OrderDate,
             User = user,
-            Products = products
+            OrderedProducts = products
         };
     }
 
     private static OrderDto MapToOrderDto(Order order)
     {
-        List<int> productIds = order.Products
+        List<int> productIds = order.OrderedProducts
             .Select(o => o.Id)
             .ToList();
 
@@ -111,7 +111,7 @@ public class OrderService : IOrderService
             Email = order.Email,
             OrderDate = order.OrderDate,
             UserId = order.User.Id,
-            ProductIds = productIds
+            OrderedProductIds = productIds
         };
     }
 }
