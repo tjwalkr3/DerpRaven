@@ -5,18 +5,20 @@ on:
 
 jobs:
   backup-database:
-    run: |
-      # === Configuration ===
-      CONTAINER_NAME=$(kubectl -n derp get pods --no-headers -o custom-columns=":metadata.name" | grep "derp-db-dep")
-      DB_NAME="postgres"
-      DB_USER="derp"
-      export PGPASSWORD="1234"
+    steps:
+      name: Back up the database.
+      run: |
+        # === Configuration ===
+        CONTAINER_NAME=$(kubectl -n derp get pods --no-headers -o custom-columns=":metadata.name" | grep "derp-db-dep")
+        DB_NAME="postgres"
+        DB_USER="derp"
+        export PGPASSWORD="1234"
 
-      # === Generate timestamp and filename ===
-      TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
-      FILENAME="${DB_NAME}_backup_${TIMESTAMP}.dmp"
+        # === Generate timestamp and filename ===
+        TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+        FILENAME="${DB_NAME}_backup_${TIMESTAMP}.dmp"
 
-      # === Back up the database ===
-      kubectl -n derp exec -t $CONTAINER_NAME -- \
-        pg_dump -Fc -U "$DB_USER" "$DB_NAME" \
-        > /home/thomas/backups/$FILENAME
+        # === Back up the database ===
+        kubectl -n derp exec -t $CONTAINER_NAME -- \
+          pg_dump -Fc -U "$DB_USER" "$DB_NAME" \
+          > /home/thomas/backups/$FILENAME

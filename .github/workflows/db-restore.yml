@@ -5,17 +5,19 @@ on:
 
 jobs:
   restore-database:
-    run: |
-      # === Configuration ===
-      CONTAINER_NAME=$(kubectl -n derp get pods --no-headers -o custom-columns=":metadata.name" | grep "derp-db-dep")
+    steps:
+      name: Restore the database.
+      run: |
+        # === Configuration ===
+        CONTAINER_NAME=$(kubectl -n derp get pods --no-headers -o custom-columns=":metadata.name" | grep "derp-db-dep")
 
-      # === Find the most recent backup ===
-      LATEST_BACKUP=$(ls -t /home/thomas/backups/*.dmp | head -n 1)
-      echo "Restoring from backup file: $LATEST_BACKUP"
+        # === Find the most recent backup ===
+        LATEST_BACKUP=$(ls -t /home/thomas/backups/*.dmp | head -n 1)
+        echo "Restoring from backup file: $LATEST_BACKUP"
 
-      # === Copy the most recent backup file to the database ===
-      kubectl -n derp cp $LATEST_BACKUP $CONTAINER_NAME:/tmp/backup.dmp
-      
-      # === Restore the database ===
-      kubectl -n derp exec -t $CONTAINER_NAME -- \
-          pg_restore --clean -U derp -d postgres /tmp/backup.dmp
+        # === Copy the most recent backup file to the database ===
+        kubectl -n derp cp $LATEST_BACKUP $CONTAINER_NAME:/tmp/backup.dmp
+        
+        # === Restore the database ===
+        kubectl -n derp exec -t $CONTAINER_NAME -- \
+            pg_restore --clean -U derp -d postgres /tmp/backup.dmp
