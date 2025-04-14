@@ -144,10 +144,6 @@ data:
       ('portfolioPlush','Portfolio1',1),
       ('portfolioArt','Portfolio2',2);
 
-    INSERT INTO public."OrderProduct" ("OrderId","ProductId") VALUES
-      (1,1),
-      (2,2);
-
     INSERT INTO public."PortfolioImage" ("ImageId","PortfolioId") VALUES
       (1,1),
       (2,2);
