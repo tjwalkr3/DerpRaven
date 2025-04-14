@@ -7,7 +7,7 @@ on:
 
 jobs:
   backup-database:
-    runs-on: self-hosted
+    runs-on: [self-hosted, alex-office4]
     steps:
     - name: Back up the database.
       run: |
