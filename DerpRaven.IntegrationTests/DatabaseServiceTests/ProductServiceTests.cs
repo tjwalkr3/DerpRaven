@@ -42,7 +42,7 @@ public class ProductServiceTests
 
         orders = new()
         {
-            new() { Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, User = user1, Products = [] }
+            new() { Address = "123 Street", Email = "test@example.com", OrderDate = DateTime.Now, User = user1, OrderedProducts = [] }
         };
         _context.Orders.AddRange(orders);
 
