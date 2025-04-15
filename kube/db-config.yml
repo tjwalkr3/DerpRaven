@@ -82,7 +82,6 @@ data:
       CONSTRAINT "PK_Orders" PRIMARY KEY ("Id"),
       CONSTRAINT "FK_Orders_Users_UserId" FOREIGN KEY ("UserId") REFERENCES public."Users"("Id") ON DELETE CASCADE
     );
-    CREATE INDEX "IX_Orders_ProductId" ON public."Orders" USING btree ("ProductId");
     CREATE INDEX "IX_Orders_UserId" ON public."Orders" USING btree ("UserId");
 
     CREATE TABLE public."PortfolioImage" (
