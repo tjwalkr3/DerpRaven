@@ -82,15 +82,17 @@ jobs:
 
     - name: Run the integration tests.
       run: |
-        docker compose up \
+        docker compose 
           -f integration-test-docker-compose.yml \
+          up \
           --build \
           --abort-on-container-exit \
           --exit-code-from integration-tests
 
-        docker compose down \
-         -f integration-test-docker-compose.yml \
-         -v
+        docker compose 
+          -f integration-test-docker-compose.yml \
+          down \
+          -v
 
         echo "going to deploy!!!"
 
