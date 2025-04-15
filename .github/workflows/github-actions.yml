@@ -22,6 +22,7 @@ jobs:
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.IntegrationTests
           dotnet format --verify-no-changes --verbosity diagnostic DerpRaven.Web
         "
+
     - name: Notify Discord on Failure
       if: failure()
       uses: tsickert/discord-webhook@v7.0.0
@@ -80,15 +81,17 @@ jobs:
     - name: Check out the code. 
       uses: actions/checkout@v4
 
-    - name: Run the unit tests.
+    - name: Run the integration tests.
       run: |
-        docker build \
-          -f ./IntegrationTests.Dockerfile \
-          -t thomas_test_container \
-          .
+        docker compose -f integration-test-docker-compose.yml down -v
+        docker compose -f integration-test-docker-compose.yml up --build --abort-on-container-exit --exit-code-from integration-tests
+        echo "Going to deploy!!!"
 
-        docker run --rm thomas_test_container
-        echo "going to deploy!!!"
+    - name: Cleaning Up Tests
+      if: always()
+      run: |
+        echo "Cleaning up tests."
+        docker compose -f integration-test-docker-compose.yml down -v
 
     - name: Notify Discord on Failure
       if: failure()

@@ -5,10 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:DerpRaven.Maui.Views"
     Shell.FlyoutBehavior="Flyout"
-    BackgroundColor="Black"
-    FlyoutBackgroundColor="DarkGrey"
-    Shell.TitleColor="White"
-    Shell.ForegroundColor="White" >
+    FlyoutBackgroundColor="DarkGrey" >
 
     <Shell.ToolbarItems>
         <ToolbarItem Text="Login" Clicked="OnButtonClicked"/>

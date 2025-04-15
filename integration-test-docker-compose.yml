@@ -1,0 +1,18 @@
+services:
+  test-postgres-db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: derp
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: postgres
+    volumes:
+      - ./config/db-init.sql:/docker-entrypoint-initdb.d/db-init.sql
+
+  integration-tests:
+    build:
+      context: .
+      dockerfile: IntegrationTests.Dockerfile
+    depends_on:
+      - test-postgres-db
+    restart: "no"

@@ -1,0 +1,32 @@
+name: Back up the database, keeping only the most recent 4 backups
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  backup-database:
+    runs-on: [self-hosted, alex-office4]
+    steps:
+    - name: Back up the database.
+      run: |
+        # === Configuration ===
+        CONTAINER_NAME=$(kubectl -n derp get pods --no-headers -o custom-columns=":metadata.name" | grep "derp-db-dep")
+        DB_NAME="postgres"
+        DB_USER="derp"
+        export PGPASSWORD="1234"
+
+        # === Generate timestamp and filename ===
+        TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+        FILENAME="${DB_NAME}_backup_${TIMESTAMP}.dmp"
+
+        # === Back up the database ===
+        kubectl -n derp exec -t $CONTAINER_NAME -- \
+          pg_dump -Fc -U "$DB_USER" "$DB_NAME" \
+          > /home/thomas/$FILENAME
+
+        # === Keep only the 4 newest backups ===
+        ls -1t /home/thomas/*.dmp | tail -n +5 | xargs -r rm --
+        echo "Backup complete. Latest backups:"
+        ls -1t /home/thomas/*.dmp | head -n 4
