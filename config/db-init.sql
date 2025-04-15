@@ -105,3 +105,50 @@ CREATE TABLE public."OrderedProducts" (
     CONSTRAINT "FK_OrderedProducts_Orders_OrderId" FOREIGN KEY ("OrderId") REFERENCES public."Orders"("Id") ON DELETE CASCADE
 );
 CREATE INDEX "IX_OrderedProducts_OrderId" ON public."OrderedProducts" USING btree ("OrderId");
+
+INSERT INTO public."ProductTypes" ("Name") VALUES
+    ('Plushie'),
+    ('Art');
+
+INSERT INTO public."Users" ("Name","OAuth","Email","Role","Active") VALUES
+    ('Derp','dljapfpsadkfjpajdpfajd','Derpipose@gmail.com','Admin',true),
+    ('Derp2','jhkjhljhkwejifuhiwine','Derpipose2@gmail.com','Customer',false);
+
+INSERT INTO public."Products" ("Name","Price","Quantity","Description","ProductTypeId") VALUES
+    ('Product1',10,1,'Plushie',1),
+    ('Product2',25,1,'Art',2);
+
+INSERT INTO public."Orders" ("Address","Email","OrderDate","UserId") VALUES
+    ('Madeup1','Derpipose@gmail.com','2025-03-27 00:00:00.000',1),
+    ('Madeup2','Derpipose@gmail.com','2025-01-15 00:00:00.000',2);
+
+INSERT INTO public."CustomRequests" ("Description","Email","Status","ProductTypeId","UserId") VALUES
+    ('this Plushie','Derpipose@gmail.com','pending',1,1),
+    ('this Art','Derpipose2@gmail.com','pending',2,2),
+    ('this Art','Derpipose@gmail.com','pending',2,1);
+
+INSERT INTO public."Images" ("Alt","Path") VALUES
+    ('thisimage1','imagepath1'),
+    ('thisimage2','imagepath2');
+
+INSERT INTO public."Portfolios" ("Description","Name","ProductTypeId") VALUES
+    ('portfolioPlush','Portfolio1',1),
+    ('portfolioArt','Portfolio2',2);
+
+INSERT INTO public."PortfolioImage" ("ImageId","PortfolioId") VALUES
+    (1,1),
+    (2,2);
+
+INSERT INTO public."ProductImage" ("ImageId","ProductId") VALUES
+    (1,1),
+    (2,2);
+
+INSERT INTO public."OrderedProducts" ("Quantity","Price","Name","OrderId") VALUES
+    (2,22.50,'example plushie',1),
+    (2,33.75,'example art',2);
+
+INSERT INTO public."__EFMigrationsHistory" ("MigrationId","ProductVersion") VALUES
+    ('20250322010505_InitialCreate','9.0.3'),
+    ('20250407161114_UniqueEmail','9.0.3'),
+    ('20250414181005_AddPurchasedProductTable','9.0.3'),
+    ('20250414181847_RemoveProductIdFromOrder','9.0.3');
