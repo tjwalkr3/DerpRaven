@@ -29,7 +29,16 @@ public class UserServiceTests
     [TearDown]
     public void TearDownAttribute()
     {
-        _context.Database.EnsureDeleted();
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"OrderedProducts\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ProductImage\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"PortfolioImage\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Orders\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Products\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Portfolios\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"CustomRequests\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ProductTypes\"");
+        _context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Images\"");
         _context.Dispose();
     }
 
