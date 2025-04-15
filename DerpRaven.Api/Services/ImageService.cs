@@ -126,10 +126,7 @@ public class ImageService : IImageService
     {
         _logger.LogInformation("Fetching image info for image with ID {ImageId}", id);
         var image = await _context.Images.FindAsync(id);
-        if (image != null)
-        {
-            return MapToImageDto(image);
-        }
+        if (image != null) return MapToImageDto(image);
         return null;
     }
 
