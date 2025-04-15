@@ -2,7 +2,7 @@ name: Tear down environment on closed pull request
 
 on:
   pull_request:
-    types: [closed]
+    types: [closed, merged]
 
 jobs:
   tear-down-kubernetes:

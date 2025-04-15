@@ -15,17 +15,12 @@ spec:
         app: derp-db
     spec:
       volumes:
-      - name: derp-db-data
-        persistentVolumeClaim:
-          claimName: derp-db-pvc-pr-$PULL_REQUEST_ID
       - name: schema-init
         configMap:
           name: derp-init-sql
       containers:
       - name: derp-postgres
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: derp-db-data
         - mountPath: /docker-entrypoint-initdb.d/init.sql
           subPath: derp-db-init
           name: schema-init
