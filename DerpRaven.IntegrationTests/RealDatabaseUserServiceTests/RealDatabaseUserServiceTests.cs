@@ -149,6 +149,12 @@ public class RealDatabaseUserServiceTests
         // Assert
         exists.ShouldBeFalse();
     }
+
+    [Test]
+    public void BadTest()
+    {
+        false.ShouldBeTrue();
+    }
 }
 
 
