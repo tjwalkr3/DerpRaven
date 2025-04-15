@@ -27,7 +27,6 @@ public class RealDatabaseUserServiceTests
     [TearDown]
     public void TearDownAttribute()
     {
-        _context.Database.EnsureDeleted();
         _context.Dispose();
     }
 
@@ -35,39 +34,25 @@ public class RealDatabaseUserServiceTests
     [Test]
     public async Task GetAllUsers()
     {
-        // Arrange
-        List<User> users = new()
-        {
-            new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] },
-            new User { Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = false, Role = "customer", CustomRequests = [], Orders = [] }
-        };
-        await _context.Users.AddRangeAsync(users);
-        await _context.SaveChangesAsync();
-
         // Act
         var result = await _userService.GetAllUsersAsync();
 
         // Assert
         result.ShouldNotBeNull();
-        result.Any(u => u.Name == "User1").ShouldBeTrue();
-        result.Any(u => u.Name == "User2").ShouldBeTrue();
+        result.Any(u => u.Name == "Derp").ShouldBeTrue();
+        result.Any(u => u.Name == "Derp2").ShouldBeTrue();
     }
 
     [Order(2)]
     [Test]
     public async Task GetUserById()
     {
-        // Arrange
-        var user = new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-
         // Act
         var result = await _userService.GetUserByIdAsync(1);
 
         // Assert
         result.ShouldNotBeNull();
-        result.Name.ShouldBe("User1");
+        result.Name.ShouldBe("Derp");
     }
 
     [Order(3)]
@@ -75,11 +60,11 @@ public class RealDatabaseUserServiceTests
     public async Task CreateUser()
     {
         // Arrange
-        var user = new UserDto() { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Role = "customer", Active = true };
+        var user = new UserDto() { Id = 3, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Role = "customer", Active = true };
 
         // Act
         var succeeded = await _userService.CreateUserAsync(user);
-        var result = _context.Users.Find(1);
+        var result = _context.Users.Find(3);
 
         // Assert
         succeeded.ShouldBeTrue();
@@ -92,14 +77,11 @@ public class RealDatabaseUserServiceTests
     public async Task UpdateUser()
     {
         // Arrange
-        var user = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-        var updatedUser = new UserDto { Id = 1, Name = "UpdatedUser", OAuth = "OAuth1", Email = "updated@example.com", Active = false, Role = "customer" };
+        var updatedUser = new UserDto { Id = 3, Name = "UpdatedUser", OAuth = "OAuth1", Email = "updated@example.com", Active = false, Role = "customer" };
 
         // Act
         await _userService.UpdateUserAsync(updatedUser);
-        var result = await _context.Users.FindAsync(1);
+        var result = await _context.Users.FindAsync(3);
 
         // Assert
         result.ShouldNotBeNull();
@@ -112,74 +94,46 @@ public class RealDatabaseUserServiceTests
     [Test]
     public async Task GetUsersByStatus()
     {
-        // Arrange
-        List<User> users = new()
-        {
-            new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] },
-            new User { Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = false, Role = "customer", CustomRequests = [], Orders = [] }
-        };
-        await _context.Users.AddRangeAsync(users);
-        await _context.SaveChangesAsync();
-
         // Act
         var result = await _userService.GetUsersByStatusAsync(true);
 
         // Assert
         result.ShouldNotBeNull();
         result.Single().Active.ShouldBeTrue();
-        result.Single().Name.ShouldBe("User1");
+        result.Single().Name.ShouldBe("Derp");
     }
 
     [Order(6)]
     [Test]
-    public async Task GetUserByEmail_WhileEmailsAreDifferent()
+    public async Task GetUserByEmail()
     {
-        // Arrange
-        List<User> users = new()
-        {
-            new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] },
-            new User { Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = false, Role = "customer", CustomRequests = [], Orders = [] }
-        };
-        await _context.Users.AddRangeAsync(users);
-        await _context.SaveChangesAsync();
-
         // Act
-        var result = await _userService.GetUserByEmailAsync("user1@example.com");
+        var result = await _userService.GetUserByEmailAsync("Derpipose@gmail.com");
 
         // Assert
         result.ShouldNotBeNull();
-        result.Email.ShouldBe("user1@example.com");
+        result.Email.ShouldBe("Derpipose@gmail.com");
     }
 
     [Order(8)]
     [Test]
     public async Task GetUserByName()
     {
-        // Arrange
-        var user = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-
         // Act
-        var result = await _userService.GetUsersByNameAsync("User1");
+        var result = await _userService.GetUsersByNameAsync("Derp");
 
         // Assert
         result.ShouldNotBeEmpty();
-        result.Single().Name.ShouldBe("User1");
+        result.Single().Name.ShouldBe("Derp");
     }
 
 
     [Order(9)]
     [Test]
-    public async Task ChackEmailExists_ShouldBeTrue()
+    public async Task CheckEmailExists_ShouldBeTrue()
     {
-        // Arrange
-        User user = new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-
         // Act
-        bool exists = await _userService.EmailExistsAsync("user1@example.com");
+        bool exists = await _userService.EmailExistsAsync("Derpipose@gmail.com");
 
         // Assert
         exists.ShouldBeTrue();
@@ -187,13 +141,8 @@ public class RealDatabaseUserServiceTests
 
     [Order(10)]
     [Test]
-    public async Task ChackEmailExists_ShouldBeFalse()
+    public async Task CheckEmailExists_ShouldBeFalse()
     {
-        // Arrange
-        User user = new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-
         // Act
         bool exists = await _userService.EmailExistsAsync("user5@example.com");
 
