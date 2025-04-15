@@ -25,3 +25,8 @@ jobs:
         kubectl -n derp exec -t $CONTAINER_NAME -- \
           pg_dump -Fc -U "$DB_USER" "$DB_NAME" \
           > /home/thomas/$FILENAME
+
+        # === Keep only the 4 newest backups ===
+        ls -1t /home/thomas/*.dmp | tail -n +5 | xargs -r rm --
+        echo "Backup complete. Latest backups:"
+        ls -1t /home/thomas/*.dmp | head -n 4
