@@ -13,3 +13,4 @@ jobs:
         export PULL_REQUEST_ID=${{ github.event.pull_request.number }}
         export NAMESPACE="derpraven-pr-$PULL_REQUEST_ID"
         kubectl delete namespace $NAMESPACE
+

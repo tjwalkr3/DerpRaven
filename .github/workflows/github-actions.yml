@@ -80,14 +80,18 @@ jobs:
     - name: Check out the code. 
       uses: actions/checkout@v4
 
-    - name: Run the unit tests.
+    - name: Run the integration tests.
       run: |
-        docker build \
-          -f ./IntegrationTests.Dockerfile \
-          -t thomas_test_container \
-          .
+        docker compose up \
+          -f integration-test-docker-compose.yml \
+          --build \
+          --abort-on-container-exit \
+          --exit-code-from integration-tests
 
-        docker run --rm thomas_test_container
+        docker compose down \
+         -f integration-test-docker-compose.yml \
+         -v
+
         echo "going to deploy!!!"
 
     - name: Notify Discord on Failure
