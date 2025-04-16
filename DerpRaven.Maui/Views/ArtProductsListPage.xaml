@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DerpRaven.Maui.Views.ArtProductsListPage"
              xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
+             xmlns:breadcrumb="clr-namespace:Breadcrumb;assembly=Breadcrumb"
              Title="Art Products">
     <Grid>
+        <breadcrumb:Breadcrumb />
         <ScrollView>
             <CollectionView ItemsSource="{Binding ArtProducts}" SelectionMode="Single">
                 <CollectionView.ItemTemplate>

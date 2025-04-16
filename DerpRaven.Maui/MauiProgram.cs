@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.ApiClients;
 using CommunityToolkit.Maui;
+using IeuanWalker.Maui.StateButton;
 namespace DerpRaven.Maui;
 
 public static class MauiProgram
@@ -14,6 +15,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseStateButton()
             .RegisterServices()
             .RegisterViewModels()
             .RegisterViews()

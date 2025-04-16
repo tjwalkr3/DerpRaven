@@ -1,4 +1,5 @@
 ﻿using DerpRaven.Maui.ViewModels;
+using DerpRaven.Maui.Views;
 namespace DerpRaven.Maui;
 
 public partial class AppShell : Shell
@@ -10,6 +11,8 @@ public partial class AppShell : Shell
         InitializeComponent();
         BindingContext = viewModel;
         _viewModel = viewModel;
+
+        Routing.RegisterRoute("ProductPage", typeof(ProductPage));
     }
 
     public async void OnButtonClicked(object? sender, EventArgs e)
@@ -18,4 +21,5 @@ public partial class AppShell : Shell
         if (loginToolbarItem == null) return;
         await _viewModel.TryToLogin(loginToolbarItem);
     }
+
 }

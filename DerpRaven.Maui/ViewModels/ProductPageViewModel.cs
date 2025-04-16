@@ -10,6 +10,7 @@ namespace DerpRaven.Maui.ViewModels;
 [QueryProperty(nameof(ProductIdQuery), "productId")]
 public partial class ProductPageViewModel : ObservableObject
 {
+    public ObservableCollection<string> BreadcrumbItems { get; } = new();
     public string ProductIdQuery
     {
         set
@@ -41,6 +42,8 @@ public partial class ProductPageViewModel : ObservableObject
         _imageHelpers = imageHelpers;
         _productClient = productClient;
         SelectedQuantity = 1;
+
+        BreadcrumbItems.Add("Products");
     }
 
     partial void OnProductIdChanged(int value)
@@ -56,12 +59,21 @@ public partial class ProductPageViewModel : ObservableObject
             ProductDetails = await _productClient.GetProductByIdAsync(ProductId);
             if (ProductDetails == null) return;
 
+            OnPropertyChanged(nameof(QuantityOptions));
+            await Task.Delay(100);
+            SelectedQuantity = QuantityOptions.DefaultIfEmpty(1).Min();
+
             List<int> imageIds = ProductDetails?.ImageIds ?? [];
             if (imageIds.Count < 1) return;
 
             Images = await _imageHelpers.GetImageDtos(imageIds);
             Images = _imageHelpers.GetPaths(Images);
             await _imageHelpers.SaveListOfImages(Images);
+
+            BreadcrumbItems.Clear();
+            BreadcrumbItems.Add("Products");
+            BreadcrumbItems.Add(ProductDetails?.Name ?? "Product Details");
+
         }
         finally
         {

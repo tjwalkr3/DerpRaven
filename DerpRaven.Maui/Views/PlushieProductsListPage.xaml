@@ -3,29 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DerpRaven.Maui.Views.PlushieProductsListPage"
              xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
+             xmlns:breadcrumb="clr-namespace:Breadcrumb;assembly=Breadcrumb"
              Title="Plushie Products">
-    <ScrollView>
-        <CollectionView ItemsSource="{Binding PlushieProducts}" SelectionMode="Single">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border Padding="10" Margin="10,10,10,0" Stroke="Transparent">
-                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
-                            <Image Grid.ColumnSpan="2" Source="{Binding ImagePath}" HeightRequest="240"  Aspect="AspectFill" Margin="0,5,0,20">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer 
+    <Grid>
+        <breadcrumb:Breadcrumb />
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding PlushieProducts}" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="10" Margin="10,10,10,0" Stroke="Transparent">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                                <Image Grid.ColumnSpan="2" Source="{Binding ImagePath}" HeightRequest="240"  Aspect="AspectFill" Margin="0,5,0,20">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductsListPageViewModel}}, Path=NavigateToProductCommand}" 
                                         CommandParameter="{Binding .}" />
-                                </Image.GestureRecognizers>
-                            </Image>
-                            <Label Grid.Row="1" Text="{Binding Name}" FontSize="20" FontAttributes="Bold"/>
-                            <Label Grid.Row="2" Text="{Binding Price, StringFormat='${0:F2}'}" FontSize="16" TextColor="Green"/>
-                            <Button Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Text="Add to Cart"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label Grid.Row="1" Text="{Binding Name}" FontSize="20" FontAttributes="Bold"/>
+                                <Label Grid.Row="2" Text="{Binding Price, StringFormat='${0:F2}'}" FontSize="16" TextColor="Green"/>
+                                <Button Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Text="Add to Cart"/>
 
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-    </ScrollView>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+        <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#80000000">
+            <ActivityIndicator 
+                IsRunning="True"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" 
+                Color="White" 
+                WidthRequest="60" 
+                HeightRequest="60"/>
+        </Grid>
+    </Grid>
 </ContentPage>
