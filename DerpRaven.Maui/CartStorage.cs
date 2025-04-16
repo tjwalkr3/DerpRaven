@@ -69,6 +69,7 @@ namespace DerpRaven.Maui {
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public int ProductTypeId { get; set; }
+
         public override bool Equals(object? obj) {
             if (obj is CartItem item) {
                 return Name == item.Name &&
