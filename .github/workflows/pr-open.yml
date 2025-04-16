@@ -2,7 +2,7 @@ name: Create environment on opened pull request
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [created, opened, reopened]
 
 jobs:
   build_and_push_api_to_dockerhub:
