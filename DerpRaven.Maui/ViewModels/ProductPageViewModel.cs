@@ -11,7 +11,6 @@ namespace DerpRaven.Maui.ViewModels;
 [QueryProperty(nameof(ProductIdQuery), "productId")]
 public partial class ProductPageViewModel : ObservableObject
 {
-    public ObservableCollection<string> BreadcrumbItems { get; } = new();
     public string ProductIdQuery
     {
         set
@@ -54,8 +53,6 @@ public partial class ProductPageViewModel : ObservableObject
         _imageHelpers = imageHelpers;
         _productClient = productClient;
         SelectedQuantity = 1;
-
-        BreadcrumbItems.Add("Products");
     }
 
     private void populateCartButton() {
