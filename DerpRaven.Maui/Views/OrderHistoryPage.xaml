@@ -8,25 +8,33 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <VerticalStackLayout Padding="10" Spacing="10">
-                        <Border Stroke="Gray" Padding="10" Margin="5">
+                        <Border Stroke="Gray" StrokeThickness="5" Padding="10" Margin="5" StrokeShape="RoundRectangle 15">
                             <VerticalStackLayout>
-                                <Button Text="{Binding OrderDate, StringFormat='Order {0:MM/dd/yyyy}'}"
+                                <Button Text="{Binding OrderSummary}"
                                         Command="{Binding ToggleExpandCommand}" />
 
                                 <CollectionView ItemsSource="{Binding Products}" 
                                                 IsVisible="{Binding IsExpanded}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
-                                            <VerticalStackLayout>
-                                                <Label>
-                                                    <Label.Text>
-                                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                                            <Binding Path="Name" />
-                                                            <Binding Path="Price" />
-                                                        </MultiBinding>
-                                                    </Label.Text>
-                                                </Label>
-                                            </VerticalStackLayout>
+                                            <Border Stroke="Gray" Padding="10" Margin="5">
+                                                <Grid ColumnDefinitions="*,*"
+                                                      RowDefinitions="*,*,*">
+                                                    <Label Text="{Binding Name}"
+                                                           Grid.Row="0"
+                                                           Grid.Column="0"/>
+                                                    <Label Text="{Binding Price, StringFormat='Price: {0:C}'}" 
+                                                           Grid.Row="1"
+                                                           Grid.Column="0"/>
+                                                    <Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}" 
+                                                           Grid.Row="2"
+                                                           Grid.Column="0"/>
+                                                    <Label Text="{Binding ItemTotal, StringFormat='Price: {0:C}'}"
+                                                           Grid.Row="2"
+                                                           Grid.Column="1"
+                                                           HorizontalOptions="End"/>
+                                                </Grid>
+                                            </Border>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
