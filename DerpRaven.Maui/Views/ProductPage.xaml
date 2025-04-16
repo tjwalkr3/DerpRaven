@@ -49,7 +49,7 @@
 
             </HorizontalStackLayout>
 
-            <Button Text="Add To Cart" Command="{Binding AddToCartCommand}" />
+            <Button Text="{Binding CartButtonText}" Command="{Binding AddToCartCommand}" IsEnabled="{Binding IsSignedIn}"/>
 
             <Label Text="{Binding ProductDetails.Description}" FontSize="18"/>
         </VerticalStackLayout>
