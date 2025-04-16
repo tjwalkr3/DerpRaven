@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
              x:Class="DerpRaven.Maui.Views.OrderHistoryPage"
-             Title="OrderHistoryPage">
+             Title="Order History">
     <ScrollView>
         <CollectionView ItemsSource="{Binding Orders}">
             <CollectionView.ItemTemplate>
