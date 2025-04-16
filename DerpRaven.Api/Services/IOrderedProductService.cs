@@ -5,8 +5,8 @@ namespace DerpRaven.Api.Services
 {
     public interface IOrderedProductService
     {
-        Task CreateOrderedProducts(List<OrderedProductDto> orderedProducts);
-        Task<List<OrderedProductDto>> GetOrderedProductsByOrderId();
+        Task<bool> CreateOrderedProducts(List<OrderedProductDto> orderedProducts);
+        Task<List<OrderedProductDto>> GetOrderedProductsByOrderId(int orderId);
         Task<OrderedProduct> MapToOrderedProduct(OrderedProductDto orderedProductDto);
         OrderedProductDto MapToOrderedProductDto(OrderedProduct orderedProduct);
     }

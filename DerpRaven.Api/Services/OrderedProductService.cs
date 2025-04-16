@@ -15,16 +15,17 @@ public class OrderedProductService : IOrderedProductService
         _logger = logger;
     }
 
-    public async Task<List<OrderedProductDto>> GetOrderedProductsByOrderId()
+    public async Task<List<OrderedProductDto>> GetOrderedProductsByOrderId(int orderId)
     {
         _logger.LogInformation("Fetching all ordered products");
         return await _context.OrderedProducts
+            .Where(op => op.Order.Id == orderId)
             .Include(op => op.Order)
             .Select(op => MapToOrderedProductDto(op))
             .ToListAsync();
     }
 
-    public async Task CreateOrderedProducts(List<OrderedProductDto> orderedProducts)
+    public async Task<bool> CreateOrderedProducts(List<OrderedProductDto> orderedProducts)
     {
         _logger.LogInformation("Creating ordered products");
         List<OrderedProduct> newOrderedProducts =
@@ -35,9 +36,10 @@ public class OrderedProductService : IOrderedProductService
         if (newOrderedProducts.Count == 0)
         {
             _logger.LogWarning("No ordered products to create");
-            return;
+            return false;
         }
         _context.OrderedProducts.AddRange(newOrderedProducts);
+        return true;
     }
 
     public OrderedProductDto MapToOrderedProductDto(OrderedProduct orderedProduct)
