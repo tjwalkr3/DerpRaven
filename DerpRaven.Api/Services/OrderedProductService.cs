@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DerpRaven.Api.Services;
 
-public class OrderedProductService
+public class OrderedProductService : IOrderedProductService
 {
     private readonly AppDbContext _context;
     private readonly ILogger<ProductService> _logger;
@@ -27,7 +27,7 @@ public class OrderedProductService
     public async Task CreateOrderedProducts(List<OrderedProductDto> orderedProducts)
     {
         _logger.LogInformation("Creating ordered products");
-        List<OrderedProduct> newOrderedProducts = 
+        List<OrderedProduct> newOrderedProducts =
             (await Task.WhenAll(
                 orderedProducts.Select(async orderedProduct => await MapToOrderedProduct(orderedProduct))
             )).ToList();
@@ -46,7 +46,7 @@ public class OrderedProductService
         {
             Id = orderedProduct.Id,
             Quantity = orderedProduct.Quantity,
-            Price = orderedProduct.Price           
+            Price = orderedProduct.Price
         };
     }
 
