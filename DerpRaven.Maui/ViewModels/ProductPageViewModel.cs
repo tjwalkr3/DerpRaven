@@ -11,6 +11,7 @@ namespace DerpRaven.Maui.ViewModels;
 [QueryProperty(nameof(ProductIdQuery), "productId")]
 public partial class ProductPageViewModel : ObservableObject
 {
+    public ObservableCollection<string> BreadcrumbItems { get; } = new();
     public string ProductIdQuery
     {
         set
@@ -42,7 +43,10 @@ public partial class ProductPageViewModel : ObservableObject
     private readonly IProductClient _productClient;
     private readonly ICartStorage _cartStorage;
 
-
+    
+    [ObservableProperty]
+    private bool isLoading;
+    
     public ProductPageViewModel(IImageHelpers imageHelpers, IProductClient productClient, IKeycloakClient keycloakClient, ICartStorage cartStorage)
     {
         _cartStorage = cartStorage;
@@ -50,6 +54,8 @@ public partial class ProductPageViewModel : ObservableObject
         _imageHelpers = imageHelpers;
         _productClient = productClient;
         SelectedQuantity = 1;
+
+        BreadcrumbItems.Add("Products");
     }
 
     private void populateCartButton() {
@@ -69,16 +75,29 @@ public partial class ProductPageViewModel : ObservableObject
 
     public async Task RefreshSingleProductView()
     {
-        ProductDetails = await _productClient.GetProductByIdAsync(ProductId);
-        if (ProductDetails == null) return;
+        IsLoading = true;
+        try
+        {
+            ProductDetails = await _productClient.GetProductByIdAsync(ProductId);
+            if (ProductDetails == null) return;
 
-        List<int> imageIds = ProductDetails?.ImageIds ?? [];
-        if (imageIds.Count < 1) return;
+            OnPropertyChanged(nameof(QuantityOptions));
+            await Task.Delay(100);
+            SelectedQuantity = QuantityOptions.DefaultIfEmpty(1).Min();
 
-        Images = await _imageHelpers.GetImageDtos(imageIds);
-        Images = _imageHelpers.GetPaths(Images);
-        await _imageHelpers.SaveListOfImages(Images);
-        populateCartButton();
+            List<int> imageIds = ProductDetails?.ImageIds ?? [];
+            if (imageIds.Count < 1) return;
+
+
+            Images = await _imageHelpers.GetImageDtos(imageIds);
+            Images = _imageHelpers.GetPaths(Images);
+            await _imageHelpers.SaveListOfImages(Images);
+            populateCartButton();
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     public List<int> QuantityOptions => Enumerable.Range(1, ProductDetails?.Quantity ?? 0).ToList();

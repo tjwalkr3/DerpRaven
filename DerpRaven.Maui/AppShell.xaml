@@ -46,12 +46,6 @@
         Route="PortfolioPage" />
 
     <ShellContent
-        Title="Product"
-        ContentTemplate="{DataTemplate local:ProductPage}"
-        Route="ProductPage" 
-        FlyoutItemIsVisible="False" />
-
-    <ShellContent
         Title="Product List"
         ContentTemplate="{DataTemplate local:ProductsListPage}"
         Route="ProductsListPage" />

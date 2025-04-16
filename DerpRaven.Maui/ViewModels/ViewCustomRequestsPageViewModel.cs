@@ -3,12 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DerpRaven.Maui.ViewModels;
 
@@ -16,11 +11,14 @@ public partial class ViewCustomRequestsPageViewModel(ICustomRequestClient client
 {
     public ObservableCollection<CustomRequestDto> CustomRequests { get; set; } = [];
 
-    [RelayCommand]
+    [ObservableProperty]
+    private bool isLoading;
+
     public async Task GetCustomRequests()
     {
         try
         {
+            IsLoading = true;
             // See if we can get all custom requests
             List<CustomRequestDto>? requests = await client.GetCustomRequestsByUserEmailAsync();
 
@@ -44,6 +42,10 @@ public partial class ViewCustomRequestsPageViewModel(ICustomRequestClient client
         {
             logger.LogError(ex, "Error getting custom requests");
             throw;
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 }

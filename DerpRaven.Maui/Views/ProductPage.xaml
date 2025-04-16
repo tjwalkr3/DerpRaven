@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
              xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared"
-             
              x:Class="DerpRaven.Maui.Views.ProductPage"
              Title="Product Details">
-    <ScrollView>
+    <VerticalStackLayout>
+        <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="10">
             <Label Text="{Binding ProductDetails.Name}" FontSize="24" FontAttributes="Bold" />
 
@@ -43,6 +43,7 @@
                 <Label Text="Quantity:" VerticalOptions="Center" />
 
                 <Picker x:Name="QuantityPicker" 
+                        Title="{Binding SelectedQuantity}"
                         WidthRequest="100"
                         ItemsSource="{Binding QuantityOptions}" 
                         SelectedItem="{Binding SelectedQuantity}" />
@@ -54,4 +55,5 @@
             <Label Text="{Binding ProductDetails.Description}" FontSize="18"/>
         </VerticalStackLayout>
     </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>

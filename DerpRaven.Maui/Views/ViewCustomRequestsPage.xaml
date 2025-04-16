@@ -3,21 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DerpRaven.Maui.Views.ViewCustomRequestsPage"
              Title="View Past Custom Requests">
-    <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="10">
-            <CollectionView ItemsSource="{Binding CustomRequests}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Description, StringFormat='Description: {0}'}" />
-                            <Label Text="{Binding Email, StringFormat='Email: {0}'}" />
-                            <Label Text="{Binding Status, StringFormat='Status: {0}'}" />
-                        </VerticalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <Button Text="Get Custom Requests" Command="{Binding GetCustomRequestsCommand}" />
-        </VerticalStackLayout>
-    </ScrollView>
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="10" Spacing="10">
+                <CollectionView ItemsSource="{Binding CustomRequests}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Stroke="Gray" StrokeThickness="5" Padding="10" Margin="5" StrokeShape="RoundRectangle 15">
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Description, StringFormat='Description: {0}'}" />
+                                    <Label Text="{Binding Email, StringFormat='Email: {0}'}" />
+                                    <Label Text="{Binding Status, StringFormat='Status: {0}'}" FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#80000000">
+            <ActivityIndicator 
+            IsRunning="True"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Color="White" 
+            WidthRequest="60" 
+            HeightRequest="60"/>
+        </Grid>
+    </Grid>
 </ContentPage>

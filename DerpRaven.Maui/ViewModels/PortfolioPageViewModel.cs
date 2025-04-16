@@ -11,6 +11,9 @@ public partial class PortfolioPageViewModel : ObservableObject
     private readonly IPortfolioClient _portfolioClient;
     private readonly IImageHelpers _imageHelpers;
 
+    [ObservableProperty]
+    private bool isLoading;
+
     public PortfolioPageViewModel(IPortfolioClient portfolioClient, IImageHelpers imageHelpers)
     {
         _portfolioClient = portfolioClient;
@@ -19,9 +22,17 @@ public partial class PortfolioPageViewModel : ObservableObject
 
     public async Task RefreshPortfolioView()
     {
-        List<PortfolioDto> portfolios = await _portfolioClient.GetAllPortfoliosAsync();
-        List<ImageDto> images = await GetPortfolioImages(portfolios);
-        PopulatePortfolioViews(portfolios, images);
+        IsLoading = true;
+        try
+        {
+            List<PortfolioDto> portfolios = await _portfolioClient.GetAllPortfoliosAsync();
+            List<ImageDto> images = await GetPortfolioImages(portfolios);
+            PopulatePortfolioViews(portfolios, images);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     private void PopulatePortfolioViews(List<PortfolioDto> portfolios, List<ImageDto> images)
