@@ -5,7 +5,7 @@ using DerpRaven.Shared.Dtos;
 namespace DerpRaven.Shared.ApiClients;
 
 
-public class OrderedProductClient(IApiService apiService)
+public class OrderedProductClient(IApiService apiService) : IOrderedProductClient
 {
     public async Task<List<OrderedProductDto>> GetOrderedProductsByOrderId(int orderId)
     {

@@ -35,6 +35,7 @@ public class OrderController : ControllerBase
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetOrdersByUserId(int userId)
     {
+        if (userId <= 0) return BadRequest("Invalid user ID");
         var orders = await _orderService.GetOrdersByUserIdAsync(userId);
         return Ok(orders);
     }

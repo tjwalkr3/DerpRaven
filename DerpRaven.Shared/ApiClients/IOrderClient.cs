@@ -1,0 +1,10 @@
+﻿using DerpRaven.Shared.Dtos;
+
+namespace DerpRaven.Shared.ApiClients
+{
+    public interface IOrderClient
+    {
+        Task CreateOrderAsync(OrderDto order);
+        Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId);
+    }
+}

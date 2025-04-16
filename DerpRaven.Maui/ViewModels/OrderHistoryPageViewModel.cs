@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using System.Collections.ObjectModel;
 
@@ -7,10 +8,15 @@ namespace DerpRaven.Maui.ViewModels;
 
 public partial class OrderHistoryPageViewModel : ObservableObject
 {
+    private readonly IOrderClient _orderClient;
+    private readonly IOrderedProductClient _orderedProductClient;
     public ObservableCollection<OrderViewModel> Orders { get; } = [];
 
-    public OrderHistoryPageViewModel()
+    public OrderHistoryPageViewModel(IOrderClient orderClient, IOrderedProductClient orderedProductClient)
     {
+        _orderClient = orderClient;
+        _orderedProductClient = orderedProductClient;
+
         var ghostHistoryList = new List<OrderDto>
         {
             new() { Id = 1, Address = "123 Street", Email = "user@example.com", OrderDate = DateTime.Now, UserId = 5, OrderedProductIds = new List<int> { 1, 2 } },
@@ -35,6 +41,18 @@ public partial class OrderHistoryPageViewModel : ObservableObject
         {
             Orders.Add(new OrderViewModel(order, products));
         }
+    }
+
+    public void GetOrdersFromApi()
+    {
+        // This method would typically call an API to fetch the orders.
+        // For now, it is left empty as the data is already populated in the constructor.
+    }
+
+    public void GetOrderedProductsFromApi(int orderId)
+    {
+        // This method would typically call an API to fetch the ordered products for a specific order.
+        // For now, it is left empty as the data is already populated in the constructor.
     }
 }
 
