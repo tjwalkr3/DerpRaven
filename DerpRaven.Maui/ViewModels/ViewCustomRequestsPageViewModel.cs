@@ -11,10 +11,14 @@ public partial class ViewCustomRequestsPageViewModel(ICustomRequestClient client
 {
     public ObservableCollection<CustomRequestDto> CustomRequests { get; set; } = [];
 
+    [ObservableProperty]
+    private bool isLoading;
+
     public async Task GetCustomRequests()
     {
         try
         {
+            IsLoading = true;
             // See if we can get all custom requests
             List<CustomRequestDto>? requests = await client.GetCustomRequestsByUserEmailAsync();
 
@@ -38,6 +42,10 @@ public partial class ViewCustomRequestsPageViewModel(ICustomRequestClient client
         {
             logger.LogError(ex, "Error getting custom requests");
             throw;
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 }
