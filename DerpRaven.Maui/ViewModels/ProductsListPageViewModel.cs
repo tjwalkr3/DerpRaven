@@ -15,6 +15,9 @@ public partial class ProductsListPageViewModel : ObservableObject
     private readonly IProductClient _productClient;
     private readonly IImageHelpers _imageHelpers;
 
+    [ObservableProperty]
+    private bool isLoading;
+
     public ProductsListPageViewModel(IProductClient productClient, IImageHelpers imageHelpers)
     {
         _productClient = productClient;
@@ -23,9 +26,17 @@ public partial class ProductsListPageViewModel : ObservableObject
 
     public async Task RefreshProductsView()
     {
-        List<ProductDto> products = await _productClient.GetAllProductsAsync();
-        List<ImageDto> images = await DownloadAllImages(products);
-        PopulateProductViews(products, images);
+        IsLoading = true;
+        try
+        {
+            List<ProductDto> products = await _productClient.GetAllProductsAsync();
+            List<ImageDto> images = await DownloadAllImages(products);
+            PopulateProductViews(products, images);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     private void PopulateProductViews(List<ProductDto> products, List<ImageDto> images)

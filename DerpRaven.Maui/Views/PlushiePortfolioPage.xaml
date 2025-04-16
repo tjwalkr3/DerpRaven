@@ -5,55 +5,56 @@
              xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared"
              x:Class="DerpRaven.Maui.Views.PlushiePortfolioPage"
              Title="Plushie Portfolio">
-    <ScrollView>
-        <VerticalStackLayout Padding="0,0" Spacing="0">
-
-            <Label
-                Text="Welcome to Derp Raven"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
-
-            <Label Text="{Binding PlushiePortfolios.Count, StringFormat='Found {0} PlushiePortfolios', TargetNullValue='Binding is null!', FallbackValue='Fallback!'}"/>
-            <!-- CollectionView dynamically creating multiple carousels -->
-            <CollectionView ItemsSource="{Binding PlushiePortfolios}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Images.Count, StringFormat='Found {0} images'}" />
-                            <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
-                                <CarouselView.ItemTemplate>
-                                    <DataTemplate x:DataType="dtos:ImageDto">
-                                        <StackLayout>
-                                            <Border Stroke="Black"
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="0,0" Spacing="0">
+                <!-- CollectionView dynamically creating multiple carousels -->
+                <CollectionView ItemsSource="{Binding PlushiePortfolios}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate x:DataType="dtos:ImageDto">
+                                            <StackLayout>
+                                                <Border Stroke="Black"
                                                 StrokeShape="RoundRectangle 5"
                                                 Margin="10"
                                                 Padding="10"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
-                                                <StackLayout>
-                                                    <Label Text="{Binding Alt}"
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Alt}"
                                                        FontAttributes="Bold"
                                                        FontSize="18"
                                                        HorizontalOptions="Center"
                                                        VerticalOptions="Center" />
-                                                    <Image Source="{Binding Path}"
+                                                        <Image Source="{Binding Path}"
                                                        Aspect="AspectFill"
                                                        HeightRequest="150"
                                                        WidthRequest="150"
                                                        HorizontalOptions="Center" />
-                                                </StackLayout>
-                                            </Border>
-                                        </StackLayout>
-                                    </DataTemplate>
-                                </CarouselView.ItemTemplate>
-                            </CarouselView>
-                            
-                        </VerticalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            
-        </VerticalStackLayout>
-    </ScrollView>
+                                                    </StackLayout>
+                                                </Border>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#80000000">
+            <ActivityIndicator 
+            IsRunning="True"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Color="White" 
+            WidthRequest="60" 
+            HeightRequest="60"/>
+        </Grid>
+    </Grid>
 </ContentPage>

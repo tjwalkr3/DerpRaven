@@ -33,6 +33,9 @@ public partial class ProductPageViewModel : ObservableObject
     private readonly IImageHelpers _imageHelpers;
     private readonly IProductClient _productClient;
 
+    [ObservableProperty]
+    private bool isLoading;
+
     public ProductPageViewModel(IImageHelpers imageHelpers, IProductClient productClient)
     {
         _imageHelpers = imageHelpers;
@@ -47,15 +50,23 @@ public partial class ProductPageViewModel : ObservableObject
 
     public async Task RefreshSingleProductView()
     {
-        ProductDetails = await _productClient.GetProductByIdAsync(ProductId);
-        if (ProductDetails == null) return;
+        IsLoading = true;
+        try
+        {
+            ProductDetails = await _productClient.GetProductByIdAsync(ProductId);
+            if (ProductDetails == null) return;
 
-        List<int> imageIds = ProductDetails?.ImageIds ?? [];
-        if (imageIds.Count < 1) return;
+            List<int> imageIds = ProductDetails?.ImageIds ?? [];
+            if (imageIds.Count < 1) return;
 
-        Images = await _imageHelpers.GetImageDtos(imageIds);
-        Images = _imageHelpers.GetPaths(Images);
-        await _imageHelpers.SaveListOfImages(Images);
+            Images = await _imageHelpers.GetImageDtos(imageIds);
+            Images = _imageHelpers.GetPaths(Images);
+            await _imageHelpers.SaveListOfImages(Images);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     public List<int> QuantityOptions => Enumerable.Range(1, ProductDetails?.Quantity ?? 0).ToList();
