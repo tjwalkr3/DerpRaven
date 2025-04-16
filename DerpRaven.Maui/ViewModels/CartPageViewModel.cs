@@ -21,11 +21,11 @@ public partial class CartPageViewModel : ObservableObject
     {
         _cartStorage = cartStorage;
         PopulateCart();
-        checkPlushiePresent();
+        CheckPlushiePresent();
         UpdateRunningTotal();
     }
 
-    private void PopulateCart() {
+    public void PopulateCart() {
         // Get the cart items from storage
         var cartItemsFromStorage = _cartStorage.GetCartItems();
         // Clear the cart items collection
@@ -36,13 +36,13 @@ public partial class CartPageViewModel : ObservableObject
         }
         // Update the running total
         UpdateRunningTotal();
-
+        CheckPlushiePresent();
     }
 
     [ObservableProperty]
     public bool plushiePresent = false;
 
-    public void checkPlushiePresent()
+    public void CheckPlushiePresent()
     {
         foreach (var item in CartItems)
         {

@@ -82,7 +82,6 @@ public partial class ProductPageViewModel : ObservableObject
             if (ProductDetails == null) return;
 
             OnPropertyChanged(nameof(QuantityOptions));
-            await Task.Delay(100);
             SelectedQuantity = QuantityOptions.DefaultIfEmpty(1).Min();
 
             List<int> imageIds = ProductDetails?.ImageIds ?? [];

@@ -12,7 +12,7 @@ public partial class CustomRequestPage : Shell
     }
     private async void OnNavigated(object sender, ShellNavigatedEventArgs e)
     {
-        UpdateTitle(); // Update the title every time navigation happens
+        await UpdateTitle(); // Update the title every time navigation happens
     }
 
     private async Task UpdateTitle()
