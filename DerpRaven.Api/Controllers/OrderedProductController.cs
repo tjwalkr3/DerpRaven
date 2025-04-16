@@ -18,7 +18,7 @@ public class OrderedProductController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAllOrderedProducts(int id)
+    public async Task<IActionResult> GetOrderedProductsByOrderId(int id)
     {
         if (id <= 0) return BadRequest("Invalid order ID");
         var orderedProducts = await _orderedProductService.GetOrderedProductsByOrderId(id);
