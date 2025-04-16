@@ -5,49 +5,68 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:DerpRaven.Maui.Views"
     Shell.FlyoutBehavior="Flyout"
-    FlyoutBackgroundColor="DarkGrey" >
+    FlyoutBackgroundColor="DarkGrey">
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid Padding="10">
+                <Label 
+                    Text="{Binding Title}"
+                    TextColor="#FDFAFA"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
 
     <Shell.ToolbarItems>
         <ToolbarItem Text="Login" Clicked="OnButtonClicked"/>
     </Shell.ToolbarItems>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem Title="Home" Route="MainPage" >
+        <ShellContent 
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}"/>
+    </FlyoutItem>
 
-    <ShellContent
-        Title="Cart"
-        ContentTemplate="{DataTemplate local:CartPage}"
-        Route="CartPage"
-        IsVisible="{Binding IsLoggedIn}" />
+    <FlyoutItem Title="Portfolio"  Route="PortfolioPage" >
+        <ShellContent 
+            Title="Portfolio"
+            ContentTemplate="{DataTemplate local:PortfolioPage}" />
+    </FlyoutItem>
 
-    <ShellContent
-        Title="Custom Request"
-        ContentTemplate="{DataTemplate local:CustomRequestPage}"
-        Route="CustomRequestPage"
-        IsVisible="{Binding IsLoggedIn}" />
+    <FlyoutItem Title="Product List" Route="ProductsListPage">
+        <ShellContent 
+            Title="Product List"
+            ContentTemplate="{DataTemplate local:ProductsListPage}" />
+    </FlyoutItem>
 
-    <ShellContent
-        Title="Order History"
-        ContentTemplate="{DataTemplate local:OrderHistoryPage}"
-        Route="OrderHistoryPage"
-        IsVisible="{Binding IsLoggedIn}" />
+    <FlyoutItem Title="Custom Request"  Route="CustomRequestPage">
+        <ShellContent 
+            Title="Custom Request"
+            ContentTemplate="{DataTemplate local:CustomRequestPage}" 
+            IsVisible="{Binding IsLoggedIn}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Cart" Route="CartPage">
+        <ShellContent 
+            Title="Cart"
+            ContentTemplate="{DataTemplate local:CartPage}"
+            IsVisible="{Binding IsLoggedIn}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Order History" Route="OrderHistoryPage">
+        <ShellContent 
+            Title="Order History"
+            ContentTemplate="{DataTemplate local:OrderHistoryPage}"
+            IsVisible="{Binding IsLoggedIn}" />
+    </FlyoutItem>
 
     <ShellContent
         Title="Payment"
         ContentTemplate="{DataTemplate local:PaymentPage}"
         Route="PaymentPage" 
         FlyoutItemIsVisible="False" />
-
-    <ShellContent
-        Title="Portfolio"
-        ContentTemplate="{DataTemplate local:PortfolioPage}"
-        Route="PortfolioPage" />
-
-    <ShellContent
-        Title="Product List"
-        ContentTemplate="{DataTemplate local:ProductsListPage}"
-        Route="ProductsListPage" />
 
 </Shell>
