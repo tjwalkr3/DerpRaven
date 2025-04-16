@@ -11,7 +11,6 @@ namespace DerpRaven.Maui.ViewModels;
 [QueryProperty(nameof(ProductIdQuery), "productId")]
 public partial class ProductPageViewModel : ObservableObject
 {
-    public ObservableCollection<string> BreadcrumbItems { get; } = new();
     public string ProductIdQuery
     {
         set
@@ -46,7 +45,9 @@ public partial class ProductPageViewModel : ObservableObject
     
     [ObservableProperty]
     private bool isLoading;
-    
+
+    public List<int> QuantityOptions => Enumerable.Range(1, ProductDetails?.Quantity ?? 0).ToList();
+
     public ProductPageViewModel(IImageHelpers imageHelpers, IProductClient productClient, IKeycloakClient keycloakClient, ICartStorage cartStorage)
     {
         _cartStorage = cartStorage;
@@ -54,8 +55,6 @@ public partial class ProductPageViewModel : ObservableObject
         _imageHelpers = imageHelpers;
         _productClient = productClient;
         SelectedQuantity = 1;
-
-        BreadcrumbItems.Add("Products");
     }
 
     private void populateCartButton() {
@@ -82,7 +81,7 @@ public partial class ProductPageViewModel : ObservableObject
             if (ProductDetails == null) return;
 
             OnPropertyChanged(nameof(QuantityOptions));
-            SelectedQuantity = QuantityOptions.DefaultIfEmpty(1).Min();
+            SelectedQuantity = QuantityOptions.Min();
 
             List<int> imageIds = ProductDetails?.ImageIds ?? [];
             if (imageIds.Count < 1) return;
@@ -99,11 +98,10 @@ public partial class ProductPageViewModel : ObservableObject
         }
     }
 
-    public List<int> QuantityOptions => Enumerable.Range(1, ProductDetails?.Quantity ?? 0).ToList();
-
     partial void OnProductDetailsChanged(ProductDto? value)
     {
         OnPropertyChanged(nameof(QuantityOptions));
+        OnPropertyChanged(nameof(SelectedQuantity));
     }
 
     //Add to cart will add the product to the cart
