@@ -1,49 +1,42 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using DerpRaven.Maui;
 
 namespace DerpRaven.Maui.ViewModels;
 
 public partial class CartPageViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private ObservableCollection<CartItem> cartItems;
+
+    private readonly ICartStorage _cartStorage;
 
     [ObservableProperty]
-    private decimal runningTotal;
+    private ObservableCollection<CartItem> cartItems = [];
 
-    public CartPageViewModel()
+    [ObservableProperty]
+    private decimal runningTotal = 0.00m;
+
+
+    public CartPageViewModel(ICartStorage cartStorage)
     {
-        cartItems = new ObservableCollection<CartItem>
-        {
-            new CartItem
-            {
-                Name = "Unicorn Squishy",
-                ImageUrl = "unicornsquish.jpg",
-                Quantity = 10,
-                Price = 10.99M,
-                ProductTypeId = 1
-            },
-            new CartItem
-            {
-                Name = "Horse Plushie",
-                ImageUrl = "horsesnuggler.jpg",
-                Quantity = 2,
-                Price = 59.99M,
-                ProductTypeId = 1
-            },
-            new CartItem
-            {
-                Name = "Emote",
-                ImageUrl = "quincymad.png",
-                Quantity = 1,
-                Price = 14.99M,
-                ProductTypeId = 2
-
-            }
-        };
-
+        _cartStorage = cartStorage;
+        PopulateCart();
         checkPlushiePresent();
+        UpdateRunningTotal();
+    }
+
+    private void PopulateCart() {
+        // Get the cart items from storage
+        var cartItemsFromStorage = _cartStorage.GetCartItems();
+        // Clear the cart items collection
+        CartItems = new ObservableCollection<CartItem>();
+        // Add the items from storage to the cart items collection
+        foreach (var item in cartItemsFromStorage) {
+            CartItems.Add(item);
+        }
+        // Update the running total
+        UpdateRunningTotal();
+
     }
 
     [ObservableProperty]
@@ -64,12 +57,12 @@ public partial class CartPageViewModel : ObservableObject
 
 
 
-    //[RelayCommand]
-    //private void RemoveItem(CartItem item)
-    //{
-    //    cartItems.Remove(item);
-    //    UpdateRunningTotal();
-    //}
+    [RelayCommand]
+    private void RemoveItem(CartItem item) {
+        _cartStorage.RemoveCartItem(item);
+        UpdateRunningTotal();
+        PopulateCart();
+    }
 
     //[RelayCommand]
     //private void Checkout()
@@ -77,9 +70,8 @@ public partial class CartPageViewModel : ObservableObject
     // Implement checkout logic here
     //}
 
-    //private void UpdateRunningTotal()
-    //{
-    //    RunningTotal = cartItems.Sum(item => item.Total);
-    //}
+    private void UpdateRunningTotal() {
+        RunningTotal = CartItems.Sum(item => item.Quantity * item.Price);
+    }
 }
 

@@ -1,98 +1,88 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
 using Microsoft.Maui.Storage;
-using DerpRaven.Maui.ViewModels;
 using DerpRaven.Shared.Dtos;
 
-namespace DerpRaven.Maui;
-internal class CartStorage
-{
-    private const string CartKey = "CartItems";
+namespace DerpRaven.Maui {
+    public class CartStorage : ICartStorage {
+        private const string CartKey = "CartItems";
 
-    public static void SaveCartItems(List<CartItem> items)
-    {
-        var json = JsonSerializer.Serialize(items);
-        Preferences.Set(CartKey, json);
-    }
-
-    public static void AddCartItem(ProductDto product)
-    {
-        var item = new CartItem
-        {
-            Name = product.Name,
-            ImageUrl = Path.Combine(FileSystem.CacheDirectory, $"{product.ImageIds[0]}.png"),
-            //ImageUrl = GetImageUrl(product.ImageIds),
-            Quantity = product.Quantity,
-            Price = product.Price,
-            ProductTypeId = product.ProductTypeId
-        };
-        //if the item is already in the cart, increase the quantity
-        var existingItem = GetCartItems().FirstOrDefault(i => i.Name == item.Name);
-        if (existingItem != null)
-        {
-            existingItem.Quantity += item.Quantity;
+        public void SaveCartItems(List<CartItem> items) {
+            var json = JsonSerializer.Serialize(items);
+            Preferences.Clear(CartKey);
+            Preferences.Set(CartKey, json);
         }
-        else
-        {
+
+        public void AddCartItem(ProductDto product) {
+            var item = new CartItem {
+                Name = product.Name,
+                ImageUrl = Path.Combine(FileSystem.CacheDirectory, $"{product.ImageIds[0]}.png"),
+                Quantity = product.Quantity,
+                Price = product.Price,
+                ProductTypeId = product.ProductTypeId
+            };
+
             var cartItems = GetCartItems();
-            cartItems.Add(item);
+            var existingItem = cartItems.FirstOrDefault(i => i.Name == item.Name);
+            if (existingItem != null) {
+                existingItem.Quantity += item.Quantity;
+            } else {
+                cartItems.Add(item);
+            }
+            SaveCartItems(cartItems);
         }
-        SaveCartItems(GetCartItems());
-    }
 
-    //private static string GetImageUrl(List<int> ids) {
-    //    string imageUrl = string.Empty;
-    //    // Assuming you have a method to get the image URL by ID
-    //    imageUrl = GetImageUrlById(ids[0]);
-    //    return imageUrl;
-    //}
-
-    public static void RemoveCartItem(CartItem item)
-    {
-        var cartItems = GetCartItems();
-        cartItems.Remove(item);
-        SaveCartItems(cartItems);
-    }
-
-    public static List<CartItem> GetCartItems()
-    {
-        var json = Preferences.Get(CartKey, string.Empty);
-        if (string.IsNullOrEmpty(json))
-        {
-            return new List<CartItem>();
+        public void RemoveCartItem(CartItem item) {
+            var cartItems = GetCartItems();
+            cartItems.Remove(item);
+            SaveCartItems(cartItems);
         }
-        return JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
-    }
 
-    public static void ClearCart()
-    {
-        Preferences.Remove(CartKey);
-    }
-
-    public static void UpdateCartItem(CartItem item)
-    {
-        var cartItems = GetCartItems();
-        var existingItem = cartItems.FirstOrDefault(i => i.Name == item.Name);
-        if (existingItem != null)
-        {
-            existingItem.Quantity = item.Quantity;
-            existingItem.Price = item.Price;
+        public List<CartItem> GetCartItems() {
+            var json = Preferences.Get(CartKey, string.Empty);
+            if (string.IsNullOrEmpty(json)) {
+                return new List<CartItem>();
+            }
+            return JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
         }
-        SaveCartItems(cartItems);
+
+        public void ClearCart() {
+            Preferences.Remove(CartKey);
+        }
+
+        public void UpdateCartItem(CartItem item) {
+            var cartItems = GetCartItems();
+            var existingItem = cartItems.FirstOrDefault(i => i.Name == item.Name);
+            if (existingItem != null) {
+                existingItem.Quantity = item.Quantity;
+                existingItem.Price = item.Price;
+            }
+            SaveCartItems(cartItems);
+        }
     }
 
+    public class CartItem {
+        public string Name { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public int ProductTypeId { get; set; }
 
-}
+        public override bool Equals(object? obj) {
+            if (obj is CartItem item) {
+                return Name == item.Name &&
+                       ImageUrl == item.ImageUrl &&
+                       Quantity == item.Quantity &&
+                       Price == item.Price &&
+                       ProductTypeId == item.ProductTypeId;
+            }
+            return false;
+        }
 
-public class CartItem
-{
-    public string Name { get; set; } = string.Empty;
-    public string ImageUrl { get; set; } = string.Empty;
-    public int Quantity { get; set; }
-    public decimal Price { get; set; }
-    public int ProductTypeId { get; set; }
+        public override int GetHashCode() {
+            return HashCode.Combine(Name, ImageUrl, Quantity, Price, ProductTypeId);
+        }
+    }
 }
