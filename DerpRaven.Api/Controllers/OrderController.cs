@@ -2,6 +2,7 @@
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using OpenTelemetry.Metrics;
 
 namespace DerpRaven.Api.Controllers;
 
@@ -11,10 +12,12 @@ namespace DerpRaven.Api.Controllers;
 public class OrderController : ControllerBase
 {
     private readonly IOrderService _orderService;
+    private readonly IUserService _userService;
 
-    public OrderController(IOrderService orderService)
+    public OrderController(IOrderService orderService, IUserService userService)
     {
         _orderService = orderService;
+        _userService = userService;
     }
 
     [HttpGet]
@@ -40,6 +43,16 @@ public class OrderController : ControllerBase
         return Ok(orders);
     }
 
+    [HttpGet("user")]
+    public async Task<IActionResult> GetOrdersByUserEmail()
+    {
+        UserDto? user = await ControllerHelpers.GetCurrentUser(HttpContext.User, _userService);
+        if (user == null) return Unauthorized();
+
+        var requests = await _orderService.GetOrdersByUserEmailAsync(user.Email);
+        return Ok(requests);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateOrder(OrderDto order)
     {
@@ -55,4 +68,6 @@ public class OrderController : ControllerBase
         if (!wasUpdated) return BadRequest();
         return NoContent();
     }
+
+
 }

@@ -46,6 +46,30 @@ public class OrderService : IOrderService
             .ToListAsync();
     }
 
+    // Test this later
+    public async Task<List<OrderDto>> GetOrdersByUserEmailAsync(string email)
+    {
+        _logger.LogInformation("Fetching orders for user with ID {UserEmail}", email);
+        //return await _context.Orders
+        //    .Include(r => r.User)
+        //    .Where(r => r.User.Email == email)
+        //    .Select(r => MapToOrderDto(r))
+        //    .ToListAsync();
+        List<Order> orders = await _context.Orders.Include(r => r.User).ToListAsync();
+        List<OrderDto> orderDtos = [];
+
+        foreach (var order in orders)
+        {
+            if (order.User.Email == email)
+            {
+                OrderDto orderDto = MapToOrderDto(order);
+                orderDtos.Add(orderDto);
+            }
+        }
+
+        return orderDtos;
+    }
+
     public async Task<bool> UpdateOrderAsync(int id, string address, string email)
     {
         var oldOrder = await _context.Orders.FindAsync(id);
@@ -100,7 +124,7 @@ public class OrderService : IOrderService
 
     private static OrderDto MapToOrderDto(Order order)
     {
-        List<int> productIds = order.OrderedProducts
+        List<int> orderedProductIds = order.OrderedProducts
             .Select(o => o.Id)
             .ToList();
 
@@ -111,7 +135,7 @@ public class OrderService : IOrderService
             Email = order.Email,
             OrderDate = order.OrderDate,
             UserId = order.User.Id,
-            OrderedProductIds = productIds
+            OrderedProductIds = orderedProductIds
         };
     }
 }

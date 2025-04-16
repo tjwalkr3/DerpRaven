@@ -17,4 +17,11 @@ public class OrderClient(IApiService apiService) : IOrderClient
         var response = await apiService.PostAsJsonAsync("api/Order", order);
         response.EnsureSuccessStatusCode();
     }
+
+    public async Task<List<OrderDto>> GetOrdersByUserEmailAsync()
+    {
+        var response = await apiService.GetAsync($"api/Order/user");
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<List<OrderDto>>() ?? [];
+    }
 }

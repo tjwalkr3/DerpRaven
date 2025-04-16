@@ -10,7 +10,7 @@ public partial class OrderHistoryPageViewModel : ObservableObject
 {
     private readonly IOrderClient _orderClient;
     private readonly IOrderedProductClient _orderedProductClient;
-    public ObservableCollection<OrderViewModel> Orders { get; } = [];
+    public ObservableCollection<OrderViewModel> OrderViewModels { get; } = [];
 
     public OrderHistoryPageViewModel(IOrderClient orderClient, IOrderedProductClient orderedProductClient)
     {
@@ -30,29 +30,29 @@ public partial class OrderHistoryPageViewModel : ObservableObject
             new() { Id = 3, Name = "Product 3", Price = 15.99m, Quantity = 31, OrderID = 2},
             new() { Id = 4, Name = "Product 4", Price = 20.99m, Quantity = 18, OrderID = 2}
         };
-
-        UpdateOrderDtos(ghostHistoryList, ghostOrderedProductList);
     }
 
-    public void UpdateOrderDtos(List<OrderDto> historyList, List<OrderedProductDto> products)
+    public async Task RefreshOrdersView()
     {
-        Orders.Clear();
+        OrderViewModels.Clear();
+        List<OrderDto> historyList = await GetOrdersAsync();
         foreach (var order in historyList)
         {
-            Orders.Add(new OrderViewModel(order, products));
+            var products = await GetOrderedProductsAsync(order.Id);
+            OrderViewModels.Add(new OrderViewModel(order, products));
         }
     }
 
-    public void GetOrdersFromApi()
+    public async Task<List<OrderDto>> GetOrdersAsync()
     {
-        // This method would typically call an API to fetch the orders.
-        // For now, it is left empty as the data is already populated in the constructor.
+        var orders = await _orderClient.GetOrdersByUserEmailAsync();
+        return orders;
     }
 
-    public void GetOrderedProductsFromApi(int orderId)
+    public async Task<List<OrderedProductDto>> GetOrderedProductsAsync(int orderId)
     {
-        // This method would typically call an API to fetch the ordered products for a specific order.
-        // For now, it is left empty as the data is already populated in the constructor.
+        var products = await _orderedProductClient.GetOrderedProductsByOrderId(orderId);
+        return products;
     }
 }
 

@@ -4,7 +4,7 @@
              x:Class="DerpRaven.Maui.Views.OrderHistoryPage"
              Title="Order History">
     <ScrollView>
-        <CollectionView ItemsSource="{Binding Orders}">
+        <CollectionView ItemsSource="{Binding OrderViewModels}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <VerticalStackLayout Padding="10" Spacing="10">
