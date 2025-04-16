@@ -43,10 +43,9 @@
                 <Label Text="Quantity:" VerticalOptions="Center" />
 
                 <Picker x:Name="QuantityPicker" 
-                        Title="{Binding SelectedQuantity}"
                         WidthRequest="100"
                         ItemsSource="{Binding QuantityOptions}" 
-                        SelectedItem="{Binding SelectedQuantity}" />
+                        SelectedItem="{Binding SelectedQuantity, Mode=TwoWay}" />
 
             </HorizontalStackLayout>
 
