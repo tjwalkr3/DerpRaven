@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using DerpRaven.Shared.Dtos;
+using CommunityToolkit.Mvvm.Input;
 
 public partial class MainPageViewModel : ObservableObject
 {
@@ -125,7 +126,19 @@ public partial class MainPageViewModel : ObservableObject
                 Alt = "Horse Snuggler",
                 Path = "horsesnuggler.png"
             }
+
         };
+    }
+    [RelayCommand]
+    private async Task NavigateToPlushiePortfolio()
+    {
+        await Shell.Current.GoToAsync("///PlushiePortfolioTab");
+    }
+
+    [RelayCommand]
+    private async Task NavigateToArtPortfolio()
+    {
+        await Shell.Current.GoToAsync("///ArtPortfolioTab");
     }
 }
 
