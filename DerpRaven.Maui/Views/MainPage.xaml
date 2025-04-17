@@ -4,7 +4,7 @@
              x:Class="DerpRaven.Maui.Views.MainPage"
              xmlns:models="clr-namespace:DerpRaven.Maui.ViewModels"
              xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared">
-    
+
 
     <ScrollView
         >
@@ -21,23 +21,37 @@
 
             <Grid ColumnDefinitions="*,*">
 
+                <!--Add tap gestures to send to portfolios when the logo is clicked-->
                 <!-- Image for DRS-->
-                <Image
+                <Border Grid.Column="0" 
+                        Stroke="Gray" 
+                        StrokeThickness="5" 
+                        Padding="10" 
+                        Margin="5" 
+                        StrokeShape="RoundRectangle 15"
+                        BackgroundColor="Gray">
+                    <Image
                     Source="derpravenstudiologo.png"
                     HeightRequest="150"
                     WidthRequest="150"
                     Aspect="AspectFit" 
-                    Margin="30"
-                    Grid.Column="0"/>
+                    Margin="30" />
+                </Border>
 
                 <!-- Image for DRP-->
-                <Image
+                <Border Grid.Column="1" 
+                        Stroke="Gray" 
+                        StrokeThickness="5" 
+                        Padding="10" Margin="5" 
+                        StrokeShape="RoundRectangle 15"
+                        BackgroundColor="Gray">
+                    <Image
                     Source="derpravenlogo.png"
                     HeightRequest="150"
                     WidthRequest="150"
                     Aspect="AspectFit" 
-                    Margin="30"
-                    Grid.Column="1"/>
+                    Margin="30" />
+                </Border>
             </Grid>
 
             <CarouselView ItemsSource="{Binding Art}"
@@ -103,8 +117,8 @@
                 </CarouselView.ItemTemplate>
             </CarouselView>
         </VerticalStackLayout>
-        
-        
+
+
     </ScrollView>
 
 </ContentPage>
