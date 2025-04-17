@@ -60,6 +60,10 @@
                                          BackgroundColor="Gray">
                                     <Label Text="Description" />
                                 </Border>
+                                <BoxView Color="Gray" 
+                                         HeightRequest="1" 
+                                         HorizontalOptions="FillAndExpand" 
+                                         Margin="5,0"/>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
