@@ -5,7 +5,8 @@ using System.Text.Json;
 using Microsoft.Maui.Storage;
 using DerpRaven.Shared.Dtos;
 
-namespace DerpRaven.Maui {
+namespace DerpRaven.Maui
+{
     public class CartStorage : ICartStorage
     {
         private const string CartKey = "CartItems";
@@ -90,15 +91,18 @@ namespace DerpRaven.Maui {
         }
     }
 
-    public class CartItem {
+    public class CartItem
+    {
         public string Name { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public int ProductTypeId { get; set; }
 
-        public override bool Equals(object? obj) {
-            if (obj is CartItem item) {
+        public override bool Equals(object? obj)
+        {
+            if (obj is CartItem item)
+            {
                 return Name == item.Name &&
                        ImageUrl == item.ImageUrl &&
                        Quantity == item.Quantity &&
@@ -108,7 +112,8 @@ namespace DerpRaven.Maui {
             return false;
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return HashCode.Combine(Name, ImageUrl, Quantity, Price, ProductTypeId);
         }
     }

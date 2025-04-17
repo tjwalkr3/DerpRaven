@@ -42,7 +42,7 @@ public partial class ProductPageViewModel : ObservableObject
     private readonly IProductClient _productClient;
     private readonly ICartStorage _cartStorage;
 
-    
+
     [ObservableProperty]
     private bool isLoading;
 
@@ -58,12 +58,16 @@ public partial class ProductPageViewModel : ObservableObject
         keycloakClient.IdentityTokenChanged += IdentityTokenHasChanged;
     }
 
-    private void populateCartButton() {
+    private void populateCartButton()
+    {
         IsSignedIn = !string.IsNullOrEmpty(_oktaClient.IdentityToken);
         //check if logged in
-        if (string.IsNullOrEmpty(_oktaClient.IdentityToken)) {
+        if (string.IsNullOrEmpty(_oktaClient.IdentityToken))
+        {
             CartButtonText = "Login to add to cart";
-        } else {
+        }
+        else
+        {
             CartButtonText = "Add to cart";
         }
     }

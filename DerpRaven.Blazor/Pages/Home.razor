@@ -1,0 +1,14 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<AuthorizeView>
+    @foreach (var item in context.User.Claims)
+    {
+        <p>@item.Value  @item.Type</p>
+    }
+</AuthorizeView>
