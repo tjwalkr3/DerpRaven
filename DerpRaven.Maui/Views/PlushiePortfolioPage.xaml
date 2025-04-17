@@ -13,6 +13,17 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <VerticalStackLayout>
+                                <Border Stroke="Gray" 
+                                         StrokeThickness="5" 
+                                         Padding="10" 
+                                         Margin="5" 
+                                         StrokeShape="RoundRectangle 15"
+                                         BackgroundColor="Gray"
+                                         HorizontalOptions="Start">
+                                    <Label Text="{Binding Portfolio.Name}"
+                                       HorizontalOptions="Start"
+                                       FontSize="20"/>
+                                </Border>
                                 <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
                                     <CarouselView.ItemTemplate>
                                         <DataTemplate x:DataType="dtos:ImageDto">
@@ -22,7 +33,8 @@
                                                 Margin="10"
                                                 Padding="10"
                                                 HorizontalOptions="Center"
-                                                VerticalOptions="Center">
+                                                VerticalOptions="Center"
+                                                BackgroundColor="Gray">
                                                     <StackLayout>
                                                         <Label Text="{Binding Alt}"
                                                        FontAttributes="Bold"
@@ -40,6 +52,14 @@
                                         </DataTemplate>
                                     </CarouselView.ItemTemplate>
                                 </CarouselView>
+                                <Border  Stroke="Gray" 
+                                         StrokeThickness="5" 
+                                         Padding="10" 
+                                         Margin="5" 
+                                         StrokeShape="RoundRectangle 15"
+                                         BackgroundColor="Gray">
+                                    <Label Text="Description" />
+                                </Border>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
