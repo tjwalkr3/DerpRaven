@@ -62,7 +62,6 @@
                     <DataTemplate x:DataType="dtos:ImageDto">
                         <StackLayout>
                             <Border Stroke="Black"
-                                    BackgroundColor="#80808080"
                                     StrokeShape="RoundRectangle 5"
                                     Margin="10"
                                     Padding="10"
@@ -127,7 +126,6 @@
                     <DataTemplate x:DataType="dtos:ImageDto">
                         <StackLayout>
                             <Border Stroke="Black"
-                                    BackgroundColor="#80808080"
                                     StrokeShape="RoundRectangle 5"  
                                     Margin="10"
                                     Padding="10"
