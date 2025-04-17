@@ -1,0 +1,49 @@
+﻿@page "/orders"
+
+<h3>Orders</h3>
+<h4 class="errorText">@errorString</h4>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>OrderDate</th>
+            <th>User Id</th>
+            <th>Product Ids</th>
+        </tr>
+
+        @if (_orders == null)
+        {
+            <tr>
+                <td colspan="6">Loading...</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in _orders)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Address</td>
+                    <td>@item.Email</td>
+                    <td>@item.OrderDate</td>
+                    <td>@item.UserId</td>
+                    <td>
+                        @foreach (var productId in item.OrderedProductIds)
+                        {
+                            <span>@productId</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </thead>
+</table>
+
+
+
+@code {
+
+}

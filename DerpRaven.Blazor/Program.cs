@@ -30,5 +30,6 @@ builder.Services.AddOidcAuthentication(opt =>
 
 builder.Services.AddScoped<IImageClient, BlazorImageClient>();
 builder.Services.AddScoped<ICustomRequestClient, BlazorCustomRequestClient>();
+builder.Services.AddScoped<IOrderClient, BlazorOrderClient>();
 
 await builder.Build().RunAsync();
