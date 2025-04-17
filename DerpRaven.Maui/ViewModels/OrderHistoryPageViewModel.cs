@@ -50,7 +50,7 @@ public partial class OrderHistoryPageViewModel : ObservableObject
         }
         finally
         {
-            isLoading = false;
+            IsLoading = false;
         }
     }
 
