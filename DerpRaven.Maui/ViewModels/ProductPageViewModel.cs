@@ -55,6 +55,7 @@ public partial class ProductPageViewModel : ObservableObject
         _imageHelpers = imageHelpers;
         _productClient = productClient;
         SelectedQuantity = 1;
+        keycloakClient.IdentityTokenChanged += IdentityTokenHasChanged;
     }
 
     private void populateCartButton() {
@@ -70,6 +71,11 @@ public partial class ProductPageViewModel : ObservableObject
     partial void OnProductIdChanged(int value)
     {
         Task.Run(async () => await RefreshSingleProductView());
+    }
+
+    public async void IdentityTokenHasChanged()
+    {
+        await RefreshSingleProductView();
     }
 
     public async Task RefreshSingleProductView()
@@ -112,7 +118,5 @@ public partial class ProductPageViewModel : ObservableObject
         _cartStorage.AddCartItem(ProductDetails);
         await Shell.Current.GoToAsync($"///CartPage");
     }
-
-
 }
 

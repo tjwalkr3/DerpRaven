@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using System.Collections.ObjectModel;
 
@@ -7,10 +8,17 @@ namespace DerpRaven.Maui.ViewModels;
 
 public partial class OrderHistoryPageViewModel : ObservableObject
 {
-    public ObservableCollection<OrderViewModel> Orders { get; } = [];
+    private readonly IOrderClient _orderClient;
+    private readonly IOrderedProductClient _orderedProductClient;
+    public ObservableCollection<OrderViewModel> OrderViewModels { get; } = [];
 
-    public OrderHistoryPageViewModel()
+    [ObservableProperty]
+    private bool isLoading;
+    public OrderHistoryPageViewModel(IOrderClient orderClient, IOrderedProductClient orderedProductClient)
     {
+        _orderClient = orderClient;
+        _orderedProductClient = orderedProductClient;
+
         var ghostHistoryList = new List<OrderDto>
         {
             new() { Id = 1, Address = "123 Street", Email = "user@example.com", OrderDate = DateTime.Now, UserId = 5, OrderedProductIds = new List<int> { 1, 2 } },
@@ -24,33 +32,55 @@ public partial class OrderHistoryPageViewModel : ObservableObject
             new() { Id = 3, Name = "Product 3", Price = 15.99m, Quantity = 31, OrderID = 2},
             new() { Id = 4, Name = "Product 4", Price = 20.99m, Quantity = 18, OrderID = 2}
         };
-
-        UpdateOrderDtos(ghostHistoryList, ghostOrderedProductList);
     }
 
-    public void UpdateOrderDtos(List<OrderDto> historyList, List<OrderedProductDto> products)
+    public async Task RefreshOrdersView()
     {
-        Orders.Clear();
-        foreach (var order in historyList)
+        IsLoading = true;
+        try
         {
-            Orders.Add(new OrderViewModel(order, products));
+
+            OrderViewModels.Clear();
+            List<OrderDto> historyList = await GetOrdersAsync();
+            foreach (var order in historyList)
+            {
+                var products = await GetOrderedProductsAsync(order.Id);
+                OrderViewModels.Add(new OrderViewModel(order, products));
+            }
         }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    public async Task<List<OrderDto>> GetOrdersAsync()
+    {
+        var orders = await _orderClient.GetOrdersByUserEmailAsync();
+        return orders;
+    }
+
+    public async Task<List<OrderedProductDto>> GetOrderedProductsAsync(int orderId)
+    {
+        var products = await _orderedProductClient.GetOrderedProductsByOrderId(orderId);
+        return products;
     }
 }
 
 public partial class OrderViewModel : ObservableObject
 {
     public OrderDto Order { get; private set; }
-    public List<OrderedProductDto> Products { get; private set; } = new();
     public decimal OrderTotal { get; private set; } = 0;
+
+    public ObservableCollection<OrderedProductDto> Products { get; private set; } = [];
 
     [ObservableProperty]
     private bool isExpanded;
 
-    public OrderViewModel(OrderDto order, List<OrderedProductDto> productList)
+    public OrderViewModel(OrderDto order, List<OrderedProductDto> products)
     {
+        foreach (var product in products) Products.Add(product);
         Order = order;
-        Products = productList.Where(p => order.OrderedProductIds.Contains(p.Id)).ToList();
         CalculateTotal();
     }
 

@@ -114,8 +114,7 @@ public class ProductService : IProductService
             Quantity = dto.Quantity,
             Description = dto.Description,
             ProductType = productType,
-            Images = images,
-            Orders = []
+            Images = images
         };
     }
 

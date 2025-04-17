@@ -70,7 +70,6 @@ public class UserController : ControllerBase
         var wasUser = await _userService.CreateUserAsync(user);
         if (!wasUser) return BadRequest();
         return Created();
-
     }
 
     [HttpPut("{id}")]
