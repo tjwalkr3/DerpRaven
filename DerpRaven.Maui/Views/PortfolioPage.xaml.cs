@@ -10,8 +10,6 @@ public partial class PortfolioPage : Shell
         InitializeComponent();
         BindingContext = vm;
         _viewModel = vm;
-
-        Navigated += OnNavigated;
     }
 
     protected override async void OnAppearing()
@@ -20,20 +18,6 @@ public partial class PortfolioPage : Shell
         if (_viewModel != null)
         {
             await _viewModel.RefreshPortfolioView();
-        }
-    }
-
-    private void OnNavigated(object sender, ShellNavigatedEventArgs e)
-    {
-        UpdateTitle(); // Update the title every time navigation happens
-    }
-
-    private void UpdateTitle()
-    {
-        if (this.CurrentItem is ShellItem shellItem)
-        {
-            var activeSection = shellItem.CurrentItem; // Get the active ShellSection
-            this.Title = activeSection.Title; // This updates the parent Shell title
         }
     }
 }

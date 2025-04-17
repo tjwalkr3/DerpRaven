@@ -12,16 +12,15 @@ public partial class CustomRequestPage : Shell
     }
     private async void OnNavigated(object sender, ShellNavigatedEventArgs e)
     {
-        await UpdateTitle(); // Update the title every time navigation happens
+        await GetRequests(); // Update the title every time navigation happens
     }
 
-    private async Task UpdateTitle()
+    private async Task GetRequests()
     {
         if (this.CurrentItem is ShellItem shellItem)
         {
             var activeSection = shellItem.CurrentItem; // Get the active ShellSection
-            this.Title = activeSection.Title; // This updates the parent Shell title
-            if (this.Title == "View")
+            if (activeSection?.Title == "View")
             {
                 if (this.CurrentPage is Page page &&
                     page.BindingContext is ViewCustomRequestsPageViewModel vm)

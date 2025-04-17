@@ -55,7 +55,7 @@ public partial class AppShellViewModel : ObservableObject
         if (!string.IsNullOrEmpty(_oktaClient.IdentityToken))
         {
             string email = _authenticationData.User.FindFirst("email")?.Value ?? "unknown";
-            loginToolbarItem.Text = $"Logout {email}";
+            loginToolbarItem.Text = $"Logout";
         }
         else
         {
