@@ -42,17 +42,18 @@ public class OrderedProductService : IOrderedProductService
         return true;
     }
 
-    public OrderedProductDto MapToOrderedProductDto(OrderedProduct orderedProduct)
+    private static OrderedProductDto MapToOrderedProductDto(OrderedProduct orderedProduct)
     {
         return new OrderedProductDto
         {
             Id = orderedProduct.Id,
+            Name = orderedProduct.Name,
             Quantity = orderedProduct.Quantity,
             Price = orderedProduct.Price
         };
     }
 
-    public async Task<OrderedProduct> MapToOrderedProduct(OrderedProductDto orderedProductDto)
+    private async Task<OrderedProduct> MapToOrderedProduct(OrderedProductDto orderedProductDto)
     {
         Order? newOrder = await _context.Orders.FindAsync(orderedProductDto.OrderID);
         if (newOrder == null) throw new Exception("Order not found");
@@ -60,6 +61,7 @@ public class OrderedProductService : IOrderedProductService
         return new OrderedProduct
         {
             Id = orderedProductDto.Id,
+            Name = orderedProductDto.Name,
             Quantity = orderedProductDto.Quantity,
             Price = orderedProductDto.Price,
             Order = newOrder

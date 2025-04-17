@@ -59,16 +59,17 @@ public partial class OrderHistoryPageViewModel : ObservableObject
 public partial class OrderViewModel : ObservableObject
 {
     public OrderDto Order { get; private set; }
-    public List<OrderedProductDto> Products { get; private set; } = new();
     public decimal OrderTotal { get; private set; } = 0;
+
+    public ObservableCollection<OrderedProductDto> Products { get; private set; } = [];
 
     [ObservableProperty]
     private bool isExpanded;
 
-    public OrderViewModel(OrderDto order, List<OrderedProductDto> productList)
+    public OrderViewModel(OrderDto order, List<OrderedProductDto> products)
     {
+        foreach (var product in products) Products.Add(product);
         Order = order;
-        Products = productList.Where(p => order.OrderedProductIds.Contains(p.Id)).ToList();
         CalculateTotal();
     }
 

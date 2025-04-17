@@ -50,24 +50,11 @@ public class OrderService : IOrderService
     public async Task<List<OrderDto>> GetOrdersByUserEmailAsync(string email)
     {
         _logger.LogInformation("Fetching orders for user with ID {UserEmail}", email);
-        //return await _context.Orders
-        //    .Include(r => r.User)
-        //    .Where(r => r.User.Email == email)
-        //    .Select(r => MapToOrderDto(r))
-        //    .ToListAsync();
-        List<Order> orders = await _context.Orders.Include(r => r.User).ToListAsync();
-        List<OrderDto> orderDtos = [];
-
-        foreach (var order in orders)
-        {
-            if (order.User.Email == email)
-            {
-                OrderDto orderDto = MapToOrderDto(order);
-                orderDtos.Add(orderDto);
-            }
-        }
-
-        return orderDtos;
+        return await _context.Orders
+            .Include(r => r.User)
+            .Where(r => r.User.Email == email)
+            .Select(r => MapToOrderDto(r))
+            .ToListAsync();
     }
 
     public async Task<bool> UpdateOrderAsync(int id, string address, string email)
