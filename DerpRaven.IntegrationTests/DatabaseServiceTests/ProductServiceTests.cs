@@ -82,8 +82,8 @@ public class ProductServiceTests
         // Arrange
         List<Product> products = new()
         {
-            new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders },
-            new Product() { Name = "Test Product2", Price = 150.0m, Quantity = 1, Description = "A description2", ProductType = type2, Images = images, Orders = orders },
+            new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images },
+            new Product() { Name = "Test Product2", Price = 150.0m, Quantity = 1, Description = "A description2", ProductType = type2, Images = images },
         };
         await _context.AddRangeAsync(products);
         await _context.SaveChangesAsync();
@@ -101,7 +101,7 @@ public class ProductServiceTests
     public async Task GetProductById()
     {
         // Arrange
-        var product1 = new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders };
+        var product1 = new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images };
         await _context.Products.AddAsync(product1);
         await _context.SaveChangesAsync();
 
@@ -118,7 +118,7 @@ public class ProductServiceTests
     public async Task GetProductByName()
     {
         // Arrange
-        var product1 = new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders };
+        var product1 = new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images };
         await _context.Products.AddAsync(product1);
         await _context.SaveChangesAsync();
 
@@ -137,8 +137,8 @@ public class ProductServiceTests
         // Arrange
         List<Product> products = new()
         {
-            new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders },
-            new Product() { Name = "Test Product2", Price = 150.0m, Quantity = 1, Description = "A description2", ProductType = type2, Images = images, Orders = orders }
+            new Product() { Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images },
+            new Product() { Name = "Test Product2", Price = 150.0m, Quantity = 1, Description = "A description2", ProductType = type2, Images = images }
         };
         _context.AddRange(products);
         _context.SaveChanges();
@@ -157,7 +157,7 @@ public class ProductServiceTests
     public async Task UpdateProduct()
     {
         // Arrange
-        var product1 = new Product { Id = 1, Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images, Orders = orders };
+        var product1 = new Product { Id = 1, Name = "Test Product", Price = 100.0m, Quantity = 1, Description = "A description", ProductType = type1, Images = images };
         _context.Products.Add(product1);
         _context.SaveChanges();
 
