@@ -1,7 +1,9 @@
 ﻿using DerpRaven.Shared.Dtos;
 
-namespace DerpRaven.Maui {
-    public interface ICartStorage {
+namespace DerpRaven.Maui
+{
+    public interface ICartStorage
+    {
         void AddCartItem(ProductDto product);
         void ClearCart();
         List<CartItem> GetCartItems();

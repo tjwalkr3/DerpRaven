@@ -90,6 +90,7 @@ builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBlobService, BlobService>();
+builder.Services.AddScoped<IOrderedProductService, OrderedProductService>();
 
 var app = builder.Build();
 

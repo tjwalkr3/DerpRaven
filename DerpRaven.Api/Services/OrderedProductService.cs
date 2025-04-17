@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DerpRaven.Api.Services;
 
-public class OrderedProductService
+public class OrderedProductService : IOrderedProductService
 {
     private readonly AppDbContext _context;
     private readonly ILogger<ProductService> _logger;
@@ -15,19 +15,20 @@ public class OrderedProductService
         _logger = logger;
     }
 
-    public async Task<List<OrderedProductDto>> GetOrderedProductsByOrderId()
+    public async Task<List<OrderedProductDto>> GetOrderedProductsByOrderId(int orderId)
     {
         _logger.LogInformation("Fetching all ordered products");
         return await _context.OrderedProducts
+            .Where(op => op.Order.Id == orderId)
             .Include(op => op.Order)
             .Select(op => MapToOrderedProductDto(op))
             .ToListAsync();
     }
 
-    public async Task CreateOrderedProducts(List<OrderedProductDto> orderedProducts)
+    public async Task<bool> CreateOrderedProducts(List<OrderedProductDto> orderedProducts)
     {
         _logger.LogInformation("Creating ordered products");
-        List<OrderedProduct> newOrderedProducts = 
+        List<OrderedProduct> newOrderedProducts =
             (await Task.WhenAll(
                 orderedProducts.Select(async orderedProduct => await MapToOrderedProduct(orderedProduct))
             )).ToList();
@@ -35,22 +36,24 @@ public class OrderedProductService
         if (newOrderedProducts.Count == 0)
         {
             _logger.LogWarning("No ordered products to create");
-            return;
+            return false;
         }
         _context.OrderedProducts.AddRange(newOrderedProducts);
+        return true;
     }
 
-    public OrderedProductDto MapToOrderedProductDto(OrderedProduct orderedProduct)
+    private static OrderedProductDto MapToOrderedProductDto(OrderedProduct orderedProduct)
     {
         return new OrderedProductDto
         {
             Id = orderedProduct.Id,
+            Name = orderedProduct.Name,
             Quantity = orderedProduct.Quantity,
-            Price = orderedProduct.Price           
+            Price = orderedProduct.Price
         };
     }
 
-    public async Task<OrderedProduct> MapToOrderedProduct(OrderedProductDto orderedProductDto)
+    private async Task<OrderedProduct> MapToOrderedProduct(OrderedProductDto orderedProductDto)
     {
         Order? newOrder = await _context.Orders.FindAsync(orderedProductDto.OrderID);
         if (newOrder == null) throw new Exception("Order not found");
@@ -58,6 +61,7 @@ public class OrderedProductService
         return new OrderedProduct
         {
             Id = orderedProductDto.Id,
+            Name = orderedProductDto.Name,
             Quantity = orderedProductDto.Quantity,
             Price = orderedProductDto.Price,
             Order = newOrder
