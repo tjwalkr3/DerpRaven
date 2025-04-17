@@ -139,16 +139,16 @@ public partial class MainPageViewModel : ObservableObject
     [RelayCommand]
     private async Task NavigateToPlushiePortfolio()
     {
-        //NavigationState.SelectedTab = "Plushie";
-        await Shell.Current.GoToAsync("//PortfolioPage/PlushiePortfolio");
+        NavigationState.SelectedTab = "PlushiePortfolio";
+        await Shell.Current.GoToAsync("//PortfolioPage");
 
     }
 
     [RelayCommand]
     private async Task NavigateToArtPortfolio()
     {
-        //NavigationState.SelectedTab = "Art";
-        await Shell.Current.GoToAsync("//PortfolioPage/ArtPortfolio");
+        NavigationState.SelectedTab = "ArtPortfolio";
+        await Shell.Current.GoToAsync("//PortfolioPage");
     }
 }
 

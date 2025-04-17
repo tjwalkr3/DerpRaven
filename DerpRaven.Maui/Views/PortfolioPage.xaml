@@ -6,11 +6,11 @@
     xmlns:local="clr-namespace:DerpRaven.Maui.Views"
     Title="">
 
-    <TabBar Route="PortfolioPage">
-        <Tab Title="Plushie Portfolio" Route="PlushiePortfolio">
+    <TabBar >
+        <Tab Title="Plushie Portfolio" Route="PlushiePortfolio" x:Name="PlushieTab" >
             <ShellContent ContentTemplate="{DataTemplate local:PlushiePortfolioPage}" />
         </Tab>
-        <Tab Title="Art Portfolio" Route="ArtPortfolio">
+        <Tab Title="Art Portfolio" Route="ArtPortfolio" x:Name="ArtTab" >
             <ShellContent ContentTemplate="{DataTemplate local:ArtPortfolioPage}" />
         </Tab>
     </TabBar>

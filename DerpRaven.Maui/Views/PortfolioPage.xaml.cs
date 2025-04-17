@@ -19,9 +19,27 @@ public partial class PortfolioPage : Shell
 
         if (!string.IsNullOrEmpty(NavigationState.SelectedTab))
         {
-            _viewModel.SelectedTab = NavigationState.SelectedTab;
-            _viewModel.SelectTab();
-            NavigationState.SelectedTab = null;
+            var tabBar = this.Items.FirstOrDefault() as TabBar;
+
+            var route = NavigationState.SelectedTab;
+
+            ShellSection? targetTab = null;
+
+            if (NavigationState.SelectedTab == "ArtPortfolio")
+            {
+                targetTab = tabBar?.Items.FirstOrDefault(i => i.Route == route);
+            }
+            else if (NavigationState.SelectedTab == "PlushiePortfolio")
+            {
+                targetTab = tabBar?.Items.FirstOrDefault(i => i.Route == route);
+            }
+
+            if (targetTab != null)
+            {
+                tabBar.CurrentItem = targetTab;
+            }
+
+            NavigationState.SelectedTab = null; // Clear it after use
         }
 
 

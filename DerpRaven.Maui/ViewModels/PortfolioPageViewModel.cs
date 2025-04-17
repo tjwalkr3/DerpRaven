@@ -5,7 +5,7 @@ using DerpRaven.Shared.ApiClients;
 using System.Diagnostics;
 namespace DerpRaven.Maui.ViewModels;
 
-[QueryProperty(nameof(SelectedTab), "tab")]
+
 public partial class PortfolioPageViewModel : ObservableObject
 {
     public string SelectedTab { get; set; }
@@ -71,28 +71,6 @@ public partial class PortfolioPageViewModel : ObservableObject
         await _imageHelpers.SaveListOfImages(images);
 
         return images;
-    }
-    public void SelectTab()
-    {
-        Debug.WriteLine($"SelectedTab: {SelectedTab}");
-        if (SelectedTab == "Plushie")
-        {
-            // Logic to select the PlushieTab
-            var plushieTab = Shell.Current.Items.FirstOrDefault(i => i.Title == "Plushie Portfolio");
-            if (plushieTab != null)
-            {
-                Shell.Current.CurrentItem = plushieTab;
-            }
-        }
-        else if (SelectedTab == "Art")
-        {
-            // Logic to select the ArtTab
-            var artTab = Shell.Current.Items.FirstOrDefault(i => i.Title == "Art Portfolio");
-            if (artTab != null)
-            {
-                Shell.Current.CurrentItem = artTab;
-            }
-        }
     }
 }
 
