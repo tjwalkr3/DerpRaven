@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using DerpRaven.Shared.Dtos;
 using CommunityToolkit.Mvvm.Input;
+using System.Globalization;
 
 public partial class MainPageViewModel : ObservableObject
 {
@@ -130,15 +131,16 @@ public partial class MainPageViewModel : ObservableObject
         };
     }
     [RelayCommand]
-    private async Task NavigateToPlushiePortfolio()
+    private async Task NavigateToPlushiePortfolio(string tab)
     {
-        await Shell.Current.GoToAsync("///PlushiePortfolioTab");
+        await Shell.Current.GoToAsync($"//PortfolioPage?tab={tab}");
     }
 
     [RelayCommand]
-    private async Task NavigateToArtPortfolio()
+    private async Task NavigateToArtPortfolio(string tab)
     {
-        await Shell.Current.GoToAsync("///ArtPortfolioTab");
+        tab = "Art";
+        await Shell.Current.GoToAsync($"//PortfolioPage?tab={tab}");
     }
 }
 

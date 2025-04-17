@@ -15,6 +15,9 @@ public partial class PortfolioPage : Shell
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        _viewModel.SelectTab();
+
         if (_viewModel != null)
         {
             await _viewModel.RefreshPortfolioView();

@@ -39,7 +39,7 @@
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer 
                                 Command="{Binding NavigateToArtPortfolioCommand}" 
-                                CommandParameter="{Binding .}" />
+                                CommandParameter="Art" />
                         </Image.GestureRecognizers>
                     </Image>
                 </Border>
@@ -106,7 +106,7 @@
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer 
                                 Command="{Binding NavigateToPlushiePortfolioCommand}" 
-                                CommandParameter="{Binding .}" />
+                                CommandParameter="Plushie" />
                         </Image.GestureRecognizers>
                     </Image>
                 </Border>
