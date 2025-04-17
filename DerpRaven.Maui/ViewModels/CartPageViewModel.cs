@@ -25,13 +25,15 @@ public partial class CartPageViewModel : ObservableObject
         UpdateRunningTotal();
     }
 
-    public void PopulateCart() {
+    public void PopulateCart()
+    {
         // Get the cart items from storage
         var cartItemsFromStorage = _cartStorage.GetCartItems();
         // Clear the cart items collection
         CartItems = new ObservableCollection<CartItem>();
         // Add the items from storage to the cart items collection
-        foreach (var item in cartItemsFromStorage) {
+        foreach (var item in cartItemsFromStorage)
+        {
             CartItems.Add(item);
         }
         // Update the running total
@@ -58,7 +60,8 @@ public partial class CartPageViewModel : ObservableObject
 
 
     [RelayCommand]
-    private void RemoveItem(CartItem item) {
+    private void RemoveItem(CartItem item)
+    {
         _cartStorage.RemoveCartItem(item);
         UpdateRunningTotal();
         PopulateCart();
@@ -70,7 +73,8 @@ public partial class CartPageViewModel : ObservableObject
     // Implement checkout logic here
     //}
 
-    private void UpdateRunningTotal() {
+    private void UpdateRunningTotal()
+    {
         RunningTotal = CartItems.Sum(item => item.Quantity * item.Price);
     }
 }

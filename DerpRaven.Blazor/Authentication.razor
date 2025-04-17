@@ -1,0 +1,10 @@
+﻿@page "/authentication/{action}"
+
+<RemoteAuthenticatorView Action="@Action">
+    <!-- Add messages to be displayed in -->
+</RemoteAuthenticatorView>
+
+@code {
+    [Parameter]
+    public string Action { get; set; } = string.Empty;
+}
