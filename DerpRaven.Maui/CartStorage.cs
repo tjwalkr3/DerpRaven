@@ -76,11 +76,14 @@ namespace DerpRaven.Maui
             SaveCartItems(cartItems);
         }
 
-        public void CheckOut() {
+        public void CheckOut()
+        {
             var cartItems = GetCartItems();
             List<OrderedProductDto> products = new List<OrderedProductDto>();
-            foreach (var item in cartItems) {
-                products.Add(new OrderedProductDto {
+            foreach (var item in cartItems)
+            {
+                products.Add(new OrderedProductDto
+                {
                     Name = item.Name,
                     Quantity = item.Quantity,
                     Price = item.Price
