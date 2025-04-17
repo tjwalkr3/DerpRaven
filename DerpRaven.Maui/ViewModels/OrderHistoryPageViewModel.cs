@@ -12,6 +12,8 @@ public partial class OrderHistoryPageViewModel : ObservableObject
     private readonly IOrderedProductClient _orderedProductClient;
     public ObservableCollection<OrderViewModel> OrderViewModels { get; } = [];
 
+    [ObservableProperty]
+    private bool isLoading;
     public OrderHistoryPageViewModel(IOrderClient orderClient, IOrderedProductClient orderedProductClient)
     {
         _orderClient = orderClient;
@@ -34,12 +36,21 @@ public partial class OrderHistoryPageViewModel : ObservableObject
 
     public async Task RefreshOrdersView()
     {
-        OrderViewModels.Clear();
-        List<OrderDto> historyList = await GetOrdersAsync();
-        foreach (var order in historyList)
+        IsLoading = true;
+        try
         {
-            var products = await GetOrderedProductsAsync(order.Id);
-            OrderViewModels.Add(new OrderViewModel(order, products));
+
+            OrderViewModels.Clear();
+            List<OrderDto> historyList = await GetOrdersAsync();
+            foreach (var order in historyList)
+            {
+                var products = await GetOrderedProductsAsync(order.Id);
+                OrderViewModels.Add(new OrderViewModel(order, products));
+            }
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
 

@@ -3,46 +3,57 @@
              xmlns:local="clr-namespace:DerpRaven.Maui.ViewModels"
              x:Class="DerpRaven.Maui.Views.OrderHistoryPage"
              Title="Order History">
-    <ScrollView>
-        <CollectionView ItemsSource="{Binding OrderViewModels}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <VerticalStackLayout Padding="10" Spacing="10">
-                        <Border Stroke="Gray" StrokeThickness="5" Padding="10" Margin="5" StrokeShape="RoundRectangle 15">
-                            <VerticalStackLayout>
-                                <Button Text="{Binding OrderSummary}"
+    <Grid>
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding OrderViewModels}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="10" Spacing="10">
+                            <Border Stroke="Gray" StrokeThickness="5" Padding="10" Margin="5" StrokeShape="RoundRectangle 15">
+                                <VerticalStackLayout>
+                                    <Button Text="{Binding OrderSummary}"
                                         Command="{Binding ToggleExpandCommand}" />
 
-                                <CollectionView ItemsSource="{Binding Products}" 
+                                    <CollectionView ItemsSource="{Binding Products}" 
                                                 IsVisible="{Binding IsExpanded}">
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border Stroke="Gray" Padding="10" Margin="5">
-                                                <Grid ColumnDefinitions="*,*"
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Stroke="Gray" Padding="10" Margin="5">
+                                                    <Grid ColumnDefinitions="*,*"
                                                       RowDefinitions="*,*,*">
-                                                    <Label Text="{Binding Name}"
+                                                        <Label Text="{Binding Name}"
                                                            Grid.Row="0"
                                                            Grid.Column="0"/>
-                                                    <Label Text="{Binding Price, StringFormat='Price: {0:C}'}" 
+                                                        <Label Text="{Binding Price, StringFormat='Price: {0:C}'}" 
                                                            Grid.Row="1"
                                                            Grid.Column="0"/>
-                                                    <Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}" 
+                                                        <Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}" 
                                                            Grid.Row="2"
                                                            Grid.Column="0"/>
-                                                    <Label Text="{Binding ItemTotal, StringFormat='Price: {0:C}'}"
+                                                        <Label Text="{Binding ItemTotal, StringFormat='Price: {0:C}'}"
                                                            Grid.Row="2"
                                                            Grid.Column="1"
                                                            HorizontalOptions="End"/>
-                                                </Grid>
-                                            </Border>
-                                        </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
-                            </VerticalStackLayout>
-                        </Border>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </ScrollView>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+        <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#80000000">
+            <ActivityIndicator 
+                VerticalOptions="Center" 
+                IsRunning="True"
+                HorizontalOptions="Center" 
+                Color="White" 
+                WidthRequest="60" 
+                HeightRequest="60"/>
+        </Grid>
+    </Grid>
 </ContentPage>
