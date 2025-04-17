@@ -29,26 +29,31 @@ public class BlazorCustomRequestClient : ICustomRequestClient
 
     public async Task<bool> CreateCustomRequestAsync(CustomRequestDto customRequest)
     {
+        await Task.Delay(1000);
         throw new NotImplementedException();
     }
 
     public async Task<CustomRequestDto?> GetCustomRequestByIdAsync(int id)
     {
+        await Task.Delay(1000);
         throw new NotImplementedException();
     }
 
     public async Task<List<CustomRequestDto>?> GetCustomRequestsByStatusAsync(string status)
     {
+        await Task.Delay(1000);
         throw new NotImplementedException();
     }
 
     public async Task<List<CustomRequestDto>?> GetCustomRequestsByTypeAsync(string productType)
     {
+        await Task.Delay(1000);
         throw new NotImplementedException();
     }
 
     public async Task<List<CustomRequestDto>?> GetCustomRequestsByUserEmailAsync()
     {
+        await Task.Delay(1000);
         throw new NotImplementedException();
     }
 }
