@@ -4,12 +4,15 @@
              x:Class="DerpRaven.Maui.Views.CustomRequestPage"
              xmlns:local="clr-namespace:DerpRaven.Maui.Views"
              Title="">
+
     <TabBar>
         <Tab Title="Create">
-            <ShellContent ContentTemplate="{DataTemplate local:CreateCustomRequestPage}" />
+            <ShellContent 
+                ContentTemplate="{DataTemplate local:CreateCustomRequestPage}" />
         </Tab>
         <Tab Title="View">
-            <ShellContent ContentTemplate="{DataTemplate local:ViewCustomRequestsPage}" />
+            <ShellContent 
+                ContentTemplate="{DataTemplate local:ViewCustomRequestsPage}" />
         </Tab>
     </TabBar>
 
