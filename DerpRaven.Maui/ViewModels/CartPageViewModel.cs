@@ -73,6 +73,7 @@ public partial class CartPageViewModel : ObservableObject
     private void Checkout() {
         // Implement checkout logic here  
         var popup = new PaymentPopup();
+
         // Show popup using the current visible page  
         var currentPage = Application.Current.MainPage;
 
