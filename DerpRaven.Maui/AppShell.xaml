@@ -30,7 +30,7 @@
             ContentTemplate="{DataTemplate local:MainPage}"/>
     </FlyoutItem>
 
-    <FlyoutItem Title="Portfolio"  Route="PortfolioPage" >
+    <FlyoutItem Title="Portfolio" >
         <ShellContent 
             Title="Portfolio"
             ContentTemplate="{DataTemplate local:PortfolioPage}" />

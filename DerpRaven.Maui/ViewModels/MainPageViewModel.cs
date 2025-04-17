@@ -130,17 +130,25 @@ public partial class MainPageViewModel : ObservableObject
 
         };
     }
-    [RelayCommand]
-    private async Task NavigateToPlushiePortfolio(string tab)
+
+    public static class NavigationState
     {
-        await Shell.Current.GoToAsync($"//PortfolioPage?tab={tab}");
+        public static string SelectedTab;
     }
 
     [RelayCommand]
-    private async Task NavigateToArtPortfolio(string tab)
+    private async Task NavigateToPlushiePortfolio()
     {
-        tab = "Art";
-        await Shell.Current.GoToAsync($"//PortfolioPage?tab={tab}");
+        //NavigationState.SelectedTab = "Plushie";
+        await Shell.Current.GoToAsync("//PortfolioPage/PlushiePortfolio");
+
+    }
+
+    [RelayCommand]
+    private async Task NavigateToArtPortfolio()
+    {
+        //NavigationState.SelectedTab = "Art";
+        await Shell.Current.GoToAsync("//PortfolioPage/ArtPortfolio");
     }
 }
 

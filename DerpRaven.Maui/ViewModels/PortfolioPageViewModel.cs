@@ -8,7 +8,8 @@ namespace DerpRaven.Maui.ViewModels;
 [QueryProperty(nameof(SelectedTab), "tab")]
 public partial class PortfolioPageViewModel : ObservableObject
 {
-    public string SelectedTab { get; set; } = "";
+    public string SelectedTab { get; set; }
+
     public ObservableCollection<CarouselViewModel> PlushiePortfolios { get; private set; } = [];
     public ObservableCollection<CarouselViewModel> ArtPortfolios { get; private set; } = [];
     private readonly IPortfolioClient _portfolioClient;

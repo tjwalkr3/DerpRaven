@@ -1,5 +1,6 @@
 using DerpRaven.Maui.ViewModels;
 using Microsoft.Maui.Controls;
+using static DerpRaven.Maui.ViewModels.MainPageViewModel;
 namespace DerpRaven.Maui.Views;
 
 public partial class PortfolioPage : Shell
@@ -16,7 +17,13 @@ public partial class PortfolioPage : Shell
     {
         base.OnAppearing();
 
-        _viewModel.SelectTab();
+        if (!string.IsNullOrEmpty(NavigationState.SelectedTab))
+        {
+            _viewModel.SelectedTab = NavigationState.SelectedTab;
+            _viewModel.SelectTab();
+            NavigationState.SelectedTab = null;
+        }
+
 
         if (_viewModel != null)
         {
