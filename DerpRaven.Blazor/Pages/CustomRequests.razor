@@ -29,7 +29,14 @@
                     <td>@item.Id</td>
                     <td>@item.Description</td>
                     <td>@item.Email</td>
-                    <td>@item.Status</td>
+                    <td>
+                        <select @bind="item.Status">
+                            <option value="Accepted">Accepted</option>
+                            <option value="Denied">Denied</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                        <button @onclick="() => ChangeStatus(item.Id, item.Status)">Update</button>
+                    </td>
                     <td>@item.ProductTypeId</td>
                     <td>@item.UserId</td>
                 </tr>
