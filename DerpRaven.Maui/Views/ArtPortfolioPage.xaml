@@ -22,7 +22,7 @@
                                          HorizontalOptions="Center">
                                     <Border.Shadow>
                                         <Shadow
-                                            Brush="Black"
+                                            Brush="Gray"
                                             Offset="5,5"
                                             Radius="10"
                                             Opacity="0.5"/>
