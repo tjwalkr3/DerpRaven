@@ -1,18 +1,34 @@
-﻿namespace DerpRaven.Blazor.Pages;
+﻿using DerpRaven.Blazor.ApiClients;
+using DerpRaven.Shared.Dtos;
+
+namespace DerpRaven.Blazor.Pages;
 
 partial class ManageView
 {
-    private string ProductName { get; set; } = "";
-    private string Price { get; set; } = "";
-    private string Description { get; set; } = "";
+    private string errorString = string.Empty;
+    private readonly BlazorProductClient _productClient;
+    private List<ProductDto> _products = [];
 
-    private void Remove()
+    public ManageView(BlazorProductClient productClient)
     {
-        // logic here
+        _productClient = productClient;
     }
 
-    private void Edit()
+    private async Task LoadRequests()
     {
-        // logic here
+        try
+        {
+            _products = await _productClient.GetAllProductsAsync();
+            errorString = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            errorString = ex.Message;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRequests();
     }
 }

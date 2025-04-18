@@ -1,64 +1,24 @@
-﻿.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+﻿.errorText {
+    color: #cc0000;
 }
 
-textarea {
-    resize: vertical;
-}
-
-.grid-form {
-    display: grid;
-    grid-template-columns: 1fr 2fr 3fr; 
-    gap: 15px 10px; 
-    width: 80vw;
-    margin-left 0;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-sizing: border-box;
-}
-
-.image {
-    grid-column: 1;
-    grid-row: 1;
-}
-
-.item-a {
-    grid-column: 2;
-    grid-row: 1;
-}
-
-.item-b {
-    grid-column: 2;
-    grid-row: 2;
-}
-
-.item-c {
-    grid-column: 2;
-    grid-row: 3;
-}
-
-.item-d {
-    grid-column: 2 ;
-    grid-row: 4 ;
-}
-
-.item-e {
-    grid-column: 3; 
-    grid-row: 4;
-}
-
-.carousel {
+table {
     width: 100%;
-    overflow: hidden;
-    margin-bottom: 20px;
-    border-radius: 10px;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.carousel-track {
-    display: flex;
-    width: 300%;
-    animation: slide 9s infinite;
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }

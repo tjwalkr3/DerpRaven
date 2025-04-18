@@ -1,31 +1,48 @@
 ﻿@page "/manageview"
+@*@attribute [Authorize] *@
 
 <h3>Manage View</h3>
+<h4 class="errorText">@errorString</h4>
 
-<div class="grid-form">
-	<div class="carousel">
-		<div class="carousel-track">
-			<label class="image">Text</label>
-		</div>
-	</div>
 
-	<div class="item-a">
-		<label>Name</label>
-		<input @bind="ProductName" placeholder="Product Name" />
-	</div>
 
-	<div class="item-b">
-		<label>Price</label>
-		<input type="text" @bind="Price" placeholder="$0.00" />
-	</div>
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Product Type Id</th>
+            <th>Image Ids</th>
+        </tr>
 
-	<div class="item-c">
-		<label>Description</label>
-		<textarea @bind="Description" rows=""></textarea>
-	</div>
+        @if (_products == null)
+        {
+            <tr>
+                <td colspan="6">Loading...</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in _products)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.Description</td>
+                    <td>@item.ProductTypeId</td>
+                    <td>@item.Quantity</td>
+                    <td>
+                        @foreach (var imageId in item.ImageIds)
+                        {
+                            <span>@imageId, </span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </thead>
+</table>
 
-	<div class="form-group">
-	</div>
-	<button class="item-d" @onclick="Remove">Remove</button>
-	<button class="item-e" @onclick="Edit">Edit</button>
-</div>
