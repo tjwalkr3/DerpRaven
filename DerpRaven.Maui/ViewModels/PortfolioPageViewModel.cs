@@ -2,10 +2,14 @@
 using System.Collections.ObjectModel;
 using DerpRaven.Shared.Dtos;
 using DerpRaven.Shared.ApiClients;
+using System.Diagnostics;
 namespace DerpRaven.Maui.ViewModels;
+
 
 public partial class PortfolioPageViewModel : ObservableObject
 {
+    public string SelectedTab { get; set; }
+
     public ObservableCollection<CarouselViewModel> PlushiePortfolios { get; private set; } = [];
     public ObservableCollection<CarouselViewModel> ArtPortfolios { get; private set; } = [];
     private readonly IPortfolioClient _portfolioClient;

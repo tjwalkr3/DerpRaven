@@ -8,7 +8,7 @@ namespace DerpRaven.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+//[Authorize]
 public class PortfolioController : ControllerBase
 {
     private readonly IPortfolioService _portfolioService;

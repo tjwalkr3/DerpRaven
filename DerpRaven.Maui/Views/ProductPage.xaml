@@ -7,52 +7,52 @@
              Title="Product Details">
     <VerticalStackLayout>
         <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="10">
-            <Label Text="{Binding ProductDetails.Name}" FontSize="24" FontAttributes="Bold" />
+            <VerticalStackLayout Padding="10" Spacing="10">
+                <Label Text="{Binding Images[0].Alt}" 
+                   FontAttributes="Bold"
+                   FontSize="24"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
 
-            <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate x:DataType="dtos:ImageDto">
-                        <StackLayout>
-                            <Border Stroke="Black"
+                <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="dtos:ImageDto">
+                            <StackLayout>
+                                <Border Stroke="Black"
                                     StrokeShape="RoundRectangle 5"
                                     Margin="10"
                                     Padding="10"
                                     HorizontalOptions="Center"
-                                    VerticalOptions="Center">
-                                <StackLayout>
-                                    <Label Text="{Binding Alt}"
-                                        FontAttributes="Bold"
-                                        FontSize="18"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center" />
-                                    <Image Source="{Binding Path}"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="Gray">
+                                    <StackLayout>
+                                        <Image Source="{Binding Path}"
                                         Aspect="AspectFill"
                                         HeightRequest="150"
                                         WidthRequest="150"
                                         HorizontalOptions="Center" />
-                                </StackLayout>
-                            </Border>
-                        </StackLayout>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
-            <Label Text="{Binding ProductDetails.Price, StringFormat='Price: ${0:F2}'}" FontSize="20" TextColor="Green" />
+                                    </StackLayout>
+                                </Border>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <Label Text="{Binding ProductDetails.Price, StringFormat='Price: ${0:F2}'}" FontSize="20" TextColor="Green" />
 
-            <HorizontalStackLayout>
-                <Label Text="Quantity:" VerticalOptions="Center" />
+                <HorizontalStackLayout>
+                    <Label Text="Quantity:" VerticalOptions="Center" />
 
-                <Picker x:Name="QuantityPicker" 
+                    <Picker x:Name="QuantityPicker" 
                         WidthRequest="100"
                         ItemsSource="{Binding QuantityOptions}" 
                         SelectedItem="{Binding SelectedQuantity, Mode=TwoWay}" />
 
-            </HorizontalStackLayout>
+                </HorizontalStackLayout>
 
-            <Button Text="{Binding CartButtonText}" Command="{Binding AddToCartCommand}" IsEnabled="{Binding IsSignedIn}"/>
+                <Button Text="{Binding CartButtonText}" Command="{Binding AddToCartCommand}" IsEnabled="{Binding IsSignedIn}"/>
 
-            <Label Text="{Binding ProductDetails.Description}" FontSize="18"/>
-        </VerticalStackLayout>
-    </ScrollView>
+                <Label Text="{Binding ProductDetails.Description}" FontSize="18"/>
+            </VerticalStackLayout>
+        </ScrollView>
     </VerticalStackLayout>
 </ContentPage>

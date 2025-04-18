@@ -12,33 +12,67 @@
                 <CollectionView ItemsSource="{Binding ArtPortfolios}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
-                                <CarouselView.ItemTemplate>
-                                    <DataTemplate x:DataType="dtos:ImageDto">
-                                        <StackLayout>
-                                            <Border Stroke="Black"
-                                            StrokeShape="RoundRectangle 5"
-                                            Margin="10"
-                                            Padding="10"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center">
-                                                <StackLayout>
-                                                    <Label Text="{Binding Alt}"
+                            <VerticalStackLayout>
+                                <Border Stroke="Gray" 
+                                         StrokeThickness="1" 
+                                         Padding="10" 
+                                         Margin="5" 
+                                         StrokeShape="RoundRectangle 15"
+                                         BackgroundColor="Gray"
+                                         HorizontalOptions="Center">
+                                    <Border.Shadow>
+                                        <Shadow
+                                            Brush="Gray"
+                                            Offset="5,5"
+                                            Radius="10"
+                                            Opacity="0.5"/>
+                                    </Border.Shadow>
+                                    <Label Text="{Binding Portfolio.Name}" 
+                                       HorizontalOptions="Start"
+                                       VerticalOptions="Start"
+                                       FontSize="20"/>
+                                </Border>
+                                <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate x:DataType="dtos:ImageDto">
+                                            <StackLayout>
+                                                <Border Stroke="Black"
+                                                        StrokeShape="RoundRectangle 5"
+                                                        Margin="10"
+                                                        Padding="10"
+                                                        HorizontalOptions="Center"
+                                                        VerticalOptions="Center"
+                                                        BackgroundColor="Gray">
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Alt}"
                                                    FontAttributes="Bold"
                                                    FontSize="18"
                                                    HorizontalOptions="Center"
                                                    VerticalOptions="Center" />
-                                                    <Image Source="{Binding Path}"
+                                                        <Image Source="{Binding Path}"
                                                    Aspect="AspectFill"
                                                    HeightRequest="150"
                                                    WidthRequest="150"
                                                    HorizontalOptions="Center" />
-                                                </StackLayout>
-                                            </Border>
-                                        </StackLayout>
-                                    </DataTemplate>
-                                </CarouselView.ItemTemplate>
-                            </CarouselView>
+                                                    </StackLayout>
+                                                </Border>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <Border  Stroke="Gray" 
+                                         StrokeThickness="5" 
+                                         Padding="10" 
+                                         Margin="5" 
+                                         StrokeShape="RoundRectangle 15"
+                                         BackgroundColor="Gray">
+                                    <Label Text="Description" />
+                                </Border>
+                                <BoxView Color="Gray" 
+                                         HeightRequest="1" 
+                                         HorizontalOptions="FillAndExpand" 
+                                         Margin="5,0"/>
+                            </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

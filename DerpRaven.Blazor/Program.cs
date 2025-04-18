@@ -14,9 +14,11 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped<CustomAuthenticationMessageHandler>();
-Uri baseAddress = new Uri(builder.Configuration["BaseAddress"] ?? "http://localhost:5077");
 
-builder.Services.AddHttpClient("testClient", opt => opt.BaseAddress = baseAddress)
+string baseAddress = builder.Configuration.GetValue<string>("BaseAddress") ?? "";
+Console.WriteLine($"Base address: {baseAddress}");
+
+builder.Services.AddHttpClient("testClient", opt => opt.BaseAddress = new Uri(baseAddress))
                 .AddHttpMessageHandler<CustomAuthenticationMessageHandler>();
 
 
@@ -33,5 +35,6 @@ builder.Services.AddOidcAuthentication(opt =>
 
 builder.Services.AddScoped<BlazorImageClient>();
 builder.Services.AddScoped<ICustomRequestClient, BlazorCustomRequestClient>();
+builder.Services.AddScoped<IOrderClient, BlazorOrderClient>();
 
 await builder.Build().RunAsync();

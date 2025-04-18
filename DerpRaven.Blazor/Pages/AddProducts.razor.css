@@ -1,0 +1,26 @@
+﻿.product-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin-left: 0px;
+    gap: 20px;
+    
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+.submit-button {
+    align-self: flex-end;
+    padding: 8px 16px;
+    background-color: #e0e0e0;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
