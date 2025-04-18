@@ -2,9 +2,9 @@
 
 public partial class AddProducts
 {
-    private string ProductName { get; set; }
-    private string Price { get; set; }
-    private string Description { get; set; }
+    private string ProductName { get; set; } = "";
+    private string Price { get; set; } = "";
+    private string Description { get; set; } = "";
     private bool IsPlush { get; set; }
     private bool IsArt { get; set; }
 
