@@ -12,9 +12,11 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped<CustomAuthenticationMessageHandler>();
-Uri baseAddress = new Uri(builder.Configuration["BaseAddress"] ?? "http://localhost:5077");
 
-builder.Services.AddHttpClient("testClient", opt => opt.BaseAddress = baseAddress)
+//Uri baseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAddress") ?? "http://localhost:5077");
+string baseAddress = Environment.GetEnvironmentVariable("BaseAddress") ?? "http://localhost:5077";
+
+builder.Services.AddHttpClient("testClient", opt => opt.BaseAddress = new Uri(baseAddress))
                 .AddHttpMessageHandler<CustomAuthenticationMessageHandler>();
 
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("testClient"));
