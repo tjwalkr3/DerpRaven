@@ -1,0 +1,33 @@
+﻿@page "/addproducts"
+
+<h3>Add Products</h3>
+
+
+<div class="product-form">
+    <div>
+        <label>Name</label>
+        <input @bind="ProductName" placeholder="Product Name" />
+    </div>
+
+    <div>
+        <label>Price</label>
+        <input type="text" @bind="Price" placeholder="$0.00" />
+    </div>
+
+    <div>
+        <label>Photos</label>
+        <button @onclick="UploadPhoto">Upload</button>
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea @bind="Description" rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label><input type="checkbox" @bind="IsPlush" /> Plush</label>
+        <label><input type="checkbox" @bind="IsArt" /> Art</label>
+    </div>
+
+    <button class="submit-button" @onclick="AddProduct">Add Product</button>
+</div>
