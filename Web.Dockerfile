@@ -6,9 +6,10 @@ ARG FEATURE_FLAG_ON
 WORKDIR /App
 COPY . ./
 RUN dotnet restore "DerpRaven.Blazor/DerpRaven.Blazor.csproj"
+
 # Inject the base address into the appsettings.json
 RUN echo "{\"BaseAddress\":\"${BASE_ADDRESS}\",\"FeatureFlagEnabled\":\"${FEATURE_FLAG_ON}\"}" \
-    > /App/publish/wwwroot/appsettings.json
+    > /App/DerpRaven.Blazor/wwwroot/appsettings.json
 
 RUN dotnet publish "DerpRaven.Blazor/DerpRaven.Blazor.csproj" -c Release -o publish
 
