@@ -9,7 +9,7 @@ RUN dotnet restore "DerpRaven.Blazor/DerpRaven.Blazor.csproj"
 RUN dotnet publish "DerpRaven.Blazor/DerpRaven.Blazor.csproj" -c Release -o publish
 
 # Inject the base address into the appsettings.json
-RUN echo "{\n    \"BaseAddress\": \"${BASE_ADDRESS}\",\n    \"FeatureFlagEnabled\": \"${FEATURE_FLAG_ON}\"}" \
+RUN echo "{\"BaseAddress\":\"${BASE_ADDRESS}\",\"FeatureFlagEnabled\":\"${FEATURE_FLAG_ON}\"}" \
     > /App/publish/wwwroot/appsettings.json
 
 # Use NGINX to serve the static files

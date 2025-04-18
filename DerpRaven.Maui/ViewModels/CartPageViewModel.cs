@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using DerpRaven.Maui;
+using DerpRaven.Maui.Popups;
+using CommunityToolkit.Maui.Views;
 
 namespace DerpRaven.Maui.ViewModels;
 
@@ -67,11 +69,21 @@ public partial class CartPageViewModel : ObservableObject
         PopulateCart();
     }
 
-    //[RelayCommand]
-    //private void Checkout()
-    //{
-    // Implement checkout logic here
-    //}
+    [RelayCommand]
+    private void Checkout()
+    {
+        // Implement checkout logic here  
+        var popup = new PaymentPopup();
+
+        // Show popup using the current visible page  
+        var currentPage = Application.Current.MainPage;
+
+        // Corrected the issue by using the correct type cast and accessing the MainPage directly  
+        if (currentPage is Page page)
+        {
+            page.ShowPopup(popup);
+        }
+    }
 
     private void UpdateRunningTotal()
     {

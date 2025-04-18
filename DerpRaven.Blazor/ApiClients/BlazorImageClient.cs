@@ -3,10 +3,11 @@ using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DerpRaven.Blazor.ApiClients;
 
-public class BlazorImageClient : IImageClient
+public class BlazorImageClient
 {
     private readonly HttpClient _httpClient;
 
@@ -21,16 +22,17 @@ public class BlazorImageClient : IImageClient
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<byte[]?> GetImageAsync(int id)
+    public string GetImageAddress(int id)
     {
-        var response = await _httpClient.GetAsync($"api/image/get/{id}");
 
-        if (response.IsSuccessStatusCode)
+        Console.WriteLine(_httpClient.BaseAddress);
+        if (_httpClient.BaseAddress == null)
         {
-            return await response.Content.ReadAsByteArrayAsync();
+            Console.WriteLine("Base address is null");
+            throw new InvalidOperationException("Base address is not set.");
         }
-
-        return null;
+        Console.WriteLine(_httpClient.BaseAddress + $"api/image/get/{id}");
+        return _httpClient.BaseAddress + $"api/image/get/{id}";
     }
 
     public async Task<ImageDto?> GetImageInfoAsync(int id)
@@ -48,7 +50,9 @@ public class BlazorImageClient : IImageClient
 
     public async Task<List<ImageDto>> ListImagesAsync()
     {
+        Console.WriteLine("We are in ImageAsync");
         var response = await _httpClient.GetFromJsonAsync<List<ImageDto>>("api/image/list");
+        Console.WriteLine("We have gotten the json, returning now");
         return response ?? [];
     }
 
