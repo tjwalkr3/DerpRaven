@@ -13,15 +13,28 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border Stroke="Gray" Padding="10" Margin="5">
-                                <VerticalStackLayout>
-                                    <Image Source="{Binding ImageUrl}" HeightRequest="100" />
+                            <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                                <VerticalStackLayout Grid.Column="0" Spacing="5">
                                     <Label Text="{Binding Name}" FontSize="18" />
                                     <Label Text="{Binding Price, StringFormat='Price: {0:C}'}" />
                                     <Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}" />
                                     <Label Text="{Binding Total, StringFormat='Total: {0:C}'}" />
-                                    <Button Text="Remove" Command="{Binding Source={RelativeSource AncestorType={x:Type local:CartPageViewModel}}, Path=RemoveItemCommand}" CommandParameter="{Binding .}" />
+                                    <Button Text="Remove" 
+                                            HeightRequest="0"
+                                            WidthRequest="100"
+                                            HorizontalOptions="Start"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:CartPageViewModel}}, Path=RemoveItemCommand}" CommandParameter="{Binding .}" />
                                 </VerticalStackLayout>
-                            </Border>
+                                <Image Grid.Column="1"
+                                    Source="{Binding ImageUrl}" 
+                                    HeightRequest="120"
+                                    WidthRequest="120"
+                                    Aspect="AspectFit" 
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    Margin="10"/>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

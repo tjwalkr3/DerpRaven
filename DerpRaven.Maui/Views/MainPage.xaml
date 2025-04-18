@@ -31,32 +31,33 @@
                         StrokeShape="RoundRectangle 15"
                         BackgroundColor="Gray">
                     <Image
-                    Source="derpravenstudiologo.png"
-                    HeightRequest="150"
-                    WidthRequest="150"
-                    Aspect="AspectFit" 
-                    Margin="30" />
+                        Source="derpravenstudiologo.png"
+                        HeightRequest="150"
+                        WidthRequest="150"
+                        Aspect="AspectFit" 
+                        Margin="30">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding NavigateToArtPortfolioCommand}" 
+                                CommandParameter="Art" />
+                        </Image.GestureRecognizers>
+                    </Image>
                 </Border>
 
-                <!-- Image for DRP-->
                 <Border Grid.Column="1" 
                         Stroke="Gray" 
                         StrokeThickness="5" 
-                        Padding="10" Margin="5" 
+                        Padding="10" 
+                        Margin="5" 
                         StrokeShape="RoundRectangle 15"
                         BackgroundColor="Gray">
-                    <Image
-                    Source="derpravenlogo.png"
-                    HeightRequest="150"
-                    WidthRequest="150"
-                    Aspect="AspectFit" 
-                    Margin="30" />
+                    <Label Text="Sample Text" />
                 </Border>
-            </Grid>
 
+            </Grid>
             <CarouselView ItemsSource="{Binding Art}"
-                          PeekAreaInsets="100"
-                          HeightRequest="250">
+              PeekAreaInsets="100"
+              HeightRequest="250">
                 <CarouselView.ItemTemplate SnapPointsType ="None">
                     <DataTemplate x:DataType="dtos:ImageDto">
                         <StackLayout>
@@ -85,13 +86,47 @@
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
+            <Grid ColumnDefinitions="Auto, *" VerticalOptions="Center">
+                <!-- Image for DRP-->
+                <Border Grid.Column="0" 
+                        Stroke="Gray" 
+                        StrokeThickness="5" 
+                        Padding="10" Margin="5" 
+                        StrokeShape="RoundRectangle 15"
+                        BackgroundColor="Gray"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start">
+                    <Image
+                        Source="derpravenlogo.png"
+                        HeightRequest="110"
+                        WidthRequest="110"
+                        Aspect="AspectFit" 
+                        Margin="30" >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding NavigateToPlushiePortfolioCommand}" 
+                                CommandParameter="Plushie" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
 
-            <CarouselView ItemsSource="{Binding Plushies}" PeekAreaInsets="100">
+                <Border Grid.Column="1" 
+                        Stroke="Gray" 
+                        StrokeThickness="5" 
+                        Padding="10" 
+                        Margin="5" 
+                        StrokeShape="RoundRectangle 15"
+                        BackgroundColor="Gray">
+                    <Label Text="Sample Text" />
+                </Border>
+            </Grid>
+
+            <CarouselView  ItemsSource="{Binding Plushies}" PeekAreaInsets="100">
                 <CarouselView.ItemTemplate SnapPointsType ="None">
                     <DataTemplate x:DataType="dtos:ImageDto">
                         <StackLayout>
                             <Border Stroke="Black"
-                                    StrokeShape="RoundRectangle 5"
+                                    StrokeShape="RoundRectangle 5"  
                                     Margin="10"
                                     Padding="10"
                                     HorizontalOptions="Center"
@@ -109,7 +144,7 @@
                                            HeightRequest="150"
                                            MaximumHeightRequest="150"
                                            HorizontalOptions="Center"
-                                           VerticalOptions="EndAndExpand"/>
+                                           VerticalOptions="EndAndExpand" />
                                 </StackLayout>
                             </Border>
                         </StackLayout>
