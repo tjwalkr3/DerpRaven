@@ -44,7 +44,7 @@
             </Border>
 
             <Label Text="{Binding RunningTotal, StringFormat='Running Total: {0:C}'}" FontSize="18" />
-            <Button Text="Checkout" Command="{Binding CheckoutCommand}" />
+            <Button Text="Checkout" Clicked="OnDisplayPopupClicked" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -74,11 +74,10 @@ public partial class CartPageViewModel : ObservableObject
         PopulateCart();
     }
 
-    //[RelayCommand]
-    //private void Checkout()
-    //{
-    // Implement checkout logic here
-    //}
+    [RelayCommand]
+    private void Checkout() {
+        //Implement checkout logic here
+    }
 
     private void UpdateRunningTotal()
     {

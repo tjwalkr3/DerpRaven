@@ -10,6 +10,7 @@ namespace DerpRaven.Maui
     public class CartStorage : ICartStorage
     {
         private const string CartKey = "CartItems";
+        public bool CanCheckOut { get; private set; } = false;
 
         public void SaveCartItems(List<CartItem> items)
         {
@@ -89,8 +90,22 @@ namespace DerpRaven.Maui
                     Price = item.Price
                 });
             }
+
             //Checkout api call here
+            if(CanCheckOut)
             ClearCart();
+        }
+
+
+        //For checking out stuff
+        string? nonce;
+        public bool IsNonce { get => nonce != null; }
+        public void AddNonce(string nonce) {
+            this.nonce = nonce;
+        }
+
+        public void VerifyCanCheckOut() {
+            
         }
     }
 
