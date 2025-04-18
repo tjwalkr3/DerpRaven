@@ -46,14 +46,21 @@ public partial class CartPageViewModel : ObservableObject
 
     public void CheckPlushiePresent()
     {
-        foreach (var item in CartItems)
+        if (CartItems.Count == 0)
         {
-            if (item.ProductTypeId == 1)
+            PlushiePresent = false;
+        }
+        else
+        {
+            foreach (var item in CartItems)
             {
-                PlushiePresent = true;
-                break;
+                if (item.ProductTypeId == 1)
+                {
+                    PlushiePresent = true;
+                    break;
+                }
+                else PlushiePresent = false;
             }
-            else PlushiePresent = false;
         }
     }
 

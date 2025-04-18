@@ -19,10 +19,18 @@
                                          Margin="5" 
                                          StrokeShape="RoundRectangle 15"
                                          BackgroundColor="Gray"
-                                         HorizontalOptions="Start">
+                                         HorizontalOptions="Center">
+                                    <Border.Shadow>
+                                        <Shadow
+                                            Brush="Black"
+                                            Offset="5,5"
+                                            Radius="10"
+                                            Opacity="0.5"/>
+                                    </Border.Shadow>
                                     <Label Text="{Binding Portfolio.Name}"
-                                       HorizontalOptions="Start"
-                                       FontSize="20"/>
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           FontSize="20"/>
                                 </Border>
                                 <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
                                     <CarouselView.ItemTemplate>

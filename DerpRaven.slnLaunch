@@ -12,5 +12,20 @@
         "Action": "Start"
       }
     ]
+  },
+  {
+    "Name": "Blazor&API",
+    "Projects": [
+      {
+        "Path": "DerpRaven.Blazor\\DerpRaven.Blazor.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      },
+      {
+        "Path": "DerpRaven.Api\\DerpRaven.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      }
+    ]
   }
 ]

@@ -16,9 +16,11 @@
             </HorizontalStackLayout>
 
             <Picker x:Name="ArtOptionsPicker" 
-            IsVisible="{Binding Source={x:Reference ArtCheckBox}, Path=IsChecked}"
-            SelectedItem="{Binding ArtType}"
-            Title="Select an option">
+                    IsVisible="{Binding Source={x:Reference ArtCheckBox}, Path=IsChecked}"
+                    SelectedItem="{Binding ArtType}"
+                    Title="Select an option"
+                    TextColor="#FDFAFA"
+                    TitleColor="#FDFAFA">
                 <Picker.Items>
                     <x:String>Headshot</x:String>
                     <x:String>Bust</x:String>
@@ -33,12 +35,12 @@
             </Picker>
 
             <Label Text="Description of what you want:" />
-            <Border Stroke="Black" StrokeThickness="1" Padding="0">
-                <Editor HeightRequest="300" Text="{Binding Description}" Placeholder="Describe what you want..."/>
+            <Border Stroke="White" StrokeThickness="1" Padding="0">
+                <Editor HeightRequest="300" Text="{Binding Description}" Placeholder="Describe what you want..." />
             </Border>
 
             <Label Text="Email (Required for contact):" />
-            <Border Stroke="Black" StrokeThickness="1">
+            <Border Stroke="White" StrokeThickness="1">
                 <Entry Text="{Binding Email}" Placeholder="example@example.com" Keyboard="Email"/>
             </Border>
             <Button Text="Submit" Command="{Binding SubmitCommand}" />
