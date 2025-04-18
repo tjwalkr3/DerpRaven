@@ -13,7 +13,8 @@ public partial class CartPage : ContentPage
         _vm = vm;
     }
 
-    public void DisplayPopup() {
+    public void DisplayPopup()
+    {
         var popup = new PaymentPopup();
 
         this.ShowPopup(popup);

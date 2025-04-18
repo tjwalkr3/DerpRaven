@@ -70,7 +70,8 @@ public partial class CartPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Checkout() {
+    private void Checkout()
+    {
         // Implement checkout logic here  
         var popup = new PaymentPopup();
 
@@ -78,7 +79,8 @@ public partial class CartPageViewModel : ObservableObject
         var currentPage = Application.Current.MainPage;
 
         // Corrected the issue by using the correct type cast and accessing the MainPage directly  
-        if (currentPage is Page page) {
+        if (currentPage is Page page)
+        {
             page.ShowPopup(popup);
         }
     }

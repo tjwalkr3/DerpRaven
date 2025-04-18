@@ -51,7 +51,7 @@ public partial class Images
                 Console.WriteLine($"Image ID: {image.Id}, URL: {image.ImageDataUrl}");
             }
             await InvokeAsync(StateHasChanged);
-            Console.WriteLine("We should have all the images now"); 
+            Console.WriteLine("We should have all the images now");
         }
         catch (Exception ex)
         {

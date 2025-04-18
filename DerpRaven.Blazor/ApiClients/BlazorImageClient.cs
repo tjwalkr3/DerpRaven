@@ -26,12 +26,12 @@ public class BlazorImageClient
     {
 
         Console.WriteLine(_httpClient.BaseAddress);
-        if (_httpClient.BaseAddress == null) 
+        if (_httpClient.BaseAddress == null)
         {
             Console.WriteLine("Base address is null");
             throw new InvalidOperationException("Base address is not set.");
         }
-        Console.WriteLine(_httpClient.BaseAddress+ $"api/image/get/{id}");
+        Console.WriteLine(_httpClient.BaseAddress + $"api/image/get/{id}");
         return _httpClient.BaseAddress + $"api/image/get/{id}";
     }
 
