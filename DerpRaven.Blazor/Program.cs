@@ -13,8 +13,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped<CustomAuthenticationMessageHandler>();
 
-//Uri baseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAddress") ?? "http://localhost:5077");
-string baseAddress = Environment.GetEnvironmentVariable("BaseAddress") ?? "http://localhost:5077";
+string baseAddress = builder.Configuration.GetValue<string>("BaseAddress") ?? "";
 Console.WriteLine($"Base address: {baseAddress}");
 
 builder.Services.AddHttpClient("testClient", opt => opt.BaseAddress = new Uri(baseAddress))
