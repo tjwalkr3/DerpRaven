@@ -4,21 +4,26 @@ namespace DerpRaven.Maui.Popups;
 
 public partial class PaymentPopup : Popup {
     bool loaded = false;
-    public PaymentPopup()
+    public string PaymentUrl { get; set; }
+    public PaymentPopup(string Url)
 	{
-		InitializeComponent();
+        PaymentUrl = Url;
+        _cart = new();
+        InitializeComponent();
+        BindingContext = this;
+        
 	}
 
-    public async void WebMessageReceived(object sender, WebNavigatingEventArgs e) {
-        if (loaded) {
-            cart.AddNonce(e.Url);
-            e.Cancel = true;
-            if (SendOrder != null)
-                await SendOrder();
-            await Navigation.PopAsync();
-        } else {
-            loaded = true;
-        }
+
+    public void WebMessageReceived(object sender, WebNavigatingEventArgs e) {
+        //if (loaded) {
+        //    _cart.AddNonce(e.Url);
+        //    //e.Cancel = true;
+        //    //await Navigation.PopAsync();
+        //} else {
+        //    loaded = true;
+        //}
+
     }
     void OnClosePopupClicked(object? sender, EventArgs e) => Close();
 }

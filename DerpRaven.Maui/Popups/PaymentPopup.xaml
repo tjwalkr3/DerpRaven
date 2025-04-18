@@ -8,7 +8,7 @@
         
         <WebView
             VerticalOptions="FillAndExpand"
-            Source="https://derpipose.github.io/AltPayment.html" />
+            Source="{Binding PaymentUrl}"/>
         <Button Text="Cancel" Clicked="OnClosePopupClicked"/>
     </StackLayout>
 </toolkit:Popup>

@@ -7,22 +7,19 @@ using DerpRaven.Shared.Dtos;
 
 namespace DerpRaven.Maui
 {
-    public class CartStorage : ICartStorage
-    {
+    public class CartStorage : ICartStorage {
         private const string CartKey = "CartItems";
         public bool CanCheckOut { get; private set; } = false;
 
-        public void SaveCartItems(List<CartItem> items)
-        {
+
+        public void SaveCartItems(List<CartItem> items) {
             var json = JsonSerializer.Serialize(items);
             Preferences.Clear(CartKey);
             Preferences.Set(CartKey, json);
         }
 
-        public void AddCartItem(ProductDto product)
-        {
-            var item = new CartItem
-            {
+        public void AddCartItem(ProductDto product) {
+            var item = new CartItem {
                 Name = product.Name,
                 ImageUrl = Path.Combine(FileSystem.CacheDirectory, $"{product.ImageIds[0]}.png"),
                 Quantity = product.Quantity,
@@ -32,68 +29,64 @@ namespace DerpRaven.Maui
 
             var cartItems = GetCartItems();
             var existingItem = cartItems.FirstOrDefault(i => i.Name == item.Name);
-            if (existingItem != null)
-            {
+            if (existingItem != null) {
                 existingItem.Quantity += item.Quantity;
-            }
-            else
-            {
+            } else {
                 cartItems.Add(item);
             }
             SaveCartItems(cartItems);
         }
 
-        public void RemoveCartItem(CartItem item)
-        {
+        public void RemoveCartItem(CartItem item) {
             var cartItems = GetCartItems();
             cartItems.Remove(item);
             SaveCartItems(cartItems);
         }
 
-        public List<CartItem> GetCartItems()
-        {
+        public List<CartItem> GetCartItems() {
             var json = Preferences.Get(CartKey, string.Empty);
-            if (string.IsNullOrEmpty(json))
-            {
+            if (string.IsNullOrEmpty(json)) {
                 return new List<CartItem>();
             }
             return JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
         }
 
-        public void ClearCart()
-        {
+        public void ClearCart() {
             Preferences.Remove(CartKey);
         }
 
-        public void UpdateCartItem(CartItem item)
-        {
+        public void UpdateCartItem(CartItem item) {
             var cartItems = GetCartItems();
             var existingItem = cartItems.FirstOrDefault(i => i.Name == item.Name);
-            if (existingItem != null)
-            {
+            if (existingItem != null) {
                 existingItem.Quantity = item.Quantity;
                 existingItem.Price = item.Price;
             }
             SaveCartItems(cartItems);
         }
 
-        public void CheckOut()
-        {
+        public decimal GetCartTotal() {
+            var cartItems = GetCartItems();
+            return cartItems.Sum(item => item.Quantity * item.Price);
+        }
+
+        public void CheckOut() {
             var cartItems = GetCartItems();
             List<OrderedProductDto> products = new List<OrderedProductDto>();
-            foreach (var item in cartItems)
-            {
-                products.Add(new OrderedProductDto
-                {
+            foreach (var item in cartItems) {
+                products.Add(new OrderedProductDto {
                     Name = item.Name,
                     Quantity = item.Quantity,
                     Price = item.Price
                 });
             }
+            //Checkout page call and response
 
-            //Checkout api call here
-            if(CanCheckOut)
-            ClearCart();
+            if(CanCheckOut){ 
+                //Checkout api call here
+                ClearCart();
+                CanCheckOut = false;
+            }
         }
 
 
@@ -105,7 +98,7 @@ namespace DerpRaven.Maui
         }
 
         public void VerifyCanCheckOut() {
-            
+
         }
     }
 

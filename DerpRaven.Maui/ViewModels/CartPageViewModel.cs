@@ -81,7 +81,7 @@ public partial class CartPageViewModel : ObservableObject
 
     private void UpdateRunningTotal()
     {
-        RunningTotal = CartItems.Sum(item => item.Quantity * item.Price);
+        RunningTotal = _cartStorage.GetCartTotal();
     }
 }
 
