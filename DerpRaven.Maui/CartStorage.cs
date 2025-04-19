@@ -4,12 +4,20 @@ using System.Linq;
 using System.Text.Json;
 using Microsoft.Maui.Storage;
 using DerpRaven.Shared.Dtos;
+using DerpRaven.Shared.ApiClients;
 
 namespace DerpRaven.Maui
 {
     public class CartStorage : ICartStorage {
         private const string CartKey = "CartItems";
         public bool CanCheckOut { get; private set; } = false;
+        private readonly IOrderedProductClient OrderedProductClient;
+        private readonly IProductClient ProductClient;
+
+        public CartStorage(IOrderedProductClient orderedProductClient, IProductClient productClient) {
+            OrderedProductClient = orderedProductClient;
+            ProductClient = productClient;
+        }
 
 
         public void SaveCartItems(List<CartItem> items) {
@@ -21,6 +29,7 @@ namespace DerpRaven.Maui
         public void AddCartItem(ProductDto product) {
             var item = new CartItem {
                 Name = product.Name,
+                ProductId = product.Id,
                 ImageUrl = Path.Combine(FileSystem.CacheDirectory, $"{product.ImageIds[0]}.png"),
                 Quantity = product.Quantity,
                 Price = product.Price,
@@ -43,7 +52,7 @@ namespace DerpRaven.Maui
             SaveCartItems(cartItems);
         }
 
-        public List<CartItem> GetCartItems() {
+        public static List<CartItem> GetCartItems() {
             var json = Preferences.Get(CartKey, string.Empty);
             if (string.IsNullOrEmpty(json)) {
                 return new List<CartItem>();
@@ -65,7 +74,7 @@ namespace DerpRaven.Maui
             SaveCartItems(cartItems);
         }
 
-        public decimal GetCartTotal() {
+        public static decimal GetCartTotal() {
             var cartItems = GetCartItems();
             return cartItems.Sum(item => item.Quantity * item.Price);
         }
@@ -79,10 +88,18 @@ namespace DerpRaven.Maui
                     Quantity = item.Quantity,
                     Price = item.Price
                 });
+                ProductDto? oldproduct = ProductClient.GetProductByIdAsync(item.ProductId).Result;
+                if (oldproduct != null) {
+                    oldproduct.Quantity -= item.Quantity;
+                    //TODO: Update the product quantity in the database using the ProductClient.
+                    //ProductClient.
+                }
+                OrderedProductClient.CreateOrderedProducts(products);
             }
             //Checkout page call and response
 
-            if(CanCheckOut){ 
+
+            if (CanCheckOut) {
                 //Checkout api call here
                 ClearCart();
                 CanCheckOut = false;
@@ -105,6 +122,7 @@ namespace DerpRaven.Maui
     public class CartItem
     {
         public string Name { get; set; } = string.Empty;
+        public int ProductId { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
         public int Quantity { get; set; }
         public decimal Price { get; set; }

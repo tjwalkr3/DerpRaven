@@ -9,8 +9,6 @@ namespace DerpRaven.Maui {
         void AddNonce(string nonce);
         void CheckOut();
         void ClearCart();
-        List<CartItem> GetCartItems();
-        decimal GetCartTotal();
         void RemoveCartItem(CartItem item);
         void SaveCartItems(List<CartItem> items);
         void UpdateCartItem(CartItem item);

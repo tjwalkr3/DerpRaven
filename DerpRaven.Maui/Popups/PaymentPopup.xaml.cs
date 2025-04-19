@@ -8,7 +8,7 @@ public partial class PaymentPopup : Popup {
     public PaymentPopup(string Url)
 	{
         PaymentUrl = Url;
-        _cart = new();
+        //_cart = new();
         InitializeComponent();
         BindingContext = this;
         

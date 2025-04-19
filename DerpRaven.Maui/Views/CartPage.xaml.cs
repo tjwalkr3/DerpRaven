@@ -21,8 +21,7 @@ public partial class CartPage : ContentPage
 
    
     public void OnDisplayPopupClicked(object sender, EventArgs e) {
-        CartStorage _cart = new();
-        decimal price = _cart.GetCartTotal();
+        decimal price = CartStorage.GetCartTotal();
         string PaymentUrl = "https://derpipose.github.io/Payment.html?price=" + price;
         var popup = new PaymentPopup(PaymentUrl);
 
