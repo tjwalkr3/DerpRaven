@@ -42,23 +42,6 @@ public class PortfolioController : ControllerBase
         return Ok(portfolio);
     }
 
-    [HttpGet("type/{productType}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetPortfoliosByType(string productType)
-    {
-        _metrics.AddPortfolioEndpointCall();
-        var portfolios = await _portfolioService.GetPortfoliosByTypeAsync(productType);
-        return Ok(portfolios);
-    }
-
-    [HttpGet("name/{name}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetPortfoliosByName(string name)
-    {
-        _metrics.AddPortfolioEndpointCall();
-        var portfolios = await _portfolioService.GetPortfoliosByNameAsync(name);
-        return Ok(portfolios);
-    }
 
     [HttpPost]
     public async Task<IActionResult> CreatePortfolioAsync(PortfolioDto portfolio)

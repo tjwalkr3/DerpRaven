@@ -35,28 +35,6 @@ public class PortfolioService : IPortfolioService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<List<PortfolioDto>> GetPortfoliosByTypeAsync(string productType)
-    {
-        _logger.LogInformation("Fetching portfolios with product type {ProductType}", productType);
-        return await _context.Portfolios
-            .Include(p => p.ProductType)
-            .Include(p => p.Images)
-            .Where(p => p.ProductType.Name == productType)
-            .Select(p => MapToPortfolioDto(p))
-            .ToListAsync();
-    }
-
-
-    public async Task<List<PortfolioDto>> GetPortfoliosByNameAsync(string name)
-    {
-        _logger.LogInformation("Fetching portfolios with name {PortfolioName}", name);
-        string searchQuery = name.Trim().ToLower();
-        return await _context.Portfolios
-            .Where(p => p.Name.Contains(searchQuery))
-            .Select(p => MapToPortfolioDto(p))
-            .ToListAsync();
-    }
-
     public async Task<bool> CreatePortfolioAsync(PortfolioDto dto)
     {
         var portfolio = await MapFromPortfolioDto(dto);

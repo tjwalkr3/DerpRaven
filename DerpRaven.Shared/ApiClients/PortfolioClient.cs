@@ -21,19 +21,7 @@ public class PortfolioClient(IApiService apiService) : IPortfolioClient
         return response;
     }
 
-    // does not need authentication
-    public async Task<List<PortfolioDto>> GetPortfoliosByTypeAsync(string productType)
-    {
-        var response = await apiService.GetFromJsonAsyncWithoutAuthorization<List<PortfolioDto>>($"api/portfolio/type/{productType}");
-        return response ?? [];
-    }
 
-    // does not need authentication
-    public async Task<List<PortfolioDto>> GetPortfoliosByNameAsync(string name)
-    {
-        var response = await apiService.GetFromJsonAsyncWithoutAuthorization<List<PortfolioDto>>($"api/portfolio/name/{name}");
-        return response ?? [];
-    }
 
     // needs authentication
     public async Task<bool> CreatePortfolioAsync(PortfolioDto portfolio)
