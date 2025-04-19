@@ -1,0 +1,45 @@
+﻿@page "/customrequests"
+@attribute [Authorize]
+
+<h3>CustomRequests</h3>
+<h4 class="errorText">@errorString</h4>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Product Type Id</th>
+            <th>User Id</th>
+        </tr>
+
+        @if (_portfolios == null)
+        {
+            <tr>
+                <td colspan="6">Loading...</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var portfolio in _portfolios)
+            {
+                <tr>
+                    <td>@portfolio.Id</td>
+                    <td>@portfolio.Description</td>
+                    <td>@portfolio.Name</td>
+                    <td>@portfolio.ProductTypeId</td>
+                    <td>
+                        @foreach (var imageId in portfolio.ImageIds)
+                        {
+                            <span>@imageId, </span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </thead>
+</table>
+

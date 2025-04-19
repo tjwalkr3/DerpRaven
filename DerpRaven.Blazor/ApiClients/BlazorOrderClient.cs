@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace DerpRaven.Blazor.ApiClients;
 
-public class BlazorOrderClient : IOrderClient
+public class BlazorOrderClient
 {
     private readonly HttpClient _httpClient;
 
@@ -36,11 +36,6 @@ public class BlazorOrderClient : IOrderClient
     public async Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId)
     {
         await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
-
-    Task<int> IOrderClient.CreateOrderAsync(OrderDto order)
-    {
         throw new NotImplementedException();
     }
 }

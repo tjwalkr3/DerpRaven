@@ -1,30 +1,29 @@
 ﻿using DerpRaven.Blazor.ApiClients;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
-
 namespace DerpRaven.Blazor.Pages;
 
-public partial class Orders
+public partial class Portfolio
 {
-    private List<OrderDto>? _orders = [];
+    private List<PortfolioDto>? _portfolios = [];
     private string errorString = string.Empty;
-    BlazorOrderClient _orderClient { get; }
+    BlazorPortfolioClient _portfolioClient { get; }
 
-    public Orders(BlazorOrderClient orderClient)
+    public Portfolio(BlazorPortfolioClient portfolioClient)
     {
-        _orderClient = orderClient;
+        _portfolioClient = portfolioClient;
     }
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadOrders();
+        await LoadPortfolios();
     }
 
-    private async Task LoadOrders()
+    private async Task LoadPortfolios()
     {
         try
         {
-            _orders = await _orderClient.GetAllOrdersAsync();
+            _portfolios = await _portfolioClient.GetAllPortfoliosAsync();
             errorString = string.Empty;
         }
         catch (Exception ex)
