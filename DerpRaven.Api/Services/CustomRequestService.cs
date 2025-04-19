@@ -47,28 +47,6 @@ public class CustomRequestService : ICustomRequestService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<List<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status)
-    {
-        _logger.LogInformation("Fetching custom requests with status {Status}", status);
-        return await _context.CustomRequests
-            .Include(r => r.ProductType)
-            .Include(r => r.User)
-            .Where(r => r.Status == status)
-            .Select(r => MapToCustomRequestDto(r))
-            .ToListAsync();
-    }
-
-    public async Task<List<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType)
-    {
-        _logger.LogInformation("Fetching custom requests with product type {ProductType}", productType);
-        return await _context.CustomRequests
-            .Include(r => r.ProductType)
-            .Include(r => r.User)
-            .Where(r => r.ProductType.Name == productType)
-            .Select(r => MapToCustomRequestDto(r))
-            .ToListAsync();
-    }
-
     public async Task<bool> ChangeStatusAsync(int id, string status)
     {
         _logger.LogInformation("Changing status of custom request with ID {RequestId} to {Status}", id, status);

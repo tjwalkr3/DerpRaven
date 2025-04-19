@@ -116,37 +116,6 @@ public class CustomRequestClientTests
         result[0].Id.ShouldBe(1);
     }
 
-    [Test]
-    public async Task GetCustomRequestsByStatusAsync()
-    {
-        // Arrange
-        var client = new CustomRequestClient(_apiService);
-
-        // Act
-        var result = await client.GetCustomRequestsByStatusAsync("Pending");
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<List<CustomRequestDto>>();
-        result.Count.ShouldBe(1);
-        result[0].Id.ShouldBe(1);
-    }
-
-    [Test]
-    public async Task GetCustomRequestsByTypeAsync()
-    {
-        // Arrange
-        var client = new CustomRequestClient(_apiService);
-
-        // Act
-        var result = await client.GetCustomRequestsByTypeAsync("type1");
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<List<CustomRequestDto>>();
-        result.Count.ShouldBe(1);
-        result[0].Id.ShouldBe(1);
-    }
 
     [Test]
     public async Task ChangeStatusAsync()

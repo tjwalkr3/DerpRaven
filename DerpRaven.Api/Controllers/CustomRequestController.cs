@@ -51,22 +51,6 @@ public class CustomRequestController : ControllerBase
         return Ok(requests);
     }
 
-    [HttpGet("status/{status}")]
-    public async Task<IActionResult> GetCustomRequestsByStatus(string status)
-    {
-        _metrics.AddCustomRequestEndpointCall();
-        var requests = await _customRequestService.GetCustomRequestsByStatusAsync(status);
-        return Ok(requests);
-    }
-
-    [HttpGet("type/{productType}")]
-    public async Task<IActionResult> GetCustomRequestsByType(string productType)
-    {
-        _metrics.AddCustomRequestEndpointCall();
-        var requests = await _customRequestService.GetCustomRequestsByTypeAsync(productType);
-        return Ok(requests);
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreateCustomRequest([FromBody] CustomRequestDto request)
     {
