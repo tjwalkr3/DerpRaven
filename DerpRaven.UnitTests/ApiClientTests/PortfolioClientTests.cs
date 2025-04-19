@@ -48,7 +48,7 @@ public class PortfolioClientTests
         result.Name.ShouldBe("Portfolio1");
     }
 
-    
+
 
 
     [Test]

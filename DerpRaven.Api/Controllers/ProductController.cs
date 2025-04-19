@@ -37,21 +37,6 @@ public class ProductController : ControllerBase
         return Ok(product);
     }
 
-    [HttpGet("type/{productType}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetProductsByTypeAsync(string productType)
-    {
-        var products = await _productService.GetProductsByTypeAsync(productType);
-        return Ok(products);
-    }
-
-    [HttpGet("name/{name}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetProductsByNameAsync(string name)
-    {
-        var products = await _productService.GetProductsByNameAsync(name);
-        return Ok(products);
-    }
 
     [HttpPost]
     public async Task<IActionResult> CreateProductAsync(ProductDto product)

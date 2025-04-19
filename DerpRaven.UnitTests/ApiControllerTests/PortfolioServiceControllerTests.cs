@@ -49,7 +49,8 @@ public class PortfolioServiceControllerTests
     }
 
     [Test]
-    public async Task GetPortfolioById() {
+    public async Task GetPortfolioById()
+    {
         // Act
         var result = await _controller.GetPortfolioById(1) as OkObjectResult;
         // Assert
@@ -60,7 +61,7 @@ public class PortfolioServiceControllerTests
         portfolio.Id.ShouldBe(1);
     }
 
-    
+
 
     [Test]
     public async Task CreatePortfolio()

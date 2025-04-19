@@ -24,16 +24,6 @@ public class ProductService : IProductService
             .ToListAsync();
     }
 
-    public async Task<List<ProductDto>> GetProductsByTypeAsync(string productType)
-    {
-        _logger.LogInformation("Fetching products with product type {ProductType}", productType);
-        return await _context.Products
-            .Include(p => p.ProductType)
-            .Include(p => p.Images)
-            .Where(p => p.ProductType.Name == productType)
-            .Select(p => MapToProductDto(p))
-            .ToListAsync();
-    }
 
     public async Task<ProductDto?> GetProductByIdAsync(int id)
     {
@@ -46,15 +36,6 @@ public class ProductService : IProductService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<List<ProductDto>> GetProductsByNameAsync(string name)
-    {
-        _logger.LogInformation("Fetching products with name {ProductName}", name);
-        string searchQuery = name.Trim().ToLower();
-        return await _context.Products
-            .Where(p => p.Name.Trim().ToLower().Contains(searchQuery))
-            .Select(p => MapToProductDto(p))
-            .ToListAsync();
-    }
 
     public async Task<bool> CreateProductAsync(ProductDto dto)
     {

@@ -103,7 +103,7 @@ public class PortfolioServiceTests
         result.Name.ShouldBe("Portfolio1");
     }
 
-    
+
 
     [Order(1)]
     [Test]

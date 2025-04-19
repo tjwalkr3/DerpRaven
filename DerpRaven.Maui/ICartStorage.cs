@@ -1,7 +1,9 @@
 ﻿using DerpRaven.Shared.Dtos;
 
-namespace DerpRaven.Maui {
-    public interface ICartStorage {
+namespace DerpRaven.Maui
+{
+    public interface ICartStorage
+    {
         bool CanCheckOut { get; }
         bool IsNonce { get; }
 
