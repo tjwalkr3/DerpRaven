@@ -1,6 +1,7 @@
 ﻿using DerpRaven.Blazor.ApiClients;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
+using Microsoft.AspNetCore.Components;
 
 namespace DerpRaven.Blazor.Pages;
 
@@ -51,7 +52,19 @@ public partial class AddProducts
         ProductTypeId = 0;
     }
 
+    private void OnProductChanged(ChangeEventArgs e)
+    {
+        if (e.Value == null || string.IsNullOrEmpty(e.Value.ToString())) return;
+        int productId = int.Parse(e.Value.ToString()!);
+        var product = _products.FirstOrDefault(p => p.Id == productId);
+        if (product == null) return;
 
+        ProductName = product.Name;
+        Price = product.Price;
+        Quantity = product.Quantity;
+        Description = product.Description;
+        ProductTypeId = product.ProductTypeId;
+    }
 
     public async Task LoadImages()
     {

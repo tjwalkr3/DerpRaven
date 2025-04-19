@@ -6,7 +6,7 @@
 <label>Is Editing</label>
 <input type="checkbox" @onchange="IsEditingChanged" />
 
-<select style="visibility: @isEditing;" >
+<select style="visibility: @isEditing;" @onchange="OnProductChanged">
     <option disabled selected>Select your option</option>
     @foreach (var item in _products)
     {
