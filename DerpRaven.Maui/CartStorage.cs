@@ -93,6 +93,7 @@ namespace DerpRaven.Maui
                     oldproduct.Quantity -= item.Quantity;
                     //TODO: Update the product quantity in the database using the ProductClient.
                     //ProductClient.
+                    //await ProductClient.UpdateProduct(oldproduct);
                 }
                 await OrderedProductClient.CreateOrderedProducts(products);
             }
