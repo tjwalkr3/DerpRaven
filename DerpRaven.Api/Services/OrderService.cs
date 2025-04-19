@@ -99,7 +99,7 @@ public class OrderService : IOrderService
         {
             Address = dto.Address,
             Email = dto.Email,
-            OrderDate = dto.OrderDate,
+            OrderDate = dto.OrderDate.ToUniversalTime(),
             User = user,
             OrderedProducts = []
         };
