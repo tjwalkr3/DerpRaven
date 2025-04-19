@@ -76,7 +76,9 @@ public partial class CartPageViewModel : ObservableObject
 
     [RelayCommand]
     private void Checkout() {
-        //Implement checkout logic here
+        // Implement checkout logic here
+        // Treating the checkout as successful
+        _cartStorage.CheckOut();
     }
 
     private void UpdateRunningTotal()
