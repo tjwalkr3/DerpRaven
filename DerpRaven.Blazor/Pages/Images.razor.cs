@@ -27,11 +27,7 @@ public partial class Images
         }
     }
 
-    public string IsSubmitButtonEnabled()
-    {
-        if (string.IsNullOrWhiteSpace(altText) || selectedFile == null) return "disabled";
-        return string.Empty;
-    }
+    public bool IsSubmitEnabled() => !string.IsNullOrWhiteSpace(altText) && selectedFile != null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,9 +63,9 @@ public partial class Images
 
     public async Task AddImage()
     {
-        if (selectedFile != null)
+        if (IsSubmitEnabled())
         {
-            bool result = await _imageClient.UploadImageAsync(selectedFile, altText);
+            bool result = await _imageClient.UploadImageAsync(selectedFile!, altText);
             if (result)
             {
                 altText = string.Empty;

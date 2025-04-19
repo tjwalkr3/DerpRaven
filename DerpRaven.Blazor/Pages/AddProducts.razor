@@ -1,33 +1,111 @@
 ﻿@page "/addproducts"
 
-<h3>Add Products</h3>
+@if (isEditing != "visible")
+{
+    <h3>Add A Product</h3>
+}
+else
+{
+    <h3>Edit A Product</h3>
+}
 
+<h4 class="errorText">@errorString</h4>
 
-<div class="product-form">
-    <div>
-        <label>Name</label>
-        <input @bind="ProductName" placeholder="Product Name" />
-    </div>
+<label>Is Editing</label>
+<input type="checkbox" @onchange="IsEditingChanged" />
 
-    <div>
-        <label>Price</label>
-        <input type="text" @bind="Price" placeholder="$0.00" />
-    </div>
+<select style="visibility: @isEditing;" @onchange="OnProductChanged">
+    <option disabled selected>Select your option</option>
+    @foreach (var item in _products)
+    {
+        <option value="@item.Id">@item.Name</option>
+    }
+</select>
 
-    <div>
-        <label>Photos</label>
-        <button @onclick="UploadPhoto">Upload</button>
-    </div>
-
-    <div class="form-group">
-        <label>Description</label>
-        <textarea @bind="Description" rows="4"></textarea>
-    </div>
-
-    <div class="form-group">
-        <label><input type="checkbox" @bind="IsPlush" /> Plush</label>
-        <label><input type="checkbox" @bind="IsArt" /> Art</label>
-    </div>
-
-    <button class="submit-button" @onclick="AddProduct">Add Product</button>
+<div class="form-group">
+    <label>Name</label>
+    <input @bind="ProductName" placeholder="Product Name" />
 </div>
+
+<div class="form-group">
+    <label>Price</label>
+    <input type="number" min="0" step="0.01" @bind="Price" />
+</div>
+
+<div class="form-group">
+    <label>Quantity</label>
+    <input type="number" min="0" step="1" @bind="Quantity" />
+</div>
+
+<div class="form-group">
+    <label>Description</label>
+    <textarea @bind="Description" rows="4"></textarea>
+</div>
+
+@if (isEditing != "visible")
+{
+    <div class="form-group">
+        <label>Product Type</label>
+        <select @bind="ProductTypeId">
+            <option value="1">Plushie</option>
+            <option value="2">Art</option>
+        </select>
+    </div>
+}
+
+<div class="form-group">
+    @if (isEditing != "visible") 
+    {
+        <button class="submit-button" @onclick="AddProduct">Add Product</button>
+    }
+    else 
+    {
+        <button class="submit-button" @onclick="UpdateProduct">Edit Product</button>
+    }
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>File Name</th>
+            <th>Id</th>
+            <th>Alt Text</th>
+            <th>Select Image</th>
+        </tr>
+
+        @if (_images == null)
+        {
+            <tr>
+                <td colspan="4">Loading...</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var image in _images)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(image.ImageDataUrl))
+                        {
+                            <img src="@image.ImageDataUrl" alt="@image.Alt" width="100" />
+                        }
+                    </td>
+                    <td>@image.Path</td>
+                    <td>@image.Id</td>
+                    <td>@image.Alt</td>
+                    <td>
+                        @if (isEditing == "visible" && imageIds.Contains(image.Id))
+                        {
+                            <input type="checkbox" @oninput="() => SelectImage(image.Id)" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" @oninput="() => SelectImage(image.Id)">
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </thead>
+</table>
