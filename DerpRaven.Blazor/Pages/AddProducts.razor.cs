@@ -10,18 +10,48 @@ public partial class AddProducts
     private decimal Price { get; set; } = 0;
     private int Quantity { get; set; } = 0;
     private string Description { get; set; } = "";
-    private int productTypeId { get; set; }
+    private int ProductTypeId { get; set; }
+
     private readonly IImageClient _imageClient;
     List<ImageDto>? _images = [];
     List<int> imageIds = [];
     private BlazorProductClient _productClient { get; }
+    private List<ProductDto> _products = [];
     private string errorString = string.Empty;
+    private string isEditing = "hidden";
 
     public AddProducts(IImageClient imageClient, BlazorProductClient productClient)
     {
         _productClient = productClient;
         _imageClient = imageClient;
+
     }
+
+    public async Task IsEditingChanged()
+    {
+        if (isEditing == "visible")
+        {
+            isEditing = "hidden";
+            ClearFields();
+            await InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            isEditing = "visible";
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    public void ClearFields()
+    {
+        ProductName = "";
+        Price = 0;
+        Quantity = 0;
+        Description = "";
+        ProductTypeId = 0;
+    }
+
+
 
     public async Task LoadImages()
     {
@@ -44,9 +74,23 @@ public partial class AddProducts
         }
     }
 
+    private async Task LoadProducts()
+    {
+        try
+        {
+            _products = await _productClient.GetAllProductsAsync();
+            errorString = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            errorString = ex.Message;
+        }
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await LoadImages();
+        await LoadProducts();
     }
 
     public void SelectImage(int imageId)
@@ -79,7 +123,7 @@ public partial class AddProducts
             Price = Price,
             Quantity = Quantity,
             Description = Description,
-            ProductTypeId = productTypeId,
+            ProductTypeId = ProductTypeId,
             ImageIds = imageIds
         };
         bool status = await _productClient.CreateProductAsync(product);

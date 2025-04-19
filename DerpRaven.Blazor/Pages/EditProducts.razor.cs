@@ -14,7 +14,7 @@ partial class EditProducts
         _productClient = productClient;
     }
 
-    private async Task LoadRequests()
+    private async Task LoadProducts()
     {
         try
         {
@@ -29,6 +29,6 @@ partial class EditProducts
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadRequests();
+        await LoadProducts();
     }
 }
