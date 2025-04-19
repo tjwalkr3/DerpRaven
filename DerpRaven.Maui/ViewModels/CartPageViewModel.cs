@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using DerpRaven.Maui;
 using DerpRaven.Maui.Popups;
 using CommunityToolkit.Maui.Views;
+using DerpRaven.Shared.Authentication;
 
 namespace DerpRaven.Maui.ViewModels;
 
@@ -11,6 +12,7 @@ public partial class CartPageViewModel : ObservableObject
 {
 
     private readonly ICartStorage _cartStorage;
+    private readonly IKeycloakClient _keycloakClient;
 
     [ObservableProperty]
     private ObservableCollection<CartItem> cartItems = [];
@@ -19,9 +21,10 @@ public partial class CartPageViewModel : ObservableObject
     private decimal runningTotal = 0.00m;
 
 
-    public CartPageViewModel(ICartStorage cartStorage)
+    public CartPageViewModel(ICartStorage cartStorage, IKeycloakClient keycloakClient)
     {
         _cartStorage = cartStorage;
+        _keycloakClient = keycloakClient;
         PopulateCart();
         CheckPlushiePresent();
     }
@@ -82,11 +85,11 @@ public partial class CartPageViewModel : ObservableObject
         // Treating the checkout as successful
         if (PlushiePresent)
         {
-            await _cartStorage.CheckOut("", "");
+            await _cartStorage.CheckOut("88 Holland Avenue, West Seneca, NY", "example@example.com");
         }
         else
         {
-            await _cartStorage.CheckOut("", "");
+            await _cartStorage.CheckOut("", "example@example.com");
         }
         PopulateCart();
 
