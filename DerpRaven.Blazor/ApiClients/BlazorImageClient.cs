@@ -7,7 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DerpRaven.Blazor.ApiClients;
 
-public class BlazorImageClient
+public class BlazorImageClient : IImageClient
 {
     private readonly HttpClient _httpClient;
 
