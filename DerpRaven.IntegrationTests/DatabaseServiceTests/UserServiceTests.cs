@@ -110,27 +110,7 @@ public class UserServiceTests
         result.Active.ShouldBeFalse();
     }
 
-    [Order(5)]
-    [Test]
-    public async Task GetUsersByStatus()
-    {
-        // Arrange
-        List<User> users = new()
-        {
-            new User { Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] },
-            new User { Name = "User2", OAuth = "OAuth2", Email = "user2@example.com", Active = false, Role = "customer", CustomRequests = [], Orders = [] }
-        };
-        await _context.Users.AddRangeAsync(users);
-        await _context.SaveChangesAsync();
-
-        // Act
-        var result = await _userService.GetUsersByStatusAsync(true);
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.Single().Active.ShouldBeTrue();
-        result.Single().Name.ShouldBe("User1");
-    }
+    
 
     [Order(6)]
     [Test]
@@ -153,22 +133,7 @@ public class UserServiceTests
         result.Email.ShouldBe("user1@example.com");
     }
 
-    [Order(8)]
-    [Test]
-    public async Task GetUserByName()
-    {
-        // Arrange
-        var user = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-
-        // Act
-        var result = await _userService.GetUsersByNameAsync("User1");
-
-        // Assert
-        result.ShouldNotBeEmpty();
-        result.Single().Name.ShouldBe("User1");
-    }
+    
 
 
     [Order(9)]

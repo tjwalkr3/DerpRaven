@@ -24,9 +24,7 @@ public class UserServiceControllerTests
         userService.GetAllUsersAsync().Returns(dtoList);
         userService.GetUserByIdAsync(1).Returns(dtoList[0]);
         userService.CreateUserAsync(Arg.Any<UserDto>()).Returns(true);
-        userService.GetUsersByNameAsync("User1").Returns(dtoList.Where(c => c.Name == "User1").ToList());
         userService.UpdateUserAsync(Arg.Any<UserDto>()).Returns(true);
-        userService.GetUsersByStatusAsync(true).Returns(dtoList);
         userService.GetUserByEmailAsync("user1@example.com").Returns(dtoList.Where(u => u.Email == "user1@example.com").Single());
 
         _controller = new UserController(userService);
@@ -61,21 +59,6 @@ public class UserServiceControllerTests
         user.Id.ShouldBe(1);
     }
 
-    [Test]
-    public async Task GetUserByStatus()
-    {
-        // Act
-        var result = await _controller.GetUsersByStatus(true) as OkObjectResult;
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var users = result.Value as List<UserDto>;
-        users.ShouldNotBeEmpty();
-        users.Count.ShouldBe(2);
-        users.Any(c => c.Id == 1).ShouldBeTrue();
-        users.Any(c => c.Id == 2).ShouldBeTrue();
-    }
 
     [Test]
     public async Task GetUsersByEmail()
@@ -91,19 +74,7 @@ public class UserServiceControllerTests
         users.Email.ShouldBe("user1@example.com");
     }
 
-    [Test]
-    public async Task GetUsersByName()
-    {
-        // Act
-        var result = await _controller.GetUsersByName("User1") as OkObjectResult;
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var users = result.Value as List<UserDto>;
-        users.ShouldNotBeNull();
-        users.Single().Name.ShouldBe("User1");
-    }
+   
 
     [Test]
     public async Task CreateUser()

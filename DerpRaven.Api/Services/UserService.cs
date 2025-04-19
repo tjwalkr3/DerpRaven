@@ -39,14 +39,6 @@ public class UserService : IUserService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<List<UserDto>> GetUsersByStatusAsync(bool active)
-    {
-        return await _context.Users
-            .Where(u => u.Active == active)
-            .Select(u => MapToUserDto(u))
-            .ToListAsync();
-    }
-
     public async Task<UserDto?> GetUserByEmailAsync(string email)
     {
         return await _context.Users
@@ -55,14 +47,6 @@ public class UserService : IUserService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<List<UserDto>> GetUsersByNameAsync(string name)
-    {
-        string searchQuery = name.Trim().ToLower();
-        return await _context.Users
-            .Where(u => u.Name.Trim().ToLower() == searchQuery)
-            .Select(u => MapToUserDto(u))
-            .ToListAsync();
-    }
 
     public async Task<bool> CreateUserAsync(UserDto dto)
     {
