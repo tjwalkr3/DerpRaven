@@ -3,13 +3,13 @@ using DerpRaven.Shared.Dtos;
 
 namespace DerpRaven.Blazor.Pages;
 
-partial class ManageView
+partial class EditProducts
 {
     private string errorString = string.Empty;
     private readonly BlazorProductClient _productClient;
     private List<ProductDto> _products = [];
 
-    public ManageView(BlazorProductClient productClient)
+    public EditProducts(BlazorProductClient productClient)
     {
         _productClient = productClient;
     }
