@@ -76,7 +76,8 @@ public partial class CartPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task Checkout() {
+    private async Task Checkout()
+    {
         // Implement checkout logic here
         // Treating the checkout as successful
         if (PlushiePresent)
