@@ -9,6 +9,5 @@ namespace DerpRaven.Api.Services
         Task<List<UserDto>> GetAllUsersAsync();
         Task<UserDto?> GetUserByEmailAsync(string email);
         Task<UserDto?> GetUserByIdAsync(int id);
-        Task<bool> UpdateUserAsync(UserDto dto);
     }
 }

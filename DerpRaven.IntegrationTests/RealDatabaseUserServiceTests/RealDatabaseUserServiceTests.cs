@@ -72,23 +72,7 @@ public class RealDatabaseUserServiceTests
         result.Name.ShouldBe("User1");
     }
 
-    [Order(4)]
-    [Test]
-    public async Task UpdateUser()
-    {
-        // Arrange
-        var updatedUser = new UserDto { Id = 3, Name = "UpdatedUser", OAuth = "OAuth1", Email = "updated@example.com", Active = false, Role = "customer" };
 
-        // Act
-        await _userService.UpdateUserAsync(updatedUser);
-        var result = await _context.Users.FindAsync(3);
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.Name.ShouldBe("UpdatedUser");
-        result.Email.ShouldBe("updated@example.com");
-        result.Active.ShouldBeFalse();
-    }
 
     [Order(6)]
     [Test]

@@ -24,7 +24,6 @@ public class UserServiceControllerTests
         userService.GetAllUsersAsync().Returns(dtoList);
         userService.GetUserByIdAsync(1).Returns(dtoList[0]);
         userService.CreateUserAsync(Arg.Any<UserDto>()).Returns(true);
-        userService.UpdateUserAsync(Arg.Any<UserDto>()).Returns(true);
         userService.GetUserByEmailAsync("user1@example.com").Returns(dtoList.Where(u => u.Email == "user1@example.com").Single());
 
         _controller = new UserController(userService);
@@ -74,7 +73,7 @@ public class UserServiceControllerTests
         users.Email.ShouldBe("user1@example.com");
     }
 
-   
+
 
     [Test]
     public async Task CreateUser()
@@ -98,23 +97,4 @@ public class UserServiceControllerTests
         result.StatusCode.ShouldBe(StatusCodes.Status201Created);
     }
 
-    [Test]
-    public async Task UpdateUser()
-    {
-        //Act
-        var result = await _controller.UpdateUser(1,
-            new UserDto()
-            {
-                Id = 1,
-                Name = "User1",
-                OAuth = "OAuth1",
-                Email = "user1@example.com",
-                Role = "customer",
-                Active = true
-            }) as NoContentResult;
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
-    }
 }

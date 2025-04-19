@@ -89,28 +89,8 @@ public class UserServiceTests
         result.Name.ShouldBe("User1");
     }
 
-    [Order(4)]
-    [Test]
-    public async Task UpdateUser()
-    {
-        // Arrange
-        var user = new User { Id = 1, Name = "User1", OAuth = "OAuth1", Email = "user1@example.com", Active = true, Role = "customer", CustomRequests = [], Orders = [] };
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-        var updatedUser = new UserDto { Id = 1, Name = "UpdatedUser", OAuth = "OAuth1", Email = "updated@example.com", Active = false, Role = "customer" };
 
-        // Act
-        await _userService.UpdateUserAsync(updatedUser);
-        var result = await _context.Users.FindAsync(1);
 
-        // Assert
-        result.ShouldNotBeNull();
-        result.Name.ShouldBe("UpdatedUser");
-        result.Email.ShouldBe("updated@example.com");
-        result.Active.ShouldBeFalse();
-    }
-
-    
 
     [Order(6)]
     [Test]
@@ -133,7 +113,7 @@ public class UserServiceTests
         result.Email.ShouldBe("user1@example.com");
     }
 
-    
+
 
 
     [Order(9)]

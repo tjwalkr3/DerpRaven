@@ -63,23 +63,6 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<bool> UpdateUserAsync(UserDto dto)
-    {
-        var oldUser = await _context.Users.FindAsync(dto.Id);
-        if (oldUser != null)
-        {
-            oldUser.Name = dto.Name;
-            oldUser.Email = dto.Email;
-            oldUser.Active = dto.Active;
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     private static User MapFromUserDto(UserDto dto)
     {
         return new User()

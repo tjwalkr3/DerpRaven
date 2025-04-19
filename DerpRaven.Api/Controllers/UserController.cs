@@ -55,13 +55,6 @@ public class UserController : ControllerBase
         return Created();
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateUser(int id, UserDto user)
-    {
-        if (id != user.Id) return BadRequest();
-        bool wasUpdated = await _userService.UpdateUserAsync(user);
-        if (!wasUpdated) return NotFound();
-        return NoContent();
-    }
+
 }
 
