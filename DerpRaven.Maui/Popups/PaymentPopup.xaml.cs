@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Views;
 
 namespace DerpRaven.Maui.Popups;
 
+
 public partial class PaymentPopup : Popup {
     bool loaded = false;
     public string PaymentUrl { get; set; }
@@ -26,4 +27,5 @@ public partial class PaymentPopup : Popup {
 
     }
     void OnClosePopupClicked(object? sender, EventArgs e) => Close();
+
 }

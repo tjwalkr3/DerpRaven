@@ -11,4 +11,5 @@
             Source="{Binding PaymentUrl}"/>
         <Button Text="Cancel" Clicked="OnClosePopupClicked"/>
     </StackLayout>
+
 </toolkit:Popup>

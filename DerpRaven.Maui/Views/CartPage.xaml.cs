@@ -13,6 +13,13 @@ public partial class CartPage : ContentPage
         _vm = vm;
     }
 
+    public void DisplayPopup()
+    {
+        var popup = new PaymentPopup();
+
+        this.ShowPopup(popup);
+    }
+
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);

@@ -22,7 +22,7 @@ public class BlazorCustomRequestClient : ICustomRequestClient
 
     public async Task<bool> ChangeStatusAsync(int id, string status)
     {
-        var response = await _httpClient.PatchAsync($"api/CustomRequest/{id}/status", new StringContent(status));
+        var response = await _httpClient.PatchAsync($"api/CustomRequest/{id}/status", JsonContent.Create(status));
         response.EnsureSuccessStatusCode();
         return response.IsSuccessStatusCode;
     }

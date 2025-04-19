@@ -74,8 +74,12 @@ public class ProductService : IProductService
 
     public async Task<bool> UpdateProductAsync(ProductDto dto)
     {
+        _logger.LogInformation("Product Dto id: {dto}", dto.Id);
         var oldProduct = await _context.Products.FindAsync(dto.Id);
+        _logger.LogInformation("Old product is {oldProductDto}", oldProduct);
         var productType = await _context.ProductTypes.FindAsync(dto.ProductTypeId);
+        _logger.LogInformation("Product type is {ProductId}", productType);
+
         var images = await _context.Images
             .Where(i => dto.ImageIds.Contains(i.Id))
             .ToListAsync();
@@ -87,9 +91,19 @@ public class ProductService : IProductService
             oldProduct.Quantity = dto.Quantity;
             oldProduct.Description = dto.Description;
             oldProduct.ProductType = productType;
-            oldProduct.Images = images;
+
+            // Clear the old images to avoid duplicate key error
+            _logger.LogInformation("Have not cleared stuff yet {images}", oldProduct.Images.Count);
+            _context.Entry(oldProduct).Collection(p => p.Images).Load();
+            oldProduct.Images.Clear();
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Have cleared stuff {images}", oldProduct.Images.Count);
+            foreach (var image in images) oldProduct.Images.Add(image);
+
             await _context.SaveChangesAsync();
             _logger.LogInformation("Updated product with ID {ProductId}", dto.Id);
+            _logger.LogInformation("Added stuff {images}", oldProduct.Images.Count);
             return true;
         }
         else
