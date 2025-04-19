@@ -89,9 +89,6 @@ public class UserServiceTests
         result.Name.ShouldBe("User1");
     }
 
-
-
-
     [Order(6)]
     [Test]
     public async Task GetUserByEmail_WhileEmailsAreDifferent()
@@ -112,9 +109,6 @@ public class UserServiceTests
         result.ShouldNotBeNull();
         result.Email.ShouldBe("user1@example.com");
     }
-
-
-
 
     [Order(9)]
     [Test]
