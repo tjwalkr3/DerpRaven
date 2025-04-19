@@ -56,9 +56,9 @@ public class OrderController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateOrder(OrderDto order)
     {
-        var wasCreated = await _orderService.CreateOrderAsync(order);
-        if (!wasCreated) return BadRequest();
-        return Created();
+        int createdOrderId = await _orderService.CreateOrderAsync(order);
+        if (createdOrderId == 0) return BadRequest();
+        return Created(string.Empty, new { OrderId = createdOrderId });
     }
 
     [HttpPatch("{id}")]

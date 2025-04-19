@@ -12,10 +12,14 @@ public class OrderClient(IApiService apiService) : IOrderClient
         return await response.Content.ReadFromJsonAsync<List<OrderDto>>() ?? [];
     }
 
-    public async Task CreateOrderAsync(OrderDto order)
+    public async Task<int> CreateOrderAsync(OrderDto order)
     {
         var response = await apiService.PostAsJsonAsync("api/Order", order);
         response.EnsureSuccessStatusCode();
+
+        // Deserialize the response body to extract the createdOrderId
+        var result = await response.Content.ReadFromJsonAsync<Response>();
+        return result?.OrderId ?? 0;
     }
 
     public async Task<List<OrderDto>> GetOrdersByUserEmailAsync()
@@ -30,4 +34,9 @@ public class OrderClient(IApiService apiService) : IOrderClient
         await Task.Delay(1000);
         throw new NotImplementedException();
     }
+}
+
+public class Response()
+{
+    public int OrderId { get; set; }
 }

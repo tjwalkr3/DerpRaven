@@ -6,5 +6,6 @@ namespace DerpRaven.Shared.ApiClients
     {
         Task<List<ProductDto>> GetAllProductsAsync();
         Task<ProductDto?> GetProductByIdAsync(int id);
+        Task<bool> UpdateProductAsync(ProductDto product);
     }
 }

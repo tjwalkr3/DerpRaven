@@ -7,11 +7,11 @@ namespace DerpRaven.Maui {
 
         void AddCartItem(ProductDto product);
         void AddNonce(string nonce);
-        Task CheckOut();
+        Task<bool> CheckAndUpdateCartItemQuantities();
+        Task<bool> CheckOut(string address, string email);
         void ClearCart();
         void RemoveCartItem(CartItem item);
         void SaveCartItems(List<CartItem> items);
         void UpdateCartItem(CartItem item);
-        void VerifyCanCheckOut();
     }
 }

@@ -56,6 +56,7 @@ public partial class AppShellViewModel : ObservableObject
         {
             string email = _authenticationData.User.FindFirst("email")?.Value ?? "unknown";
             loginToolbarItem.Text = $"Logout";
+            UserStorage.SetEmail(email);
         }
         else
         {
