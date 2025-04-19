@@ -49,18 +49,16 @@ else
     </select>
 </div>
 
-@if (isEditing != "visible") 
-{
-    <div class="form-group">
+<div class="form-group">
+    @if (isEditing != "visible") 
+    {
         <button class="submit-button" @onclick="AddProduct">Add Product</button>
-    </div>
-}
-else 
-{
-    <div class="form-group">
-        <button class="submit-button" @onclick="AddProduct">Edit Product</button>
-    </div>
-}
+    }
+    else 
+    {
+        <button class="submit-button" @onclick="EditProduct">Edit Product</button>
+    }
+</div>
 
 <table>
     <thead>

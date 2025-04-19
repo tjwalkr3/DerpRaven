@@ -20,6 +20,13 @@ public class BlazorProductClient
         return response.IsSuccessStatusCode;
     }
 
+    public async Task<bool> UpdateProductAsync(ProductDto product)
+    {
+        var response = await _httpClient.PutAsJsonAsync("api/Product", product);
+        response.EnsureSuccessStatusCode();
+        return response.IsSuccessStatusCode;
+    }
+
     public async Task<List<ProductDto>> GetAllProductsAsync()
     {
         var response = await _httpClient.GetFromJsonAsync<List<ProductDto>>("api/product");

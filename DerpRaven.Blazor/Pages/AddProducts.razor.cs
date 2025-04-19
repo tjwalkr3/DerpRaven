@@ -151,4 +151,27 @@ public partial class AddProducts
             errorString = "Failed to create product.";
         }
     }
+
+    public async Task UpdateProduct()
+    {
+        if (!IsSubmitButtonEnabled()) return;
+        var product = new ProductDto
+        {
+            Name = ProductName,
+            Price = Price,
+            Quantity = Quantity,
+            Description = Description,
+            ProductTypeId = ProductTypeId,
+            ImageIds = imageIds
+        };
+        bool status = await _productClient.UpdateProductAsync(product);
+        if (status)
+        {
+            errorString = string.Empty;
+        }
+        else
+        {
+            errorString = "Failed to update product.";
+        }
+    }
 }
