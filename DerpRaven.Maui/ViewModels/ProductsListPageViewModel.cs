@@ -30,6 +30,7 @@ public partial class ProductsListPageViewModel : ObservableObject
         try
         {
             List<ProductDto> products = await _productClient.GetAllProductsAsync();
+            products = products.Where(p => p.Quantity > 0).ToList(); // Filter out 0 quantity products
             List<ImageDto> images = await DownloadAllImages(products);
             PopulateProductViews(products, images);
         }

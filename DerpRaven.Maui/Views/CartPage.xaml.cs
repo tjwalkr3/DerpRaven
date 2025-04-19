@@ -25,4 +25,13 @@ public partial class CartPage : ContentPage
         base.OnNavigatedTo(args);
         _vm.PopulateCart();
     }
+
+   
+    public void OnDisplayPopupClicked(object sender, EventArgs e) {
+        decimal price = CartStorage.GetCartTotal();
+        string PaymentUrl = "https://derpipose.github.io/Payment.html?price=" + price;
+        var popup = new PaymentPopup(PaymentUrl);
+
+        this.ShowPopup(popup);
+    }
 }

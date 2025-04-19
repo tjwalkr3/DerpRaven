@@ -121,9 +121,6 @@
 	  <MauiXaml Update="Views\OrderHistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PaymentPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\PortfolioPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

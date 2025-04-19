@@ -63,10 +63,5 @@
             IsVisible="{Binding IsLoggedIn}" />
     </FlyoutItem>
 
-    <ShellContent
-        Title="Payment"
-        ContentTemplate="{DataTemplate local:PaymentPage}"
-        Route="PaymentPage" 
-        FlyoutItemIsVisible="False" />
 
 </Shell>

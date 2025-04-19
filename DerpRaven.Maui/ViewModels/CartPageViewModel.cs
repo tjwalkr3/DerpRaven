@@ -24,13 +24,12 @@ public partial class CartPageViewModel : ObservableObject
         _cartStorage = cartStorage;
         PopulateCart();
         CheckPlushiePresent();
-        UpdateRunningTotal();
     }
 
     public void PopulateCart()
     {
         // Get the cart items from storage
-        var cartItemsFromStorage = _cartStorage.GetCartItems();
+        var cartItemsFromStorage = CartStorage.GetCartItems();
         // Clear the cart items collection
         CartItems = new ObservableCollection<CartItem>();
         // Add the items from storage to the cart items collection
@@ -77,24 +76,17 @@ public partial class CartPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Checkout()
-    {
-        // Implement checkout logic here  
-        var popup = new PaymentPopup();
+    private async Task Checkout() {
+        // Implement checkout logic here
+        // Treating the checkout as successful
+        await _cartStorage.CheckOut();
+        PopulateCart();
 
-        // Show popup using the current visible page  
-        var currentPage = Application.Current.MainPage;
-
-        // Corrected the issue by using the correct type cast and accessing the MainPage directly  
-        if (currentPage is Page page)
-        {
-            page.ShowPopup(popup);
-        }
     }
 
     private void UpdateRunningTotal()
     {
-        RunningTotal = CartItems.Sum(item => item.Quantity * item.Price);
+        RunningTotal = CartStorage.GetCartTotal();
     }
 }
 

@@ -38,7 +38,6 @@ public static class MauiProgram
         builder.Services.AddTransient<CustomRequestPage>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<OrderHistoryPage>();
-        builder.Services.AddSingleton<PaymentPage>();
         builder.Services.AddTransient<PortfolioPage>();
         builder.Services.AddSingleton<ProductPage>();
         builder.Services.AddTransient<ProductsListPage>();
@@ -59,7 +58,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<CustomRequestPageViewModel>();
         builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddSingleton<OrderHistoryPageViewModel>();
-        builder.Services.AddSingleton<PaymentPageViewModel>();
         builder.Services.AddSingleton<PortfolioPageViewModel>();
         builder.Services.AddSingleton<ProductPageViewModel>();
         builder.Services.AddSingleton<ProductsListPageViewModel>();
@@ -100,6 +98,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ICartStorage, CartStorage>();
         builder.Services.AddSingleton<IOrderClient, OrderClient>();
         builder.Services.AddSingleton<IOrderedProductClient, OrderedProductClient>();
+        builder.Services.AddSingleton<ICartStorage, CartStorage>(); 
         return builder;
     }
 }
