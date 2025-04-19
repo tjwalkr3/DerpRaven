@@ -91,10 +91,10 @@ public class ProductService : IProductService
             oldProduct.Quantity = dto.Quantity;
             oldProduct.Description = dto.Description;
             oldProduct.ProductType = productType;
-            
+
             // Clear the old images to avoid duplicate key error
             _logger.LogInformation("Have not cleared stuff yet {images}", oldProduct.Images.Count);
-            _context.Entry(oldProduct).Collection(p => p.Images).Load(); 
+            _context.Entry(oldProduct).Collection(p => p.Images).Load();
             oldProduct.Images.Clear();
             await _context.SaveChangesAsync();
 
