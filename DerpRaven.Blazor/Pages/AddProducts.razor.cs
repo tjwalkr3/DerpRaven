@@ -8,10 +8,11 @@ namespace DerpRaven.Blazor.Pages;
 public partial class AddProducts
 {
     private string ProductName { get; set; } = "";
-    private decimal Price { get; set; } = 0;
+    private decimal Price { get; set; } = 0m;
     private int Quantity { get; set; } = 0;
     private string Description { get; set; } = "";
     private int ProductTypeId { get; set; }
+    private int ProductId { get; set; }
 
     private readonly IImageClient _imageClient;
     private List<ImageDto>? _images = [];
@@ -46,10 +47,11 @@ public partial class AddProducts
     public void ClearFields()
     {
         ProductName = "";
-        Price = 0;
+        Price = 0m;
         Quantity = 0;
         Description = "";
         ProductTypeId = 0;
+        ProductId = 0;
     }
 
     public void OnProductChanged(ChangeEventArgs e)
@@ -65,6 +67,7 @@ public partial class AddProducts
         Description = product.Description;
         ProductTypeId = product.ProductTypeId;
         imageIds = product.ImageIds;
+        ProductId = product.Id;
     }
 
     public async Task LoadImages()
@@ -162,7 +165,8 @@ public partial class AddProducts
             Quantity = Quantity,
             Description = Description,
             ProductTypeId = ProductTypeId,
-            ImageIds = imageIds
+            ImageIds = imageIds,
+            Id = ProductId
         };
         bool status = await _productClient.UpdateProductAsync(product);
         if (status)
