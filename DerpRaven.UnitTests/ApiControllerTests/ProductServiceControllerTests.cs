@@ -102,7 +102,7 @@ public class ProductServiceControllerTests
     public async Task UpdateProduct()
     {
         // Act
-        var result = await _controller.UpdateProduct(1,
+        var result = await _controller.UpdateProduct(
             new ProductDto()
             {
                 Description = "new product 1",
