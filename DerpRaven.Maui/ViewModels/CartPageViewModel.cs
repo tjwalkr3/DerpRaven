@@ -22,7 +22,6 @@ public partial class CartPageViewModel : ObservableObject
         _cartStorage = cartStorage;
         PopulateCart();
         CheckPlushiePresent();
-        UpdateRunningTotal();
     }
 
     public void PopulateCart()
@@ -75,10 +74,11 @@ public partial class CartPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Checkout() {
+    private async Task Checkout() {
         // Implement checkout logic here
         // Treating the checkout as successful
-        _cartStorage.CheckOut();
+        await _cartStorage.CheckOut();
+        PopulateCart();
     }
 
     private void UpdateRunningTotal()

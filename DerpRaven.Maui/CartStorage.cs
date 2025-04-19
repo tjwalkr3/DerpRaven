@@ -79,7 +79,7 @@ namespace DerpRaven.Maui
             return cartItems.Sum(item => item.Quantity * item.Price);
         }
 
-        public void CheckOut() {
+        public async Task CheckOut() {
             var cartItems = GetCartItems();
             List<OrderedProductDto> products = new List<OrderedProductDto>();
             foreach (var item in cartItems) {
@@ -88,22 +88,19 @@ namespace DerpRaven.Maui
                     Quantity = item.Quantity,
                     Price = item.Price
                 });
-                ProductDto? oldproduct = ProductClient.GetProductByIdAsync(item.ProductId).Result;
+                ProductDto? oldproduct = await ProductClient.GetProductByIdAsync(item.ProductId);
                 if (oldproduct != null) {
                     oldproduct.Quantity -= item.Quantity;
                     //TODO: Update the product quantity in the database using the ProductClient.
                     //ProductClient.
                 }
-                OrderedProductClient.CreateOrderedProducts(products);
+                await OrderedProductClient.CreateOrderedProducts(products);
             }
             //Checkout page call and response
 
 
-            if (CanCheckOut) {
-                //Checkout api call here
-                ClearCart();
-                CanCheckOut = false;
-            }
+            //Checkout api call here
+            ClearCart();
         }
 
 

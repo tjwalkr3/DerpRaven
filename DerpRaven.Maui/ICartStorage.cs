@@ -7,7 +7,7 @@ namespace DerpRaven.Maui {
 
         void AddCartItem(ProductDto product);
         void AddNonce(string nonce);
-        void CheckOut();
+        Task CheckOut();
         void ClearCart();
         void RemoveCartItem(CartItem item);
         void SaveCartItems(List<CartItem> items);
