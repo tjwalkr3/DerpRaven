@@ -107,7 +107,6 @@ public class CartStorage : ICartStorage
             {
                 Address = address,
                 Email = email,
-                OrderedProductIds = products.Select(p => p.Id).ToList(),
                 OrderDate = DateTime.Now
             };
             int orderId = await _orderClient.CreateOrderAsync(order);

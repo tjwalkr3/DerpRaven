@@ -81,7 +81,7 @@ public class OrderService : IOrderService
         {
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
-            _logger.LogInformation("Created order with ID {OrderId}", dto.Id);
+            _logger.LogInformation("Created order with ID {OrderId}", order.Id);
             return order.Id;
         }
         else
@@ -92,20 +92,16 @@ public class OrderService : IOrderService
 
     private async Task<Order?> MapFromOrderDto(OrderDto dto)
     {
-        var products = await _context.OrderedProducts
-            .Where(p => dto.OrderedProductIds.Contains(p.Id))
-            .ToListAsync();
         var user = await _context.Users.FindAsync(dto.UserId);
-        if (products == null || user == null) return null;
+        if (user == null) return null;
 
         return new Order()
         {
-            Id = dto.Id,
             Address = dto.Address,
             Email = dto.Email,
             OrderDate = dto.OrderDate,
             User = user,
-            OrderedProducts = products
+            OrderedProducts = []
         };
     }
 
