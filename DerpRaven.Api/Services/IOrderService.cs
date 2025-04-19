@@ -4,7 +4,7 @@ namespace DerpRaven.Api.Services
 {
     public interface IOrderService
     {
-        Task<bool> CreateOrderAsync(OrderDto dto);
+        Task<int> CreateOrderAsync(OrderDto dto);
         Task<List<OrderDto>> GetAllOrdersAsync();
         Task<OrderDto?> GetOrderByIdAsync(int id);
         Task<List<OrderDto>> GetOrdersByUserEmailAsync(string email);

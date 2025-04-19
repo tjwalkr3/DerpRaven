@@ -38,4 +38,9 @@ public class BlazorOrderClient : IOrderClient
         await Task.Delay(1000);
         throw new NotImplementedException();
     }
+
+    Task<int> IOrderClient.CreateOrderAsync(OrderDto order)
+    {
+        throw new NotImplementedException();
+    }
 }

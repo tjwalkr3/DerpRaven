@@ -79,7 +79,14 @@ public partial class CartPageViewModel : ObservableObject
     private async Task Checkout() {
         // Implement checkout logic here
         // Treating the checkout as successful
-        await _cartStorage.CheckOut();
+        if (PlushiePresent)
+        {
+            await _cartStorage.CheckOut("", "");
+        }
+        else
+        {
+            await _cartStorage.CheckOut("", "");
+        }
         PopulateCart();
 
     }

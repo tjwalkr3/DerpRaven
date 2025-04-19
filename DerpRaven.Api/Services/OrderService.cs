@@ -74,7 +74,7 @@ public class OrderService : IOrderService
         }
     }
 
-    public async Task<bool> CreateOrderAsync(OrderDto dto)
+    public async Task<int> CreateOrderAsync(OrderDto dto)
     {
         var order = await MapFromOrderDto(dto);
         if (order != null)
@@ -82,11 +82,11 @@ public class OrderService : IOrderService
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Created order with ID {OrderId}", dto.Id);
-            return true;
+            return order.Id;
         }
         else
         {
-            return false;
+            return 0;
         }
     }
 
