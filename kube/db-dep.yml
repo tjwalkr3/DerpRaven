@@ -17,7 +17,7 @@ spec:
       volumes:
       - name: derp-db-data
         persistentVolumeClaim:
-          claimName: derp-db-pvc-new3
+          claimName: derp-db-pvc-new4
       - name: schema-init
         configMap:
           name: derp-init-sql
