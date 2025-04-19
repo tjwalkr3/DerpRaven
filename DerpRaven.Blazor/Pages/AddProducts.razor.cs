@@ -14,8 +14,8 @@ public partial class AddProducts
     private int ProductTypeId { get; set; }
 
     private readonly IImageClient _imageClient;
-    List<ImageDto>? _images = [];
-    List<int> imageIds = [];
+    private List<ImageDto>? _images = [];
+    private List<int> imageIds = [];
     private BlazorProductClient _productClient { get; }
     private List<ProductDto> _products = [];
     private string errorString = string.Empty;
@@ -52,7 +52,7 @@ public partial class AddProducts
         ProductTypeId = 0;
     }
 
-    private void OnProductChanged(ChangeEventArgs e)
+    public void OnProductChanged(ChangeEventArgs e)
     {
         if (e.Value == null || string.IsNullOrEmpty(e.Value.ToString())) return;
         int productId = int.Parse(e.Value.ToString()!);
@@ -64,6 +64,7 @@ public partial class AddProducts
         Quantity = product.Quantity;
         Description = product.Description;
         ProductTypeId = product.ProductTypeId;
+        imageIds = product.ImageIds;
     }
 
     public async Task LoadImages()
@@ -127,7 +128,7 @@ public partial class AddProducts
             _images.Count != 0;
     }
 
-    private async Task AddProduct()
+    public async Task AddProduct()
     {
         if (!IsSubmitButtonEnabled()) return;
         var product = new ProductDto

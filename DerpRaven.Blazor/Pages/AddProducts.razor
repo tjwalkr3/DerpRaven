@@ -1,6 +1,14 @@
 ﻿@page "/addproducts"
 
-<h3>Add Products</h3>
+@if (isEditing != "visible")
+{
+    <h3>Add A Product</h3>
+}
+else
+{
+    <h3>Edit A Product</h3>
+}
+
 <h4 class="errorText">@errorString</h4>
 
 <label>Is Editing</label>
@@ -85,7 +93,14 @@ else
                     <td>@image.Id</td>
                     <td>@image.Alt</td>
                     <td>
-                        <input type="checkbox" @oninput="() => SelectImage(image.Id)">
+                        @if (isEditing == "visible" && imageIds.Contains(image.Id))
+                        {
+                            <input type="checkbox" @oninput="() => SelectImage(image.Id)" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" @oninput="() => SelectImage(image.Id)">
+                        }
                     </td>
                 </tr>
             }
