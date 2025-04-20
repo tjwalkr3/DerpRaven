@@ -13,7 +13,7 @@ public partial class AddProducts
     private int ProductTypeId { get; set; }
     private int ProductId { get; set; }
 
-    private readonly IImageClient _imageClient;
+    private readonly IBlazorImageClient _imageClient;
     private List<ImageDto>? _images = [];
     private List<int> imageIds = [];
     private IBlazorProductClient _productClient { get; }
@@ -21,11 +21,10 @@ public partial class AddProducts
     private string errorString = string.Empty;
     private string isEditing = "hidden";
 
-    public AddProducts(IImageClient imageClient, IBlazorProductClient productClient)
+    public AddProducts(IBlazorImageClient imageClient, IBlazorProductClient productClient)
     {
         _productClient = productClient;
         _imageClient = imageClient;
-
     }
 
     public async Task IsEditingChanged()

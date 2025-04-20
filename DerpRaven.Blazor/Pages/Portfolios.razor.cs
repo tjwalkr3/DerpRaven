@@ -13,16 +13,15 @@ public partial class Portfolios
     private readonly IBlazorImageClient _imageClient;
     private List<ImageDto>? _images = [];
     private List<int> imageIds = [];
-    private BlazorPortfolioClient _portfolioClient { get; }
+    private IBlazorPortfolioClient _portfolioClient { get; }
     private List<PortfolioDto> _portfolios = [];
     private string errorString = string.Empty;
     private string isEditing = "hidden";
 
-    public Portfolios(IBlazorImageClient imageClient, BlazorPortfolioClient portfolioClient)
+    public Portfolios(IBlazorImageClient imageClient, IBlazorPortfolioClient portfolioClient)
     {
         _portfolioClient = portfolioClient;
         _imageClient = imageClient;
-
     }
 
     public async Task IsEditingChanged()
