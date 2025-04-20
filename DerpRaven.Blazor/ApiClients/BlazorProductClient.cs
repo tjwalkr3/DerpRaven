@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 
 namespace DerpRaven.Blazor.ApiClients;
 
-public class BlazorProductClient
+public class BlazorProductClient : IBlazorProductClient
 {
     private readonly HttpClient _httpClient;
 

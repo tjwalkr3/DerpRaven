@@ -33,10 +33,10 @@ builder.Services.AddOidcAuthentication(opt =>
     opt.ProviderOptions.DefaultScopes.Add("profile");
 });
 
-builder.Services.AddScoped<IImageClient, BlazorImageClient>();
-builder.Services.AddScoped<ICustomRequestClient, BlazorCustomRequestClient>();
-builder.Services.AddScoped<BlazorOrderClient>();
-builder.Services.AddScoped<BlazorProductClient>();
-builder.Services.AddScoped<BlazorPortfolioClient>();
+builder.Services.AddScoped<IBlazorImageClient, BlazorImageClient>();
+builder.Services.AddScoped<IBlazorCustomRequestClient, BlazorCustomRequestClient>();
+builder.Services.AddScoped<IBlazorOrderClient, BlazorOrderClient>();
+builder.Services.AddScoped<IBlazorProductClient, BlazorProductClient>();
+builder.Services.AddScoped<IBlazorPortfolioClient, BlazorPortfolioClient>();
 
 await builder.Build().RunAsync();

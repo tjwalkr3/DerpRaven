@@ -3,7 +3,7 @@ using DerpRaven.Shared.Dtos;
 using System.Net.Http.Json;
 namespace DerpRaven.Blazor.ApiClients;
 
-public class BlazorPortfolioClient
+public class BlazorPortfolioClient : IBlazorPortfolioClient
 {
     private readonly HttpClient _httpClient;
 

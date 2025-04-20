@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace DerpRaven.Blazor.ApiClients;
 
-public class BlazorOrderClient
+public class BlazorOrderClient : IBlazorOrderClient
 {
     private readonly HttpClient _httpClient;
 
