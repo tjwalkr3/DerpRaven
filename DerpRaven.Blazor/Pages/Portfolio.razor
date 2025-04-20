@@ -1,4 +1,4 @@
-﻿@page "/customrequests"
+﻿@page "/portfolios"
 @attribute [Authorize]
 
 <h3>CustomRequests</h3>
@@ -10,10 +10,9 @@
         <tr>
             <th>Id</th>
             <th>Description</th>
-            <th>Email</th>
-            <th>Status</th>
+            <th>Name</th>
             <th>Product Type Id</th>
-            <th>User Id</th>
+            <th>Image Ids</th>
         </tr>
 
         @if (_portfolios == null)
