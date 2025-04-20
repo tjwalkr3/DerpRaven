@@ -118,8 +118,9 @@ public partial class ProductPageViewModel : ObservableObject
     [RelayCommand]
     private async Task AddToCart()
     {
+        await Shell.Current.GoToAsync("//ProductsListPage");
         //add to cart
-        _cartStorage.AddCartItem(ProductDetails);
+        _cartStorage.AddCartItem(ProductDetails, SelectedQuantity);
         await Shell.Current.GoToAsync($"///CartPage");
     }
 }

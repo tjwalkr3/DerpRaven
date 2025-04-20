@@ -20,6 +20,11 @@ public partial class CartPageViewModel : ObservableObject
     [ObservableProperty]
     private decimal runningTotal = 0.00m;
 
+    [ObservableProperty]
+    bool itemsInCart = false;
+
+    [ObservableProperty]
+    bool noItems = false;
 
     public CartPageViewModel(ICartStorage cartStorage, IKeycloakClient keycloakClient)
     {
@@ -43,10 +48,25 @@ public partial class CartPageViewModel : ObservableObject
         // Update the running total
         UpdateRunningTotal();
         CheckPlushiePresent();
+        CheckIfItemsInCart();
     }
 
     [ObservableProperty]
     public bool plushiePresent = false;
+
+    public void CheckIfItemsInCart()
+    {
+        if (CartItems.Count >= 1)
+        {
+            ItemsInCart = true;
+            NoItems = false;
+        }
+        else
+        {
+            ItemsInCart = false;
+            NoItems = true;
+        }
+    }
 
     public void CheckPlushiePresent()
     {
