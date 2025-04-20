@@ -39,7 +39,6 @@ public partial class OrderHistoryPageViewModel : ObservableObject
         IsLoading = true;
         try
         {
-
             OrderViewModels.Clear();
             List<OrderDto> historyList = await GetOrdersAsync();
             foreach (var order in historyList)
@@ -97,6 +96,5 @@ public partial class OrderViewModel : ObservableObject
     public decimal CalculateTotal()
     {
         return OrderTotal = Products.Sum(p => p.Quantity * p.Price);
-
     }
 }

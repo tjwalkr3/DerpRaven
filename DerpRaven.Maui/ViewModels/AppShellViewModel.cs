@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.Authentication;
 using Duende.IdentityModel.OidcClient;
 namespace DerpRaven.Maui.ViewModels;

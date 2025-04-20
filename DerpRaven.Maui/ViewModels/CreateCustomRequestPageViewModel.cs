@@ -3,14 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.ApplicationModel.DataTransfer;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DerpRaven.Maui.ViewModels;
 

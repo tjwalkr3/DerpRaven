@@ -1,9 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using DerpRaven.Maui;
-using DerpRaven.Maui.Popups;
-using CommunityToolkit.Maui.Views;
 using DerpRaven.Shared.Authentication;
 
 namespace DerpRaven.Maui.ViewModels;
@@ -112,7 +109,6 @@ public partial class CartPageViewModel : ObservableObject
             await _cartStorage.CheckOut("", "example@example.com");
         }
         PopulateCart();
-
     }
 
     private void UpdateRunningTotal()
