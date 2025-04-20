@@ -32,12 +32,10 @@ public class ImageClient(IApiService apiService) : IImageClient
     public async Task<byte[]?> GetImageAsync(int id)
     {
         var response = await apiService.GetAsyncWithoutAuthorization($"api/image/get/{id}");
-
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadAsByteArrayAsync();
         }
-
         return null;
     }
 

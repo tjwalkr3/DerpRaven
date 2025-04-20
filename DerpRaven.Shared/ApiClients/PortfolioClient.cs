@@ -1,7 +1,5 @@
 ﻿using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.Dtos;
-using Microsoft.AspNetCore.Components.Forms;
-using System.Net.Http.Json;
 
 namespace DerpRaven.Shared.ApiClients;
 
@@ -20,8 +18,6 @@ public class PortfolioClient(IApiService apiService) : IPortfolioClient
         var response = await apiService.GetFromJsonAsyncWithoutAuthorization<PortfolioDto>($"api/portfolio/{id}");
         return response;
     }
-
-
 
     // needs authentication
     public async Task<bool> CreatePortfolioAsync(PortfolioDto portfolio)
