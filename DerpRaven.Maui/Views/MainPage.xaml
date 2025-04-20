@@ -6,8 +6,7 @@
              xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared">
 
 
-    <ScrollView
-        >
+    <ScrollView>
         <VerticalStackLayout
             Padding="0,0"
             Spacing="0">
@@ -53,7 +52,6 @@
                         BackgroundColor="Gray">
                     <Label Text="Sample Text" />
                 </Border>
-
             </Grid>
             <CarouselView ItemsSource="{Binding Art}"
               PeekAreaInsets="100"
@@ -152,8 +150,5 @@
                 </CarouselView.ItemTemplate>
             </CarouselView>
         </VerticalStackLayout>
-
-
     </ScrollView>
-
 </ContentPage>

@@ -6,7 +6,6 @@
              Title="Cart View">
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="10">
-
             <Label Text="Cart" FontSize="24" HorizontalOptions="Center" />
 
             <CollectionView ItemsSource="{Binding CartItems}">
@@ -26,13 +25,13 @@
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:CartPageViewModel}}, Path=RemoveItemCommand}" CommandParameter="{Binding .}" />
                                 </VerticalStackLayout>
                                 <Image Grid.Column="1"
-                                    Source="{Binding ImageUrl}" 
-                                    HeightRequest="120"
-                                    WidthRequest="120"
-                                    Aspect="AspectFit" 
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Center"
-                                    Margin="10"/>
+                                        Source="{Binding ImageUrl}" 
+                                        HeightRequest="120"
+                                        WidthRequest="120"
+                                        Aspect="AspectFit" 
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"
+                                        Margin="10"/>
                             </Grid>
                         </Border>
                     </DataTemplate>

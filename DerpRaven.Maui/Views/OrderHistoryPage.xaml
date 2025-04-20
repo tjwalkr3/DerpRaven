@@ -13,7 +13,6 @@
                                 <VerticalStackLayout>
                                     <Button Text="{Binding OrderSummary}"
                                         Command="{Binding ToggleExpandCommand}" />
-
                                     <CollectionView ItemsSource="{Binding Products}" 
                                                 IsVisible="{Binding IsExpanded}">
                                         <CollectionView.ItemTemplate>

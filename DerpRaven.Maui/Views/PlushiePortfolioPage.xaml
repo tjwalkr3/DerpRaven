@@ -76,7 +76,6 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-
             </VerticalStackLayout>
         </ScrollView>
         <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#80000000">
