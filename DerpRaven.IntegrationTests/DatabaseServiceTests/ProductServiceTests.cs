@@ -113,8 +113,6 @@ public class ProductServiceTests
         product.Name.ShouldBe("Test Product");
     }
 
-
-
     [Order(6)]
     [Test]
     public async Task UpdateProduct()

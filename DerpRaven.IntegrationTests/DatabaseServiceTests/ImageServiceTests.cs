@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Shouldly;
-using DerpRaven.Shared.Dtos;
-using DerpRaven.Api;
-using Microsoft.Extensions.Options;
 namespace DerpRaven.IntegrationTests.DatabaseServiceTests;
 
 public class ImageServiceTests
