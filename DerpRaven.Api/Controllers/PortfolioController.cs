@@ -69,11 +69,10 @@ public class PortfolioController : ControllerBase
         return Created();
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdatePortfolio(int id, PortfolioDto portfolio)
+    [HttpPut]
+    public async Task<IActionResult> UpdatePortfolio(PortfolioDto portfolio)
     {
         _metrics.AddPortfolioEndpointCall();
-        if (id != portfolio.Id) return BadRequest();
         bool wasUpdated = await _portfolioService.UpdatePortfolioAsync(portfolio);
         if (!wasUpdated) return NotFound();
         return NoContent();
