@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 
 namespace DerpRaven.Maui.ViewModels;
 
@@ -80,17 +78,8 @@ public partial class ProductsListPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void AddToCart(ProductDto product)
-    {
-        if (product == null) return;
-        Debug.WriteLine($"Added {product.Name} to cart!");
-        // Here you could add logic to update a cart collection
-    }
-
-    [RelayCommand]
     private async Task NavigateToProduct(ProductDto product)
     {
-
         if (product == null) return;
         await Shell.Current.GoToAsync($"ProductPage?productId={product.Id}");
     }

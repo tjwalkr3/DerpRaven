@@ -1,10 +1,9 @@
-﻿namespace DerpRaven.Maui.ViewModels;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using DerpRaven.Shared.Dtos;
 using CommunityToolkit.Mvvm.Input;
-using System.Globalization;
 
+namespace DerpRaven.Maui.ViewModels;
 public partial class MainPageViewModel : ObservableObject
 {
     public ObservableCollection<ImageDto> Art { get; private set; }
@@ -127,7 +126,6 @@ public partial class MainPageViewModel : ObservableObject
                 Alt = "Horse Snuggler",
                 Path = "horsesnuggler.png"
             }
-
         };
     }
 
@@ -141,7 +139,6 @@ public partial class MainPageViewModel : ObservableObject
     {
         NavigationState.SelectedTab = "PlushiePortfolio";
         await Shell.Current.GoToAsync("//PortfolioPage");
-
     }
 
     [RelayCommand]

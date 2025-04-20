@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using DerpRaven.Shared.Dtos;
 using DerpRaven.Shared.ApiClients;
-using System.Diagnostics;
 namespace DerpRaven.Maui.ViewModels;
 
 

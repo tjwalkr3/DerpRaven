@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.Dtos;
-using System.Collections.ObjectModel;
 
 namespace DerpRaven.Maui.ViewModels;
 
@@ -96,7 +95,6 @@ public partial class ProductPageViewModel : ObservableObject
             List<int> imageIds = ProductDetails?.ImageIds ?? [];
             if (imageIds.Count < 1) return;
 
-
             Images = await _imageHelpers.GetImageDtos(imageIds);
             Images = _imageHelpers.GetPaths(Images);
             await _imageHelpers.SaveListOfImages(Images);
@@ -118,7 +116,6 @@ public partial class ProductPageViewModel : ObservableObject
     [RelayCommand]
     private async Task AddToCart()
     {
-        //add to cart
         _cartStorage.AddCartItem(ProductDetails);
         await Shell.Current.GoToAsync($"///CartPage");
     }
