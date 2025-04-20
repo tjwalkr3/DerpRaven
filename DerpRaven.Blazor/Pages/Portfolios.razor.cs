@@ -1,8 +1,6 @@
 ﻿using DerpRaven.Blazor.ApiClients;
-using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Components;
-
 namespace DerpRaven.Blazor.Pages;
 
 public partial class Portfolios
@@ -12,7 +10,7 @@ public partial class Portfolios
     private int ProductTypeId { get; set; }
     private int PortfolioId { get; set; }
 
-    private readonly IImageClient _imageClient;
+    private readonly IBlazorImageClient _imageClient;
     private List<ImageDto>? _images = [];
     private List<int> imageIds = [];
     private BlazorPortfolioClient _portfolioClient { get; }
@@ -20,7 +18,7 @@ public partial class Portfolios
     private string errorString = string.Empty;
     private string isEditing = "hidden";
 
-    public Portfolios(IImageClient imageClient, BlazorPortfolioClient portfolioClient)
+    public Portfolios(IBlazorImageClient imageClient, BlazorPortfolioClient portfolioClient)
     {
         _portfolioClient = portfolioClient;
         _imageClient = imageClient;
