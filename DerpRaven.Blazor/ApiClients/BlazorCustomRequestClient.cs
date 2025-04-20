@@ -4,7 +4,7 @@ using DerpRaven.Shared.Dtos;
 using System.Net.Http.Json;
 namespace DerpRaven.Blazor.ApiClients;
 
-public class BlazorCustomRequestClient : ICustomRequestClient
+public class BlazorCustomRequestClient : IBlazorCustomRequestClient
 {
     private readonly HttpClient _httpClient;
 
@@ -25,35 +25,5 @@ public class BlazorCustomRequestClient : ICustomRequestClient
         var response = await _httpClient.PatchAsync($"api/CustomRequest/{id}/status", JsonContent.Create(status));
         response.EnsureSuccessStatusCode();
         return response.IsSuccessStatusCode;
-    }
-
-    public async Task<bool> CreateCustomRequestAsync(CustomRequestDto customRequest)
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
-
-    public async Task<CustomRequestDto?> GetCustomRequestByIdAsync(int id)
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
-
-    public async Task<List<CustomRequestDto>?> GetCustomRequestsByStatusAsync(string status)
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
-
-    public async Task<List<CustomRequestDto>?> GetCustomRequestsByTypeAsync(string productType)
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
-
-    public async Task<List<CustomRequestDto>?> GetCustomRequestsByUserEmailAsync()
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
     }
 }

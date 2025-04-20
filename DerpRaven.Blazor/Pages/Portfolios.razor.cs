@@ -1,29 +1,26 @@
 ﻿using DerpRaven.Blazor.ApiClients;
-using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Components;
 namespace DerpRaven.Blazor.Pages;
 
-public partial class AddProducts
+public partial class Portfolios
 {
-    private string ProductName { get; set; } = "";
-    private decimal Price { get; set; } = 0m;
-    private int Quantity { get; set; } = 0;
+    private string PortfolioName { get; set; } = "";
     private string Description { get; set; } = "";
     private int ProductTypeId { get; set; }
-    private int ProductId { get; set; }
+    private int PortfolioId { get; set; }
 
     private readonly IBlazorImageClient _imageClient;
     private List<ImageDto>? _images = [];
     private List<int> imageIds = [];
-    private IBlazorProductClient _productClient { get; }
-    private List<ProductDto> _products = [];
+    private IBlazorPortfolioClient _portfolioClient { get; }
+    private List<PortfolioDto> _portfolios = [];
     private string errorString = string.Empty;
     private string isEditing = "hidden";
 
-    public AddProducts(IBlazorImageClient imageClient, IBlazorProductClient productClient)
+    public Portfolios(IBlazorImageClient imageClient, IBlazorPortfolioClient portfolioClient)
     {
-        _productClient = productClient;
+        _portfolioClient = portfolioClient;
         _imageClient = imageClient;
     }
 
@@ -44,28 +41,24 @@ public partial class AddProducts
 
     public void ClearFields()
     {
-        ProductName = "";
-        Price = 0m;
-        Quantity = 0;
+        PortfolioName = "";
         Description = "";
         ProductTypeId = 0;
-        ProductId = 0;
+        PortfolioId = 0;
     }
 
-    public void OnProductChanged(ChangeEventArgs e)
+    public void OnPortfolioChanged(ChangeEventArgs e)
     {
         if (e.Value == null || string.IsNullOrEmpty(e.Value.ToString())) return;
-        int productId = int.Parse(e.Value.ToString()!);
-        var product = _products.FirstOrDefault(p => p.Id == productId);
+        int portfolioId = int.Parse(e.Value.ToString()!);
+        var product = _portfolios.FirstOrDefault(p => p.Id == portfolioId);
         if (product == null) return;
 
-        ProductName = product.Name;
-        Price = product.Price;
-        Quantity = product.Quantity;
+        PortfolioName = product.Name;
         Description = product.Description;
         ProductTypeId = product.ProductTypeId;
         imageIds = product.ImageIds;
-        ProductId = product.Id;
+        PortfolioId = product.Id;
     }
 
     public async Task LoadImages()
@@ -89,11 +82,11 @@ public partial class AddProducts
         }
     }
 
-    private async Task LoadProducts()
+    private async Task LoadPortfolios()
     {
         try
         {
-            _products = await _productClient.GetAllProductsAsync();
+            _portfolios = await _portfolioClient.GetAllPortfoliosAsync();
             errorString = string.Empty;
         }
         catch (Exception ex)
@@ -105,7 +98,7 @@ public partial class AddProducts
     protected override async Task OnInitializedAsync()
     {
         await LoadImages();
-        await LoadProducts();
+        await LoadPortfolios();
     }
 
     public void SelectImage(int imageId)
@@ -122,26 +115,23 @@ public partial class AddProducts
 
     public bool IsSubmitButtonEnabled()
     {
-        return !string.IsNullOrWhiteSpace(ProductName) &&
-            Price > 0 &&
+        return !string.IsNullOrWhiteSpace(PortfolioName) &&
             !string.IsNullOrWhiteSpace(Description) &&
             _images != null &&
             _images.Count != 0;
     }
 
-    public async Task AddProduct()
+    public async Task AddPortfolio()
     {
         if (!IsSubmitButtonEnabled()) return;
-        var product = new ProductDto
+        var portfolio = new PortfolioDto
         {
-            Name = ProductName,
-            Price = Price,
-            Quantity = Quantity,
+            Name = PortfolioName,
             Description = Description,
             ProductTypeId = ProductTypeId,
             ImageIds = imageIds
         };
-        bool status = await _productClient.CreateProductAsync(product);
+        bool status = await _portfolioClient.CreatePortfolioAsync(portfolio);
 
         if (status)
         {
@@ -153,20 +143,18 @@ public partial class AddProducts
         }
     }
 
-    public async Task UpdateProduct()
+    public async Task UpdatePortfolio()
     {
         if (!IsSubmitButtonEnabled()) return;
-        var product = new ProductDto
+        var portfolio = new PortfolioDto
         {
-            Name = ProductName,
-            Price = Price,
-            Quantity = Quantity,
+            Name = PortfolioName,
             Description = Description,
             ProductTypeId = ProductTypeId,
             ImageIds = imageIds,
-            Id = ProductId
+            Id = PortfolioId
         };
-        bool status = await _productClient.UpdateProductAsync(product);
+        bool status = await _portfolioClient.UpdatePortfolioAsync(portfolio);
         if (status)
         {
             errorString = string.Empty;

@@ -1,13 +1,13 @@
-﻿@page "/addproducts"
+﻿@page "/portfolios"
 @attribute [Authorize]
 
 @if (isEditing != "visible")
 {
-    <h3>Add A Product</h3>
+    <h3>Add A Portfolio</h3>
 }
 else
 {
-    <h3>Edit A Product</h3>
+    <h3>Edit A Portfolio</h3>
 }
 
 <h4 class="errorText">@errorString</h4>
@@ -15,9 +15,9 @@ else
 <label>Is Editing</label>
 <input type="checkbox" @onchange="IsEditingChanged" />
 
-<select style="visibility: @isEditing;" @onchange="OnProductChanged">
+<select style="visibility: @isEditing;" @onchange="OnPortfolioChanged">
     <option disabled selected>Select your option</option>
-    @foreach (var item in _products)
+    @foreach (var item in _portfolios)
     {
         <option value="@item.Id">@item.Name</option>
     }
@@ -25,17 +25,7 @@ else
 
 <div class="form-group">
     <label>Name</label>
-    <input @bind="ProductName" placeholder="Product Name" />
-</div>
-
-<div class="form-group">
-    <label>Price</label>
-    <input type="number" min="0" step="0.01" @bind="Price" />
-</div>
-
-<div class="form-group">
-    <label>Quantity</label>
-    <input type="number" min="0" step="1" @bind="Quantity" />
+    <input @bind="PortfolioName" placeholder="Portfolio Name" />
 </div>
 
 <div class="form-group">
@@ -55,13 +45,13 @@ else
 }
 
 <div class="form-group">
-    @if (isEditing != "visible") 
+    @if (isEditing != "visible")
     {
-        <button class="submit-button" @onclick="AddProduct">Add Product</button>
+        <button class="submit-button" @onclick="AddPortfolio">Add Portfolio</button>
     }
-    else 
+    else
     {
-        <button class="submit-button" @onclick="UpdateProduct">Edit Product</button>
+        <button class="submit-button" @onclick="UpdatePortfolio">Edit Portfolio</button>
     }
 </div>
 
