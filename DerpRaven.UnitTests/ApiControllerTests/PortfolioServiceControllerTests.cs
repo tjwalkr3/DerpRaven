@@ -61,8 +61,6 @@ public class PortfolioServiceControllerTests
         portfolio.Id.ShouldBe(1);
     }
 
-
-
     [Test]
     public async Task CreatePortfolio()
     {

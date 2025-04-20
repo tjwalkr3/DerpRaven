@@ -20,13 +20,6 @@
                                          StrokeShape="RoundRectangle 15"
                                          BackgroundColor="Gray"
                                          HorizontalOptions="Center">
-                                    <Border.Shadow>
-                                        <Shadow
-                                            Brush="Gray"
-                                            Offset="5,5"
-                                            Radius="10"
-                                            Opacity="0.5"/>
-                                    </Border.Shadow>
                                     <Label Text="{Binding Portfolio.Name}"
                                            HorizontalOptions="Center"
                                            VerticalOptions="Center"

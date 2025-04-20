@@ -1,7 +1,6 @@
 ﻿using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.Dtos;
-using Microsoft.AspNetCore.Components.Forms;
 using NSubstitute;
 using System.Net;
 using Shouldly;
@@ -47,9 +46,6 @@ public class PortfolioClientTests
         result.Id.ShouldBe(1);
         result.Name.ShouldBe("Portfolio1");
     }
-
-
-
 
     [Test]
     public async Task CreatePortfolioAsync()

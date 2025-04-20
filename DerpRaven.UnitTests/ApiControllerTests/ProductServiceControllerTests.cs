@@ -56,10 +56,6 @@ public class ProductServiceControllerTests
         product.Id.ShouldBe(1);
     }
 
-
-
-
-
     [Test]
     public async Task CreateProduct()
     {

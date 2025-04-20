@@ -96,5 +96,4 @@ public class UserServiceControllerTests
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(StatusCodes.Status201Created);
     }
-
 }

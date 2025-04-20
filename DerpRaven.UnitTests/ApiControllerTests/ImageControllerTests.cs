@@ -61,7 +61,6 @@ public class ImageControllerTests
         result.StatusCode.ShouldBe(StatusCodes.Status200OK);
     }
 
-
     [Test]
     public async Task ListImages()
     {
