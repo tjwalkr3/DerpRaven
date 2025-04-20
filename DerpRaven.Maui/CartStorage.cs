@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using Microsoft.Maui.Storage;
+﻿using System.Text.Json;
 using DerpRaven.Shared.Dtos;
 using DerpRaven.Shared.ApiClients;
 
-namespace DerpRaven.Maui
-{
+namespace DerpRaven.Maui {
     public class CartStorage : ICartStorage
     {
         private const string CartKey = "CartItems";
-        public bool CanCheckOut { get; private set; } = false;
         private readonly IOrderedProductClient OrderedProductClient;
         private readonly IProductClient ProductClient;
 
@@ -20,7 +14,6 @@ namespace DerpRaven.Maui
             OrderedProductClient = orderedProductClient;
             ProductClient = productClient;
         }
-
 
         public void SaveCartItems(List<CartItem> items)
         {
@@ -120,20 +113,6 @@ namespace DerpRaven.Maui
 
             //Checkout api call here
             ClearCart();
-        }
-
-
-        //For checking out stuff
-        string? nonce;
-        public bool IsNonce { get => nonce != null; }
-        public void AddNonce(string nonce)
-        {
-            this.nonce = nonce;
-        }
-
-        public void VerifyCanCheckOut()
-        {
-
         }
     }
 

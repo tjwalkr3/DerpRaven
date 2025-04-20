@@ -36,6 +36,5 @@ public class ImageHelpers(IImageClient imageClient) : IImageHelpers
             stream.Write(image, 0, image.Length);
         }
     }
-
     public async Task<List<ImageDto>> GetImageDtos(List<int> imageIds) => await imageClient.GetImageInfoManyAsync(imageIds);
 }
