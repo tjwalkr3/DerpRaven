@@ -17,7 +17,8 @@ public partial class ProductPage : ContentPage
         BindingContext = vm;
     }
 
-    protected override async void OnAppearing() {
+    protected override async void OnAppearing()
+    {
         await _vm.RefreshSingleProductView();
     }
 }

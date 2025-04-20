@@ -124,6 +124,6 @@ public partial class ProductPageViewModel : ObservableObject
         await Shell.Current.GoToAsync($"///CartPage");
     }
 
-    
+
 }
 

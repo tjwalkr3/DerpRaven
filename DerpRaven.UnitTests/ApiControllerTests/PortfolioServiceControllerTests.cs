@@ -107,7 +107,7 @@ public class PortfolioServiceControllerTests
     public async Task UpdatePortfolio()
     {
         // Act
-        var result = await _controller.UpdatePortfolio(1,
+        var result = await _controller.UpdatePortfolio(
             new PortfolioDto()
             {
                 Description = "new portfolio 1",
