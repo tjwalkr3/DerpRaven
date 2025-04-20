@@ -5,7 +5,7 @@ namespace DerpRaven.Maui {
         bool CanCheckOut { get; }
         bool IsNonce { get; }
 
-        void AddCartItem(ProductDto product);
+        void AddCartItem(ProductDto product, int SelectedQuantity);
         void AddNonce(string nonce);
         Task<bool> CheckAndUpdateCartItemQuantities();
         Task<bool> CheckOut(string address, string email);

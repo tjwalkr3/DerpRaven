@@ -29,12 +29,12 @@ public class CartStorage : ICartStorage {
         Preferences.Set(CartKey, json);
     }
 
-    public void AddCartItem(ProductDto product) {
+    public void AddCartItem(ProductDto product, int SelectedQuantity) {
         var item = new CartItem {
             Name = product.Name,
             ProductId = product.Id,
             ImageUrl = Path.Combine(FileSystem.CacheDirectory, $"{product.ImageIds[0]}.png"),
-            Quantity = product.Quantity,
+            Quantity = SelectedQuantity,
             Price = product.Price,
             ProductTypeId = product.ProductTypeId
         };
