@@ -4,7 +4,6 @@ using DerpRaven.Shared.Dtos;
 
 namespace DerpRaven.Shared.ApiClients;
 
-
 public class CustomRequestClient(IApiService apiService) : ICustomRequestClient
 {
     // needs authentication

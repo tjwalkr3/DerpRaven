@@ -1,6 +1,5 @@
 ﻿using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.Dtos;
-using System.Net.Http;
 
 namespace DerpRaven.Shared.ApiClients;
 
