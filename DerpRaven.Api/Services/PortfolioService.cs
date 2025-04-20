@@ -86,7 +86,12 @@ public class PortfolioService : IPortfolioService
             oldPortfolio.Name = dto.Name;
             oldPortfolio.Description = dto.Description;
             oldPortfolio.ProductType = productType;
-            oldPortfolio.Images = images;
+
+            _context.Entry(oldPortfolio).Collection(p => p.Images).Load();
+            oldPortfolio.Images.Clear();
+            await _context.SaveChangesAsync();
+
+            foreach (var image in images) oldPortfolio.Images.Add(image);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Updated portfolio with ID {PortfolioId}", dto.Id);
             return true;
