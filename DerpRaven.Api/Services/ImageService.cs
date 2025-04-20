@@ -1,10 +1,8 @@
 ﻿namespace DerpRaven.Api.Services;
 using Azure;
-using Azure.Storage.Blobs;
 using DerpRaven.Api.Model;
 using DerpRaven.Shared.Dtos;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 public class ImageService : IImageService
 {

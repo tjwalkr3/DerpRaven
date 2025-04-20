@@ -39,22 +39,6 @@ public class CustomRequestClient(IApiService apiService) : ICustomRequestClient
     }
 
     // needs authentication
-    public async Task<List<CustomRequestDto>?> GetCustomRequestsByStatusAsync(string status)
-    {
-        var response = await apiService.GetAsync($"api/CustomRequest/status/{status}");
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<List<CustomRequestDto>>();
-    }
-
-    // needs authentication
-    public async Task<List<CustomRequestDto>?> GetCustomRequestsByTypeAsync(string productType)
-    {
-        var response = await apiService.GetAsync($"api/CustomRequest/type/{productType}");
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<List<CustomRequestDto>>();
-    }
-
-    // needs authentication
     public async Task<bool> ChangeStatusAsync(int id, string status)
     {
         var response = await apiService.PatchAsync($"api/CustomRequest/{id}/status", new StringContent(status));

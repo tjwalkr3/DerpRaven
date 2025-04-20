@@ -49,46 +49,6 @@ public class PortfolioClientTests
     }
 
     [Test]
-    public async Task GetPortfoliosByTypeAsync()
-    {
-        // Arrange
-        IApiService _apiService = Substitute.For<IApiService>();
-        var portfolioList = new List<PortfolioDto> { new PortfolioDto { Id = 1, Name = "Portfolio1", Description = "Description1" } };
-        _apiService.GetFromJsonAsyncWithoutAuthorization<List<PortfolioDto>>(Arg.Any<string>()).Returns(portfolioList);
-        var client = new PortfolioClient(_apiService);
-
-        // Act
-        var result = await client.GetPortfoliosByTypeAsync("Type1");
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<List<PortfolioDto>>();
-        result.Count.ShouldBe(1);
-        result[0].Id.ShouldBe(1);
-        result[0].Name.ShouldBe("Portfolio1");
-    }
-
-    [Test]
-    public async Task GetPortfoliosByNameAsync()
-    {
-        // Arrange
-        IApiService _apiService = Substitute.For<IApiService>();
-        var portfolioList = new List<PortfolioDto> { new PortfolioDto { Id = 1, Name = "Portfolio1", Description = "Description1" } };
-        _apiService.GetFromJsonAsyncWithoutAuthorization<List<PortfolioDto>>(Arg.Any<string>()).Returns(portfolioList);
-        var client = new PortfolioClient(_apiService);
-
-        // Act
-        var result = await client.GetPortfoliosByNameAsync("Portfolio1");
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<List<PortfolioDto>>();
-        result.Count.ShouldBe(1);
-        result[0].Id.ShouldBe(1);
-        result[0].Name.ShouldBe("Portfolio1");
-    }
-
-    [Test]
     public async Task CreatePortfolioAsync()
     {
         // Arrange

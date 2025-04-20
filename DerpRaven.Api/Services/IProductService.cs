@@ -7,8 +7,6 @@ namespace DerpRaven.Api.Services
         Task<bool> CreateProductAsync(ProductDto dto);
         Task<List<ProductDto>> GetAllProductsAsync();
         Task<ProductDto?> GetProductByIdAsync(int id);
-        Task<List<ProductDto>> GetProductsByNameAsync(string name);
-        Task<List<ProductDto>> GetProductsByTypeAsync(string productType);
         Task<bool> UpdateProductAsync(ProductDto dto);
     }
 }
