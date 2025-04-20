@@ -20,7 +20,10 @@ namespace DerpRaven.Maui {
             var json = JsonSerializer.Serialize(items);
             Preferences.Clear(CartKey);
             Preferences.Set(CartKey, json);
+
         }
+        SaveCartItems(cartItems);
+    }
 
         public void AddCartItem(ProductDto product)
         {
@@ -53,6 +56,8 @@ namespace DerpRaven.Maui {
             cartItems.Remove(item);
             SaveCartItems(cartItems);
         }
+        return JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
+    }
 
         public static List<CartItem> GetCartItems()
         {
@@ -67,7 +72,10 @@ namespace DerpRaven.Maui {
         public void ClearCart()
         {
             Preferences.Remove(CartKey);
+
         }
+        SaveCartItems(cartItems);
+    }
 
         public void UpdateCartItem(CartItem item)
         {
@@ -95,52 +103,55 @@ namespace DerpRaven.Maui {
             {
                 products.Add(new OrderedProductDto
                 {
+
                     Name = item.Name,
                     Quantity = item.Quantity,
-                    Price = item.Price
+                    Price = item.Price,
+                    OrderID = orderId
                 });
                 ProductDto? oldproduct = await ProductClient.GetProductByIdAsync(item.ProductId);
                 if (oldproduct != null)
                 {
+
                     oldproduct.Quantity -= item.Quantity;
-                    //TODO: Update the product quantity in the database using the ProductClient.
-                    //ProductClient.
+                    await _productClient.UpdateProductAsync(oldproduct);
                 }
-                await OrderedProductClient.CreateOrderedProducts(products);
             }
+
             //Checkout page call and response
-
-
-            //Checkout api call here
+            await _orderedProductClient.CreateOrderedProducts(products);
             ClearCart();
-        }
-    }
-
-    public class CartItem
-    {
-        public string Name { get; set; } = string.Empty;
-        public int ProductId { get; set; }
-        public string ImageUrl { get; set; } = string.Empty;
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-        public int ProductTypeId { get; set; }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj is CartItem item)
-            {
-                return Name == item.Name &&
-                       ImageUrl == item.ImageUrl &&
-                       Quantity == item.Quantity &&
-                       Price == item.Price &&
-                       ProductTypeId == item.ProductTypeId;
-            }
+            return true;
+        } else {
             return false;
         }
+    }
+}
 
-        public override int GetHashCode()
+public class CartItem
+{
+    public string Name { get; set; } = string.Empty;
+    public int ProductId { get; set; }
+    public string ImageUrl { get; set; } = string.Empty;
+    public int Quantity { get; set; }
+    public decimal Price { get; set; }
+    public int ProductTypeId { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is CartItem item)
         {
-            return HashCode.Combine(Name, ImageUrl, Quantity, Price, ProductTypeId);
+            return Name == item.Name &&
+                   ImageUrl == item.ImageUrl &&
+                   Quantity == item.Quantity &&
+                   Price == item.Price &&
+                   ProductTypeId == item.ProductTypeId;
         }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name, ImageUrl, Quantity, Price, ProductTypeId);
     }
 }

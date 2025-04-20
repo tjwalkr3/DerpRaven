@@ -8,6 +8,7 @@ public partial class CartPageViewModel : ObservableObject
 {
 
     private readonly ICartStorage _cartStorage;
+    private readonly IKeycloakClient _keycloakClient;
 
     [ObservableProperty]
     private ObservableCollection<CartItem> cartItems = [];
@@ -15,10 +16,16 @@ public partial class CartPageViewModel : ObservableObject
     [ObservableProperty]
     private decimal runningTotal = 0.00m;
 
+    [ObservableProperty]
+    bool itemsInCart = false;
 
-    public CartPageViewModel(ICartStorage cartStorage)
+    [ObservableProperty]
+    bool noItems = false;
+
+    public CartPageViewModel(ICartStorage cartStorage, IKeycloakClient keycloakClient)
     {
         _cartStorage = cartStorage;
+        _keycloakClient = keycloakClient;
         PopulateCart();
         CheckPlushiePresent();
     }
@@ -37,10 +44,25 @@ public partial class CartPageViewModel : ObservableObject
         // Update the running total
         UpdateRunningTotal();
         CheckPlushiePresent();
+        CheckIfItemsInCart();
     }
 
     [ObservableProperty]
     public bool plushiePresent = false;
+
+    public void CheckIfItemsInCart()
+    {
+        if (CartItems.Count >= 1)
+        {
+            ItemsInCart = true;
+            NoItems = false;
+        }
+        else
+        {
+            ItemsInCart = false;
+            NoItems = true;
+        }
+    }
 
     public void CheckPlushiePresent()
     {
@@ -74,7 +96,14 @@ public partial class CartPageViewModel : ObservableObject
     {
         // Implement checkout logic here
         // Treating the checkout as successful
-        await _cartStorage.CheckOut();
+        if (PlushiePresent)
+        {
+            await _cartStorage.CheckOut("88 Holland Avenue, West Seneca, NY", "example@example.com");
+        }
+        else
+        {
+            await _cartStorage.CheckOut("", "example@example.com");
+        }
         PopulateCart();
     }
 

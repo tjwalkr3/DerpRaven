@@ -17,6 +17,7 @@ public partial class CartPage : ContentPage
     {
         var popup = new PaymentPopup("");
 
+
         this.ShowPopup(popup);
     }
 

@@ -7,7 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DerpRaven.Blazor.ApiClients;
 
-public class BlazorImageClient
+public class BlazorImageClient : IImageClient
 {
     private readonly HttpClient _httpClient;
 
@@ -22,17 +22,16 @@ public class BlazorImageClient
         return response.IsSuccessStatusCode;
     }
 
-    public string GetImageAddress(int id)
+    public async Task<byte[]?> GetImageAsync(int id)
     {
+        var response = await _httpClient.GetAsync($"api/image/get/{id}");
 
-        Console.WriteLine(_httpClient.BaseAddress);
-        if (_httpClient.BaseAddress == null)
+        if (response.IsSuccessStatusCode)
         {
-            Console.WriteLine("Base address is null");
-            throw new InvalidOperationException("Base address is not set.");
+            return await response.Content.ReadAsByteArrayAsync();
         }
-        Console.WriteLine(_httpClient.BaseAddress + $"api/image/get/{id}");
-        return _httpClient.BaseAddress + $"api/image/get/{id}";
+
+        return null;
     }
 
     public async Task<ImageDto?> GetImageInfoAsync(int id)

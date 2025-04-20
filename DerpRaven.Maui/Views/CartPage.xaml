@@ -42,8 +42,10 @@
                 <Entry Placeholder="Address" />
             </Border>
 
-            <Label Text="{Binding RunningTotal, StringFormat='Running Total: {0:C}'}" FontSize="18" />
-            <Button Text="Checkout"  Command="{Binding CheckoutCommand}" />
+            <Label IsVisible="{Binding NoItems}" Text="No items in Cart" />
+
+            <Label IsVisible="{Binding ItemsInCart}" Text="{Binding RunningTotal, StringFormat='Running Total: {0:C}'}" FontSize="18" />
+            <Button IsVisible="{Binding ItemsInCart}" Text="Checkout"  Command="{Binding CheckoutCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

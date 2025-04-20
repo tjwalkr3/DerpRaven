@@ -1,10 +1,10 @@
 ﻿using DerpRaven.Shared.Dtos;
 
-namespace DerpRaven.Shared.ApiClients
+namespace DerpRaven.Blazor.ApiClients
 {
-    public interface IOrderClient
+    public interface IBlazorOrderClient
     {
-        Task<int> CreateOrderAsync(OrderDto order);
+        Task CreateOrderAsync(OrderDto order);
         Task<List<OrderDto>> GetAllOrdersAsync();
         Task<List<OrderDto>> GetOrdersByUserEmailAsync();
         Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId);

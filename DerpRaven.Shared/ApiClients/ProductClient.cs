@@ -1,5 +1,6 @@
 ﻿using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.Dtos;
+using System.Net.Http;
 
 namespace DerpRaven.Shared.ApiClients;
 
@@ -16,5 +17,12 @@ public class ProductClient(IApiService apiService) : IProductClient
     {
         var response = await apiService.GetFromJsonAsyncWithoutAuthorization<ProductDto>($"api/product/{id}");
         return response;
+    }
+
+    public async Task<bool> UpdateProductAsync(ProductDto product)
+    {
+        var response = await apiService.PutAsJsonAsync("api/Product", product);
+        response.EnsureSuccessStatusCode();
+        return response.IsSuccessStatusCode;
     }
 }
