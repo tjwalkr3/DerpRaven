@@ -123,5 +123,7 @@ public partial class ProductPageViewModel : ObservableObject
         _cartStorage.AddCartItem(ProductDetails, SelectedQuantity);
         await Shell.Current.GoToAsync($"///CartPage");
     }
+
+    
 }
 

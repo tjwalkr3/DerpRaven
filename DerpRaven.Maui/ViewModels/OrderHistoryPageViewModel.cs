@@ -57,6 +57,7 @@ public partial class OrderHistoryPageViewModel : ObservableObject
     public async Task<List<OrderDto>> GetOrdersAsync()
     {
         var orders = await _orderClient.GetOrdersByUserEmailAsync();
+        orders.Reverse();
         return orders;
     }
 
