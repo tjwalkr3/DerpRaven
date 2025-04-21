@@ -15,6 +15,12 @@ public partial class CartPageViewModel : ObservableObject
     private ObservableCollection<CartItem> cartItems = [];
 
     [ObservableProperty]
+    private string emailContact = string.Empty;
+
+    [ObservableProperty]
+    private string shippingAddress = string.Empty;
+
+    [ObservableProperty]
     private decimal runningTotal = 0.00m;
 
     [ObservableProperty]
@@ -102,11 +108,11 @@ public partial class CartPageViewModel : ObservableObject
         // Treating the checkout as successful
         if (PlushiePresent)
         {
-            await _cartStorage.CheckOut("88 Holland Avenue, West Seneca, NY", "example@example.com");
+            await _cartStorage.CheckOut(ShippingAddress, EmailContact);
         }
         else
         {
-            await _cartStorage.CheckOut("", "example@example.com");
+            await _cartStorage.CheckOut("", EmailContact);
         }
         PopulateCart();
     }

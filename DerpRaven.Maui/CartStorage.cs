@@ -12,9 +12,11 @@ public class CartStorage : ICartStorage
     private readonly IOrderClient _orderClient;
     private readonly IProductClient _productClient;
     private readonly IUserClient _userClient;
+    private readonly IUserStorage _userStorage;
 
-    public CartStorage(IOrderedProductClient orderedProductClient, IProductClient productClient, IOrderClient orderClient, IUserClient userClient)
+    public CartStorage(IOrderedProductClient orderedProductClient, IProductClient productClient, IOrderClient orderClient, IUserClient userClient, IUserStorage userStorage)
     {
+        _userStorage = userStorage;
         _userClient = userClient;
         _orderedProductClient = orderedProductClient;
         _productClient = productClient;
@@ -100,7 +102,7 @@ public class CartStorage : ICartStorage
 
         if (cartItems.Count > 0 && await CheckAndUpdateCartItemQuantities())
         {
-            string? userEmail = UserStorage.GetEmail();
+            string? userEmail = _userStorage.GetEmail();
             UserDto userdto = await _userClient.GetUserByEmailAsync(userEmail);
             // Create order
             OrderDto order = new OrderDto

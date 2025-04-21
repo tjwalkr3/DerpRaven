@@ -6,10 +6,12 @@ namespace DerpRaven.Maui.ViewModels;
 public partial class AppShellViewModel : ObservableObject
 {
     private readonly IKeycloakClient _oktaClient;
+    private readonly IUserStorage _userStorage; 
     private LoginResult _authenticationData = default!;
 
-    public AppShellViewModel(IKeycloakClient oktaClient)
+    public AppShellViewModel(IKeycloakClient oktaClient, IUserStorage userStorage)
     {
+        _userStorage = userStorage;
         _oktaClient = oktaClient;
         oktaClient.IdentityTokenChanged += OnIdentityTokenChanged;
         OnIdentityTokenChanged();
@@ -55,7 +57,7 @@ public partial class AppShellViewModel : ObservableObject
         {
             string email = _authenticationData.User.FindFirst("email")?.Value ?? "unknown";
             loginToolbarItem.Text = $"Logout";
-            UserStorage.SetEmail(email);
+            _userStorage.SetEmail(email);
         }
         else
         {

@@ -41,7 +41,7 @@
             <Label Text="Enter Address For Plushie Shipping:" IsVisible="{Binding PlushiePresent}"/>
             
             <Border Stroke="Black" StrokeThickness="1" IsVisible="{Binding PlushiePresent}">
-                <Entry Placeholder="Address" />
+                <Entry Placeholder="Address" Text="{Binding ShippingAddress}"/>
             </Border>
 
             <Label IsVisible="{Binding NoItems}" Text="No items in Cart" />
