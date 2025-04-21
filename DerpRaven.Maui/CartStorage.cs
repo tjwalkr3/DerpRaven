@@ -62,7 +62,7 @@ public class CartStorage : ICartStorage
         SaveCartItems(cartItems);
     }
 
-    public static List<CartItem> GetCartItems()
+    public List<CartItem> GetCartItems()
     {
         var json = Preferences.Get(CartKey, string.Empty);
         if (string.IsNullOrEmpty(json))
@@ -89,7 +89,7 @@ public class CartStorage : ICartStorage
         SaveCartItems(cartItems);
     }
 
-    public static decimal GetCartTotal()
+    public decimal GetCartTotal()
     {
         var cartItems = GetCartItems();
         return cartItems.Sum(item => item.Quantity * item.Price);

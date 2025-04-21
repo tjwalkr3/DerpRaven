@@ -12,6 +12,8 @@ namespace DerpRaven.Maui
         Task<bool> CheckAndUpdateCartItemQuantities();
         Task<bool> CheckOut(string address, string email);
         void ClearCart();
+        public List<CartItem> GetCartItems();
+        public decimal GetCartTotal();
         void RemoveCartItem(CartItem item);
         void SaveCartItems(List<CartItem> items);
         void UpdateCartItem(CartItem item);

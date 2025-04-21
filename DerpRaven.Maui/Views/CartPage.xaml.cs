@@ -6,8 +6,10 @@ namespace DerpRaven.Maui.Views;
 public partial class CartPage : ContentPage
 {
     private readonly CartPageViewModel _vm;
-    public CartPage(CartPageViewModel vm)
+    ICartStorage _cartStorage;
+    public CartPage(CartPageViewModel vm, ICartStorage cartStorage)
     {
+        _cartStorage = cartStorage;
         InitializeComponent();
         BindingContext = vm;
         _vm = vm;
@@ -30,7 +32,7 @@ public partial class CartPage : ContentPage
 
     public void OnDisplayPopupClicked(object sender, EventArgs e)
     {
-        decimal price = CartStorage.GetCartTotal();
+        decimal price = _cartStorage.GetCartTotal();
         string PaymentUrl = "https://derpipose.github.io/Payment.html?price=" + price;
         var popup = new PaymentPopup(PaymentUrl);
 

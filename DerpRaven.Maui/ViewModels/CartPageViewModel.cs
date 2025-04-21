@@ -40,7 +40,7 @@ public partial class CartPageViewModel : ObservableObject
     public void PopulateCart()
     {
         // Get the cart items from storage
-        var cartItemsFromStorage = CartStorage.GetCartItems();
+        var cartItemsFromStorage = _cartStorage.GetCartItems();
         // Clear the cart items collection
         CartItems = new ObservableCollection<CartItem>();
         // Add the items from storage to the cart items collection
@@ -119,7 +119,7 @@ public partial class CartPageViewModel : ObservableObject
 
     private void UpdateRunningTotal()
     {
-        RunningTotal = CartStorage.GetCartTotal();
+        RunningTotal = _cartStorage.GetCartTotal();
     }
 }
 
