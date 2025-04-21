@@ -84,3 +84,4 @@ public partial class OrderViewModel : ObservableObject
         return OrderTotal = Products.Sum(p => p.Quantity * p.Price);
     }
 }
+//
