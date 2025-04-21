@@ -40,19 +40,23 @@ public partial class CartPageViewModel : ObservableObject
     public void PopulateCart()
     {
         // Get the cart items from storage
-        var cartItemsFromStorage = _cartStorage.GetCartItems();
+        List<CartItem> cartItemsFromStorage = _cartStorage.GetCartItems();
+
         // Clear the cart items collection
         CartItems = new ObservableCollection<CartItem>();
+
         // Add the items from storage to the cart items collection
         foreach (var item in cartItemsFromStorage)
         {
             CartItems.Add(item);
         }
+
         // Update the running total
         UpdateRunningTotal();
         CheckPlushiePresent();
         CheckIfItemsInCart();
     }
+
 
     [ObservableProperty]
     public bool plushiePresent = false;

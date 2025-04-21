@@ -20,7 +20,7 @@ public partial class AppShellViewModel : ObservableObject
     [ObservableProperty]
     private bool isLoggedIn = false;
 
-    private void OnIdentityTokenChanged()
+    public void OnIdentityTokenChanged()
     {
         IsLoggedIn = !string.IsNullOrEmpty(_oktaClient.IdentityToken);
     }
@@ -51,13 +51,13 @@ public partial class AppShellViewModel : ObservableObject
         }
     }
 
-    private void UpdateLoginLogoutButton(ToolbarItem loginToolbarItem)
+    public void UpdateLoginLogoutButton(ToolbarItem loginToolbarItem)
     {
-        if (!string.IsNullOrEmpty(_oktaClient.IdentityToken))
+        if (!string.IsNullOrEmpty(_oktaClient.IdentityToken) && _authenticationData != null && _authenticationData.User != null)
         {
             string email = _authenticationData.User.FindFirst("email")?.Value ?? "unknown";
             loginToolbarItem.Text = $"Logout";
-            _userStorage.SetEmail(email);
+            _userStorage.SetEmail(email);                
         }
         else
         {
