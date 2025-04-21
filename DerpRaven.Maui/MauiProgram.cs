@@ -85,7 +85,11 @@ public static class MauiProgram
 
         builder.Services.AddSingleton(sp => new HttpClient
         {
+#if DEBUG
             BaseAddress = new Uri("http://10.0.2.2:5077")
+#else
+            BaseAddress = new Uri("http://derpraven-api.westus3.azurecontainer.io:8080")
+#endif
         });
 
         builder.Services.AddSingleton<IApiService, ApiService>();
