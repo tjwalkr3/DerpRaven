@@ -1,7 +1,6 @@
 ﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Maui.ApplicationModel.Communication;
 namespace DerpRaven.Api.Services;
 
 public class CustomRequestService : ICustomRequestService
@@ -45,28 +44,6 @@ public class CustomRequestService : ICustomRequestService
             .Where(r => r.Id == id)
             .Select(r => MapToCustomRequestDto(r))
             .FirstOrDefaultAsync();
-    }
-
-    public async Task<List<CustomRequestDto>> GetCustomRequestsByStatusAsync(string status)
-    {
-        _logger.LogInformation("Fetching custom requests with status {Status}", status);
-        return await _context.CustomRequests
-            .Include(r => r.ProductType)
-            .Include(r => r.User)
-            .Where(r => r.Status == status)
-            .Select(r => MapToCustomRequestDto(r))
-            .ToListAsync();
-    }
-
-    public async Task<List<CustomRequestDto>> GetCustomRequestsByTypeAsync(string productType)
-    {
-        _logger.LogInformation("Fetching custom requests with product type {ProductType}", productType);
-        return await _context.CustomRequests
-            .Include(r => r.ProductType)
-            .Include(r => r.User)
-            .Where(r => r.ProductType.Name == productType)
-            .Select(r => MapToCustomRequestDto(r))
-            .ToListAsync();
     }
 
     public async Task<bool> ChangeStatusAsync(int id, string status)

@@ -1,9 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using DerpRaven.Maui;
-using DerpRaven.Maui.Popups;
-using CommunityToolkit.Maui.Views;
 using DerpRaven.Shared.Authentication;
 
 namespace DerpRaven.Maui.ViewModels;
@@ -18,8 +15,19 @@ public partial class CartPageViewModel : ObservableObject
     private ObservableCollection<CartItem> cartItems = [];
 
     [ObservableProperty]
+    private string emailContact = string.Empty;
+
+    [ObservableProperty]
+    private string shippingAddress = string.Empty;
+
+    [ObservableProperty]
     private decimal runningTotal = 0.00m;
 
+    [ObservableProperty]
+    bool itemsInCart = false;
+
+    [ObservableProperty]
+    bool noItems = false;
 
     public CartPageViewModel(ICartStorage cartStorage, IKeycloakClient keycloakClient)
     {
@@ -32,21 +40,40 @@ public partial class CartPageViewModel : ObservableObject
     public void PopulateCart()
     {
         // Get the cart items from storage
-        var cartItemsFromStorage = CartStorage.GetCartItems();
+        List<CartItem> cartItemsFromStorage = _cartStorage.GetCartItems();
+
         // Clear the cart items collection
         CartItems = new ObservableCollection<CartItem>();
+
         // Add the items from storage to the cart items collection
         foreach (var item in cartItemsFromStorage)
         {
             CartItems.Add(item);
         }
+
         // Update the running total
         UpdateRunningTotal();
         CheckPlushiePresent();
+        CheckIfItemsInCart();
     }
+
 
     [ObservableProperty]
     public bool plushiePresent = false;
+
+    public void CheckIfItemsInCart()
+    {
+        if (CartItems.Count >= 1)
+        {
+            ItemsInCart = true;
+            NoItems = false;
+        }
+        else
+        {
+            ItemsInCart = false;
+            NoItems = true;
+        }
+    }
 
     public void CheckPlushiePresent()
     {
@@ -85,19 +112,18 @@ public partial class CartPageViewModel : ObservableObject
         // Treating the checkout as successful
         if (PlushiePresent)
         {
-            await _cartStorage.CheckOut("88 Holland Avenue, West Seneca, NY", "example@example.com");
+            await _cartStorage.CheckOut(ShippingAddress, EmailContact);
         }
         else
         {
-            await _cartStorage.CheckOut("", "example@example.com");
+            await _cartStorage.CheckOut("", EmailContact);
         }
         PopulateCart();
-
     }
 
     private void UpdateRunningTotal()
     {
-        RunningTotal = CartStorage.GetCartTotal();
+        RunningTotal = _cartStorage.GetCartTotal();
     }
 }
 

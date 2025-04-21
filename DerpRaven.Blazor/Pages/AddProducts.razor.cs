@@ -2,7 +2,6 @@
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Components;
-
 namespace DerpRaven.Blazor.Pages;
 
 public partial class AddProducts
@@ -14,19 +13,18 @@ public partial class AddProducts
     private int ProductTypeId { get; set; }
     private int ProductId { get; set; }
 
-    private readonly IImageClient _imageClient;
+    private readonly IBlazorImageClient _imageClient;
     private List<ImageDto>? _images = [];
     private List<int> imageIds = [];
-    private BlazorProductClient _productClient { get; }
+    private IBlazorProductClient _productClient { get; }
     private List<ProductDto> _products = [];
     private string errorString = string.Empty;
     private string isEditing = "hidden";
 
-    public AddProducts(IImageClient imageClient, BlazorProductClient productClient)
+    public AddProducts(IBlazorImageClient imageClient, IBlazorProductClient productClient)
     {
         _productClient = productClient;
         _imageClient = imageClient;
-
     }
 
     public async Task IsEditingChanged()

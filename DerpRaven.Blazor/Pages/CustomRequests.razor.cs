@@ -1,14 +1,14 @@
-﻿namespace DerpRaven.Blazor.Pages;
-using DerpRaven.Shared.ApiClients;
+﻿using DerpRaven.Blazor.ApiClients;
 using DerpRaven.Shared.Dtos;
+namespace DerpRaven.Blazor.Pages;
 
 public partial class CustomRequests
 {
     private List<CustomRequestDto>? _requests = [];
     private string errorString = string.Empty;
-    ICustomRequestClient _customRequestClient { get; }
+    IBlazorCustomRequestClient _customRequestClient { get; }
 
-    public CustomRequests(ICustomRequestClient customRequestClient)
+    public CustomRequests(IBlazorCustomRequestClient customRequestClient)
     {
         _customRequestClient = customRequestClient;
     }

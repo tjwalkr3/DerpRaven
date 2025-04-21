@@ -4,7 +4,6 @@ using DerpRaven.Shared.Dtos;
 
 namespace DerpRaven.Shared.ApiClients;
 
-
 public class CustomRequestClient(IApiService apiService) : ICustomRequestClient
 {
     // needs authentication
@@ -34,22 +33,6 @@ public class CustomRequestClient(IApiService apiService) : ICustomRequestClient
     public async Task<List<CustomRequestDto>?> GetCustomRequestsByUserEmailAsync()
     {
         var response = await apiService.GetAsync($"api/CustomRequest/user");
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<List<CustomRequestDto>>();
-    }
-
-    // needs authentication
-    public async Task<List<CustomRequestDto>?> GetCustomRequestsByStatusAsync(string status)
-    {
-        var response = await apiService.GetAsync($"api/CustomRequest/status/{status}");
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<List<CustomRequestDto>>();
-    }
-
-    // needs authentication
-    public async Task<List<CustomRequestDto>?> GetCustomRequestsByTypeAsync(string productType)
-    {
-        var response = await apiService.GetAsync($"api/CustomRequest/type/{productType}");
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<CustomRequestDto>>();
     }

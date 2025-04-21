@@ -42,24 +42,6 @@ public class PortfolioController : ControllerBase
         return Ok(portfolio);
     }
 
-    [HttpGet("type/{productType}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetPortfoliosByType(string productType)
-    {
-        _metrics.AddPortfolioEndpointCall();
-        var portfolios = await _portfolioService.GetPortfoliosByTypeAsync(productType);
-        return Ok(portfolios);
-    }
-
-    [HttpGet("name/{name}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetPortfoliosByName(string name)
-    {
-        _metrics.AddPortfolioEndpointCall();
-        var portfolios = await _portfolioService.GetPortfoliosByNameAsync(name);
-        return Ok(portfolios);
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreatePortfolioAsync(PortfolioDto portfolio)
     {
@@ -69,11 +51,10 @@ public class PortfolioController : ControllerBase
         return Created();
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdatePortfolio(int id, PortfolioDto portfolio)
+    [HttpPut]
+    public async Task<IActionResult> UpdatePortfolio(PortfolioDto portfolio)
     {
         _metrics.AddPortfolioEndpointCall();
-        if (id != portfolio.Id) return BadRequest();
         bool wasUpdated = await _portfolioService.UpdatePortfolioAsync(portfolio);
         if (!wasUpdated) return NotFound();
         return NoContent();

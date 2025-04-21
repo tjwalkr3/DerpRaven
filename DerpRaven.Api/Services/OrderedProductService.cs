@@ -39,6 +39,7 @@ public class OrderedProductService : IOrderedProductService
             return false;
         }
         _context.OrderedProducts.AddRange(newOrderedProducts);
+        await _context.SaveChangesAsync();
         return true;
     }
 

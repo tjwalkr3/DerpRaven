@@ -35,28 +35,10 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    [HttpGet("status/{active}")]
-    public async Task<IActionResult> GetUsersByStatus(bool active)
-    {
-        var users = await _userService.GetUsersByStatusAsync(active);
-        return Ok(users);
-    }
-
     [HttpGet("email/{email}")]
     public async Task<IActionResult> GetUserByEmail(string email)
     {
         var user = await _userService.GetUserByEmailAsync(email);
-        if (user == null)
-        {
-            return NotFound();
-        }
-        return Ok(user);
-    }
-
-    [HttpGet("name/{name}")]
-    public async Task<IActionResult> GetUsersByName(string name)
-    {
-        var user = await _userService.GetUsersByNameAsync(name);
         if (user == null)
         {
             return NotFound();

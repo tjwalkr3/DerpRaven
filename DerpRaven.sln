@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.IntegrationTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.Blazor", "DerpRaven.Blazor\DerpRaven.Blazor.csproj", "{60EFF1E7-74A8-0EA6-1AE7-52AA24E75491}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerpRaven.MauiTests", "DerpRaven.MauiTests\DerpRaven.MauiTests.csproj", "{D1148247-D691-4F91-81EB-03E60605E108}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,7 @@ Global
 		{3359C78C-D391-4601-AA1F-3DE075C980AD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{3359C78C-D391-4601-AA1F-3DE075C980AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3359C78C-D391-4601-AA1F-3DE075C980AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3359C78C-D391-4601-AA1F-3DE075C980AD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{7B89099D-D739-4B23-A01E-1C177BFE67F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B89099D-D739-4B23-A01E-1C177BFE67F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B89099D-D739-4B23-A01E-1C177BFE67F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,6 +49,10 @@ Global
 		{60EFF1E7-74A8-0EA6-1AE7-52AA24E75491}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60EFF1E7-74A8-0EA6-1AE7-52AA24E75491}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60EFF1E7-74A8-0EA6-1AE7-52AA24E75491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1148247-D691-4F91-81EB-03E60605E108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1148247-D691-4F91-81EB-03E60605E108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1148247-D691-4F91-81EB-03E60605E108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1148247-D691-4F91-81EB-03E60605E108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Dtos;
 using Microsoft.Extensions.Logging;
@@ -7,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace DerpRaven.Maui.ViewModels;
 
-public partial class ViewCustomRequestsPageViewModel(ICustomRequestClient client, ILogger<CustomRequestPageViewModel> logger) : ObservableObject
+public partial class ViewCustomRequestsPageViewModel(ICustomRequestClient client, ILogger<ViewCustomRequestsPageViewModel> logger) : ObservableObject
 {
     public ObservableCollection<CustomRequestDto> CustomRequests { get; set; } = [];
 
@@ -27,8 +26,7 @@ public partial class ViewCustomRequestsPageViewModel(ICustomRequestClient client
             {
                 logger.LogError("No custom requests found");
                 return;
-            }
-            ;
+            };
 
             // If we do find some, we need to set the list to include the requests
             logger.LogInformation("Found {Count} custom requests", requests.Count);

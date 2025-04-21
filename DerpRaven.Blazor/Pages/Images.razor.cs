@@ -1,18 +1,18 @@
-﻿using DerpRaven.Shared.ApiClients;
+﻿using DerpRaven.Blazor.ApiClients;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Components.Forms;
 namespace DerpRaven.Blazor.Pages;
 
 public partial class Images
 {
-    private readonly IImageClient _imageClient;
+    private readonly IBlazorImageClient _imageClient;
     List<ImageDto>? _images = [];
     private IBrowserFile? selectedFile;
     private string altText = string.Empty;
     private string featureFlag;
     private string errorString = string.Empty;
 
-    public Images(IImageClient imageClient, IConfiguration config)
+    public Images(IBlazorImageClient imageClient, IConfiguration config)
     {
         _imageClient = imageClient;
         if (string.IsNullOrEmpty(config["FeatureFlagEnabled"]))

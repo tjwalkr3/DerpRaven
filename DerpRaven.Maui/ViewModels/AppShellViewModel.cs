@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.Authentication;
 using Duende.IdentityModel.OidcClient;
 namespace DerpRaven.Maui.ViewModels;
@@ -7,10 +6,12 @@ namespace DerpRaven.Maui.ViewModels;
 public partial class AppShellViewModel : ObservableObject
 {
     private readonly IKeycloakClient _oktaClient;
+    private readonly IUserStorage _userStorage; 
     private LoginResult _authenticationData = default!;
 
-    public AppShellViewModel(IKeycloakClient oktaClient)
+    public AppShellViewModel(IKeycloakClient oktaClient, IUserStorage userStorage)
     {
+        _userStorage = userStorage;
         _oktaClient = oktaClient;
         oktaClient.IdentityTokenChanged += OnIdentityTokenChanged;
         OnIdentityTokenChanged();
@@ -19,7 +20,7 @@ public partial class AppShellViewModel : ObservableObject
     [ObservableProperty]
     private bool isLoggedIn = false;
 
-    private void OnIdentityTokenChanged()
+    public void OnIdentityTokenChanged()
     {
         IsLoggedIn = !string.IsNullOrEmpty(_oktaClient.IdentityToken);
     }
@@ -50,13 +51,13 @@ public partial class AppShellViewModel : ObservableObject
         }
     }
 
-    private void UpdateLoginLogoutButton(ToolbarItem loginToolbarItem)
+    public void UpdateLoginLogoutButton(ToolbarItem loginToolbarItem)
     {
-        if (!string.IsNullOrEmpty(_oktaClient.IdentityToken))
+        if (!string.IsNullOrEmpty(_oktaClient.IdentityToken) && _authenticationData != null && _authenticationData.User != null)
         {
             string email = _authenticationData.User.FindFirst("email")?.Value ?? "unknown";
             loginToolbarItem.Text = $"Logout";
-            UserStorage.SetEmail(email);
+            _userStorage.SetEmail(email);                
         }
         else
         {

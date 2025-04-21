@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using DerpRaven.Shared.ApiClients;
 using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.Dtos;
-using System.Collections.ObjectModel;
 
 namespace DerpRaven.Maui.ViewModels;
 
@@ -114,12 +113,11 @@ public partial class ProductPageViewModel : ObservableObject
         OnPropertyChanged(nameof(SelectedQuantity));
     }
 
-    //Add to cart will add the product to the cart
     [RelayCommand]
     private async Task AddToCart()
     {
-        //add to cart
-        _cartStorage.AddCartItem(ProductDetails);
+        await Shell.Current.GoToAsync("//ProductsListPage");
+        _cartStorage.AddCartItem(ProductDetails, SelectedQuantity);
         await Shell.Current.GoToAsync($"///CartPage");
     }
 }

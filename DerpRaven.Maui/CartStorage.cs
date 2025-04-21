@@ -1,96 +1,112 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using Microsoft.Maui.Storage;
+﻿using System.Text.Json;
 using DerpRaven.Shared.Dtos;
 using DerpRaven.Shared.ApiClients;
 
 namespace DerpRaven.Maui;
 
-public class CartStorage : ICartStorage {
+public class CartStorage : ICartStorage
+{
     private const string CartKey = "CartItems";
     public bool CanCheckOut { get; private set; } = false;
     private readonly IOrderedProductClient _orderedProductClient;
     private readonly IOrderClient _orderClient;
     private readonly IProductClient _productClient;
     private readonly IUserClient _userClient;
+    private readonly IUserStorage _userStorage;
 
-    public CartStorage(IOrderedProductClient orderedProductClient, IProductClient productClient, IOrderClient orderClient, IUserClient userClient) {
+    public CartStorage(IOrderedProductClient orderedProductClient, IProductClient productClient, IOrderClient orderClient, IUserClient userClient, IUserStorage userStorage)
+    {
+        _userStorage = userStorage;
         _userClient = userClient;
         _orderedProductClient = orderedProductClient;
         _productClient = productClient;
         _orderClient = orderClient;
     }
 
-    public void SaveCartItems(List<CartItem> items) {
+    public void SaveCartItems(List<CartItem> items)
+    {
         var json = JsonSerializer.Serialize(items);
         Preferences.Clear(CartKey);
         Preferences.Set(CartKey, json);
     }
 
-    public void AddCartItem(ProductDto product) {
-        var item = new CartItem {
+    public void AddCartItem(ProductDto product, int SelectedQuantity)
+    {
+        var item = new CartItem
+        {
             Name = product.Name,
             ProductId = product.Id,
             ImageUrl = Path.Combine(FileSystem.CacheDirectory, $"{product.ImageIds[0]}.png"),
-            Quantity = product.Quantity,
+            Quantity = SelectedQuantity,
             Price = product.Price,
             ProductTypeId = product.ProductTypeId
         };
 
         var cartItems = GetCartItems();
         var existingItem = cartItems.FirstOrDefault(i => i.Name == item.Name);
-        if (existingItem != null) {
+        if (existingItem != null)
+        {
             existingItem.Quantity += item.Quantity;
-        } else {
+        }
+        else
+        {
             cartItems.Add(item);
         }
         SaveCartItems(cartItems);
     }
 
-    public void RemoveCartItem(CartItem item) {
+    public void RemoveCartItem(CartItem item)
+    {
         var cartItems = GetCartItems();
         cartItems.Remove(item);
         SaveCartItems(cartItems);
     }
 
-    public static List<CartItem> GetCartItems() {
+    public List<CartItem> GetCartItems()
+    {
         var json = Preferences.Get(CartKey, string.Empty);
-        if (string.IsNullOrEmpty(json)) {
+        if (string.IsNullOrEmpty(json))
+        {
             return new List<CartItem>();
         }
         return JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
     }
 
-    public void ClearCart() {
+    public void ClearCart()
+    {
         Preferences.Remove(CartKey);
     }
 
-    public void UpdateCartItem(CartItem item) {
+    public void UpdateCartItem(CartItem item)
+    {
         var cartItems = GetCartItems();
         var existingItem = cartItems.FirstOrDefault(i => i.Name == item.Name);
-        if (existingItem != null) {
+        if (existingItem != null)
+        {
             existingItem.Quantity = item.Quantity;
             existingItem.Price = item.Price;
         }
         SaveCartItems(cartItems);
     }
 
-    public static decimal GetCartTotal() {
+    public decimal GetCartTotal()
+    {
         var cartItems = GetCartItems();
         return cartItems.Sum(item => item.Quantity * item.Price);
     }
 
-    public async Task<bool> CheckOut(string address, string email) {
+    public async Task<bool> CheckOut(string address, string email)
+    {
         var cartItems = GetCartItems();
         List<OrderedProductDto> products = new List<OrderedProductDto>();
 
-        if (cartItems.Count > 0 && await CheckAndUpdateCartItemQuantities()) {
-            string? userEmail = UserStorage.GetEmail();
+        if (cartItems.Count > 0 && await CheckAndUpdateCartItemQuantities())
+        {
+            string? userEmail = _userStorage.GetEmail();
             UserDto userdto = await _userClient.GetUserByEmailAsync(userEmail);
             // Create order
-            OrderDto order = new OrderDto {
+            OrderDto order = new OrderDto
+            {
                 Address = address,
                 Email = email,
                 OrderDate = DateTime.Now,
@@ -98,8 +114,10 @@ public class CartStorage : ICartStorage {
             };
             int orderId = await _orderClient.CreateOrderAsync(order);
 
-            foreach (var item in cartItems) {
-                products.Add(new OrderedProductDto {
+            foreach (var item in cartItems)
+            {
+                products.Add(new OrderedProductDto
+                {
                     Name = item.Name,
                     Quantity = item.Quantity,
                     Price = item.Price,
@@ -107,7 +125,8 @@ public class CartStorage : ICartStorage {
                 });
 
                 ProductDto? oldproduct = await _productClient.GetProductByIdAsync(item.ProductId);
-                if (oldproduct != null) {
+                if (oldproduct != null)
+                {
                     oldproduct.Quantity -= item.Quantity;
                     await _productClient.UpdateProductAsync(oldproduct);
                 }
@@ -117,18 +136,23 @@ public class CartStorage : ICartStorage {
             await _orderedProductClient.CreateOrderedProducts(products);
             ClearCart();
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
-    public async Task<bool> CheckAndUpdateCartItemQuantities() {
+    public async Task<bool> CheckAndUpdateCartItemQuantities()
+    {
         bool quantitiesHaveNotChanged = true;
         var cartItems = GetCartItems();
         List<OrderedProductDto> products = new List<OrderedProductDto>();
-        foreach (var item in cartItems) {
+        foreach (var item in cartItems)
+        {
             ProductDto? oldproduct = await _productClient.GetProductByIdAsync(item.ProductId);
-            if (oldproduct != null && oldproduct.Quantity < item.Quantity) {
+            if (oldproduct != null && oldproduct.Quantity < item.Quantity)
+            {
                 item.Quantity = oldproduct.Quantity;
                 quantitiesHaveNotChanged = false;
             }
@@ -140,7 +164,8 @@ public class CartStorage : ICartStorage {
     //For checking out stuff
     string? nonce;
     public bool IsNonce { get => nonce != null; }
-    public void AddNonce(string nonce) {
+    public void AddNonce(string nonce)
+    {
         this.nonce = nonce;
     }
 }

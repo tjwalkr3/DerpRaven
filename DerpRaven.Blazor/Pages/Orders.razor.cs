@@ -1,15 +1,14 @@
-﻿using DerpRaven.Shared.ApiClients;
+﻿using DerpRaven.Blazor.ApiClients;
 using DerpRaven.Shared.Dtos;
-
 namespace DerpRaven.Blazor.Pages;
 
 public partial class Orders
 {
     private List<OrderDto>? _orders = [];
     private string errorString = string.Empty;
-    IOrderClient _orderClient { get; }
+    IBlazorOrderClient _orderClient { get; }
 
-    public Orders(IOrderClient orderClient)
+    public Orders(IBlazorOrderClient orderClient)
     {
         _orderClient = orderClient;
     }

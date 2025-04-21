@@ -90,19 +90,6 @@ public class RealDatabaseUserServiceTests
         result.Active.ShouldBeFalse();
     }
 
-    [Order(5)]
-    [Test]
-    public async Task GetUsersByStatus()
-    {
-        // Act
-        var result = await _userService.GetUsersByStatusAsync(true);
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.Single().Active.ShouldBeTrue();
-        result.Single().Name.ShouldBe("Derp");
-    }
-
     [Order(6)]
     [Test]
     public async Task GetUserByEmail()
@@ -114,19 +101,6 @@ public class RealDatabaseUserServiceTests
         result.ShouldNotBeNull();
         result.Email.ShouldBe("Derpipose@gmail.com");
     }
-
-    [Order(8)]
-    [Test]
-    public async Task GetUserByName()
-    {
-        // Act
-        var result = await _userService.GetUsersByNameAsync("Derp");
-
-        // Assert
-        result.ShouldNotBeEmpty();
-        result.Single().Name.ShouldBe("Derp");
-    }
-
 
     [Order(9)]
     [Test]

@@ -1,8 +1,6 @@
 ﻿using DerpRaven.Shared.Authentication;
 using DerpRaven.Shared.Dtos;
 using Microsoft.AspNetCore.Components.Forms;
-using System.Net.Http.Json;
-using System.Web;
 
 namespace DerpRaven.Shared.ApiClients;
 

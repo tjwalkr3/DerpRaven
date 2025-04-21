@@ -4,7 +4,6 @@
              x:Class="DerpRaven.Maui.Views.CustomRequestPage"
              xmlns:local="clr-namespace:DerpRaven.Maui.Views"
              Title="">
-
     <TabBar>
         <Tab Title="Create">
             <ShellContent 

@@ -1,0 +1,102 @@
+﻿@page "/portfolios"
+@attribute [Authorize]
+
+@if (isEditing != "visible")
+{
+    <h3>Add A Portfolio</h3>
+}
+else
+{
+    <h3>Edit A Portfolio</h3>
+}
+
+<h4 class="errorText">@errorString</h4>
+
+<label>Is Editing</label>
+<input type="checkbox" @onchange="IsEditingChanged" />
+
+<select style="visibility: @isEditing;" @onchange="OnPortfolioChanged">
+    <option disabled selected>Select your option</option>
+    @foreach (var item in _portfolios)
+    {
+        <option value="@item.Id">@item.Name</option>
+    }
+</select>
+
+<div class="form-group">
+    <label>Name</label>
+    <input @bind="PortfolioName" placeholder="Portfolio Name" />
+</div>
+
+<div class="form-group">
+    <label>Description</label>
+    <textarea @bind="Description" rows="4"></textarea>
+</div>
+
+@if (isEditing != "visible")
+{
+    <div class="form-group">
+        <label>Product Type</label>
+        <select @bind="ProductTypeId">
+            <option value="1">Plushie</option>
+            <option value="2">Art</option>
+        </select>
+    </div>
+}
+
+<div class="form-group">
+    @if (isEditing != "visible")
+    {
+        <button class="submit-button" @onclick="AddPortfolio">Add Portfolio</button>
+    }
+    else
+    {
+        <button class="submit-button" @onclick="UpdatePortfolio">Edit Portfolio</button>
+    }
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>File Name</th>
+            <th>Id</th>
+            <th>Alt Text</th>
+            <th>Select Image</th>
+        </tr>
+
+        @if (_images == null)
+        {
+            <tr>
+                <td colspan="4">Loading...</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var image in _images)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(image.ImageDataUrl))
+                        {
+                            <img src="@image.ImageDataUrl" alt="@image.Alt" width="100" />
+                        }
+                    </td>
+                    <td>@image.Path</td>
+                    <td>@image.Id</td>
+                    <td>@image.Alt</td>
+                    <td>
+                        @if (isEditing == "visible" && imageIds.Contains(image.Id))
+                        {
+                            <input type="checkbox" @oninput="() => SelectImage(image.Id)" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" @oninput="() => SelectImage(image.Id)">
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </thead>
+</table>

@@ -28,12 +28,6 @@ public class OrderClient(IApiService apiService) : IOrderClient
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<OrderDto>>() ?? [];
     }
-
-    public async Task<List<OrderDto>> GetAllOrdersAsync()
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
 }
 
 public class Response()

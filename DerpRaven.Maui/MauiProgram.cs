@@ -55,7 +55,6 @@ public static class MauiProgram
     private static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
     {
         builder.Services.AddSingleton<CartPageViewModel>();
-        builder.Services.AddSingleton<CustomRequestPageViewModel>();
         builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddSingleton<OrderHistoryPageViewModel>();
         builder.Services.AddSingleton<PortfolioPageViewModel>();
@@ -86,7 +85,11 @@ public static class MauiProgram
 
         builder.Services.AddSingleton(sp => new HttpClient
         {
+#if DEBUG
             BaseAddress = new Uri("http://10.0.2.2:5077")
+#else
+            BaseAddress = new Uri("http://derpraven-api.westus3.azurecontainer.io:8080")
+#endif
         });
 
         builder.Services.AddSingleton<IApiService, ApiService>();
@@ -100,6 +103,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IOrderedProductClient, OrderedProductClient>();
         builder.Services.AddSingleton<ICartStorage, CartStorage>();
         builder.Services.AddSingleton<IUserClient, UserClient>();
+        builder.Services.AddSingleton<IUserStorage, UserStorage>(); 
         return builder;
     }
 }

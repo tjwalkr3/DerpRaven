@@ -1,8 +1,6 @@
 ﻿using DerpRaven.Shared.Dtos;
 using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using OpenTelemetry.Metrics;
 
 namespace DerpRaven.Api.Controllers;
 
