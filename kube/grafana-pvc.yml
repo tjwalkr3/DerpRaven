@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: derp-grafana-pvc
+  namespace: derp
+spec:
+  accessModes:
+  - ReadWriteOnce
+  #- ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

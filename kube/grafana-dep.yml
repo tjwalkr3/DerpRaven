@@ -15,12 +15,17 @@ spec:
         app: derp-grafana
     spec:
       volumes:
+      - name: derp-grafana-data
+        persistentVolumeClaim:
+          claimName: derp-grafana-pvc
       - name: grafana-configs
         configMap:
           name: derp-grafana-config
       containers:
       - name: derp-grafana
         volumeMounts:
+        - mountPath: /etc/grafana/provisioning/dashboards
+          name: derp-grafana-data
         - mountPath: /etc/grafana/provisioning/datasources/ds.yaml
           subPath: derp-config
           name: grafana-configs
