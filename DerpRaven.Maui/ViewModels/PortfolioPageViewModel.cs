@@ -38,7 +38,7 @@ public partial class PortfolioPageViewModel : ObservableObject
         }
     }
 
-    private void PopulatePortfolioViews(List<PortfolioDto> portfolios, List<ImageDto> images)
+    public void PopulatePortfolioViews(List<PortfolioDto> portfolios, List<ImageDto> images)
     {
         PlushiePortfolios.Clear();
         ArtPortfolios.Clear();
