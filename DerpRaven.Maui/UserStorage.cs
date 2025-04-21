@@ -16,6 +16,5 @@ public static class UserStorage
     {
         Preferences.Set("Email", email);
     }
-
 }
 
