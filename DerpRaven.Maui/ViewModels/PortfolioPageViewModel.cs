@@ -7,7 +7,7 @@ namespace DerpRaven.Maui.ViewModels;
 
 public partial class PortfolioPageViewModel : ObservableObject
 {
-    public string SelectedTab { get; set; }
+    public string SelectedTab { get; set; } = string.Empty;
 
     public ObservableCollection<CarouselViewModel> PlushiePortfolios { get; private set; } = [];
     public ObservableCollection<CarouselViewModel> ArtPortfolios { get; private set; } = [];
