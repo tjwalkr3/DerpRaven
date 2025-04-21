@@ -42,6 +42,13 @@ public partial class PortfolioPageViewModel : ObservableObject
     {
         PlushiePortfolios.Clear();
         ArtPortfolios.Clear();
+        MakeCarouselView(portfolios, images);
+        OnPropertyChanged(nameof(PlushiePortfolios));
+        OnPropertyChanged(nameof(ArtPortfolios));
+    }
+
+    public void MakeCarouselView(List<PortfolioDto> portfolios, List<ImageDto> images)
+    {
         foreach (var portfolio in portfolios)
         {
             List<ImageDto> portfolioImages = images.Where(img => portfolio.ImageIds.Contains(img.Id)).ToList();
@@ -54,11 +61,9 @@ public partial class PortfolioPageViewModel : ObservableObject
                 ArtPortfolios.Add(new CarouselViewModel(portfolio, portfolioImages));
             }
         }
-        OnPropertyChanged(nameof(PlushiePortfolios));
-        OnPropertyChanged(nameof(ArtPortfolios));
     }
 
-    private async Task<List<ImageDto>> GetPortfolioImages(List<PortfolioDto> portfolios)
+    public async Task<List<ImageDto>> GetPortfolioImages(List<PortfolioDto> portfolios)
     {
         List<int> imageIds = portfolios
             .SelectMany(p => p.ImageIds)
