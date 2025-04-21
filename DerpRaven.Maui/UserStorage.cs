@@ -13,6 +13,5 @@ public class UserStorage : IUserStorage {
     public void SetEmail(string email) {
         Preferences.Set("Email", email);
     }
-
 }
 
