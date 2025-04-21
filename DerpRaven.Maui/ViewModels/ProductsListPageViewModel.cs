@@ -79,13 +79,6 @@ public partial class ProductsListPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void AddToCart(ProductDto product)
-    {
-        if (product == null) return;
-        Debug.WriteLine($"Added {product.Name} to cart!");
-    }
-
-    [RelayCommand]
     private async Task NavigateToProduct(ProductDto product)
     {
         if (product == null) return;
