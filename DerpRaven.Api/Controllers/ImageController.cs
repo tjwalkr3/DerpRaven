@@ -1,8 +1,8 @@
-﻿namespace DerpRaven.Api.Controllers;
-using DerpRaven.Api.Services;
+﻿using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+
+namespace DerpRaven.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

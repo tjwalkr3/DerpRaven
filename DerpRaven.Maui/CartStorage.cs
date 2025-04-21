@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using Microsoft.Maui.Storage;
+﻿using System.Text.Json;
 using DerpRaven.Shared.Dtos;
 using DerpRaven.Shared.ApiClients;
 

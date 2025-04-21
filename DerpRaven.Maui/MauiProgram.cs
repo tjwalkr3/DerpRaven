@@ -55,7 +55,6 @@ public static class MauiProgram
     private static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
     {
         builder.Services.AddSingleton<CartPageViewModel>();
-        builder.Services.AddSingleton<CustomRequestPageViewModel>();
         builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddSingleton<OrderHistoryPageViewModel>();
         builder.Services.AddSingleton<PortfolioPageViewModel>();

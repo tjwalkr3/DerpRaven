@@ -23,8 +23,6 @@ public class ProductServiceControllerTests
         productService.GetAllProductsAsync().Returns(dtoList);
         productService.GetProductByIdAsync(1).Returns(dtoList[0]);
         productService.CreateProductAsync(Arg.Any<ProductDto>()).Returns(true);
-        productService.GetProductsByTypeAsync("type1").Returns(dtoList.Where(c => c.ProductTypeId == 1).ToList());
-        productService.GetProductsByNameAsync("my product").Returns(dtoList.Where(c => c.Name == "my product").ToList());
         productService.UpdateProductAsync(Arg.Any<ProductDto>()).Returns(true);
 
         _controller = new ProductController(productService);
@@ -56,34 +54,6 @@ public class ProductServiceControllerTests
         var product = result.Value as ProductDto;
         product.ShouldNotBeNull();
         product.Id.ShouldBe(1);
-    }
-
-    [Test]
-    public async Task GetProductsByType()
-    {
-        // Act
-        var result = await _controller.GetProductsByTypeAsync("type1") as OkObjectResult;
-        // Assert
-        result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var products = result.Value as List<ProductDto>;
-        products.ShouldNotBeEmpty();
-        products.Count.ShouldBe(1);
-        products.Any(c => c.ProductTypeId == 1).ShouldBeTrue();
-    }
-
-    [Test]
-    public async Task GetProductsByName()
-    {
-        // Act
-        var result = await _controller.GetProductsByNameAsync("my product") as OkObjectResult;
-        // Assert
-        result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var products = result.Value as List<ProductDto>;
-        products.ShouldNotBeEmpty();
-        products.Count.ShouldBe(1);
-        products.Any(c => c.Name == "my product").ShouldBeTrue();
     }
 
     [Test]

@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using DerpRaven.Shared.Dtos;
 using CommunityToolkit.Mvvm.Input;
-using System.Globalization;
 
 public partial class MainPageViewModel : ObservableObject
 {

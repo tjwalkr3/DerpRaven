@@ -6,7 +6,6 @@
              Title="Cart View">
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="10">
-
             <Label Text="Cart" FontSize="24" HorizontalOptions="Center" />
 
             <CollectionView ItemsSource="{Binding CartItems}">
@@ -38,7 +37,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            
             <Label Text="Enter Address For Plushie Shipping:" IsVisible="{Binding PlushiePresent}"/>
+            
             <Border Stroke="Black" StrokeThickness="1" IsVisible="{Binding PlushiePresent}">
                 <Entry Placeholder="Address" />
             </Border>
@@ -46,6 +47,7 @@
             <Label IsVisible="{Binding NoItems}" Text="No items in Cart" />
 
             <Label IsVisible="{Binding ItemsInCart}" Text="{Binding RunningTotal, StringFormat='Running Total: {0:C}'}" FontSize="18" />
+            
             <Button IsVisible="{Binding ItemsInCart}" Text="Checkout"  Command="{Binding CheckoutCommand}" />
         </VerticalStackLayout>
     </ScrollView>

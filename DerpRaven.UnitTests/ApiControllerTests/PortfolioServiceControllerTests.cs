@@ -26,8 +26,6 @@ public class PortfolioServiceControllerTests
         portfolioService.GetAllPortfoliosAsync().Returns(dtoList);
         portfolioService.GetPortfolioByIdAsync(1).Returns(dtoList[0]);
         portfolioService.CreatePortfolioAsync(Arg.Any<PortfolioDto>()).Returns(true);
-        portfolioService.GetPortfoliosByTypeAsync("type1").Returns(dtoList.Where(c => c.ProductTypeId == 1).ToList());
-        portfolioService.GetPortfoliosByNameAsync("my product").Returns(dtoList.Where(c => c.Name == "my product").ToList());
         portfolioService.DeletePortfolioAsync(1).Returns(true);
         portfolioService.UpdatePortfolioAsync(Arg.Any<PortfolioDto>()).Returns(true);
 
@@ -61,34 +59,6 @@ public class PortfolioServiceControllerTests
         var portfolio = result.Value as PortfolioDto;
         portfolio.ShouldNotBeNull();
         portfolio.Id.ShouldBe(1);
-    }
-
-    [Test]
-    public async Task GetPortfoliosByType()
-    {
-        // Act
-        var result = await _controller.GetPortfoliosByType("type1") as OkObjectResult;
-        // Assert
-        result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var portfolios = result.Value as List<PortfolioDto>;
-        portfolios.ShouldNotBeEmpty();
-        portfolios.Count.ShouldBe(1);
-        portfolios.Any(c => c.ProductTypeId == 1).ShouldBeTrue();
-    }
-
-    [Test]
-    public async Task GetPortfoliosByName()
-    {
-        // Act
-        var result = await _controller.GetPortfoliosByName("my product") as OkObjectResult;
-        // Assert
-        result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var portfolios = result.Value as List<PortfolioDto>;
-        portfolios.ShouldNotBeEmpty();
-        portfolios.Count.ShouldBe(1);
-        portfolios.Any(c => c.Name == "my product").ShouldBeTrue();
     }
 
     [Test]

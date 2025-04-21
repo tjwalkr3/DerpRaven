@@ -103,26 +103,6 @@ public class PortfolioServiceTests
         result.Name.ShouldBe("Portfolio1");
     }
 
-    [Order(3)]
-    [Test]
-    public async Task GetPortfoliosByType()
-    {
-        // Arrange
-        var portfolios = new List<Portfolio>
-        {
-            new Portfolio { Name = "Portfolio1", Description = "Description1", ProductType = type1, Images = images },
-            new Portfolio { Name = "Portfolio2", Description = "Description2", ProductType = type2, Images = images }
-        };
-        await _context.Portfolios.AddRangeAsync(portfolios);
-        await _context.SaveChangesAsync();
-
-        // Act
-        var result = await _portfolioService.GetPortfoliosByTypeAsync(type1.Name);
-
-        // Assert
-        result.Single().Name.ShouldBe("Portfolio1");
-    }
-
     [Order(1)]
     [Test]
     public async Task UpdatePortfolio()

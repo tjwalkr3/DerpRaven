@@ -20,22 +20,4 @@ public class BlazorOrderClient : IBlazorOrderClient
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<OrderDto>>() ?? [];
     }
-
-    public async Task CreateOrderAsync(OrderDto order)
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
-
-    public async Task<List<OrderDto>> GetOrdersByUserEmailAsync()
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
-
-    public async Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId)
-    {
-        await Task.Delay(1000);
-        throw new NotImplementedException();
-    }
 }

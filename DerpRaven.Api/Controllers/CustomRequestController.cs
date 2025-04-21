@@ -1,9 +1,6 @@
 ﻿using DerpRaven.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using DerpRaven.Shared.Dtos;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using System.Reflection.Metadata.Ecma335;
 
 namespace DerpRaven.Api.Controllers;
 
@@ -48,22 +45,6 @@ public class CustomRequestController : ControllerBase
         if (user == null) return Unauthorized();
 
         var requests = await _customRequestService.GetCustomRequestsByUserEmailAsync(user.Email);
-        return Ok(requests);
-    }
-
-    [HttpGet("status/{status}")]
-    public async Task<IActionResult> GetCustomRequestsByStatus(string status)
-    {
-        _metrics.AddCustomRequestEndpointCall();
-        var requests = await _customRequestService.GetCustomRequestsByStatusAsync(status);
-        return Ok(requests);
-    }
-
-    [HttpGet("type/{productType}")]
-    public async Task<IActionResult> GetCustomRequestsByType(string productType)
-    {
-        _metrics.AddCustomRequestEndpointCall();
-        var requests = await _customRequestService.GetCustomRequestsByTypeAsync(productType);
         return Ok(requests);
     }
 

@@ -2,11 +2,10 @@
 using DerpRaven.Shared.Dtos;
 using System.Net.Http.Json;
 
-
 namespace DerpRaven.Shared.ApiClients;
+
 public class UserClient(IApiService apiService) : IUserClient
 {
-
     public async Task<UserDto> GetUserByEmailAsync(string email)
     {
         var response = await apiService.GetAsync($"api/User/email/{email}");

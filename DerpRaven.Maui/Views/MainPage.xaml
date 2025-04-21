@@ -5,23 +5,16 @@
              xmlns:models="clr-namespace:DerpRaven.Maui.ViewModels"
              xmlns:dtos="clr-namespace:DerpRaven.Shared.Dtos;assembly=DerpRaven.Shared">
 
-
-    <ScrollView
-        >
+    <ScrollView>
         <VerticalStackLayout
             Padding="0,0"
             Spacing="0">
-
             <Label
                 Text="Welcome to Derp Raven"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App UI" />
-
-
             <Grid ColumnDefinitions="*,*">
-
-                <!--Add tap gestures to send to portfolios when the logo is clicked-->
                 <!-- Image for DRS-->
                 <Border Grid.Column="0" 
                         Stroke="Gray" 
@@ -152,8 +145,5 @@
                 </CarouselView.ItemTemplate>
             </CarouselView>
         </VerticalStackLayout>
-
-
     </ScrollView>
-
 </ContentPage>
