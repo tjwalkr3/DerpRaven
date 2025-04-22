@@ -3,15 +3,21 @@ kind: Ingress
 metadata:
   name: derp-api-ingress
   namespace: derp
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
+  tls:
+    - hosts:
+        - api.dragonbytes.org
+      secretName: tls-dragonbytes # This should match the secret you created with the cert/key
   rules:
-  - host: api.dragonbytes.org
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: derp-api-svc
-            port:
-              number: 8080 # same as external ip set in service
+    - host: api.dragonbytes.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: derp-api-svc
+                port:
+                  number: 8080

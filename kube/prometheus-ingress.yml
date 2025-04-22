@@ -3,15 +3,21 @@ kind: Ingress
 metadata:
   name: derp-prometheus-ingress
   namespace: derp
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
+  tls:
+    - hosts:
+        - prometheus.dragonbytes.org
+      secretName: tls-dragonbytes
   rules:
-  - host: prometheus.dragonbytes.org
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: derp-prometheus-svc
-            port:
-              number: 9090 # same as external ip set in service
+    - host: prometheus.dragonbytes.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: derp-prometheus-svc
+                port:
+                  number: 9090
