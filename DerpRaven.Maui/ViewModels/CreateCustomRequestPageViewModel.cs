@@ -39,7 +39,8 @@ public partial class CreateCustomRequestPageViewModel(ICustomRequestClient clien
                 ProductTypeId = IsArt ? 2 : 1
             };
             bool success = await client.CreateCustomRequestAsync(request);
-            if (success) {
+            if (success)
+            {
                 //clear the fields
                 Description = string.Empty;
                 Email = string.Empty;

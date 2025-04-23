@@ -7,13 +7,15 @@ using System.Collections.ObjectModel;
 
 namespace DerpRaven.MauiTests;
 
-public class CartPageVMTests {
+public class CartPageVMTests
+{
     private CartPageViewModel _viewModel;
     private ICartStorage _cartStorage;
     private IKeycloakClient _keycloakClient;
 
     [SetUp]
-    public void Setup() {
+    public void Setup()
+    {
         _cartStorage = Substitute.For<ICartStorage>();
         _keycloakClient = Substitute.For<IKeycloakClient>();
 
@@ -29,7 +31,8 @@ public class CartPageVMTests {
     }
 
     [Test]
-    public void PopulateCart_ShouldPopulateCartItemsAndUpdateRunningTotal() {
+    public void PopulateCart_ShouldPopulateCartItemsAndUpdateRunningTotal()
+    {
         // Act
         _viewModel.PopulateCart();
         //_viewModel.UpdateRunningTotal();
@@ -42,7 +45,8 @@ public class CartPageVMTests {
     }
 
     [Test]
-    public void CheckIfItemsInCart_ShouldSetItemsInCartCorrectly() {
+    public void CheckIfItemsInCart_ShouldSetItemsInCartCorrectly()
+    {
         // Act
         _viewModel.PopulateCart();
         _viewModel.CheckIfItemsInCart();
@@ -52,7 +56,8 @@ public class CartPageVMTests {
     }
 
     [Test]
-    public void CheckIfItemsInCart_ShouldSetNoItemsCorrectly_WhenNoItemsInCart() {
+    public void CheckIfItemsInCart_ShouldSetNoItemsCorrectly_WhenNoItemsInCart()
+    {
         // Arrange
         _cartStorage.GetCartItems().Returns(new List<CartItem>());
         _viewModel.PopulateCart();
@@ -64,7 +69,8 @@ public class CartPageVMTests {
     }
 
     [Test]
-    public void CheckPlushiePresent_ShouldSetPlushiePresentCorrectly() {
+    public void CheckPlushiePresent_ShouldSetPlushiePresentCorrectly()
+    {
         // Arrange
         var cartItems = new List<CartItem>
         {
@@ -79,7 +85,8 @@ public class CartPageVMTests {
     }
 
     [Test]
-    public void CheckPlushiePresent_ShouldSetPlushiePresentToFalse_WhenNoPlushie() {
+    public void CheckPlushiePresent_ShouldSetPlushiePresentToFalse_WhenNoPlushie()
+    {
         // Arrange
         var cartItems = new List<CartItem>
         {
@@ -94,7 +101,8 @@ public class CartPageVMTests {
     }
 
     [Test]
-    public async Task CheckIfCheckoutClearsCart() {
+    public async Task CheckIfCheckoutClearsCart()
+    {
         // Arrange
         _viewModel.PopulateCart();
         _viewModel.EmailContact = "Email@email.com";
