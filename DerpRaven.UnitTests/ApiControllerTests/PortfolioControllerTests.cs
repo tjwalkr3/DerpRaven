@@ -8,7 +8,7 @@ using NSubstitute;
 using Shouldly;
 namespace DerpRaven.UnitTests.ApiControllerTests;
 
-public class PortfolioServiceControllerTests
+public class PortfolioControllerTests
 {
     PortfolioController _controller;
 
