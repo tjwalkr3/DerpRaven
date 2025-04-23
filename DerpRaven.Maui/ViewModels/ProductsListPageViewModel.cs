@@ -39,7 +39,7 @@ public partial class ProductsListPageViewModel : ObservableObject
         }
     }
 
-    private void PopulateProductViews(List<ProductDto> products, List<ImageDto> images)
+    public void PopulateProductViews(List<ProductDto> products, List<ImageDto> images)
     {
         PlushieProducts.Clear();
         ArtProducts.Clear();

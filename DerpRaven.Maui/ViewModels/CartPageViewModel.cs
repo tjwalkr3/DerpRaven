@@ -106,7 +106,7 @@ public partial class CartPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task Checkout()
+    public async Task Checkout()
     {
         // Implement checkout logic here
         // Treating the checkout as successful
