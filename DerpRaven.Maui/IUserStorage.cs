@@ -1,5 +1,7 @@
-﻿namespace DerpRaven.Maui {
-    public interface IUserStorage {
+﻿namespace DerpRaven.Maui
+{
+    public interface IUserStorage
+    {
         string GetEmail();
         void SetEmail(string email);
     }

@@ -8,7 +8,7 @@ using Shouldly;
 using DerpRaven.Api;
 namespace DerpRaven.UnitTests.ApiControllerTests;
 
-public class CustomRequestServiceControllerTests
+public class CustomRequestControllerTests
 {
     CustomRequestController _controller;
 

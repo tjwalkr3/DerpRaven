@@ -7,7 +7,6 @@ namespace DerpRaven.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize]
 public class OrderedProductController : ControllerBase
 {
     private readonly IOrderedProductService _orderedProductService;
