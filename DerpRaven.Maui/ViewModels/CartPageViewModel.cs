@@ -53,8 +53,8 @@ public partial class CartPageViewModel : ObservableObject
 
         // Update the running total
         UpdateRunningTotal();
-        CheckPlushiePresent();
         CheckIfItemsInCart();
+        CheckPlushiePresent();
     }
 
 

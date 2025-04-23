@@ -9,6 +9,11 @@ namespace DerpRaven.Maui.ViewModels;
 
 public partial class CreateCustomRequestPageViewModel(ICustomRequestClient client, ILogger<CreateCustomRequestPageViewModel> logger) : ObservableObject
 {
+    public static class NavigationState
+    {
+        public static string ViewTab;
+    }
+
     public ObservableCollection<CustomRequestDto> CustomRequests { get; set; } = [];
 
     [ObservableProperty]
@@ -48,7 +53,8 @@ public partial class CreateCustomRequestPageViewModel(ICustomRequestClient clien
                 IsArt = false;
                 IsPlushie = false;
                 //navigate to the view custom request page
-                await Shell.Current.GoToAsync("//ViewCustomRequsetPage");
+                NavigationState.ViewTab = "ViewCustomRequestPage"; 
+                await Shell.Current.GoToAsync("//CustomRequestPage");
 
             }
         }

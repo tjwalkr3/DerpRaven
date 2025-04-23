@@ -1,9 +1,11 @@
 using DerpRaven.Maui.ViewModels;
 using System.Threading.Tasks;
+using static DerpRaven.Maui.ViewModels.CreateCustomRequestPageViewModel;
 namespace DerpRaven.Maui.Views;
 
 public partial class CustomRequestPage : Shell
 {
+
     public CustomRequestPage()
     {
         InitializeComponent();
@@ -30,4 +32,31 @@ public partial class CustomRequestPage : Shell
             }
         }
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // Check if the NavigationState.SelectedTab is set
+        if (!string.IsNullOrEmpty(NavigationState.ViewTab))
+        {
+            var tabBar = this.Items.FirstOrDefault() as TabBar;
+
+            var route = NavigationState.ViewTab;
+
+            ShellSection? targetTab = null;
+
+            if (NavigationState.ViewTab == "ViewCustomRequestPage")
+            {
+                targetTab = tabBar?.Items.FirstOrDefault(i => i.Route == route);
+            }
+
+            if (targetTab != null)
+            {
+                tabBar.CurrentItem = targetTab;
+            }
+
+            NavigationState.ViewTab = null; // Clear it after use
+        }
+    }
+
 }
