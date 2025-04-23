@@ -6,7 +6,7 @@ using Shouldly;
 
 namespace DerpRaven.UnitTests;
 
-public class AddProduct
+public class AddProductTests
 {
     private AddProducts _addProducts;
     private IBlazorImageClient _imageClient;
@@ -21,9 +21,16 @@ public class AddProduct
     }
 
     [Test]
-    public void Test1()
+    public void AddProduct()
     {
-        Assert.Pass();
+        // Arrange
+
+
+        // Act
+
+
+        // Assert
+        throw new NotImplementedException();
     }
 
     [Test]
@@ -35,9 +42,24 @@ public class AddProduct
             new ProductDto { Id = 2, Name = "Product 2", Price = 20.0m, Quantity = 10, Description = "Description 2", ProductTypeId = 2 }
         };
         _productClient.GetAllProductsAsync().Returns(products);
+
         // Act
         await _addProducts.LoadProducts();
+
         // Assert
         _addProducts._products.Count.ShouldBe(2);
+    }
+
+    [Test]
+    public void UpdateProduct()
+    {
+        // Arrange
+
+
+        // Act
+
+
+        // Assert
+        throw new NotImplementedException();
     }
 }
