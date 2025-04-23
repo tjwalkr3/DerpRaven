@@ -75,10 +75,13 @@ public partial class Portfolios
         }
     }
 
-    public async Task ConvertImages(List<ImageDto> images) {
-        foreach (var image in images) {
+    public async Task ConvertImages(List<ImageDto> images)
+    {
+        foreach (var image in images)
+        {
             var imageData = await _imageClient.GetImageAsync(image.Id);
-            if (imageData != null) {
+            if (imageData != null)
+            {
                 image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
             }
         }
