@@ -11,6 +11,13 @@ data:
         protocols:
           http:
             endpoint: 0.0.0.0:4318
+      httpcheck:
+        targets:
+          - endpoint: http://derp-api-svc:8080/api/healthcheck
+            method: GET
+          - endpoint: http://derp-web-svc:80
+            method: GET
+        collection_interval: 1s
 
     # Exporters
     exporters:
@@ -31,7 +38,7 @@ data:
           receivers: [otlp]
           exporters: [zipkin]
         metrics:
-          receivers: [otlp]
+          receivers: [otlp, httpcheck]
           exporters: [prometheus]
         logs:
           receivers: [otlp]
