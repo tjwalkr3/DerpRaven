@@ -53,6 +53,7 @@ public partial class CreateCustomRequestPageViewModel(ICustomRequestClient clien
                 IsArt = false;
                 IsPlushie = false;
                 //navigate to the view custom request page
+
                 NavigationState.ViewTab = "ViewCustomRequestPage"; 
                 await Shell.Current.GoToAsync("//CustomRequestPage");
 
