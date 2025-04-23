@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DerpRaven.Api\DerpRaven.Api.csproj" />
+    <ProjectReference Include="..\DerpRaven.Blazor\DerpRaven.Blazor.csproj" />
     <ProjectReference Include="..\DerpRaven.Shared\DerpRaven.Shared.csproj" />
   </ItemGroup>
 
