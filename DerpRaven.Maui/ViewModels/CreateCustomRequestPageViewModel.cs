@@ -48,7 +48,7 @@ public partial class CreateCustomRequestPageViewModel(ICustomRequestClient clien
                 IsArt = false;
                 IsPlushie = false;
                 //navigate to the view custom request page
-                await Shell.Current.GoToAsync("//ViewCustomRequsetPage");
+                //await Shell.Current.GoToAsync("//ViewCustomRequsetPage");
 
             }
         }
