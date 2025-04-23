@@ -67,7 +67,7 @@ public partial class Portfolios
         {
             _images = await _imageClient.ListImagesAsync();
             await ConvertImages(_images);
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)
         {
