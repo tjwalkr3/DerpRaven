@@ -17,7 +17,7 @@ public partial class AddProducts
     private List<ImageDto>? _images = [];
     private List<int> imageIds = [];
     private IBlazorProductClient _productClient { get; }
-    private List<ProductDto> _products = [];
+    public List<ProductDto> _products = [];
     private string errorString = string.Empty;
     private string isEditing = "hidden";
 
@@ -73,15 +73,8 @@ public partial class AddProducts
         try
         {
             _images = await _imageClient.ListImagesAsync();
-            foreach (var image in _images)
-            {
-                var imageData = await _imageClient.GetImageAsync(image.Id);
-                if (imageData != null)
-                {
-                    image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
-                }
-            }
-            StateHasChanged();
+            await ConvertImages(_images);
+            await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)
         {
@@ -89,7 +82,19 @@ public partial class AddProducts
         }
     }
 
-    private async Task LoadProducts()
+    public async Task ConvertImages(List<ImageDto> images)
+    {
+        foreach (var image in images)
+        {
+            var imageData = await _imageClient.GetImageAsync(image.Id);
+            if (imageData != null)
+            {
+                image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
+            }
+        }
+    }
+
+    public async Task LoadProducts()
     {
         try
         {
