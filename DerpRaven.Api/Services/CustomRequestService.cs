@@ -17,6 +17,7 @@ public class CustomRequestService : ICustomRequestService
     public async Task<List<CustomRequestDto>> GetAllCustomRequestsAsync()
     {
         _logger.LogInformation("Fetching all custom requests");
+        _logger.LogError("This is a test of the emergency broadcast system. ");
         return await _context.CustomRequests
             .Include(r => r.ProductType)
             .Include(r => r.User)
