@@ -17,7 +17,7 @@ data:
             method: GET
           - endpoint: http://derp-web-svc:80
             method: GET
-        collection_interval: 1s
+        collection_interval: 15s
 
     # Exporters
     exporters:
@@ -39,7 +39,7 @@ data:
           exporters: [zipkin]
         metrics:
           receivers: [otlp, httpcheck]
-          exporters: [prometheus]
+          exporters: [debug, prometheus]
         logs:
           receivers: [otlp]
-          exporters: [debug, otlphttp]
+          exporters: [otlphttp]
