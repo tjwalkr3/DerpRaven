@@ -52,11 +52,8 @@ public partial class CreateCustomRequestPageViewModel(ICustomRequestClient clien
                 ArtType = string.Empty;
                 IsArt = false;
                 IsPlushie = false;
-                //navigate to the view custom request page
-
-                NavigationState.ViewTab = "ViewCustomRequestPage"; 
-                await Shell.Current.GoToAsync("//CustomRequestPage");
-
+                //Do a popup
+                await Shell.Current.DisplayAlert("Success", "Your custom request has been submitted successfully!", "OK");
             }
         }
         catch (Exception ex)
