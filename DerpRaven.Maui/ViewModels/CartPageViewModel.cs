@@ -113,12 +113,15 @@ public partial class CartPageViewModel : ObservableObject
         if (PlushiePresent)
         {
             await _cartStorage.CheckOut(ShippingAddress, EmailContact);
+            await Shell.Current.DisplayAlert("Success", "Your checkout was successful! Your plushie should arrive in 1-3 weeks!", "OK");
         }
         else
         {
             await _cartStorage.CheckOut("", EmailContact);
+            await Shell.Current.DisplayAlert("Success", "Your checkout was successful!", "OK");
         }
         PopulateCart();
+
     }
 
     private void UpdateRunningTotal()
