@@ -9,7 +9,7 @@ spec:
   tls:
     - hosts:
         - api.dragonbytes.org
-      secretName: tls-dragonbytes # This should match the secret you created with the cert/key
+      secretName: tls-dragonbytes
   rules:
     - host: api.dragonbytes.org
       http:
