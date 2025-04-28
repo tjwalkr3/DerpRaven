@@ -57,7 +57,7 @@ public partial class ProductPageViewModel : ObservableObject
         keycloakClient.IdentityTokenChanged += IdentityTokenHasChanged;
     }
 
-    private void populateCartButton()
+    public void populateCartButton()
     {
         IsSignedIn = !string.IsNullOrEmpty(_oktaClient.IdentityToken);
         //check if logged in

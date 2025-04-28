@@ -103,7 +103,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IOrderedProductClient, OrderedProductClient>();
         builder.Services.AddSingleton<ICartStorage, CartStorage>();
         builder.Services.AddSingleton<IUserClient, UserClient>();
-        builder.Services.AddSingleton<IUserStorage, UserStorage>(); 
+        builder.Services.AddSingleton<IUserStorage, UserStorage>();
         return builder;
     }
 }

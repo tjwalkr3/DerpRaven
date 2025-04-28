@@ -7,7 +7,7 @@ using NSubstitute;
 using Shouldly;
 namespace DerpRaven.UnitTests.ApiControllerTests;
 
-public class ProductServiceControllerTests
+public class ProductControllerTests
 {
     ProductController _controller;
     [SetUp]

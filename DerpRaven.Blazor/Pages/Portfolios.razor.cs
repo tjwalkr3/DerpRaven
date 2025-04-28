@@ -66,19 +66,24 @@ public partial class Portfolios
         try
         {
             _images = await _imageClient.ListImagesAsync();
-            foreach (var image in _images)
-            {
-                var imageData = await _imageClient.GetImageAsync(image.Id);
-                if (imageData != null)
-                {
-                    image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
-                }
-            }
-            StateHasChanged();
+            await ConvertImages(_images);
+            await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)
         {
             errorString = ex.Message;
+        }
+    }
+
+    public async Task ConvertImages(List<ImageDto> images)
+    {
+        foreach (var image in images)
+        {
+            var imageData = await _imageClient.GetImageAsync(image.Id);
+            if (imageData != null)
+            {
+                image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
+            }
         }
     }
 

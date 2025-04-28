@@ -9,6 +9,11 @@ namespace DerpRaven.Maui.ViewModels;
 
 public partial class CreateCustomRequestPageViewModel(ICustomRequestClient client, ILogger<CreateCustomRequestPageViewModel> logger) : ObservableObject
 {
+    public static class NavigationState
+    {
+        public static string ViewTab;
+    }
+
     public ObservableCollection<CustomRequestDto> CustomRequests { get; set; } = [];
 
     [ObservableProperty]
@@ -39,7 +44,17 @@ public partial class CreateCustomRequestPageViewModel(ICustomRequestClient clien
                 ProductTypeId = IsArt ? 2 : 1
             };
             bool success = await client.CreateCustomRequestAsync(request);
-            //if (success) await GetCustomRequests(); Should we navigate to view custom requests page?
+            if (success)
+            {
+                //clear the fields
+                Description = string.Empty;
+                Email = string.Empty;
+                ArtType = string.Empty;
+                IsArt = false;
+                IsPlushie = false;
+                //Do a popup
+                await Shell.Current.DisplayAlert("Success", "Your custom request has been submitted successfully!", "OK");
+            }
         }
         catch (Exception ex)
         {

@@ -1,4 +1,4 @@
-[![deployment pipeline](https://github.com/tjwalkr3/DerpRaven/actions/workflows/github-actions.yml/badge.svg)](https://github.com/tjwalkr3/DerpRaven/actions/workflows/github-actions.yml)
+[![deployment pipeline](https://github.com/tjwalkr3/DerpRaven/actions/workflows/github-actions.yml/badge.svg)](https://github.com/tjwalkr3/DerpRaven/actions/workflows/github-actions.yml)<br><br>
 HOW TO START MAUI APP:
 1. Download the android emulator for api 34. 35 and later will not work. The api breaks the code.
 2. Set the solution configuration drop down at the top of the screen to release instead of debug

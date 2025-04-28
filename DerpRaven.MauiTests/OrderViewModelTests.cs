@@ -17,7 +17,7 @@ public class OrderViewModelTests
             Id = 1,
             Address = "123 Test Street",
             Email = "test@example.com",
-            OrderDate = DateTime.Now,
+            OrderDate = new DateTime(2025, 4, 21),
             UserId = 42,
             OrderedProductIds = new List<int> { 1, 2 }
         };
@@ -32,7 +32,6 @@ public class OrderViewModelTests
         // Pass them to the OrderViewModel constructor
         _orderViewModel = new OrderViewModel(order, products);
     }
-
 
     [Test]
     public void TestCalculateTotal()
