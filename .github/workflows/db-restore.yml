@@ -5,7 +5,7 @@ on:
 
 jobs:
   restore-database:
-    runs-on: self-hosted
+    runs-on: [self-hosted, alex-office4]
     steps:
     - name: Restore the database.
       run: |
