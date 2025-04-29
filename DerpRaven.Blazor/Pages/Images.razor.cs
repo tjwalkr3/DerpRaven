@@ -39,11 +39,7 @@ public partial class Images
             _images = await _imageClient.ListImagesAsync();
             foreach (var image in _images)
             {
-                var imageData = await _imageClient.GetImageAsync(image.Id);
-                if (imageData != null)
-                {
-                    image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
-                }
+                image.ImageDataUrl = $"https://derpravenstorage.blob.core.windows.net/images/{image.Id}";
             }
             StateHasChanged();
         }

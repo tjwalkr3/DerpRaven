@@ -73,7 +73,7 @@ public partial class AddProducts
         try
         {
             _images = await _imageClient.ListImagesAsync();
-            await ConvertImages(_images);
+            SetImageUrls(_images);
             await InvokeAsync(StateHasChanged);
         }
         catch (Exception ex)
@@ -82,15 +82,11 @@ public partial class AddProducts
         }
     }
 
-    public async Task ConvertImages(List<ImageDto> images)
+    public void SetImageUrls(List<ImageDto> images)
     {
         foreach (var image in images)
         {
-            var imageData = await _imageClient.GetImageAsync(image.Id);
-            if (imageData != null)
-            {
-                image.ImageDataUrl = $"data:image/png;base64,{Convert.ToBase64String(imageData)}";
-            }
+            image.ImageDataUrl = $"https://derpravenstorage.blob.core.windows.net/images/{image.Id}";
         }
     }
 

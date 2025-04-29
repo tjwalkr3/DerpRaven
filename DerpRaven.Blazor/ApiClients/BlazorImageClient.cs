@@ -22,18 +22,6 @@ public class BlazorImageClient : IBlazorImageClient
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<byte[]?> GetImageAsync(int id)
-    {
-        var response = await _httpClient.GetAsync($"api/image/get/{id}");
-
-        if (response.IsSuccessStatusCode)
-        {
-            return await response.Content.ReadAsByteArrayAsync();
-        }
-
-        return null;
-    }
-
     public async Task<ImageDto?> GetImageInfoAsync(int id)
     {
         var response = await _httpClient.GetFromJsonAsync<ImageDto>($"api/image/info/{id}");
