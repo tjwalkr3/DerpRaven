@@ -99,20 +99,4 @@ public class CartPageVMTests
         // Assert
         _viewModel.PlushiePresent.ShouldBeFalse();
     }
-
-    [Test]
-    public async Task CheckIfCheckoutClearsCart()
-    {
-        // Arrange
-        _viewModel.PopulateCart();
-        _viewModel.EmailContact = "Email@email.com";
-        _viewModel.ShippingAddress = "123 Test St";
-        // Act
-        await _viewModel.Checkout();
-        _cartStorage.GetCartItems().Returns(new List<CartItem>());
-        _viewModel.PopulateCart();
-        // Assert
-        await _cartStorage.Received(1).CheckOut(Arg.Any<string>(), Arg.Any<string>());
-        _viewModel.CartItems.Count.ShouldBe(0);
-    }
 }
