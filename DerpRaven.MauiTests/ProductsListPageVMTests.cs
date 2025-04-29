@@ -15,9 +15,9 @@ public class ProductsListPageVMTests
     public void Setup()
     {
         var productClient = Substitute.For<IProductClient>();
-        var imageHelpers = Substitute.For<IImageHelpers>();
+        var imageClient = Substitute.For<IImageClient>();
 
-        var viewModel = new ProductsListPageViewModel(productClient, imageHelpers);
+        var viewModel = new ProductsListPageViewModel(productClient, imageClient);
 
     }
 

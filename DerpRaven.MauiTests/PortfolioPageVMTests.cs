@@ -15,9 +15,9 @@ public class PortfolioPageViewModelTests
     public void Setup()
     {
         var portfolioClient = Substitute.For<IPortfolioClient>();
-        var imageHelpers = Substitute.For<IImageHelpers>();
+        var imageClient = Substitute.For<IImageClient>();
 
-        var viewModel = new PortfolioPageViewModel(portfolioClient, imageHelpers);
+        var viewModel = new PortfolioPageViewModel(portfolioClient, imageClient);
     }
 
     [Test]

@@ -14,16 +14,16 @@
                         <DataTemplate>
                             <VerticalStackLayout>
                                 <Border Stroke="Gray" 
-                                         StrokeThickness="1" 
-                                         Padding="10" 
-                                         Margin="5" 
-                                         StrokeShape="RoundRectangle 15"
-                                         BackgroundColor="Gray"
-                                         HorizontalOptions="Center">
+                                        StrokeThickness="1" 
+                                        Padding="10" 
+                                        Margin="5" 
+                                        StrokeShape="RoundRectangle 15"
+                                        BackgroundColor="Gray"
+                                        HorizontalOptions="Center">
                                     <Label Text="{Binding Portfolio.Name}" 
-                                       HorizontalOptions="Start"
-                                       VerticalOptions="Start"
-                                       FontSize="20"/>
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Start"
+                                           FontSize="20"/>
                                 </Border>
                                 <CarouselView ItemsSource="{Binding Images}" PeekAreaInsets="100">
                                     <CarouselView.ItemTemplate>
@@ -38,15 +38,15 @@
                                                         BackgroundColor="Gray">
                                                     <StackLayout>
                                                         <Label Text="{Binding Alt}"
-                                                   FontAttributes="Bold"
-                                                   FontSize="18"
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="Center" />
-                                                        <Image Source="{Binding Path}"
-                                                   Aspect="AspectFill"
-                                                   HeightRequest="150"
-                                                   WidthRequest="150"
-                                                   HorizontalOptions="Center" />
+                                                               FontAttributes="Bold"
+                                                               FontSize="18"
+                                                               HorizontalOptions="Center"
+                                                               VerticalOptions="Center" />
+                                                        <Image Source="{Binding Id, StringFormat='https://derpravenstorage.blob.core.windows.net/images/{0}'}"
+                                                               Aspect="AspectFill"
+                                                               HeightRequest="150"
+                                                               WidthRequest="150"
+                                                               HorizontalOptions="Center" />
                                                     </StackLayout>
                                                 </Border>
                                             </StackLayout>
@@ -72,13 +72,12 @@
             </VerticalStackLayout>
         </ScrollView>
         <Grid IsVisible="{Binding IsLoading}" BackgroundColor="#80000000">
-            <ActivityIndicator 
-            IsRunning="True"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" 
-            Color="White" 
-            WidthRequest="60" 
-            HeightRequest="60"/>
+            <ActivityIndicator IsRunning="True"
+                               VerticalOptions="Center" 
+                               HorizontalOptions="Center" 
+                               Color="White" 
+                               WidthRequest="60" 
+                               HeightRequest="60"/>
         </Grid>
     </Grid>
 </ContentPage>

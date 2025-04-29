@@ -13,7 +13,11 @@
                     <DataTemplate>
                         <Border Padding="10" Margin="10,10,10,0" Stroke="Transparent">
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
-                                <Image Grid.ColumnSpan="2" Source="{Binding ImagePath}" HeightRequest="240"  Aspect="AspectFill" Margin="0,5,0,20">
+                                <Image Source="{Binding ImagePath, StringFormat='https://derpravenstorage.blob.core.windows.net/images/{0}'}"
+                                       Grid.ColumnSpan="2" 
+                                       HeightRequest="240"  
+                                       Aspect="AspectFill" 
+                                       Margin="0,5,0,20">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductsListPageViewModel}}, Path=NavigateToProductCommand}" 

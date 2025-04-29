@@ -37,7 +37,7 @@ public partial class ProductPageViewModel : ObservableObject
     string _cartButtonText = string.Empty;
 
     private readonly IKeycloakClient _oktaClient;
-    private readonly IImageHelpers _imageHelpers;
+    private readonly IImageClient _imageClient;
     private readonly IProductClient _productClient;
     private readonly ICartStorage _cartStorage;
 
@@ -47,11 +47,11 @@ public partial class ProductPageViewModel : ObservableObject
 
     public List<int> QuantityOptions => Enumerable.Range(1, ProductDetails?.Quantity ?? 0).ToList();
 
-    public ProductPageViewModel(IImageHelpers imageHelpers, IProductClient productClient, IKeycloakClient keycloakClient, ICartStorage cartStorage)
+    public ProductPageViewModel(IImageClient imageClient, IProductClient productClient, IKeycloakClient keycloakClient, ICartStorage cartStorage)
     {
         _cartStorage = cartStorage;
         _oktaClient = keycloakClient;
-        _imageHelpers = imageHelpers;
+        _imageClient = imageClient;
         _productClient = productClient;
         SelectedQuantity = 1;
         keycloakClient.IdentityTokenChanged += IdentityTokenHasChanged;
@@ -81,6 +81,8 @@ public partial class ProductPageViewModel : ObservableObject
         await RefreshSingleProductView();
     }
 
+    public async Task<List<ImageDto>> GetImageDtos(List<int> imageIds) => await _imageClient.GetImageInfoManyAsync(imageIds);
+
     public async Task RefreshSingleProductView()
     {
         IsLoading = true;
@@ -96,9 +98,7 @@ public partial class ProductPageViewModel : ObservableObject
             if (imageIds.Count < 1) return;
 
 
-            Images = await _imageHelpers.GetImageDtos(imageIds);
-            Images = _imageHelpers.GetPaths(Images);
-            await _imageHelpers.SaveListOfImages(Images);
+            Images = await GetImageDtos(imageIds);
             populateCartButton();
         }
         finally

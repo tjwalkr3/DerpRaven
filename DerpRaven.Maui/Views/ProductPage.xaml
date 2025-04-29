@@ -26,11 +26,11 @@
                                     VerticalOptions="Center"
                                     BackgroundColor="Gray">
                                     <StackLayout>
-                                        <Image Source="{Binding Path}"
-                                        Aspect="AspectFill"
-                                        HeightRequest="150"
-                                        WidthRequest="150"
-                                        HorizontalOptions="Center" />
+                                        <Image Source="{Binding Id, StringFormat='https://derpravenstorage.blob.core.windows.net/images/{0}'}"
+                                               Aspect="AspectFill"
+                                               HeightRequest="150"
+                                               WidthRequest="150"
+                                               HorizontalOptions="Center" />
                                     </StackLayout>
                                 </Border>
                             </StackLayout>

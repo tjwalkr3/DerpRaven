@@ -17,11 +17,11 @@ public class ProductPageVMTests
     public void Setup()
     {
         var productClient = Substitute.For<IProductClient>();
-        var imageHelpers = Substitute.For<IImageHelpers>();
+        var imageClient = Substitute.For<IImageClient>();
         _mockCartStorage = Substitute.For<ICartStorage>();
         _mockKeycloakClient = Substitute.For<IKeycloakClient>();
 
-        _viewModel = new ProductPageViewModel(imageHelpers, productClient, _mockKeycloakClient, _mockCartStorage);
+        _viewModel = new ProductPageViewModel(imageClient, productClient, _mockKeycloakClient, _mockCartStorage);
     }
 
     [Test]

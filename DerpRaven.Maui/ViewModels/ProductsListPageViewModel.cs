@@ -12,15 +12,15 @@ public partial class ProductsListPageViewModel : ObservableObject
     public ObservableCollection<ProductDto> PlushieProducts { get; private set; } = [];
     public ObservableCollection<ProductDto> ArtProducts { get; private set; } = [];
     private readonly IProductClient _productClient;
-    private readonly IImageHelpers _imageHelpers;
+    private readonly IImageClient _imageClient;
 
     [ObservableProperty]
     private bool isLoading;
 
-    public ProductsListPageViewModel(IProductClient productClient, IImageHelpers imageHelpers)
+    public ProductsListPageViewModel(IProductClient productClient, IImageClient imageClient)
     {
         _productClient = productClient;
-        _imageHelpers = imageHelpers;
+        _imageClient = imageClient;
     }
 
     public async Task RefreshProductsView()
@@ -30,7 +30,7 @@ public partial class ProductsListPageViewModel : ObservableObject
         {
             List<ProductDto> products = await _productClient.GetAllProductsAsync();
             products = products.Where(p => p.Quantity > 0).ToList(); // Filter out 0 quantity products
-            List<ImageDto> images = await DownloadAllImages(products);
+            List<ImageDto> images = await GetAllImageDtos(products);
             PopulateProductViews(products, images);
         }
         finally
@@ -46,7 +46,7 @@ public partial class ProductsListPageViewModel : ObservableObject
 
         foreach (var product in products)
         {
-            product.ImagePath = images.FirstOrDefault(img => img.Id == product.ImageIds[0])?.Path; // set the path to the main image
+            product.ImagePath = images.FirstOrDefault(img => img.Id == product.ImageIds[0])?.Id.ToString(); // set the path to the main image's id
             if (product.ProductTypeId == 1)
             {
                 PlushieProducts.Add(product);
@@ -58,7 +58,9 @@ public partial class ProductsListPageViewModel : ObservableObject
         }
     }
 
-    public async Task<List<ImageDto>> DownloadAllImages(List<ProductDto> products)
+    public async Task<List<ImageDto>> GetImageDtos(List<int> imageIds) => await _imageClient.GetImageInfoManyAsync(imageIds);
+
+    public async Task<List<ImageDto>> GetAllImageDtos(List<ProductDto> products)
     {
         List<int> imageIds = [];
 
@@ -71,9 +73,7 @@ public partial class ProductsListPageViewModel : ObservableObject
         }
         imageIds = imageIds.Distinct().ToList();
 
-        List<ImageDto> images = await _imageHelpers.GetImageDtos(imageIds);
-        images = _imageHelpers.GetPaths(images);
-        await _imageHelpers.SaveListOfImages(images);
+        List<ImageDto> images = await GetImageDtos(imageIds);
 
         return images;
     }

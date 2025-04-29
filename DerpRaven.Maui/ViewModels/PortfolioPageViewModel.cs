@@ -12,15 +12,15 @@ public partial class PortfolioPageViewModel : ObservableObject
     public ObservableCollection<CarouselViewModel> PlushiePortfolios { get; private set; } = [];
     public ObservableCollection<CarouselViewModel> ArtPortfolios { get; private set; } = [];
     private readonly IPortfolioClient _portfolioClient;
-    private readonly IImageHelpers _imageHelpers;
+    private readonly IImageClient _imageClient;
 
     [ObservableProperty]
     private bool isLoading;
 
-    public PortfolioPageViewModel(IPortfolioClient portfolioClient, IImageHelpers imageHelpers)
+    public PortfolioPageViewModel(IPortfolioClient portfolioClient, IImageClient imageClient)
     {
         _portfolioClient = portfolioClient;
-        _imageHelpers = imageHelpers;
+        _imageClient = imageClient;
     }
 
     public async Task RefreshPortfolioView()
@@ -63,6 +63,8 @@ public partial class PortfolioPageViewModel : ObservableObject
         }
     }
 
+    public async Task<List<ImageDto>> GetImageDtos(List<int> imageIds) => await _imageClient.GetImageInfoManyAsync(imageIds);
+
     public async Task<List<ImageDto>> GetPortfolioImages(List<PortfolioDto> portfolios)
     {
         List<int> imageIds = portfolios
@@ -70,9 +72,7 @@ public partial class PortfolioPageViewModel : ObservableObject
             .Distinct()
             .ToList();
 
-        List<ImageDto> images = await _imageHelpers.GetImageDtos(imageIds);
-        images = _imageHelpers.GetPaths(images);
-        await _imageHelpers.SaveListOfImages(images);
+        List<ImageDto> images = await GetImageDtos(imageIds);
 
         return images;
     }

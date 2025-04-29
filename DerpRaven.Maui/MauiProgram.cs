@@ -97,7 +97,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<ICustomRequestClient, CustomRequestClient>();
         builder.Services.AddSingleton<IPortfolioClient, PortfolioClient>();
         builder.Services.AddSingleton<IProductClient, ProductClient>();
-        builder.Services.AddSingleton<IImageHelpers, ImageHelpers>();
         builder.Services.AddSingleton<ICartStorage, CartStorage>();
         builder.Services.AddSingleton<IOrderClient, OrderClient>();
         builder.Services.AddSingleton<IOrderedProductClient, OrderedProductClient>();
