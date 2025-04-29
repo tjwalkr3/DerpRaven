@@ -142,16 +142,16 @@ jobs:
         username: ${{ vars.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and push Web to DockerHub.
-      run: |
-        docker build \
-          -f ./Web.Dockerfile \
-          -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }} \
-          --build-arg BASE_ADDRESS="https://api.dragonbytes.org" \
-          --build-arg FEATURE_FLAG_ON=${{ vars.FEATURE_FLAG_ON }} \
-          .
+    # - name: Build and push Web to DockerHub.
+    #   run: |
+    #     docker build \
+    #       -f ./Web.Dockerfile \
+    #       -t ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }} \
+    #       --build-arg BASE_ADDRESS="https://api.dragonbytes.org" \
+    #       --build-arg FEATURE_FLAG_ON=${{ vars.FEATURE_FLAG_ON }} \
+    #       .
 
-        docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }}
+    #     docker push -q ${{ vars.DOCKERHUB_USERNAME }}/derp-raven-web:${{ github.run_number }}
 
     - name: Build and push Web to DockerHub.
       run: |
@@ -170,31 +170,31 @@ jobs:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         content: 'The docker build has failed for the Blazor WASM app. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
 
-  deploy_to_kubernetes:
-    needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
-    runs-on: self-hosted
-    steps:
-    - name: Check out the code. 
-      uses: actions/checkout@v4
+  # deploy_to_kubernetes:
+  #   needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
+  #   runs-on: self-hosted
+  #   steps:
+  #   - name: Check out the code. 
+  #     uses: actions/checkout@v4
 
-    - name: deploy to kubernetes
-      run: |
-        kubectl apply -f kube/namespace.yml
-        export BUILD_NUMBER=${{ github.run_number }}
-        export AZURE_BLOB_CONN_STRING=${{ secrets.AZURE_BLOB_CONN_STRING }}
-        export AZURE_BLOB_CONTIANER_NAME=${{ vars.AZURE_BLOB_CONTAINER_NAME_KUBE }}
+  #   - name: deploy to kubernetes
+  #     run: |
+  #       kubectl apply -f kube/namespace.yml
+  #       export BUILD_NUMBER=${{ github.run_number }}
+  #       export AZURE_BLOB_CONN_STRING=${{ secrets.AZURE_BLOB_CONN_STRING }}
+  #       export AZURE_BLOB_CONTIANER_NAME=${{ vars.AZURE_BLOB_CONTAINER_NAME_KUBE }}
         
-        for FILE in "kube"/*
-        do
-          cat "$FILE" | envsubst | kubectl apply -f -
-        done
+  #       for FILE in "kube"/*
+  #       do
+  #         cat "$FILE" | envsubst | kubectl apply -f -
+  #       done
 
-    - name: Notify Discord on Failure
-      if: failure()
-      uses: tsickert/discord-webhook@v7.0.0
-      with:
-        webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-        content: 'The Kubernetes deployment has failed. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
+  #   - name: Notify Discord on Failure
+  #     if: failure()
+  #     uses: tsickert/discord-webhook@v7.0.0
+  #     with:
+  #       webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+  #       content: 'The Kubernetes deployment has failed. https://github.com/tjwalkr3/DerpRaven/actions/runs/${{ github.run_id }}'
 
   deploy_to_azure:
     needs: [build_and_push_api_to_dockerhub, build_and_push_web_to_dockerhub]
