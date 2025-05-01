@@ -20,6 +20,7 @@ public partial class ViewCustomRequestsPageViewModel(ICustomRequestClient client
             IsLoading = true;
             // See if we can get all custom requests
             List<CustomRequestDto>? requests = await client.GetCustomRequestsByUserEmailAsync();
+            if (requests != null) requests.Reverse();
 
             // If we don't find any, we don't need to do much, just return, leaving the list empty
             if (requests == null)

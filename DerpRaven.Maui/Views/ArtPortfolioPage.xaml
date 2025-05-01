@@ -53,14 +53,6 @@
                                         </DataTemplate>
                                     </CarouselView.ItemTemplate>
                                 </CarouselView>
-                                <Border  Stroke="Gray" 
-                                         StrokeThickness="5" 
-                                         Padding="10" 
-                                         Margin="5" 
-                                         StrokeShape="RoundRectangle 15"
-                                         BackgroundColor="Gray">
-                                    <Label Text="Description" />
-                                </Border>
                                 <BoxView Color="Gray" 
                                          HeightRequest="1" 
                                          HorizontalOptions="FillAndExpand" 
